@@ -1,0 +1,30 @@
+{
+  "name": "pain-reporting-portal",
+  "version": "0.1.0",
+  "description": "Pain Reporting Portal",
+  "main": "index.js",
+  "bin": {
+    "prp": "index.js"
+  },
+  "scripts": {
+    "test": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ser515asu/PRP-Manhattan-Project.git"
+  },
+  "keywords": [
+    "Pain",
+    "Reporting",
+    "Portal"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ser515asu/PRP-Manhattan-Project/issues"
+  },
+  "homepage": "https://github.com/ser515asu/PRP-Manhattan-Project#readme",
+  "dependencies": {
+    "restify": "^4.0.3",
+    "yargs": "^3.26.0"
+  }
+}
