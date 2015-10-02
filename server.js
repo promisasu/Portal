@@ -1,6 +1,7 @@
 'use strict';
 
 // load node modules
+const path = require('path');
 const hapi = require('hapi');
 const vision = require('vision');
 const handlebars = require('handlebars');
@@ -9,7 +10,6 @@ const handlebars = require('handlebars');
 const router = require('./router');
 
 module.exports = function (configuration) {
-    console.log(configuration);
     const server = new hapi.Server();
 
     // register hapi plugins
@@ -31,7 +31,7 @@ module.exports = function (configuration) {
         engines: {
             handlebars: handlebars
         },
-        relativeTo: 'view',
+        relativeTo: path.join(__dirname, 'view'),
         // templates that views can render
         path: 'template',
         // layouts that templates can extend
