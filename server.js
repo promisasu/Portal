@@ -42,8 +42,8 @@ module.exports = function (configuration) {
 
     // set server port
     server.connection({
-        port: configuration.port,
-        host: configuration.hostname
+        port: configuration.server.port,
+        host: configuration.server.hostname
     });
 
     // load application routes
