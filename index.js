@@ -4,7 +4,7 @@
 // load node modules
 const hapi = require('hapi');
 const vision = require('vision');
-const jade = require('jade');
+const handlebars = require('handlebars');
 
 // load project modules
 const version = require('./package.json').version;
@@ -43,10 +43,15 @@ server.register(
 // register jade view engine
 server.views({
     engines: {
-        jade: jade
+        handlebars: handlebars
     },
     relativeTo: __dirname,
-    path: 'template'
+    // templates that views can render
+    path: 'template',
+    // layouts that templates can extend
+    layoutPath: 'layout',
+    // sets default layout to 'layout/default.handlebars'
+    layout: 'default'
 });
 
 // set server port

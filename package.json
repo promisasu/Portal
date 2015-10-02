@@ -28,8 +28,8 @@
     "eslint": "^1.5.1"
   },
   "dependencies": {
+    "handlebars": "^4.0.3",
     "hapi": "^10.1.0",
-    "jade": "^1.11.0",
     "vision": "^3.0.0",
     "yargs": "^3.26.0"
   }
