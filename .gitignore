@@ -1,3 +1,9 @@
+# Configuration file
+config.json
+
+# JSDoc
+docs/
+
 # Logs
 logs
 *.log

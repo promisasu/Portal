@@ -4,10 +4,11 @@
   "description": "Pain Reporting Portal",
   "main": "index.js",
   "bin": {
-    "prp": "index.js"
+    "prp": "cli.js"
   },
   "scripts": {
-    "test": "eslint ."
+    "test": "eslint .",
+    "doc": "jsdoc command model presenter --recurse -d docs"
   },
   "repository": {
     "type": "git",
@@ -25,11 +26,14 @@
   },
   "homepage": "https://github.com/ser515asu/PRP-Manhattan-Project#readme",
   "devDependencies": {
-    "eslint": "^1.5.1"
+    "eslint": "^1.6.0",
+    "jsdoc": "^3.3.3"
   },
   "dependencies": {
     "handlebars": "^4.0.3",
     "hapi": "^10.1.0",
+    "pm2": "^0.15.7",
+    "read": "^1.0.7",
     "vision": "^3.0.0",
     "yargs": "^3.26.0"
   }

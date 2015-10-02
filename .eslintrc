@@ -107,6 +107,7 @@ rules:
     indent:
         - 2
         - 4
+        - SwitchCase: 1
     key-spacing: 2
     linebreak-style: 2
     max-nested-callbacks:
@@ -120,6 +121,7 @@ rules:
     no-inline-comments: 2
     no-lonely-if: 2
     no-multiple-empty-lines: 2
+    no-negated-condition: 2
     no-new-object: 2
     no-new-object: 2
     no-ternary: 2
