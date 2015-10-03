@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @module command/dev
+ * @module task/dev
  */
 
 const server = require('../server');
@@ -9,9 +9,12 @@ const server = require('../server');
 /**
  * Starts the server in the console process.
  * This allows for `console.log` to be used for debugging.
- * @function dev
  * @returns {Null} nothing
  */
-module.exports = function () {
+function dev () {
     server(require('../config.json')); // eslint-disable-line global-require
-};
+}
+
+dev.description = 'Starts the server in the console process.';
+
+module.exports = dev;

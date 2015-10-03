@@ -1,0 +1,4 @@
+rules:
+    max-nested-callbacks:
+        - 2
+        - 2
