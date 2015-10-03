@@ -3,13 +3,6 @@
   "version": "0.1.0",
   "description": "Pain Reporting Portal",
   "main": "index.js",
-  "bin": {
-    "prp": "cli.js"
-  },
-  "scripts": {
-    "test": "eslint .",
-    "doc": "jsdoc command model presenter --recurse -d docs"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ser515asu/PRP-Manhattan-Project.git"
@@ -25,18 +18,16 @@
     "url": "https://github.com/ser515asu/PRP-Manhattan-Project/issues"
   },
   "homepage": "https://github.com/ser515asu/PRP-Manhattan-Project#readme",
-  "devDependencies": {
-    "eslint": "^1.6.0",
-    "jsdoc": "^3.3.3"
-  },
   "dependencies": {
+    "gulp": "gulpjs/gulp#4.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-jsdoc": "^0.1.5",
     "handlebars": "^4.0.3",
     "hapi": "^10.1.0",
     "mysql": "^2.9.0",
     "pm2": "^0.15.7",
     "read": "^1.0.7",
     "sequelize": "^3.10.0",
-    "vision": "^3.0.0",
-    "yargs": "^3.26.0"
+    "vision": "^3.0.0"
   }
 }

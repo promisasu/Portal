@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @module command/init
+ * @module task/init
  */
 
 const path = require('path');
@@ -10,10 +10,10 @@ const writeFile = require('./helper/write-file-promise');
 
 /**
  * Writes a server configuration file.
- * @function init
+ * @param {Function} done - completion callback
  * @returns {Null} nothing
  */
-module.exports = function () {
+function init (done) {
     const config = {};
 
     console.log('This utility will walk you through creating a config.json file.');
@@ -84,5 +84,10 @@ module.exports = function () {
         config.database.dialect = dialect;
 
         writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, 2));
-    });
-};
+    })
+    .then(done);
+}
+
+init.description = 'Writes a server configuration file.';
+
+module.exports = init;

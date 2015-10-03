@@ -2,27 +2,29 @@
 
 [![Build Status](https://travis-ci.org/ser515asu/PRP-Manhattan-Project.svg?branch=master)](https://travis-ci.org/ser515asu/PRP-Manhattan-Project)
 [![Dependency Status](https://david-dm.org/ser515asu/PRP-Manhattan-Project.svg)](https://david-dm.org/ser515asu/PRP-Manhattan-Project)
-[![devDependency Status](https://david-dm.org/ser515asu/PRP-Manhattan-Project/dev-status.svg)](https://david-dm.org/ser515asu/PRP-Manhattan-Project#info=devDependencies)
 
 ### Installation Instructions
-1. Install [Node JS](https://nodejs.org/en/download/)
-2. Install [MySql](https://www.mysql.com/)
+1. install [Node JS](https://nodejs.org/en/download/)
+2. install [MySql](https://www.mysql.com/)
 3. clone git repository `git clone https://github.com/ser515asu/PRP-Manhattan-Project`
 4. run `npm install`
-5. run `npm link .`
+5. run `npm install --global gulpjs/gulp-cli#4.0`
 
 ### Setup Instructions
-1. If you do not already have a database user, create one
+1. if you do not already have a database user, create one
 2. create a new empty database `CREATE SCHEMA prp_development;`
-3. run `prp init`
-4. run `prp sync`
+3. run `gulp init`
+4. run `gulp sync`
 
 ### Start the Portal
-1. run `prp start`
+1. run `gulp start`
 
 ### Test the Portal
-1. run `npm test`
+1. run `gulp test`
 
 ### View Code Documentation
-1. run `npm run-script doc`
-2. open `docs/index.html`
+1. run `gulp doc`
+2. open `documentation/index.html` in a browser
+
+### View All Server Tasks
+1. run `gulp --tasks`
