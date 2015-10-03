@@ -53,7 +53,7 @@ module.exports = function () {
 
         return read({
             prompt: 'database name:',
-            default: 'prp-development'
+            default: 'prp_development'
         });
     })
     .then(function (databaseName) {
@@ -61,7 +61,7 @@ module.exports = function () {
 
         return read({
             prompt: 'username:',
-            default: 'prp-developer'
+            default: 'developer'
         });
     })
     .then(function (databaseUsername) {
@@ -74,6 +74,14 @@ module.exports = function () {
     })
     .then(function (databasePassword) {
         config.database.password = databasePassword;
+
+        return read({
+            prompt: 'SQL server:',
+            default: 'mysql'
+        });
+    })
+    .then(function (dialect) {
+        config.database.dialect = dialect;
 
         writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, 2));
     });

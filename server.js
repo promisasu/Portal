@@ -6,8 +6,9 @@ const hapi = require('hapi');
 const vision = require('vision');
 const handlebars = require('handlebars');
 
-// load router
+// load router and database
 const router = require('./router');
+const database = require('./model');
 
 module.exports = function (configuration) {
     const server = new hapi.Server();
@@ -40,11 +41,14 @@ module.exports = function (configuration) {
         layout: 'default'
     });
 
-    // set server port
+    // configure server connection
     server.connection({
         port: configuration.server.port,
         host: configuration.server.hostname
     });
+
+    // configure database connection
+    database.setup(configuration.database);
 
     // load application routes
     server.route(router);

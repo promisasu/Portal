@@ -5,6 +5,7 @@
 2. run `npm install`
 3. run `npm link .`
 4. run `prp init`
+5. run `prp sync`
 
 ### Start the Portal
 1. run `prp start`
