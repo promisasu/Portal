@@ -1,5 +1,9 @@
 # Pain Reporting Portal
 
+[![Build Status](https://travis-ci.org/ser515asu/PRP-Manhattan-Project.svg?branch=master)](https://travis-ci.org/ser515asu/PRP-Manhattan-Project)
+[![Dependency Status](https://david-dm.org/ser515asu/PRP-Manhattan-Project.svg)](https://david-dm.org/ser515asu/PRP-Manhattan-Project)
+[![devDependency Status](https://david-dm.org/ser515asu/PRP-Manhattan-Project/dev-status.svg)](https://david-dm.org/ser515asu/PRP-Manhattan-Project#info=devDependencies)
+
 ### Installation Instructions
 1. Install [Node JS](https://nodejs.org/en/download/)
 2. Install [MySql](https://www.mysql.com/)
