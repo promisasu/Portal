@@ -2,9 +2,10 @@
 'use strict';
 
 const commandInit = require('./command/init');
-const commandDev = require('./command/dev');
 const commandStart = require('./command/start');
 const commandStop = require('./command/stop');
+const commandSync = require('./command/sync');
+const commandDev = require('./command/dev');
 const version = require('./package.json').version;
 
 // display command line interface
@@ -13,6 +14,7 @@ const argv = require('yargs')
     .command('init', 'create configuration file')
     .command('start', 'start server')
     .command('stop', 'stop server')
+    .command('sync', 'creates database tables')
     .command('dev', 'start server in developer mode')
     .demand(1)
     .help('help')
@@ -27,14 +29,17 @@ switch (argv._[0]) {
     case 'init':
         commandInit();
         break;
-    case 'dev':
-        commandDev();
-        break;
     case 'start':
         commandStart();
         break;
     case 'stop':
         commandStop();
+        break;
+    case 'sync':
+        commandSync();
+        break;
+    case 'dev':
+        commandDev();
         break;
     default:
         console.log('unknown command');
