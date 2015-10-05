@@ -12,6 +12,12 @@ const Sequelize = require('sequelize');
  * @property {String} name - survey template name
  */
 
+/**
+ * Registers model with Sequelize
+ * @function register
+ * @param {Sequelize} sequelize - database instance
+ * @returns {Null} nothing
+ */
 module.exports = function (sequelize) {
     sequelize.define('survey_template',
         {

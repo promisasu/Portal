@@ -7,13 +7,19 @@
 const Sequelize = require('sequelize');
 
 /**
- * Each Question-instance will have associated with it a patient_id and survey_instance
- * This will provide an overview of the answers submitted by the patient for
- * each question from that survey instance.
- * @typedef {Object} SurveyInstance
- * @property {String} name - SurveyInstance name
+ * Each QuestionInstance will have associated with it a Patient and SurveyInstance
+ * This will provide an overview of the answers submitted by the Patient for
+ * each question from that SurveyInstance.
+ * @typedef {Object} QuestionInstance
+ * @property {String} name - QuestionInstance name
  */
 
+/**
+ * Registers model with Sequelize
+ * @function register
+ * @param {Sequelize} sequelize - database instance
+ * @returns {Null} nothing
+ */
 module.exports = function (sequelize) {
     sequelize.define('question_instance',
         {

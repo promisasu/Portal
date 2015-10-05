@@ -9,7 +9,7 @@ const eslint = require('gulp-eslint');
 
 /**
  * Checks that the Javascript code is valid.
- * @returns {Pipe} Gulp Pipeline
+ * @returns {Null} nothing
  */
 function test () {
     return gulp.src(['*.js', 'model/**/*.js', 'presenter/**/*.js', 'task/**/*.js'])
