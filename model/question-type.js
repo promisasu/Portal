@@ -12,8 +12,14 @@ const Sequelize = require('sequelize');
  * @property {String} name - questionType name
  */
 
+/**
+ * Registers model with Sequelize
+ * @function register
+ * @param {Sequelize} sequelize - database instance
+ * @returns {Null} nothing
+ */
 module.exports = function (sequelize) {
-    sequelize.define('question-type',
+    sequelize.define('question_type',
         {
             name: {
                 type: Sequelize.STRING
