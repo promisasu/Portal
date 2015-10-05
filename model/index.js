@@ -10,6 +10,7 @@ const addSurveyTemplateModel = require('./survey-template');
 const addScheduleModel = require('./schedule');
 const addScheduleTypeModel = require('./schedule-type');
 const addQuestionModel = require('./question');
+const addQuestionTypeModel = require('./question-type');
 const addPatientModel = require('./patient');
 
 /**
@@ -49,9 +50,11 @@ module.exports.setup = function (configuration) {
     addScheduleModel(sequelize);
     addScheduleTypeModel(sequelize);
     addQuestionModel(sequelize);
+    addQuestionTypeModel(sequelize);
     addPatientModel(sequelize);
 
     // export configured sequelize to allow for access to database models
     module.exports.sequelize = sequelize;
     return sequelize;
 };
+
