@@ -1,15 +1,16 @@
 'use strict';
 
 /**
- * @module model/question-type
+ * @module model/schedule
  */
 
 const Sequelize = require('sequelize');
 
 /**
- * Each Question consists of many QuestionTypes
- * @typedef {Object} QuestionType
- * @property {String} name - questionType name
+ * A ScheduleInstance links ScheduleTemplate, Patient and a SurveyTemplate.
+ * Letting the Patient know when their next Survey is done.
+ * @typedef {Object} ScheduleInstance
+ * @property {String} name - schedule name
  */
 
 /**
@@ -19,7 +20,7 @@ const Sequelize = require('sequelize');
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('question_type',
+    sequelize.define('schedule_instance',
         {
             name: {
                 type: Sequelize.STRING

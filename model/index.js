@@ -6,14 +6,14 @@
 
 const Sequelize = require('sequelize');
 const addTrialModel = require('./trial');
-const addSurveyTemplateModel = require('./survey-template');
-const addScheduleModel = require('./schedule');
-const addScheduleTypeModel = require('./schedule-type');
-const addQuestionModel = require('./question');
-const addQuestionTypeModel = require('./question-type');
 const addPatientModel = require('./patient');
+const addSurveyTemplateModel = require('./survey-template');
 const addSurveyInstanceModel = require('./survey-instance');
+const addScheduleTemplateModel = require('./schedule-template');
+const addScheduleInstanceModel = require('./schedule-instance');
+const addQuestionTemplateModel = require('./question-template');
 const addQuestionInstanceModel = require('./question-instance');
+const addQuestionOptionModel = require('./question-option');
 
 /**
  * a DatabaseConfiguration is a collection of the settings needed to connect to the database.
@@ -48,17 +48,52 @@ module.exports.setup = function (configuration) {
 
     // add models to sequelize
     addTrialModel(sequelize);
-    addSurveyTemplateModel(sequelize);
-    addScheduleModel(sequelize);
-    addScheduleTypeModel(sequelize);
-    addQuestionModel(sequelize);
-    addQuestionTypeModel(sequelize);
     addPatientModel(sequelize);
+    addSurveyTemplateModel(sequelize);
     addSurveyInstanceModel(sequelize);
+    addScheduleTemplateModel(sequelize);
+    addScheduleInstanceModel(sequelize);
+    addQuestionTemplateModel(sequelize);
     addQuestionInstanceModel(sequelize);
+    addQuestionOptionModel(sequelize);
+
+    // Get the newly created ORM wrappers
+    const patient = sequelize.model('patient');
+    const questionInstance = sequelize.model('question_instance');
+    const questionOption = sequelize.model('question_option');
+    const questionTemplate = sequelize.model('question_template');
+    const scheduleInstance = sequelize.model('schedule_instance');
+    const scheduleTemplate = sequelize.model('schedule_template');
+    const surveyInstance = sequelize.model('survey_instance');
+    const surveyTemplate = sequelize.model('survey_template');
+    const trial = sequelize.model('trial');
+
+    // establish relationships between tables
+
+    /* ===== ONE TO MANY ===== */
+    patient.hasMany(surveyInstance);
+    questionTemplate.hasMany(questionInstance);
+    scheduleTemplate.hasMany(scheduleInstance);
+    scheduleTemplate.hasMany(surveyTemplate);
+    surveyInstance.hasMany(questionInstance);
+    surveyTemplate.hasMany(surveyInstance);
+    trial.hasMany(patient);
+
+    /* ===== MANY TO MANY ===== */
+    // surveyTemplate.belongsToMany(trial);
+    // trial.belongsToMany(surveyTemplate);
+    //
+    // questionTemplate.belongsToMany(surveyTemplate);
+    // surveyTemplate.belongsToMany(questionTemplate);
+    //
+    // questionOption.belongsToMany(questionTemplate);
+    // questionTemplate.belongsToMany(questionOption);
+    //
+    // scheduleInstance.belongsToMany(patient, surveyTemplate);
+    // surveyTemplate.belongsToMany(scheduleInstance);
+    // patient.belongsToMany(scheduleInstance);
 
     // export configured sequelize to allow for access to database models
     module.exports.sequelize = sequelize;
     return sequelize;
 };
-
