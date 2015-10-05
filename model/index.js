@@ -13,6 +13,7 @@ const addQuestionModel = require('./question');
 const addQuestionTypeModel = require('./question-type');
 const addPatientModel = require('./patient');
 const addSurveyInstanceModel = require('./survey-instance');
+const addQuestionInstanceModel = require('./question-instance');
 
 /**
  * a DatabaseConfiguration is a collection of the settings needed to connect to the database.
@@ -54,6 +55,7 @@ module.exports.setup = function (configuration) {
     addQuestionTypeModel(sequelize);
     addPatientModel(sequelize);
     addSurveyInstanceModel(sequelize);
+    addQuestionInstanceModel(sequelize);
 
     // export configured sequelize to allow for access to database models
     module.exports.sequelize = sequelize;
