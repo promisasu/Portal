@@ -48,8 +48,7 @@ module.exports.setup = function (configuration) {
     addSurveyTemplateModel(sequelize);
     addScheduleModel(sequelize);
     addScheduleTypeModel(sequelize);
-    addQuestionModel(sequelize);
-    addPatientModel(sequelize);
+    addQuestion
 
     // export configured sequelize to allow for access to database models
     module.exports.sequelize = sequelize;

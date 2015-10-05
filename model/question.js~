@@ -1,0 +1,26 @@
+'use strict';
+
+/**
+ * @module model/survey-template
+ */
+
+const Sequelize = require('sequelize');
+
+/**
+ * a Survey consists of multiple Questions
+ * @typedef {Object} SurveyTemplate
+ * @property {String} name - survey template name
+ */
+
+module.exports = function (sequelize) {
+    sequelize.define('survey_template',
+        {
+            name: {
+                type: Sequelize.STRING
+            }
+        },
+        {
+            freezeTableName: true
+        }
+    );
+};
