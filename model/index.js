@@ -9,6 +9,9 @@ const addTrialModel = require('./trial');
 const addSurveyTemplateModel = require('./survey-template');
 const addScheduleModel = require('./schedule');
 const addScheduleTypeModel = require('./schedule-type');
+const addQuestionModel = require('./question');
+const addQuestionTypeModel = require('./question-type');
+const addPatientModel = require('./patient');
 
 /**
  * a DatabaseConfiguration is a collection of the settings needed to connect to the database.
@@ -46,8 +49,12 @@ module.exports.setup = function (configuration) {
     addSurveyTemplateModel(sequelize);
     addScheduleModel(sequelize);
     addScheduleTypeModel(sequelize);
+    addQuestionModel(sequelize);
+    addQuestionTypeModel(sequelize);
+    addPatientModel(sequelize);
 
     // export configured sequelize to allow for access to database models
     module.exports.sequelize = sequelize;
     return sequelize;
 };
+
