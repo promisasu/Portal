@@ -1,15 +1,15 @@
 'use strict';
 
 /**
- * @module model/schedule-type
+ * @module model/question-template
  */
 
 const Sequelize = require('sequelize');
 
 /**
- * a ScheduleType defines a time span for a repeating Schedule.
- * @typedef {Object} ScheduleType
- * @property {String} name - schedule name
+ * a SurveyTemplate consists of multiple QuestionTemplates
+ * @typedef {Object} QuestionTemplate
+ * @property {String} name - question name
  */
 
 /**
@@ -19,7 +19,7 @@ const Sequelize = require('sequelize');
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('schedule_type',
+    sequelize.define('question_template',
         {
             name: {
                 type: Sequelize.STRING

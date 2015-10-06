@@ -1,15 +1,15 @@
 'use strict';
 
 /**
- * @module model/schedule
+ * @module model/question-option
  */
 
 const Sequelize = require('sequelize');
 
 /**
- * a Schedule table that links ScheduleType, Patient and a SurveyTemplate.
- * @typedef {Object} Schedule
- * @property {String} name - schedule name
+ * Each multiple choice question can have many QuestionOption
+ * @typedef {Object} QuestionOption
+ * @property {String} name - questionOption name
  */
 
 /**
@@ -19,7 +19,7 @@ const Sequelize = require('sequelize');
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('schedule',
+    sequelize.define('question_option',
         {
             name: {
                 type: Sequelize.STRING
