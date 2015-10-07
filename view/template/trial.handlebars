@@ -1,0 +1,105 @@
+<div class="container-fluid">
+  <br>
+  <ol class="breadcrumb">
+    <li><a href="clinician-dash.html">Dashboard</a></li>
+    <li class="active">Trial: Sickle Cell</li>
+<!--        <li class="active">Trial: {{trialName}}</li>-->
+  </ol>
+  <div class="col-sm-8">
+    <div class="card">
+      <div class="card-block">
+        <h4 class="card-title">Sickle Cell Trial</h4>
+<!--            <h4 class="card-title text-center">{{trialName}}</h4>-->
+        <p class="card-text">A brief blurb describing the trial.</p>
+<!--            <p class="card-text">{{trialDescription}}</p>-->
+        <table class="table">
+          <tbody>
+            <tr>
+              <th scope="row">Start Date</th>
+              <td>08/25/2015</td>
+<!--                  <td>{{trialStart}}</td>-->
+            </tr>
+            <tr>
+              <th scope="row">Duration</th>
+              <td>60 days</td>
+<!--                  <td>{{trialDuration}}</td>-->
+            </tr>
+            <tr>
+              <th scope="row">Patient Count</th>
+              <td>1,023</td>
+<!--                  <td>{{trialPatientCount}}</td>-->
+            </tr>
+            <tr>
+              <th scope="row">Noncompliant Count</th>
+              <td>8</td>
+<!--                  <td>{{trialNoncompliantCount}}</td>-->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card card-inverse card-primary">
+      <div class="card-block">
+        <p class="card-text">Here is where we would have a sweet graph of the clinician's total patients over time for this trial.</p>
+        <a href="#" class="btn btn-secondary btn-block">ADD NEW</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-block">
+        <h4 class="card-title">Patients</h4>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Patient ID</th>
+              <th>Stage</th>
+              <th>Survey Type</th>
+              <th>Last Taken</th>
+              <th>Total Missed</th>
+              <th>Consecutive Missed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-danger">
+              <th scope="row">1234</th>
+              <td>1</td>
+              <td>Daily</td>
+              <td>09/05/2015</td>
+              <td>5</td>
+              <td>2</td>
+            </tr>
+            <tr class="table-success">
+              <th scope="row">6546</th>
+              <td>1</td>
+              <td>Weekly</td>
+              <td>09/07/2015</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr class="table-warning">
+              <th scope="row">7865</th>
+              <td>1</td>
+              <td>Daily</td>
+              <td>09/05/2015</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+<!--
+            <tr class="table-{{patientState}}">
+              <th scope="row">{{patientID}}</th>
+              <td>{{patientStage}}</td>
+              <td>{{patientType}}</td>
+              <td>{{patientLastTaken}}</td>
+              <td>{{patientMissed}}</td>
+              <td>{{patientConsecutive}}</td>
+            </tr>
+-->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

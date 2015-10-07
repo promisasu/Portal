@@ -1,11 +1,17 @@
 'use strict';
 
-const welcomePresenter = require('./presenter/welcome');
+const dashboardPresenter = require('./presenter/dashboard');
+const trialPresenter = require('./presenter/trial');
 
 module.exports = [
     {
         method: 'GET',
         path: '/',
-        handler: welcomePresenter
+        handler: dashboardPresenter
+    },
+    {
+        method: 'GET',
+        path: '/trial',
+        handler: trialPresenter
     }
 ];
