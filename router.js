@@ -11,7 +11,7 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/trial',
+        path: '/trial/{id}',
         handler: trialPresenter
     }
 ];
