@@ -229,56 +229,58 @@
                 <h4 class="card-title">
                     Current Trials
                 </h4>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>
-                                Trial ID
-                            </th>
-                            <th>
-                                Study Name
-                            </th>
-                            <th>
-                                Start Date
-                            </th>
-                            <th>
-                                Duration
-                            </th>
-                            <th>
-                                # Patients
-                            </th>
-                            <th>
-                                # Noncompliant
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each trials}}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
                             <tr>
-                                <th scope="row">
-                                    {{ id }}
+                                <th>
+                                    Trial ID
                                 </th>
-                                <td>
-                                    <a href="/trial/{{ id }}">
-                                        {{ title }}
-                                    </a>
-                                </td>
-                                <td>
-                                    {{ start }}
-                                </td>
-                                <td>
-                                    {{ duration }}
-                                </td>
-                                <td>
-                                    {{ patientCount }}
-                                </td>
-                                <td>
-                                    {{ noncompliantCount }}
-                                </td>
+                                <th>
+                                    Study Name
+                                </th>
+                                <th>
+                                    Start Date
+                                </th>
+                                <th>
+                                    Duration
+                                </th>
+                                <th>
+                                    # Patients
+                                </th>
+                                <th>
+                                    # Noncompliant
+                                </th>
                             </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {{#each trials}}
+                                <tr>
+                                    <th scope="row">
+                                        {{ id }}
+                                    </th>
+                                    <td>
+                                        <a href="/trial/{{ id }}">
+                                            {{ title }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ start }}
+                                    </td>
+                                    <td>
+                                        {{ duration }}
+                                    </td>
+                                    <td>
+                                        {{ patientCount }}
+                                    </td>
+                                    <td>
+                                        {{ noncompliantCount }}
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
