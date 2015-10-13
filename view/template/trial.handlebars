@@ -10,7 +10,7 @@
             Trial: {{ trial.name }}
         </li>
     </ol>
-    <div class="col-sm-8">
+    <div class="col-md-4">
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title text-center">
@@ -58,16 +58,45 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-4">
-        <div class="card">
+    <div class="col-md-4">
+        <canvas id="radarChart" width="400" height="400"></canvas>
+    </div>
+    <div class="col-md-4">
+        <div id="legend" class="card">
             <div class="card-block">
-                <p class="card-text">
-                    Placeholder for pie chart. Need server-side DOM manipulation.
-                </p>
+                <h4 class="card-title">
+                    Legend
+                </h4>
             </div>
         </div>
+        <script>
+            var data = [
+                {
+                    value: 100,
+                    color:"#2ECC40",
+                    label: "Compliant"
+                },
+                {
+                    value: 50,
+                    color: "#FFDC00",
+                    label: "Semicompliant"
+                },
+                {
+                    value: 10,
+                    color: "#FF4136",
+                    label: "Noncompliant"
+                }
+            ];
+            var ctx = document.getElementById("radarChart").getContext("2d");
+            var options = {
+                legendTemplate : "<ul class=\"list-group list-group-flush\"><% for (var i=0; i<segments.length; i++){%><li class=\"list-group-item\"><i style=\"color:<%=segments[i].fillColor%>\" class=\"fa fa-circle\"></i> <%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+            }
+            var myNewChart = new Chart(ctx).Doughnut(data, options);
+            var legend = document.getElementById("legend");
+            legend.innerHTML += myNewChart.generateLegend();
+        </script>
     </div>
-    <div class="col-sm-12">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-block">
                 <div class="row">
@@ -147,56 +176,58 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>
-                                Patient ID
-                            </th>
-                            <th>
-                                Stage
-                            </th>
-                            <th>
-                                Survey Type
-                            </th>
-                            <th>
-                                Last Taken
-                            </th>
-                            <th>
-                                Total Missed
-                            </th>
-                            <th>
-                                Consecutive Missed
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each patients}}
-                            <tr class="table-{{ status }}">
-                                <th scope="row">
-                                    <a href="/patient/{{ id }}">
-                                        {{ id }}
-                                    </a>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Patient ID
                                 </th>
-                                <td>
-                                    {{ stage }}
-                                </td>
-                                <td>
-                                    {{ surveyType }}
-                                </td>
-                                <td>
-                                    {{ lastTaken }}
-                                </td>
-                                <td>
-                                    {{ totalMissed }}
-                                </td>
-                                <td>
-                                    {{ consecutiveMissed }}
-                                </td>
+                                <th>
+                                    Stage
+                                </th>
+                                <th>
+                                    Survey Type
+                                </th>
+                                <th>
+                                    Last Taken
+                                </th>
+                                <th>
+                                    Total Missed
+                                </th>
+                                <th>
+                                    Consecutive Missed
+                                </th>
                             </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {{#each patients}}
+                                <tr class="table-{{ status }}">
+                                    <th scope="row">
+                                        <a href="/patient/{{ id }}">
+                                            {{ id }}
+                                        </a>
+                                    </th>
+                                    <td>
+                                        {{ stage }}
+                                    </td>
+                                    <td>
+                                        {{ surveyType }}
+                                    </td>
+                                    <td>
+                                        {{ lastTaken }}
+                                    </td>
+                                    <td>
+                                        {{ totalMissed }}
+                                    </td>
+                                    <td>
+                                        {{ consecutiveMissed }}
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
