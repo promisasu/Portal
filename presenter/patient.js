@@ -19,7 +19,11 @@ module.exports = function (request, reply) {
             start: '08/25/2015',
             duration: '60 days',
             patientCount: 1023,
-            noncompliantCount: 8
+            noncompliantCount: 8,
+            trial: {
+                id: 1,
+                name: 'test'
+            }
         },
         surveys: [
             {

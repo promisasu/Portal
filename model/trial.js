@@ -22,11 +22,37 @@ module.exports = function (sequelize) {
     sequelize.define('trial',
         {
             name: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true,
+                    min: 3
+                }
+            },
+            description: {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+            IRBID: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true,
+                    min: 4
+                }
+            },
+            startAt: {
+                type: Sequelize.DATE,
+                allowNull: false
+            },
+            endAt: {
+                type: Sequelize.DATE,
+                allowNull: false
             }
         },
         {
-            freezeTableName: true
+            freezeTableName: true,
+            paranoid: true
         }
     );
 };

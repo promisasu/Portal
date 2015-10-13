@@ -4,6 +4,11 @@
  * @module presenter/dashboard
  */
 
+const _ = require('lodash');
+const moment = require('moment');
+
+const database = require('../model');
+
 /**
  * A dashboard view with overview of all trials and patients.
  * @function dashboard
@@ -12,38 +17,42 @@
  * @returns {View} Rendered page
  */
 module.exports = function (request, reply) {
-    reply.view('dashboard', {
-        title: 'Pain Reporting Portal',
-        status: {
-            patientCount: 2032,
-            riskCount: 52,
-            noncompliantCount: 11
-        },
-        trials: [
-            {
-                id: 1,
-                title: 'Ortho Post Op',
-                start: '09/01/2015',
-                duration: '180 days',
-                patientCount: 678,
-                noncompliantCount: 2
+    const trial = database.sequelize.model('trial');
+
+    trial.findAll().then(function (trials) {
+        // Process data into format expected in view
+        const trialData = _.map(trials, processTrial);
+
+        // Display view
+        reply.view('dashboard', {
+            title: 'Pain Reporting Portal',
+            status: {
+                patientCount: 2032,
+                riskCount: 52,
+                noncompliantCount: 11
             },
-            {
-                id: 2,
-                title: 'Sickle Cell',
-                start: '08/25/2015',
-                duration: '60 days',
-                patientCount: 1023,
-                noncompliantCount: 8
-            },
-            {
-                id: 3,
-                title: 'Pain Post Op',
-                start: '09/14/2015',
-                duration: '90 days',
-                patientCount: 331,
-                noncompliantCount: 1
-            }
-        ]
+            trials: trialData
+        });
     });
 };
+
+/**
+ * Takes in a Trial model and processes them into human readable format
+ * @param {Trial} currentTrial - a single Trial object
+ * @returns {Object} processed Trial
+ */
+function processTrial (currentTrial) {
+    const trial = currentTrial.dataValues;
+    const startDate = moment(trial.startAt);
+    const endDate = moment(trial.endAt);
+
+    return {
+        id: trial.id,
+        title: trial.name,
+        start: startDate.format('L'),
+        duration: startDate.to(endDate, true),
+        // TODO: Currently fake data, make this live data
+        patientCount: Math.floor(Math.random() * 900 + 100),
+        noncompliantCount: Math.floor(Math.random() * 100)
+    };
+}
