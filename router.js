@@ -1,5 +1,8 @@
 'use strict';
 
+const Joi = require('joi');
+
+const createTrial = require('./presenter/create-trial');
 const dashboardPresenter = require('./presenter/dashboard');
 const trialPresenter = require('./presenter/trial');
 
@@ -12,6 +15,28 @@ module.exports = [
     {
         method: 'GET',
         path: '/trial/{id}',
-        handler: trialPresenter
+        handler: trialPresenter,
+        config: {
+            validate: {
+                params: {
+                    id: Joi.number().integer()
+                }
+            }
+        }
+    },
+    {
+        method: 'POST',
+        path: '/trial',
+        handler: createTrial,
+        config: {
+            validate: {
+                payload: {
+                    name: Joi.string().min(3),
+                    description: Joi.string().empty(''),
+                    startAt: Joi.date(),
+                    endAt: Joi.date()
+                }
+            }
+        }
     }
 ];
