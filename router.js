@@ -22,6 +22,7 @@ module.exports = [
                 payload: {
                     name: Joi.string().min(3),
                     description: Joi.string().empty(''),
+                    IRBID: Joi.string().min(4),
                     startAt: Joi.date(),
                     endAt: Joi.date()
                 }

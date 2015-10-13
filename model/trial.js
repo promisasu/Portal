@@ -33,6 +33,14 @@ module.exports = function (sequelize) {
                 type: Sequelize.STRING,
                 allowNull: false
             },
+            IRBID: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true,
+                    min: 4
+                }
+            },
             startAt: {
                 type: Sequelize.DATE,
                 allowNull: false
