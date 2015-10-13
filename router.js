@@ -14,18 +14,6 @@ module.exports = [
         handler: dashboardPresenter
     },
     {
-        method: 'GET',
-        path: '/trial/{id}',
-        handler: trialPresenter,
-        config: {
-            validate: {
-                params: {
-                    id: Joi.number().integer()
-                }
-            }
-        }
-    },
-    {
         method: 'POST',
         path: '/trial',
         handler: createTrial,
@@ -42,6 +30,30 @@ module.exports = [
     },
     {
         method: 'GET',
+        path: '/trial/{id}',
+        handler: trialPresenter,
+        config: {
+            validate: {
+                params: {
+                    id: Joi.number().integer()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/patient/{id}',
+        handler: patientPresenter,
+        config: {
+            validate: {
+                params: {
+                    id: Joi.number().integer()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
         path: '/404',
         handler: {
             view: {
@@ -51,10 +63,5 @@ module.exports = [
                 }
             }
         }
-    },
-    {
-        method: 'GET',
-        path: '/trial/{id}/patient/{pid}',
-        handler: patientPresenter
     }
 ];
