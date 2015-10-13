@@ -59,23 +59,76 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="card card-inverse card-primary">
+        <div class="card">
             <div class="card-block">
                 <p class="card-text">
-                    Here is where we would have a sweet graph of the clinician's total patients over time for this trial.
+                    Placeholder for pie chart. Need server-side DOM manipulation.
                 </p>
-                <a href="#" class="btn btn-secondary btn-block">
-                    ADD NEW
-                </a>
             </div>
         </div>
     </div>
     <div class="col-sm-12">
         <div class="card">
             <div class="card-block">
-                <h4 class="card-title">
-                    Patients
-                </h4>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4 class="card-title">
+                            Patients
+                        </h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addModal">
+                            ADD NEW
+                        </button>
+                        <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>&times;</span>
+                                            <span class="sr-only">Close</span>
+                                        </button>
+                                        <h4 class="modal-title">Add New Patient</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <div class="dropdown open">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+                                                        Trial
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        {{#each trials}}
+                                                            <a class="dropdown-item" href="#">{{ title }}</a>
+                                                        {{/each}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="dropdown open">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+                                                        Survey Type
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="#">Daily</a>
+                                                        <a class="dropdown-item" href="#">Weekly</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-primary" disabled>Generate PID</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -103,7 +156,9 @@
                         {{#each patients}}
                             <tr class="table-{{ status }}">
                                 <th scope="row">
-                                    {{ id }}
+                                    <a href="/trial/{{ trial.id }}/patient/{{id}}">
+                                        {{ id }}
+                                    </a>
                                 </th>
                                 <td>
                                     {{ stage }}
