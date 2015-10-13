@@ -4,9 +4,10 @@
  * @module presenter/dashboard
  */
 
-const database = require('../model');
 const _ = require('lodash');
 const moment = require('moment');
+
+const database = require('../model');
 
 /**
  * A dashboard view with overview of all trials and patients.
@@ -42,12 +43,14 @@ module.exports = function (request, reply) {
  */
 function processTrial (currentTrial) {
     const trial = currentTrial.dataValues;
+    const startDate = moment(trial.startAt);
+    const endDate = moment(trial.endAt);
 
     return {
         id: trial.id,
         title: trial.name,
-        start: moment(trial.startAt).format('L'),
-        duration: moment(trial.startAt).to(moment(trial.endAt), true),
+        start: startDate.format('L'),
+        duration: startDate.to(endDate, true),
         // TODO: Currently fake data, make this live data
         patientCount: Math.floor(Math.random() * 900 + 100),
         noncompliantCount: Math.floor(Math.random() * 100)
