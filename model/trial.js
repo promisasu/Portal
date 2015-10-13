@@ -51,7 +51,8 @@ module.exports = function (sequelize) {
             }
         },
         {
-            freezeTableName: true
+            freezeTableName: true,
+            paranoid: true
         }
     );
 };
