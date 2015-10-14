@@ -1,0 +1,13 @@
+{
+  "server": {
+    "hostname": "localhost",
+    "port": 3000
+  },
+  "database": {
+    "hostname": "localhost",
+    "name": "prp_development",
+    "username": "developer",
+    "password": "password",
+    "dialect": "mysql"
+  }
+}
