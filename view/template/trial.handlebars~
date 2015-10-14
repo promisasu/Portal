@@ -190,6 +190,21 @@
                                     Survey Type
                                 </th>
                                 <th>
+                                Start Time
+                            </th>
+                             <th>
+                                End Time
+                            </th>
+                             <th>
+                                User Submission Time
+                            </th>
+                             <th>
+                                Actual Submission Time
+                            </th>
+                             <th>
+                                Completed
+                            </th>
+                                <th>
                                     Last Taken
                                 </th>
                                 <th>
