@@ -10,7 +10,7 @@
             Trial: {{ trial.name }}
         </li>
     </ol>
-    <div class="col-md-4">
+    <div class="col-lg-4 col-md-12">
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title text-center">
@@ -58,10 +58,10 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-xl-4 col-lg-5 col-md-7">
         <canvas id="radarChart" width="400" height="400"></canvas>
     </div>
-    <div class="col-md-4">
+    <div class="col-xl-4 col-lg-3 col-md-5">
         <div id="legend" class="card">
             <div class="card-block">
                 <h4 class="card-title">
@@ -69,34 +69,8 @@
                 </h4>
             </div>
         </div>
-        <script>
-            var data = [
-                {
-                    value: 100,
-                    color:"#2ECC40",
-                    label: "Compliant"
-                },
-                {
-                    value: 50,
-                    color: "#FFDC00",
-                    label: "Semicompliant"
-                },
-                {
-                    value: 10,
-                    color: "#FF4136",
-                    label: "Noncompliant"
-                }
-            ];
-            var ctx = document.getElementById("radarChart").getContext("2d");
-            var options = {
-                legendTemplate : "<ul class=\"list-group list-group-flush\"><% for (var i=0; i<segments.length; i++){%><li class=\"list-group-item\"><i style=\"color:<%=segments[i].fillColor%>\" class=\"fa fa-circle\"></i> <%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-            }
-            var myNewChart = new Chart(ctx).Doughnut(data, options);
-            var legend = document.getElementById("legend");
-            legend.innerHTML += myNewChart.generateLegend();
-        </script>
     </div>
-    <div class="col-md-12">
+    <div class="col-xs-12">
         <div class="card">
             <div class="card-block">
                 <div class="row">
@@ -232,3 +206,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    var data = {{{ graphData }}};
+    var ctx = document.getElementById("radarChart").getContext("2d");
+    var options = {
+        legendTemplate : "<ul class=\"list-group list-group-flush\"><% for (var i=0; i<segments.length; i++){%><li class=\"list-group-item\"><i style=\"color:<%=segments[i].fillColor%>\" class=\"fa fa-circle\"></i> <%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+    }
+    var myNewChart = new Chart(ctx).Doughnut(data, options);
+    var legend = document.getElementById("legend");
+    legend.innerHTML += myNewChart.generateLegend();
+</script>
