@@ -208,23 +208,7 @@
 </div>
 
 <script>
-    var data = [
-        {
-            value: 100,
-            color:"#2ECC40",
-            label: "Compliant"
-        },
-        {
-            value: 50,
-            color: "#FFDC00",
-            label: "Semicompliant"
-        },
-        {
-            value: 10,
-            color: "#FF4136",
-            label: "Noncompliant"
-        }
-    ];
+    var data = {{{ graphData }}};
     var ctx = document.getElementById("radarChart").getContext("2d");
     var options = {
         legendTemplate : "<ul class=\"list-group list-group-flush\"><% for (var i=0; i<segments.length; i++){%><li class=\"list-group-item\"><i style=\"color:<%=segments[i].fillColor%>\" class=\"fa fa-circle\"></i> <%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
