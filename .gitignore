@@ -4,6 +4,9 @@ config.json
 # JSDoc
 documentation/
 
+# Temporary editor files
+*~
+
 # Logs
 logs
 *.log
