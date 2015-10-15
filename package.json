@@ -4,7 +4,8 @@
   "description": "Pain Reporting Portal",
   "main": "index.js",
   "scripts": {
-    "documentation": "jsdoc model presenter task --recurse --destination documentation"
+    "documentation": "jsdoc model presenter task --recurse --destination documentation",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -22,8 +23,8 @@
   },
   "homepage": "https://github.com/ser515asu/PRP-Manhattan-Project#readme",
   "dependencies": {
+    "eslint": "^1.6.0",
     "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-eslint": "^1.0.0",
     "handlebars": "^4.0.3",
     "hapi": "^10.4.1",
     "joi": "^6.9.0",
