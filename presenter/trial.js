@@ -25,6 +25,23 @@ module.exports = function (request, reply) {
             reply.view('trial', {
                 title: 'Pain Reporting Portal',
                 trial: processTrial(currentTrial),
+                graphData: JSON.stringify([
+                    {
+                        value: 100,
+                        color: '#2ECC40',
+                        label: 'Compliant'
+                    },
+                    {
+                        value: 50,
+                        color: '#FFDC00',
+                        label: 'Semicompliant'
+                    },
+                    {
+                        value: 10,
+                        color: '#FF4136',
+                        label: 'Noncompliant'
+                    }
+                ]),
                 patients: [
                     {
                         id: 1234,

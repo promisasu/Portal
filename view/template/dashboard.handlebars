@@ -5,7 +5,7 @@
             Dashboard
         </li>
     </ol>
-    <div class="col-md-4">
+    <div class="col-lg-4 col-md-12">
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">
@@ -176,10 +176,10 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-lg-4 col-md-6">
         <canvas id="radarChart" width="400" height="400"></canvas>
     </div>
-    <div class="col-md-4">
+    <div class="col-lg-4 col-md-6">
         <div id="legend" class="card">
             <div class="card-block">
                 <h4 class="card-title">
@@ -187,43 +187,8 @@
                 </h4>
             </div>
         </div>
-        <script>
-            var data = {
-                labels: ["Compliant", "Semicompliant", "Noncompliant"],
-                datasets: [
-                    {
-                        label: "Trial 1",
-                        fillColor: "rgba(133, 17, 75, 0.2)",
-                        strokeColor: "rgb(133, 17, 75)",
-                        pointColor: "rgb(133, 17, 75)",
-                        data: [100, 10, 50]
-                    },
-                    {
-                        label: "Trial 2",
-                        fillColor: "rgba(0, 31, 62, 0.2)",
-                        strokeColor: "rgb(0, 31, 62)",
-                        pointColor: "rgb(0, 31, 62)",
-                        data: [10, 50, 100]
-                    },
-                    {
-                        label: "Trial 3",
-                        fillColor: "rgba(177, 13, 201, 0.2)",
-                        strokeColor: "rgb(177, 13, 201)",
-                        pointColor: "rgb(177, 13, 201)",
-                        data: [50, 100, 10]
-                    }
-                ]
-            };
-            var ctx = document.getElementById("radarChart").getContext("2d");
-            var options = {
-                legendTemplate : "<ul class=\"list-group list-group-flush\"><% for (var i=0; i<datasets.length; i++){%><li class=\"list-group-item\"><i style=\"color:<%=datasets[i].strokeColor%>\" class=\"fa fa-circle\"></i> <%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-            }
-            var myNewChart = new Chart(ctx).Radar(data, options);
-            var legend = document.getElementById("legend");
-            legend.innerHTML += myNewChart.generateLegend();
-        </script>
     </div>
-    <div class="col-sm-12">
+    <div class="col-xs-12">
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">
@@ -285,3 +250,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    var data = {{{ graphData }}};
+    var ctx = document.getElementById("radarChart").getContext("2d");
+    var options = {
+        legendTemplate : "<ul class=\"list-group list-group-flush\"><% for (var i=0; i<datasets.length; i++){%><li class=\"list-group-item\"><i style=\"color:<%=datasets[i].strokeColor%>\" class=\"fa fa-circle\"></i> <%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+    }
+    var myNewChart = new Chart(ctx).Radar(data, options);
+    var legend = document.getElementById("legend");
+    legend.innerHTML += myNewChart.generateLegend();
+</script>
