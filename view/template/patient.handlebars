@@ -79,13 +79,16 @@
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">
-                    Patients
+                    Patients' Surveys
                 </h4>
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>
-                                Patient ID
+                                Survey ID
+                            </th>
+                            <th>
+                                Status
                             </th>
                             <th>
                                 Stage
@@ -93,7 +96,7 @@
                             <th>
                                 Survey Type
                             </th>
-                             <th>
+                            <th>
                                 Start Time
                             </th>
                              <th>
@@ -116,15 +119,18 @@
                             </th>
                             <th>
                                 Consecutive Missed
-                            </th>
+                            </th>     
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each patients}}
+                        {{#each surveys}}
                             <tr class="table-{{ status }}">
                                 <th scope="row">
                                     {{ id }}
                                 </th>
+                                <td>
+                                    {{ status }}
+                                </td>
                                 <td>
                                     {{ stage }}
                                 </td>
@@ -155,6 +161,7 @@
                                 <td>
                                     {{ consecutiveMissed }}
                                 </td>
+                             
                             </tr>
                         {{/each}}
                     </tbody>
