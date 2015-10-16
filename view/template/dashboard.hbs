@@ -134,47 +134,60 @@
                         <thead>
                             <tr>
                                 <th>
-                                    Trial ID
+                                    Name
                                 </th>
                                 <th>
-                                    Study Name
+                                    View
                                 </th>
                                 <th>
-                                    Start Date
+                                    Status
+                                </th>
+                                <th>
+                                    # Noncompliant
+                                </th>
+                                <th>
+                                    Total Patients
                                 </th>
                                 <th>
                                     Duration
                                 </th>
                                 <th>
-                                    # Patients
+                                    Start Date
                                 </th>
                                 <th>
-                                    # Noncompliant
+                                    End Date
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each trials}}
                                 <tr>
-                                    <th scope="row">
-                                        {{ id }}
-                                    </th>
+                                    <td>
+                                        {{ name }}
+                                    </td>
                                     <td>
                                         <a href="/trial/{{ id }}">
-                                            {{ name }}
+                                            View
+                                            <i class="fa fa-search"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        {{ start }}
+                                        {{ status }}
                                     </td>
                                     <td>
-                                        {{ duration }}
+                                        {{ noncompliantCount }}
                                     </td>
                                     <td>
                                         {{ patientCount }}
                                     </td>
                                     <td>
-                                        {{ noncompliantCount }}
+                                        {{ duration }}
+                                    </td>
+                                    <td>
+                                        {{ start }}
+                                    </td>
+                                    <td>
+                                        {{ end }}
                                     </td>
                                 </tr>
                             {{/each}}
