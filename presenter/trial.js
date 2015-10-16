@@ -45,7 +45,8 @@ module.exports = function (request, reply) {
                 patients: [
                     {
                         id: 1234,
-                        status: 'danger',
+                        status: 'Noncompliant',
+                        statusType: 'danger',
                         stage: 1,
                         surveyType: 'Daily',
                         lastTaken: '09/05/2015',
@@ -54,7 +55,8 @@ module.exports = function (request, reply) {
                     },
                     {
                         id: 6546,
-                        status: 'success',
+                        status: 'Compliant',
+                        statusType: 'success',
                         stage: 1,
                         surveyType: 'Weekly',
                         lastTaken: '09/07/2015',
@@ -63,7 +65,8 @@ module.exports = function (request, reply) {
                     },
                     {
                         id: 7865,
-                        status: 'warning',
+                        status: 'Semicompliant',
+                        statusType: 'warning',
                         stage: 1,
                         surveyType: 'Daily',
                         lastTaken: '09/05/2015',

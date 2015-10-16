@@ -90,7 +90,13 @@
                         <thead>
                             <tr>
                                 <th>
-                                    Patient ID
+                                    Patient Pin
+                                </th>
+                                <th>
+                                    View
+                                </th>
+                                <th>
+                                    Status
                                 </th>
                                 <th>
                                     Stage
@@ -102,21 +108,28 @@
                                     Last Taken
                                 </th>
                                 <th>
-                                    Total Missed
+                                    Consecutive Missed
                                 </th>
                                 <th>
-                                    Consecutive Missed
+                                    Total Missed
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each patients}}
-                                <tr class="table-{{ status }}">
-                                    <th scope="row">
+                                <tr class="table-{{ statusType }}">
+                                    <td>
+                                        {{ id }}
+                                    </td>
+                                    <td>
                                         <a href="/patient/{{ id }}">
-                                            {{ id }}
+                                            View
+                                            <i class="fa fa-search"></i>
                                         </a>
-                                    </th>
+                                    </td>
+                                    <td>
+                                        {{ status }}
+                                    </td>
                                     <td>
                                         {{ stage }}
                                     </td>
@@ -127,10 +140,10 @@
                                         {{ lastTaken }}
                                     </td>
                                     <td>
-                                        {{ totalMissed }}
+                                        {{ consecutiveMissed }}
                                     </td>
                                     <td>
-                                        {{ consecutiveMissed }}
+                                        {{ totalMissed }}
                                     </td>
                                 </tr>
                             {{/each}}
