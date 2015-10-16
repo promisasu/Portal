@@ -23,9 +23,7 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize) {
     sequelize.define('question_instance',
         {
-            name: {
-                type: Sequelize.STRING
-            }
+            
         },
         {
             freezeTableName: true,
