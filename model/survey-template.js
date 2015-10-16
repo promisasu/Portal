@@ -21,9 +21,9 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize) {
     sequelize.define('survey_template',
         {
-            name: {
-                type: Sequelize.STRING
-            }
+           questionOrder: {
+            type: Sequelize.INTEGER
+           }
         },
         {
             freezeTableName: true,
