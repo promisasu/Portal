@@ -163,7 +163,6 @@
                                 <th>
                                     Survey Type
                                 </th>
-                                
                                 <th>
                                     Last Taken
                                 </th>
@@ -190,29 +189,29 @@
                                         {{ surveyType }}
                                     </td>
                                     <td>
-                                    {{ startTime }}
-                                   </td>
-                                    <td>
-                                    {{ endTime }}
+                                        {{ startTime }}
                                     </td>
                                     <td>
-                                    {{ userSubmissionTime }}
+                                        {{ endTime }}
                                     </td>
                                     <td>
-                                    {{ actualSubmissionTime  }}
+                                        {{ userSubmissionTime }}
                                     </td>
-                                 <td>
-                                    {{ completed }}
-                                </td>
-                                <td>
-                                    {{ lastTaken }}
-                                </td>
-                                <td>
-                                    {{ totalMissed }}
-                                </td>
-                                <td>
-                                    {{ consecutiveMissed }}
-                                </td>
+                                    <td>
+                                        {{ actualSubmissionTime  }}
+                                    </td>
+                                    <td>
+                                        {{ completed }}
+                                    </td>
+                                    <td>
+                                        {{ lastTaken }}
+                                    </td>
+                                    <td>
+                                        {{ totalMissed }}
+                                    </td>
+                                    <td>
+                                        {{ consecutiveMissed }}
+                                    </td>
                                 </tr>
                             {{/each}}
                         </tbody>
@@ -224,12 +223,13 @@
 </div>
 
 <script>
-    var data = {{{ graphData }}};
+    var data = JSON.parse('{{{ graphData }}}'); // eslint-disable-line quotes
     var ctx = document.getElementById("radarChart").getContext("2d");
     var options = {
-        legendTemplate : "<ul class=\"list-group list-group-flush\"><% for (var i=0; i<segments.length; i++){%><li class=\"list-group-item\"><i style=\"color:<%=segments[i].fillColor%>\" class=\"fa fa-circle\"></i> <%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-    }
+        legendTemplate: "<ul class=\"list-group list-group-flush\"><% for (var i=0; i<segments.length; i++){%><li class=\"list-group-item\"><i style=\"color:<%=segments[i].fillColor%>\" class=\"fa fa-circle\"></i> <%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+    };
     var myNewChart = new Chart(ctx).Doughnut(data, options);
     var legend = document.getElementById("legend");
+
     legend.innerHTML += myNewChart.generateLegend();
 </script>
