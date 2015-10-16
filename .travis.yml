@@ -1,6 +1,6 @@
 language: node_js
 node_js: v4
 
-install: npm install --global eslint eslint-plugin-html
+install: npm install --global eslint@1.6.0 eslint-plugin-html
 
 script: eslint . view/**/*.hbs
