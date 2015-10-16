@@ -7,8 +7,8 @@
             </a>
         </li>
         <li>
-            <a href="/trial/{{ patient.trial.id }}">
-                Trial: {{ patient.trial.name }}
+            <a href="/trial/{{ trial.id }}">
+                Trial: {{ trial.name }}
             </a>
         </li>
         <li class="active">
@@ -79,13 +79,16 @@
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">
-                    Patients
+                    Patients' Surveys
                 </h4>
-                <table class="table table-hover">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>
-                                Patient ID
+                                Survey ID
+                            </th>
+                            <th>
+                                Completed
                             </th>
                             <th>
                                 Stage
@@ -94,22 +97,28 @@
                                 Survey Type
                             </th>
                             <th>
-                                Last Taken
+                                Start Time
                             </th>
                             <th>
-                                Total Missed
+                                End Time
                             </th>
                             <th>
-                                Consecutive Missed
+                                User Submission Time
+                            </th>
+                            <th>
+                                Actual Submission Time
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each patients}}
-                            <tr class="table-{{ status }}">
+                        {{#each surveys}}
+                            <tr class="table-{{#if completed}}success{{else}}danger{{/if}}">
                                 <th scope="row">
                                     {{ id }}
                                 </th>
+                                <td>
+                                    {{ completed }}
+                                </td>
                                 <td>
                                     {{ stage }}
                                 </td>
@@ -117,13 +126,16 @@
                                     {{ surveyType }}
                                 </td>
                                 <td>
-                                    {{ lastTaken }}
+                                    {{ startTime }}
                                 </td>
                                 <td>
-                                    {{ totalMissed }}
+                                    {{ endTime }}
                                 </td>
                                 <td>
-                                    {{ consecutiveMissed }}
+                                    {{ userSubmissionTime }}
+                                </td>
+                                <td>
+                                    {{ actualSubmissionTime  }}
                                 </td>
                             </tr>
                         {{/each}}

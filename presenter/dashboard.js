@@ -74,7 +74,7 @@ function processTrial (currentTrial) {
 
     return {
         id: trial.id,
-        title: trial.name,
+        name: trial.name,
         start: startDate.format('L'),
         duration: startDate.to(endDate, true),
         // TODO: Currently fake data, make this live data

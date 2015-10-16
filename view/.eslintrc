@@ -1,0 +1,28 @@
+env:
+    browser: true
+    jquery: true
+    node: false
+    es6: false
+
+plugins:
+    - html
+
+globals:
+    Chart: true
+
+rules:
+    # Strict Mode
+    strict:
+        - 2
+        - function
+
+    # Stylistic Issues
+    no-multiple-empty-lines: 0
+    quotes:
+        - 2
+        - double
+
+    # ECMAScript 6
+    no-const-assign: 0
+    no-var: 0
+    prefer-const: 0

@@ -19,39 +19,42 @@ module.exports = function (request, reply) {
             start: '08/25/2015',
             duration: '60 days',
             patientCount: 1023,
-            noncompliantCount: 8,
-            trial: {
-                id: 1,
-                name: 'test'
-            }
+            noncompliantCount: 8
+        },
+        trial: {
+            id: 1,
+            name: 'test'
         },
         surveys: [
             {
                 id: 1234,
-                status: 'danger',
                 stage: 1,
                 surveyType: 'Daily',
-                lastTaken: '09/05/2015',
-                totalMissed: 5,
-                consecutiveMissed: 2
+                startTime: '09/05/2015 01:01:01',
+                endTime: '09/08/2015 11:00:00',
+                userSubmissionTime: '09/05/2015 01:01:01',
+                actualSubmissionTime: '09/07/2015 15:01:01',
+                completed: true
             },
             {
                 id: 6546,
-                status: 'success',
                 stage: 1,
                 surveyType: 'Weekly',
-                lastTaken: '09/07/2015',
-                totalMissed: 0,
-                consecutiveMissed: 0
+                startTime: '09/05/2015 01:01:01',
+                endTime: '09/05/2015 01:01:01',
+                userSubmissionTime: '09/07/2015 01:01:01',
+                actualSubmissionTime: '09/07/2015 13:01:01',
+                completed: true
             },
             {
                 id: 7865,
-                status: 'warning',
                 stage: 1,
                 surveyType: 'Daily',
-                lastTaken: '09/05/2015',
-                totalMissed: 1,
-                consecutiveMissed: 1
+                startTime: '09/05/2015 01:01:01',
+                endTime: '09/05/2015 01:01:01',
+                userSubmissionTime: '09/05/2015 01:01:01',
+                actualSubmissionTime: '09/05/2015 11:01:01',
+                completed: false
             }
         ]
     });

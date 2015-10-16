@@ -30,13 +30,15 @@ module.exports = function (configuration) {
     // register handlebars view engine
     server.views({
         engines: {
-            handlebars: handlebars
+            hbs: handlebars
         },
         relativeTo: path.join(__dirname, 'view'),
         // templates that views can render
         path: 'template',
         // layouts that templates can extend
         layoutPath: 'layout',
+        // partial elements that can be mixed into pages
+        partialsPath: 'partial',
         // sets default layout to 'layout/default.handlebars'
         layout: 'default'
     });
