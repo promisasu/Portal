@@ -4,8 +4,6 @@
  * @module model/schedule
  */
 
-const Sequelize = require('sequelize');
-
 /**
  * A ScheduleInstance links ScheduleTemplate, Patient and a SurveyTemplate.
  * Letting the Patient know when their next Survey is done.
@@ -21,9 +19,7 @@ const Sequelize = require('sequelize');
  */
 module.exports = function (sequelize) {
     sequelize.define('schedule_instance',
-        {
-          
-        },
+        {},
         {
             freezeTableName: true,
             paranoid: true

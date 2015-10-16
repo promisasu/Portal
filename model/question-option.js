@@ -23,7 +23,7 @@ module.exports = function (sequelize) {
         {
             optionText: {
                 type: Sequelize.STRING,
-                allowNull : false,
+                allowNull: false,
                 validate: {
                     notEmpty: true
                 }

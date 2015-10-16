@@ -30,7 +30,7 @@ module.exports = function (sequelize) {
             },
             questionType: {
                 type: Sequelize.ENUM,
-                values: ['multipleChoice','bodyPain'],
+                values: ['multipleChoice', 'bodyPain'],
                 allowNull: false,
                 validate: {
                     notEmpty: true

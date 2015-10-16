@@ -21,13 +21,13 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize) {
     sequelize.define('survey_template',
         {
-           questionOrder: {
-            type: Sequelize.INTEGER,
-            allowNull : false,
-            validate: {
-                notEmpty: true
+            questionOrder: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
             }
-           }
         },
         {
             freezeTableName: true,
