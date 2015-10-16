@@ -23,6 +23,9 @@ module.exports = function (sequelize) {
         {
             name: {
                 type: Sequelize.STRING
+            },
+            interval: {
+                type: Sequelize.INTEGER
             }
         },
         {
