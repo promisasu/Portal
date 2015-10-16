@@ -44,10 +44,7 @@ module.exports = function (sequelize) {
             surveyInstanceCompleted: {
                 type: Sequelize.BOOLEAN,
                 allowNull: false,
-                defaultValue: false,
-                validate: {
-                    notEmpty: true
-                }
+                defaultValue: false
             }
         },
         {

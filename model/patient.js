@@ -28,7 +28,7 @@ module.exports = function (sequelize) {
                 type: Sequelize.ENUM,
                 values: ['android', 'ios', 'windows']
             },
-            version: {
+            deviceVersion: {
                 type: Sequelize.STRING
             },
             dateStarted: {
