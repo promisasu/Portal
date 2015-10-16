@@ -23,6 +23,10 @@ module.exports = function (sequelize) {
         {
             name: {
                 type: Sequelize.STRING
+            },
+            questionType: {
+                type: Sequelize.ENUM,
+                values: ['multipleChoice','bodyPain']
             }
         },
         {
