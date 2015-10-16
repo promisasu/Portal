@@ -7,8 +7,8 @@
             </a>
         </li>
         <li>
-            <a href="/trial/{{ patient.trial.id }}">
-                Trial: {{ patient.trial.name }}
+            <a href="/trial/{{ trial.id }}">
+                Trial: {{ trial.name }}
             </a>
         </li>
         <li class="active">
@@ -88,7 +88,7 @@
                                 Survey ID
                             </th>
                             <th>
-                                Status
+                                Completed
                             </th>
                             <th>
                                 Stage
@@ -108,28 +108,16 @@
                             <th>
                                 Actual Submission Time
                             </th>
-                            <th>
-                                Completed
-                            </th>
-                            <th>
-                                Last Taken
-                            </th>
-                            <th>
-                                Total Missed
-                            </th>
-                            <th>
-                                Consecutive Missed
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         {{#each surveys}}
-                            <tr class="table-{{ status }}">
+                            <tr class="table-{{#if completed}}success{{else}}danger{{/if}}">
                                 <th scope="row">
                                     {{ id }}
                                 </th>
                                 <td>
-                                    {{ status }}
+                                    {{ completed }}
                                 </td>
                                 <td>
                                     {{ stage }}
@@ -148,18 +136,6 @@
                                 </td>
                                 <td>
                                     {{ actualSubmissionTime  }}
-                                </td>
-                                <td>
-                                    {{ completed }}
-                                </td>
-                                <td>
-                                    {{ lastTaken }}
-                                </td>
-                                <td>
-                                    {{ totalMissed }}
-                                </td>
-                                <td>
-                                    {{ consecutiveMissed }}
                                 </td>
                             </tr>
                         {{/each}}
