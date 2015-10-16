@@ -23,6 +23,19 @@ module.exports = function (sequelize) {
         {
             pin: {
                 type: Sequelize.INTEGER
+            },
+            deviceType: {
+                type: Sequelize.ENUM,
+                values: ['android','ios','windows']
+            },
+            version: {
+                type: Sequelize.STRING
+            },
+            dateStarted: {
+                type: Sequelize.DATE
+            },
+            dateCompleted: {
+                type: Sequelize.DATE
             }
         },
         {
