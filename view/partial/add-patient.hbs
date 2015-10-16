@@ -20,7 +20,7 @@
                     <label for="trial-name">
                         Trial
                     </label>
-                    <select class="form-control" id="trial-name" {{#if trial}}disabled{{/if}}>
+                    <select class="form-control" id="trial-name" {{#unless trials}}disabled{{/unless}}>
                         {{#if trials}}
                             {{#each trials}}
                                 <option value="{{ id }}">

@@ -160,6 +160,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{#unless trials.length}}
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="card card-inverse card-info text-center card-block">
+                                            <div class="card-title">
+                                                No Clinical Trials
+                                            </div>
+                                            <div class="card-text">
+                                                Please contact and administrator to create a new trial.
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {{/unless}}
                             {{#each trials}}
                                 <tr>
                                     <td>

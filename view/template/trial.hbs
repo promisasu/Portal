@@ -113,6 +113,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{#unless patients.length}}
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="card card-inverse card-info text-center card-block">
+                                            <div class="card-title">
+                                                No Patients
+                                            </div>
+                                            <div class="card-text">
+                                                Please add some patients to this trial.
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {{/unless}}
                             {{#each patients}}
                                 <tr class="table-{{ statusType }}">
                                     <td>
