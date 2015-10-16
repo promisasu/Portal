@@ -48,7 +48,6 @@ module.exports = function (request, reply) {
                         status: 'Noncompliant',
                         statusType: 'danger',
                         stage: 1,
-                        surveyType: 'Daily',
                         lastTaken: '09/05/2015',
                         totalMissed: 5,
                         consecutiveMissed: 2
@@ -58,7 +57,6 @@ module.exports = function (request, reply) {
                         status: 'Compliant',
                         statusType: 'success',
                         stage: 1,
-                        surveyType: 'Weekly',
                         lastTaken: '09/07/2015',
                         totalMissed: 0,
                         consecutiveMissed: 0
@@ -68,7 +66,6 @@ module.exports = function (request, reply) {
                         status: 'Semicompliant',
                         statusType: 'warning',
                         stage: 1,
-                        surveyType: 'Daily',
                         lastTaken: '09/05/2015',
                         totalMissed: 1,
                         consecutiveMissed: 1
