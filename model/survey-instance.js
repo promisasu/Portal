@@ -21,8 +21,33 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize) {
     sequelize.define('survey_instance',
         {
-            name: {
-                type: Sequelize.STRING
+            startTime: {
+                type: Sequelize.DATE,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
+            },
+            endTime: {
+                type: Sequelize.DATE,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
+            },
+            userSubmissionTime: {
+                type: Sequelize.DATE
+            },
+            actualSubmissionTime: {
+                type: Sequelize.DATE
+            },
+            surveyInstanceCompleted: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+                validate: {
+                    notEmpty: true
+                }
             }
         },
         {
