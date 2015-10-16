@@ -37,6 +37,8 @@ module.exports = function (configuration) {
         path: 'template',
         // layouts that templates can extend
         layoutPath: 'layout',
+        // partial elements that can be mixed into pages
+        partialsPath: 'partial',
         // sets default layout to 'layout/default.handlebars'
         layout: 'default'
     });
