@@ -21,8 +21,20 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize) {
     sequelize.define('question_template',
         {
-            name: {
-                type: Sequelize.STRING
+            questionText: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
+            },
+            questionType: {
+                type: Sequelize.ENUM,
+                values: ['multipleChoice', 'bodyPain'],
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
             }
         },
         {

@@ -98,6 +98,7 @@ module.exports.setup = function (configuration) {
     surveyInstance.hasMany(questionInstance);
     surveyTemplate.hasMany(surveyInstance);
     trial.hasMany(patient);
+    questionOption.hasMany(questionInstance);
 
     /* ===== MANY TO MANY ===== */
     trial.belongsToMany(surveyTemplate, {through: joinTrialsAndSurveys});

@@ -4,8 +4,6 @@
  * @module model/question-instance
  */
 
-const Sequelize = require('sequelize');
-
 /**
  * Each QuestionInstance will have associated with it a Patient and SurveyInstance
  * This will provide an overview of the answers submitted by the Patient for
@@ -22,11 +20,7 @@ const Sequelize = require('sequelize');
  */
 module.exports = function (sequelize) {
     sequelize.define('question_instance',
-        {
-            name: {
-                type: Sequelize.STRING
-            }
-        },
+       {},
         {
             freezeTableName: true,
             paranoid: true
