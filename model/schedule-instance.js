@@ -22,9 +22,7 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize) {
     sequelize.define('schedule_instance',
         {
-            name: {
-                type: Sequelize.STRING
-            }
+          
         },
         {
             freezeTableName: true,
