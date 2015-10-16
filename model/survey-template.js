@@ -22,7 +22,11 @@ module.exports = function (sequelize) {
     sequelize.define('survey_template',
         {
            questionOrder: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            allowNull : false,
+            validate: {
+                notEmpty: true
+            }
            }
         },
         {

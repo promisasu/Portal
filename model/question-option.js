@@ -22,7 +22,11 @@ module.exports = function (sequelize) {
     sequelize.define('question_option',
         {
             optionText: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                allowNull : false,
+                validate: {
+                    notEmpty: true
+                }
             }
         },
         {

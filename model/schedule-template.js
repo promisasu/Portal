@@ -22,10 +22,18 @@ module.exports = function (sequelize) {
     sequelize.define('schedule_template',
         {
             name: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
             },
             interval: {
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
             }
         },
         {

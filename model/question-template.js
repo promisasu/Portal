@@ -22,11 +22,19 @@ module.exports = function (sequelize) {
     sequelize.define('question_template',
         {
             questionText: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
             },
             questionType: {
                 type: Sequelize.ENUM,
-                values: ['multipleChoice','bodyPain']
+                values: ['multipleChoice','bodyPain'],
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
             }
         },
         {
