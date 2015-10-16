@@ -3,4 +3,4 @@ node_js: v4
 
 install: npm install --global eslint
 
-script: eslint .
+script: eslint . view/**/*.hbs
