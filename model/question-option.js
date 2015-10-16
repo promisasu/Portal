@@ -21,8 +21,12 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize) {
     sequelize.define('question_option',
         {
-            name: {
-                type: Sequelize.STRING
+            optionText: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
             }
         },
         {
