@@ -106,7 +106,7 @@
         'use strict';
         var now = new Date();
         var date = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate(); 
-                       
+        var surveys = JSON.parse('{{ surveys }}');             
         $('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
