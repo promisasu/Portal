@@ -1,3 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
+<style>
+.highlight {
+    border: 1px solid red;
+}
+
+
+.highlight2 {
+    border: 1px solid green;
+}
+
+</style>
+
+<script type="text/javascript">
+$(function() {
+    var startDate;
+    var endDate;
+    var firstDayMonth;
+    var lastDayMonth;
+    
+    var selectCurrentWeek = function() {
+        window.setTimeout(function () {
+            $('.date-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active')
+            $(".ui-datepicker-current-day").parent().addClass('highlight');
+        }, 1);
+    }
+    
+
+ var $weekPicker = $('.date-picker');
+
+    function updateWeekStartEnd() {
+        var date = $weekPicker.datepicker('getDate') || new Date();
+         startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
+        endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
+        
+    }
+
+    updateWeekStartEnd();
+
+    $weekPicker.datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        onSelect: function (dateText, inst) {
+            updateWeekStartEnd();
+            updateDateText(inst);
+            selectCurrentWeek();
+        },
+        beforeShowDay: function (date) {
+            var cssClass = '';
+            if (date >= startDate && date <= endDate) cssClass = 'ui-datepicker-current-day';
+            return [true, cssClass];
+        },
+        onChangeMonthYear: function (year, month, inst) {
+            selectCurrentWeek();
+        }
+    });
+
+    selectCurrentWeek();
+
+var selectCurrentMonth = function () {
+        window.setTimeout(function () {
+            $('.date-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active')
+             $(".ui-datepicker-current-day").parent().addClass('highlight2');
+            
+        }, 1);
+    }
+    var $monthPicker = $('.date-picker');
+
+    function updateMonthStartEnd() {
+        var date = $monthPicker.datepicker('getDate') || new Date();
+    
+        firstDayMonth = new Date(date.getFullYear(), date.getMonth()+1, 1);
+        lastDayMonth = new Date(date.getFullYear(), date.getMonth() + 2, 0);
+        
+        
+    }
+
+    updateMonthStartEnd();
+
+   
+
+    $monthPicker.datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        onSelect: function (dateText, inst) {
+            updateMonthStartEnd();
+            updateDateText(inst);
+            selectCurrentMonth();
+        },
+        beforeShowDay: function (date) {
+            var cssClass = '';
+           
+           if (date >= firstDayMonth && date <= lastDayMonth) cssClass = 'ui-datepicker-current-day';
+            return [true, cssClass];
+        },
+       
+    });
+
+    selectCurrentMonth();
+
+
+    
+});
+</script>
+
+</head>
+
+
 <div class="container-fluid">
     <br>
     <ol class="breadcrumb">
@@ -62,7 +175,18 @@
                 </table>
             </div>
         </div>
-    </div>
+
+<body>
+    <div class="date-picker"></div>
+    <br /><br />
+</body>
+</div>
+
+ </div>
+
+
+
+
     <div class="col-sm-4">
         <div class="card card-inverse card-primary">
             <div class="card-block">
@@ -145,3 +269,5 @@
         </div>
     </div>
 </div>
+
+</html>
