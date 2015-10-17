@@ -104,9 +104,45 @@
 <script>
     $(document).ready(function () {
         'use strict';
-
+        var now = new Date();
+        var date = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate(); 
+                       
         $('#calendar').fullCalendar({
-            // put your options and callbacks here
-        });
-    });
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,basicWeek,basicDay'
+			},
+                        
+			defaultDate: date,
+			editable: true,
+			eventLimit: true, 
+			events: [
+				{       
+					title: '1234 survey',
+					start: '2015-10-05T12:00:00', 
+                                        end: '2015-10-08T11:59:00',
+                                        color: '#00FF00' // green
+                                        
+				},
+				{
+					title: '6546 survey',
+					start: '2015-10-04T11:00:00',
+                                        end: '2015-10-18T13:00:00',
+                                        color: '#00FF00', // red
+                                        dow: [1] // weekly trial, every Monday
+				},
+				{
+					title: '7865 survey',
+					start: '2015-10-01T12:00:00',
+                                        end: '2015-10-31T11:59:00',
+                                        color: '#FF0000'     
+                                        
+				}
+				
+			]
+		});
+		
+	});
+
 </script>
