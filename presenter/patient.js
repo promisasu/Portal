@@ -25,7 +25,7 @@ module.exports = function (request, reply) {
             id: 1,
             name: 'test'
         },
-        surveys: [
+        surveys: JSON.stringify([
             {
                 id: 1234,
                 stage: 1,
@@ -56,6 +56,6 @@ module.exports = function (request, reply) {
                 actualSubmissionTime: '10/31/2015 11:59:00',
                 completed: false
             }
-        ]
+        ])
     });
 };
