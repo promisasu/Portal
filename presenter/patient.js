@@ -30,30 +30,30 @@ module.exports = function (request, reply) {
                 id: 1234,
                 stage: 1,
                 surveyType: 'Daily',
-                startTime: '09/05/2015 01:01:01',
-                endTime: '09/08/2015 11:00:00',
-                userSubmissionTime: '09/05/2015 01:01:01',
-                actualSubmissionTime: '09/07/2015 15:01:01',
+                startTime: '10/05/2015 12:00:00',
+                endTime: '10/08/2015 11:59:00',
+                userSubmissionTime: '10/06/2015 10:05:00',
+                actualSubmissionTime: '10/08/2015 11:00:00',
                 completed: true
             },
             {
                 id: 6546,
                 stage: 1,
                 surveyType: 'Weekly',
-                startTime: '09/05/2015 01:01:01',
-                endTime: '09/05/2015 01:01:01',
-                userSubmissionTime: '09/07/2015 01:01:01',
-                actualSubmissionTime: '09/07/2015 13:01:01',
+                startTime: '10/04/2015 11:00:00',
+                endTime: '10/18/2015 13:00:00',
+                userSubmissionTime: '10/11/2015 13:35:00',
+                actualSubmissionTime: '10/18/2015 13:00:00',
                 completed: true
             },
             {
                 id: 7865,
                 stage: 1,
                 surveyType: 'Daily',
-                startTime: '09/05/2015 01:01:01',
-                endTime: '09/05/2015 01:01:01',
-                userSubmissionTime: '09/05/2015 01:01:01',
-                actualSubmissionTime: '09/05/2015 11:01:01',
+                startTime: '10/01/2015 12:00:00',
+                endTime: '10/31/2015 11:59:00',
+                userSubmissionTime: '',
+                actualSubmissionTime: '10/31/2015 11:59:00',
                 completed: false
             }
         ]
