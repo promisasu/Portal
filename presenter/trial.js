@@ -45,27 +45,27 @@ module.exports = function (request, reply) {
                 patients: [
                     {
                         id: 1234,
-                        status: 'danger',
+                        status: 'Noncompliant',
+                        statusType: 'danger',
                         stage: 1,
-                        surveyType: 'Daily',
                         lastTaken: '09/05/2015',
                         totalMissed: 5,
                         consecutiveMissed: 2
                     },
                     {
                         id: 6546,
-                        status: 'success',
+                        status: 'Compliant',
+                        statusType: 'success',
                         stage: 1,
-                        surveyType: 'Weekly',
                         lastTaken: '09/07/2015',
                         totalMissed: 0,
                         consecutiveMissed: 0
                     },
                     {
                         id: 7865,
-                        status: 'warning',
+                        status: 'Semicompliant',
+                        statusType: 'warning',
                         stage: 1,
-                        surveyType: 'Daily',
                         lastTaken: '09/05/2015',
                         totalMissed: 1,
                         consecutiveMissed: 1

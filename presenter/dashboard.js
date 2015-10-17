@@ -71,14 +71,18 @@ function processTrial (currentTrial) {
     const trial = currentTrial.dataValues;
     const startDate = moment(trial.startAt);
     const endDate = moment(trial.endAt);
+    const statuses = ['Pending', 'Upcoming', 'In Progress', 'Completed'];
+    const status = statuses[Math.floor(Math.random() * 4)];
 
     return {
         id: trial.id,
         name: trial.name,
         start: startDate.format('L'),
+        end: endDate.format('L'),
         duration: startDate.to(endDate, true),
         // TODO: Currently fake data, make this live data
         patientCount: Math.floor(Math.random() * 900 + 100),
-        noncompliantCount: Math.floor(Math.random() * 100)
+        noncompliantCount: Math.floor(Math.random() * 100),
+        status: status
     };
 }

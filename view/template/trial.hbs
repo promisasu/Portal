@@ -90,47 +90,68 @@
                         <thead>
                             <tr>
                                 <th>
-                                    Patient ID
+                                    Patient Pin
+                                </th>
+                                <th>
+                                    View
+                                </th>
+                                <th>
+                                    Status
                                 </th>
                                 <th>
                                     Stage
                                 </th>
                                 <th>
-                                    Survey Type
-                                </th>
-                                <th>
                                     Last Taken
-                                </th>
-                                <th>
-                                    Total Missed
                                 </th>
                                 <th>
                                     Consecutive Missed
                                 </th>
+                                <th>
+                                    Total Missed
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
+                            {{#unless patients.length}}
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="card card-inverse card-info text-center card-block">
+                                            <div class="card-title">
+                                                No Patients
+                                            </div>
+                                            <div class="card-text">
+                                                Please add some patients to this trial.
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {{/unless}}
                             {{#each patients}}
-                                <tr class="table-{{ status }}">
-                                    <th scope="row">
-                                        <a href="/patient/{{ id }}">
-                                            {{ id }}
-                                        </a>
-                                    </th>
+                                <tr class="table-{{ statusType }}">
                                     <td>
-                                        {{ stage }}
+                                        {{ id }}
                                     </td>
                                     <td>
-                                        {{ surveyType }}
+                                        <a href="/patient/{{ id }}">
+                                            View
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ status }}
+                                    </td>
+                                    <td>
+                                        {{ stage }}
                                     </td>
                                     <td>
                                         {{ lastTaken }}
                                     </td>
                                     <td>
-                                        {{ totalMissed }}
+                                        {{ consecutiveMissed }}
                                     </td>
                                     <td>
-                                        {{ consecutiveMissed }}
+                                        {{ totalMissed }}
                                     </td>
                                 </tr>
                             {{/each}}
