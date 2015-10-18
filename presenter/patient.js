@@ -13,7 +13,8 @@ const surveys = [
         start: '10/01/2015',
         end: '10/01/2015',
         userSubmissionTime: '10/01/2015 15:43:35',
-        completed: true
+        completed: true,
+        color: 'green'
     },
     {
         id: 2345,
@@ -23,7 +24,8 @@ const surveys = [
         start: '10/02/2015',
         end: '10/02/2015',
         userSubmissionTime: '10/02/2015 13:11:15',
-        completed: true
+        completed: true,
+        color: 'green'
     },
     {
         id: 3456,
@@ -33,7 +35,8 @@ const surveys = [
         start: '10/05/2015',
         end: '10/05/2015',
         userSubmissionTime: '10/05/2015 11:12:43',
-        completed: true
+        completed: true,
+        color: 'green'
     },
     {
         id: 4567,
@@ -54,7 +57,8 @@ const surveys = [
         start: '10/07/2015',
         end: '10/07/2015',
         userSubmissionTime: '10/07/2015 05:56:11',
-        completed: true
+        completed: true,
+        color: 'green'
     }
 ];
 
