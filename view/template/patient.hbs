@@ -60,9 +60,6 @@
                             <th>
                                 User Submission Time
                             </th>
-                            <th>
-                                Actual Submission Time
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,16 +78,13 @@
                                     {{ surveyType }}
                                 </td>
                                 <td>
-                                    {{ startTime }}
+                                    {{ start }}
                                 </td>
                                 <td>
-                                    {{ endTime }}
+                                    {{ end }}
                                 </td>
                                 <td>
                                     {{ userSubmissionTime }}
-                                </td>
-                                <td>
-                                    {{ actualSubmissionTime  }}
                                 </td>
                             </tr>
                         {{/each}}
@@ -104,46 +98,12 @@
 <script>
     $(document).ready(function () {
         'use strict';
-        var now = new Date();
-        var date = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate(); 
-        var surveys = JSON.parse('{{{ surveys }}}'); 
-            
-        $('#calendar').fullCalendar({
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,basicWeek,basicDay'
-			},
-                        
-			defaultDate: date,
-			editable: true,
-			eventLimit: true, 
-			events: [
-				{       
-					title: surveys[0].id,
-					start: Date.parse(surveys[0].startTime), 
-                                        end: Date.parse(surveys[0].endTime),
-                                        color: '#00FF00' // green
-                                        
-				},
-				{
-					title: surveys[1].id,
-					start: Date.parse(surveys[1].startTime),
-                                        end: Date.parse(surveys[1].endTime),
-                                        color: '#00FF00', // red
-                                        dow: [1] // weekly trial, every Monday
-				},
-				{
-					title: surveys[2].id,
-					start: Date.parse(surveys[2].startTime),
-                                        end: Date.parse(surveys[2].endTime),
-                                        color: '#FF0000'     
-                                        
-				}
-				
-			]
-		});
-		
-	});
+        var surveys = JSON.parse('{{{ surveysJson }}}');
 
+        $('#calendar').fullCalendar({
+            allDayDefault: true,
+			events: surveys
+		});
+
+	});
 </script>
