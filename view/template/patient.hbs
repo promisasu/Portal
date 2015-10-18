@@ -16,52 +16,7 @@
         </li>
     </ol>
     <div class="col-sm-8">
-        <div class="card">
-            <div class="card-block">
-                <h4 class="card-title text-center">
-                    {{ trial.name }} Trial
-                </h4>
-                <p class="card-text">
-                    {{ trial.description }}
-                </p>
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th scope="row">
-                                Start Date
-                            </th>
-                            <td>
-                                {{ trial.start }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                Duration
-                            </th>
-                            <td>
-                                {{ trial.duration }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                Patient Count
-                            </th>
-                            <td>
-                                {{ trial.patientCount }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                Noncompliant Count
-                            </th>
-                            <td>
-                                {{ trial.noncompliantCount }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <div id="calendar"></div>
     </div>
     <div class="col-sm-4">
         <div class="card card-inverse card-primary">
@@ -105,9 +60,6 @@
                             <th>
                                 User Submission Time
                             </th>
-                            <th>
-                                Actual Submission Time
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,16 +78,13 @@
                                     {{ surveyType }}
                                 </td>
                                 <td>
-                                    {{ startTime }}
+                                    {{ start }}
                                 </td>
                                 <td>
-                                    {{ endTime }}
+                                    {{ end }}
                                 </td>
                                 <td>
                                     {{ userSubmissionTime }}
-                                </td>
-                                <td>
-                                    {{ actualSubmissionTime  }}
                                 </td>
                             </tr>
                         {{/each}}
@@ -145,3 +94,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        'use strict';
+        var surveys = JSON.parse('{{{ surveysJson }}}');
+
+        $('#calendar').fullCalendar({
+            allDayDefault: true,
+            events: surveys
+        });
+	});
+</script>

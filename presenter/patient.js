@@ -4,6 +4,60 @@
  * @module presenter/patient
  */
 
+const surveys = [
+    {
+        id: 1234,
+        title: 'Monthly Survey',
+        stage: 1,
+        surveyType: 'Monthly',
+        start: '10/01/2015',
+        end: '10/01/2015',
+        userSubmissionTime: '10/01/2015 15:43:35',
+        completed: true
+    },
+    {
+        id: 2345,
+        title: 'Daily Survey',
+        stage: 1,
+        surveyType: 'Daily',
+        start: '10/02/2015',
+        end: '10/02/2015',
+        userSubmissionTime: '10/02/2015 13:11:15',
+        completed: true
+    },
+    {
+        id: 3456,
+        title: 'Weekly Survey',
+        stage: 1,
+        surveyType: 'Weekly',
+        start: '10/05/2015',
+        end: '10/05/2015',
+        userSubmissionTime: '10/05/2015 11:12:43',
+        completed: true
+    },
+    {
+        id: 4567,
+        title: 'Daily Survey',
+        stage: 1,
+        surveyType: 'Daily',
+        start: '10/06/2015',
+        end: '10/06/2015',
+        userSubmissionTime: 'N/A',
+        completed: false,
+        color: 'red'
+    },
+    {
+        id: 5678,
+        title: 'Daily Survey',
+        stage: 1,
+        surveyType: 'Daily',
+        start: '10/07/2015',
+        end: '10/07/2015',
+        userSubmissionTime: '10/07/2015 05:56:11',
+        completed: true
+    }
+];
+
 /**
  * A dashboard with an overview of a specific patient.
  * @function patient
@@ -25,37 +79,7 @@ module.exports = function (request, reply) {
             id: 1,
             name: 'test'
         },
-        surveys: [
-            {
-                id: 1234,
-                stage: 1,
-                surveyType: 'Daily',
-                startTime: '09/05/2015 01:01:01',
-                endTime: '09/08/2015 11:00:00',
-                userSubmissionTime: '09/05/2015 01:01:01',
-                actualSubmissionTime: '09/07/2015 15:01:01',
-                completed: true
-            },
-            {
-                id: 6546,
-                stage: 1,
-                surveyType: 'Weekly',
-                startTime: '09/05/2015 01:01:01',
-                endTime: '09/05/2015 01:01:01',
-                userSubmissionTime: '09/07/2015 01:01:01',
-                actualSubmissionTime: '09/07/2015 13:01:01',
-                completed: true
-            },
-            {
-                id: 7865,
-                stage: 1,
-                surveyType: 'Daily',
-                startTime: '09/05/2015 01:01:01',
-                endTime: '09/05/2015 01:01:01',
-                userSubmissionTime: '09/05/2015 01:01:01',
-                actualSubmissionTime: '09/05/2015 11:01:01',
-                completed: false
-            }
-        ]
+        surveys: surveys,
+        surveysJson: JSON.stringify(surveys)
     });
 };

@@ -7,6 +7,12 @@ documentation/
 # Temporary editor files
 *~
 
+# Intellij
+*.iml
+*.ipr
+*.iws
+.idea/
+
 # Logs
 logs
 *.log
