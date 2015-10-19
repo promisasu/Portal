@@ -20,7 +20,7 @@
                     <label for="trial-name">
                         Trial
                     </label>
-                    <select class="form-control" id="trial-name" {{#unless trials}}disabled{{/unless}}>
+                    <select class="form-control" name="trialId" id="trial-name">
                         {{#if trials}}
                             {{#each trials}}
                                 <option value="{{ id }}">
@@ -35,15 +35,15 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="survey-type">
-                        Survey Type
+                    <label for="patient-stage">
+                        Stage
                     </label>
-                    <select class="form-control" id="survey-type">
-                        <option>
-                            Daily
+                    <select class="form-control" name="stageId" id="patient-stage">
+                        <option value="0">
+                            Stage 1
                         </option>
-                        <option>
-                            Weekly
+                        <option value="1">
+                            Stage 2
                         </option>
                     </select>
                 </div>
