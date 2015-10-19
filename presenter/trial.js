@@ -1,3 +1,4 @@
+/* eslint max-nested-callbacks: [2, 2] */
 'use strict';
 
 /**
@@ -5,6 +6,7 @@
  */
 
 const moment = require('moment');
+const _ = require('lodash');
 
 const database = require('../model');
 
@@ -22,62 +24,37 @@ module.exports = function (request, reply) {
         if (currentTrial === null) {
             reply.redirect('/404');
         } else {
-            reply.view('trial', {
-                title: 'Pain Reporting Portal',
-                trial: processTrial(currentTrial),
-                graphData: JSON.stringify([
-                    {
-                        value: 100,
-                        color: '#2ECC40',
-                        label: 'Compliant'
-                    },
-                    {
-                        value: 50,
-                        color: '#FFDC00',
-                        label: 'Semicompliant'
-                    },
-                    {
-                        value: 10,
-                        color: '#FF4136',
-                        label: 'Noncompliant'
-                    }
-                ]),
-                patients: [
-                    {
-                        id: 1234,
-                        status: 'Noncompliant',
-                        statusType: 'danger',
-                        stage: 1,
-                        lastTaken: '09/05/2015',
-                        totalMissed: 5,
-                        consecutiveMissed: 2
-                    },
-                    {
-                        id: 6546,
-                        status: 'Compliant',
-                        statusType: 'success',
-                        stage: 1,
-                        lastTaken: '09/07/2015',
-                        totalMissed: 0,
-                        consecutiveMissed: 0
-                    },
-                    {
-                        id: 7865,
-                        status: 'Semicompliant',
-                        statusType: 'warning',
-                        stage: 1,
-                        lastTaken: '09/05/2015',
-                        totalMissed: 1,
-                        consecutiveMissed: 1
-                    }
-                ]
+            currentTrial.getPatients()
+            .then(function (patients) {
+                reply.view('trial', {
+                    title: 'Pain Reporting Portal',
+                    trial: processTrial(currentTrial),
+                    graphData: JSON.stringify([
+                        {
+                            value: 100,
+                            color: '#2ECC40',
+                            label: 'Compliant'
+                        },
+                        {
+                            value: 50,
+                            color: '#FFDC00',
+                            label: 'Semicompliant'
+                        },
+                        {
+                            value: 10,
+                            color: '#FF4136',
+                            label: 'Noncompliant'
+                        }
+                    ]),
+                    patients: _.map(patients, processPatient)
+                });
             });
         }
     });
 };
 
 /**
- * Takes in a Trial model and processes them into human readable format
+ * Takes in a Trial model and processes it into human readable format
  * @param {Trial} currentTrial - a single Trial object
  * @returns {Object} processed Trial
  */
@@ -95,5 +72,36 @@ function processTrial (currentTrial) {
         // TODO: Currently fake data, make this live data
         patientCount: Math.floor(Math.random() * 900 + 100),
         noncompliantCount: Math.floor(Math.random() * 100)
+    };
+}
+
+/**
+ * Takes in a Patient model and processes it into human readable format
+ * @param {Trial} currentPatient - a single Patient object
+ * @returns {Object} processed Patient
+ */
+function processPatient (currentPatient) {
+    const patient = currentPatient.dataValues;
+    const statuses = ['Compliant', 'Semicompliant', 'Noncompliant'];
+    const statusTypes = ['success', 'warning', 'danger'];
+
+    // TODO replace randomly generated data with real data
+    const randomStatus = Math.floor(Math.random() * 3);
+    const randomStage = Math.floor(Math.random() * 3);
+    const randomMissed = Math.floor(Math.random() * 10);
+    const randomConsecutiveMissed = Math.floor(randomMissed / 3);
+    const startDate = new Date(1, 1, 2014);
+    const todayDate = new Date();
+    const randomDate = new Date(startDate.getTime() + Math.random() * (todayDate.getTime() - startDate.getTime()));
+    const randomDateDisplay = moment(randomDate).format('L');
+
+    return {
+        id: patient.id,
+        status: statuses[randomStatus],
+        statusType: statusTypes[randomStatus],
+        stage: randomStage,
+        lastTaken: randomDateDisplay,
+        totalMissed: randomMissed,
+        consecutiveMissed: randomConsecutiveMissed
     };
 }

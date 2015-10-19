@@ -21,15 +21,15 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize) {
     sequelize.define('patient',
         {
-            pin: {
-                type: Sequelize.INTEGER
-            },
             deviceType: {
                 type: Sequelize.ENUM,
                 values: ['android', 'ios', 'windows']
             },
             deviceVersion: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                validate: {
+                    is: /^[a-z0-9. ]+$/
+                }
             },
             dateStarted: {
                 type: Sequelize.DATE

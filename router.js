@@ -3,6 +3,7 @@
 const Joi = require('joi');
 
 const createTrial = require('./presenter/create-trial');
+const createPatient = require('./presenter/create-patient');
 const dashboardPresenter = require('./presenter/dashboard');
 const trialPresenter = require('./presenter/trial');
 const patientPresenter = require('./presenter/patient');
@@ -37,6 +38,19 @@ module.exports = [
             validate: {
                 params: {
                     id: Joi.number().integer()
+                }
+            }
+        }
+    },
+    {
+        method: 'POST',
+        path: '/patient',
+        handler: createPatient,
+        config: {
+            validate: {
+                payload: {
+                    stageId: Joi.number().integer(),
+                    trialId: Joi.number().integer()
                 }
             }
         }
