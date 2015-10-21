@@ -7,6 +7,7 @@
 
 const moment = require('moment');
 const _ = require('lodash');
+const color = require('colors.css');
 
 const database = require('../model');
 
@@ -29,23 +30,27 @@ module.exports = function (request, reply) {
                 reply.view('trial', {
                     title: 'Pain Reporting Portal',
                     trial: processTrial(currentTrial),
-                    graphData: JSON.stringify([
-                        {
-                            value: 100,
-                            color: '#2ECC40',
-                            label: 'Compliant'
-                        },
-                        {
-                            value: 50,
-                            color: '#FFDC00',
-                            label: 'Semicompliant'
-                        },
-                        {
-                            value: 10,
-                            color: '#FF4136',
-                            label: 'Noncompliant'
-                        }
-                    ]),
+                    graphData: JSON.stringify({
+                        datasets: [
+                            {
+                                data: [
+                                    100,
+                                    50,
+                                    10
+                                ],
+                                backgroundColor: [
+                                    color.green,
+                                    color.yellow,
+                                    color.red
+                                ]
+                            }
+                        ],
+                        labels: [
+                            'Compliant',
+                            'Semicompliant',
+                            'Noncompliant'
+                        ]
+                    }),
                     patients: _.map(patients, processPatient)
                 });
             });
