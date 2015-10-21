@@ -21,6 +21,9 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize) {
     sequelize.define('patient',
         {
+            pin: {
+                type: Sequelize.INTEGER
+            },
             deviceType: {
                 type: Sequelize.ENUM,
                 values: ['android', 'ios', 'windows']

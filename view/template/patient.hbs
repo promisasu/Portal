@@ -36,60 +36,62 @@
                 <h4 class="card-title">
                     Patients' Surveys
                 </h4>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>
-                                Survey ID
-                            </th>
-                            <th>
-                                Completed
-                            </th>
-                            <th>
-                                Stage
-                            </th>
-                            <th>
-                                Survey Type
-                            </th>
-                            <th>
-                                Start Time
-                            </th>
-                            <th>
-                                End Time
-                            </th>
-                            <th>
-                                User Submission Time
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each surveys}}
-                            <tr class="table-{{#if completed}}success{{else}}danger{{/if}}">
-                                <th scope="row">
-                                    {{ id }}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Survey ID
                                 </th>
-                                <td>
-                                    {{ completed }}
-                                </td>
-                                <td>
-                                    {{ stage }}
-                                </td>
-                                <td>
-                                    {{ surveyType }}
-                                </td>
-                                <td>
-                                    {{ start }}
-                                </td>
-                                <td>
-                                    {{ end }}
-                                </td>
-                                <td>
-                                    {{ userSubmissionTime }}
-                                </td>
+                                <th>
+                                    Completed
+                                </th>
+                                <th>
+                                    Stage
+                                </th>
+                                <th>
+                                    Survey Type
+                                </th>
+                                <th>
+                                    Start Time
+                                </th>
+                                <th>
+                                    End Time
+                                </th>
+                                <th>
+                                    User Submission Time
+                                </th>
                             </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {{#each surveys}}
+                                <tr class="table-{{#if completed}}success{{else}}danger{{/if}}">
+                                    <th scope="row">
+                                        {{ id }}
+                                    </th>
+                                    <td>
+                                        {{ completed }}
+                                    </td>
+                                    <td>
+                                        {{ stage }}
+                                    </td>
+                                    <td>
+                                        {{ surveyType }}
+                                    </td>
+                                    <td>
+                                        {{ start }}
+                                    </td>
+                                    <td>
+                                        {{ end }}
+                                    </td>
+                                    <td>
+                                        {{ userSubmissionTime }}
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
