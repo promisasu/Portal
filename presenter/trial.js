@@ -29,23 +29,27 @@ module.exports = function (request, reply) {
                 reply.view('trial', {
                     title: 'Pain Reporting Portal',
                     trial: processTrial(currentTrial),
-                    graphData: JSON.stringify([
-                        {
-                            value: 100,
-                            color: '#2ECC40',
-                            label: 'Compliant'
-                        },
-                        {
-                            value: 50,
-                            color: '#FFDC00',
-                            label: 'Semicompliant'
-                        },
-                        {
-                            value: 10,
-                            color: '#FF4136',
-                            label: 'Noncompliant'
-                        }
-                    ]),
+                    graphData: JSON.stringify({
+                        datasets: [
+                            {
+                                data: [
+                                    100,
+                                    50,
+                                    10
+                                ],
+                                backgroundColor: [
+                                    '#2ECC40',
+                                    '#FFDC00',
+                                    '#FF4136'
+                                ]
+                            }
+                        ],
+                        labels: [
+                            'Compliant',
+                            'Semicompliant',
+                            'Noncompliant'
+                        ]
+                    }),
                     patients: _.map(patients, processPatient)
                 });
             });

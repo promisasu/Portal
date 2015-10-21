@@ -33,28 +33,41 @@ module.exports = function (request, reply) {
             },
             trials: trialData,
             graphData: JSON.stringify({
-                labels: ['Compliant', 'Semicompliant', 'Noncompliant'],
+                labels: [
+                    'Compliant',
+                    'Semicompliant',
+                    'Noncompliant'
+                ],
                 datasets: [
                     {
                         label: 'Trial 1',
-                        fillColor: 'rgba(133, 17, 75, 0.2)',
-                        strokeColor: 'rgb(133, 17, 75)',
-                        pointColor: 'rgb(133, 17, 75)',
-                        data: [100, 10, 50]
+                        backgroundColor: 'rgba(133, 17, 75, 0.2)',
+                        pointBackgroundColor: 'rgb(133, 17, 75)',
+                        data: [
+                            100,
+                            10,
+                            50
+                        ]
                     },
                     {
                         label: 'Trial 2',
-                        fillColor: 'rgba(0, 31, 62, 0.2)',
-                        strokeColor: 'rgb(0, 31, 62)',
-                        pointColor: 'rgb(0, 31, 62)',
-                        data: [10, 50, 100]
+                        backgroundColor: 'rgba(0, 31, 62, 0.2)',
+                        pointBackgroundColor: 'rgb(0, 31, 62)',
+                        data: [
+                            10,
+                            50,
+                            100
+                        ]
                     },
                     {
                         label: 'Trial 3',
-                        fillColor: 'rgba(177, 13, 201, 0.2)',
-                        strokeColor: 'rgb(177, 13, 201)',
-                        pointColor: 'rgb(177, 13, 201)',
-                        data: [50, 100, 10]
+                        backgroundColor: 'rgba(177, 13, 201, 0.2)',
+                        pointBackgroundColor: 'rgb(177, 13, 201)',
+                        data: [
+                            50,
+                            100,
+                            10
+                        ]
                     }
                 ]
             })

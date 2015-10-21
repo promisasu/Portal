@@ -14,7 +14,7 @@ const surveys = [
         end: '10/01/2015',
         userSubmissionTime: '10/01/2015 15:43:35',
         completed: true,
-        color: 'green'
+        color: '#2ECC40'
     },
     {
         id: 2345,
@@ -25,7 +25,7 @@ const surveys = [
         end: '10/02/2015',
         userSubmissionTime: '10/02/2015 13:11:15',
         completed: true,
-        color: 'green'
+        color: '#2ECC40'
     },
     {
         id: 3456,
@@ -36,7 +36,7 @@ const surveys = [
         end: '10/05/2015',
         userSubmissionTime: '10/05/2015 11:12:43',
         completed: true,
-        color: 'green'
+        color: '#2ECC40'
     },
     {
         id: 4567,
@@ -47,7 +47,7 @@ const surveys = [
         end: '10/06/2015',
         userSubmissionTime: 'N/A',
         completed: false,
-        color: 'red'
+        color: '#FF4136'
     },
     {
         id: 5678,
@@ -58,7 +58,7 @@ const surveys = [
         end: '10/07/2015',
         userSubmissionTime: '10/07/2015 05:56:11',
         completed: true,
-        color: 'green'
+        color: '#2ECC40'
     }
 ];
 

@@ -11,23 +11,23 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+        <script src="https://cdn.rawgit.com/nnnick/Chart.js/2.0.0-alpha4/Chart.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-dark bg-inverse">
-            <div class="container-fluid">
-                <div class="col-sm-8">
-                    <a class="navbar-brand" href='/'>
-                        Pain Reporting Portal
-                    </a>
-                </div>
-                <div class="col-sm-4">
-                    <a href="#" style="color:white">
-                        <i class="fa fa-cog fa-2x pull-right"></i>
-                    </a>
-                </div>
+            <div class="container">
+                <a class="navbar-brand" href='/'>
+                    Pain Reporting Portal
+                </a>
+                <ul class="nav navbar-nav pull-right">
+                    <li class="nav-item active">
+                        <a href="#" class="nav-link">
+                            <i class="fa fa-cog fa-lg"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </nav>
         {{{ content }}}

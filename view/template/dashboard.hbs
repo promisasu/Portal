@@ -219,10 +219,13 @@
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('radarChart').getContext('2d');
     var options = {
-        legendTemplate: '<ul class="list-group list-group-flush"><% for (var i=0; i<datasets.length; i++){%><li class="list-group-item"><i style="color:<%=datasets[i].strokeColor%>" class="fa fa-circle"></i> <%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
+        legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.datasets.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[i].backgroundColor%>" class="fa fa-circle"></i> <%=data.datasets[i].label%></li><%}%></ul>'
     };
-    var myNewChart = new Chart(ctx).Radar(data, options);
+    var radarChart = new Chart.Radar(ctx, {
+        data: data,
+        options: options
+    });
     var legend = document.getElementById('legend');
 
-    legend.innerHTML += myNewChart.generateLegend();
+    legend.innerHTML += radarChart.generateLegend();
 </script>

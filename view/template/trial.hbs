@@ -58,10 +58,10 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-4 col-lg-5 col-md-7">
+    <div class="col-lg-4 col-md-7">
         <canvas id="radarChart" width="400" height="400"></canvas>
     </div>
-    <div class="col-xl-4 col-lg-3 col-md-5">
+    <div class="col-lg-4 col-md-5">
         <div id="legend" class="card">
             <div class="card-block">
                 <h4 class="card-title">
@@ -169,9 +169,12 @@
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('radarChart').getContext('2d');
     var options = {
-        legendTemplate: '<ul class="list-group list-group-flush"><% for (var i=0; i<segments.length; i++){%><li class="list-group-item"><i style="color:<%=segments[i].fillColor%>" class="fa fa-circle"></i> <%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+        legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.labels.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[0].backgroundColor[i]%>" class="fa fa-circle"></i> <%=data.labels[i]%></li><%}%></ul>'
     };
-    var myNewChart = new Chart(ctx).Doughnut(data, options);
+    var myNewChart = new Chart.Doughnut(ctx, {
+        data: data,
+        options: options
+    });
     var legend = document.getElementById('legend');
 
     legend.innerHTML += myNewChart.generateLegend();
