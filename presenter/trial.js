@@ -7,6 +7,7 @@
 
 const moment = require('moment');
 const _ = require('lodash');
+const color = require('colors.css');
 
 const database = require('../model');
 
@@ -38,9 +39,9 @@ module.exports = function (request, reply) {
                                     10
                                 ],
                                 backgroundColor: [
-                                    '#2ECC40',
-                                    '#FFDC00',
-                                    '#FF4136'
+                                    color.green,
+                                    color.yellow,
+                                    color.red
                                 ]
                             }
                         ],
