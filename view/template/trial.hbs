@@ -93,9 +93,6 @@
                                     Patient Pin
                                 </th>
                                 <th>
-                                    View
-                                </th>
-                                <th>
                                     Status
                                 </th>
                                 <th>
@@ -130,11 +127,8 @@
                             {{#each patients}}
                                 <tr class="table-{{ statusType }}">
                                     <td>
-                                        {{ id }}
-                                    </td>
-                                    <td>
                                         <a href="/patient/{{ id }}">
-                                            View
+                                            {{ id }}
                                             <i class="fa fa-search"></i>
                                         </a>
                                     </td>
