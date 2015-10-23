@@ -76,10 +76,25 @@
                                     Status
                                 </th>
                                 <th>
-                                    # Noncompliant
+                                    Total Patients
                                 </th>
                                 <th>
-                                    Total Patients
+                                    Target Number of Patients
+                                </th>
+                                <th>
+                                    Recruited Number of Patients
+                                </th>
+                                <th>
+                                    Active
+                                </th>
+                                <th>
+                                    Completed
+                                </th>
+                                <th>
+                                    # Compliant
+                                </th>
+                                <th>
+                                    # Noncompliant
                                 </th>
                                 <th>
                                     Duration
@@ -119,10 +134,25 @@
                                         {{ status }}
                                     </td>
                                     <td>
-                                        {{ noncompliantCount }}
+                                        {{ patientCount }}
                                     </td>
                                     <td>
-                                        {{ patientCount }}
+                                        {{ targetNumberOfPatients }}
+                                    </td>
+                                    <td>
+                                        {{ recruitedNumberOfPatients }}
+                                    </td>
+                                    <td>
+                                        {{ activePatients }}
+                                    </td>
+                                    <td>
+                                        {{ completedPatients }}
+                                    </td>
+                                    <td>
+                                        {{ compliantCount }}
+                                    </td>
+                                    <td>
+                                        {{ noncompliantCount }}
                                     </td>
                                     <td>
                                         {{ duration }}
