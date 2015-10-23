@@ -147,6 +147,25 @@
         }] // datasets
     }; //chartData
 
+        Chart.Type.extend({
+    // Passing in a name registers this chart in the Chart namespace
+    name: "Scatter",
+    // Providing a defaults will also register the deafults in the chart namespace
+    defaults : {
+        options: "Here",
+        available: "at this.options"
+    },
+    // Initialize is fired when the chart is initialized - Data is passed in as a parameter
+    // Config is automatically merged by the core of Chart.js, and is available at this.options
+    initialize:  function(data){
+        this.chart.ctx // The drawing context for this chart
+        this.chart.canvas // the canvas node for this chart
+    },
+    // Used to draw something on the canvas
+    draw: function() {
+    }
+});
+
 
         var ctx = document.getElementById('scatterChart').getContext('2d');
         Chart.defaults.global.responsive = true;
