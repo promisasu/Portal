@@ -128,17 +128,69 @@
             events: surveys
         });
 
+        var chartData = {
+        datasets: [{
+            label: "My First dataset",
+            data: [{
+                    x: 0,
+                    y: 0
+                }, {
+                    x: 1,
+                    y: 51
+                }, {
+                    x: 2,
+                    y: 52
+                }, {
+                    x: 3,
+                    y: 53
+                }, {
+                    x: 4,
+                    y: 54
+                }
+            ], // data
+            borderColor: "rgba(220,220,220,1)",
+            backgroundColor: "rgba(220,220,220,0.2)",
+            pointBorderColor: "rgba(220,220,220,1)",
+            pointBackgroundColor: "rgba(220,220,220,1)",
+            pointBorderWidth: "1"
+        }] // datasets
+    }; //chartData
+
+
+        var ctx = document.getElementById('scatterChart').getContext('2d');
+        Chart.defaults.global.responsive = true;
+
+    var myNewChart = new Chart(ctx).Scatter({
+            data: chartData,
+            options: {
+                responsive: true,
+                hoverMode: 'single',
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            zeroLineColor: "rgba(0,0,0,1)"
+                        }
+                    }]
+                }
+            }
+    }); 
+
+
+/*
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('scatterChart').getContext('2d');
     var options = {
         legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.datasets.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[i].backgroundColor%>" class="fa fa-circle"></i> <%=data.datasets[i].label%></li><%}%></ul>'
     };
-    var radarChart = new Chart.Radar(ctx, {
+    var scatterplot = new Chart.Scatter(ctx, {
         data: data,
         options: options
     });
     var legend = document.getElementById('legend');
 
-    legend.innerHTML += radarChart.generateLegend();
+    legend.innerHTML += scatterplot.generateLegend();
+
+*/
+
 	});
 </script>
