@@ -86,6 +86,33 @@ module.exports = function (request, reply) {
             name: 'test'
         },
         surveys: surveys,
-        surveysJson: JSON.stringify(surveys)
+        surveysJson: JSON.stringify(surveys),
+        graphData: JSON.stringify({
+            data: surveys,
+            options: {
+            scales: {
+            xAxes: [{
+            position: 'top',
+            gridLines: {
+            zeroLineColor: "rgba(0,255,0,1)"
+        },
+        scaleLabel: {
+        show: true,
+        labelString: 'x axis'
+        }
+        }],
+            yAxes: [{
+            position: 'right',
+            gridLines: {
+            zeroLineColor: "rgba(0,255,0,1)"
+        },
+            scaleLabel: {
+            show: true,
+            labelString: 'y axis'
+        }
+        }]
+        }
+    }
+    })
     });
 };
