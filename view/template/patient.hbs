@@ -117,69 +117,52 @@
         $('#calendar').fullCalendar({
             allDayDefault: true,
             events: surveys
-        });
-
-       
-
+        }); 
 	});
 
-    var scatterChartData = {
-        datasets: [{
-            label: "Compliance Chart",
-            data: [{
-                    x: 1,
-                    y: 0
-                }, {
-                    x: 1,
-                    y: 51
-                }, {
-                    x: 2,
-                    y: 52
-                }, {
-                    x: 3,
-                    y: 53
-                }, {
-                    x: 4,
-                    y: 54
-                }
-            ], 
-            borderColor: "rgba(220,220,220,1)",
-            backgroundColor: "rgba(220,220,220,0.2)",
-            pointBorderColor: "rgba(220,220,220,1)",
-            pointBackgroundColor: "rgba(220,220,220,1)",
-            pointBorderWidth: "1"
-        }] 
-    }
+    var scatterChartData = [
+                {
+                    label: 'Compliance Chart',
+                    strokeColor: '#A31515',
+                    data: [
+                        {
+                            x: new Date('2011-04-11T11:45:00'),
+                            y: 25
+                        },
+                        {
+                            x: new Date('2011-04-11T12:51:00'),
+                            y: 28
+                        },
+                        {
+                            x: new Date('2011-04-11T14:10:00'),
+                            y: 22
+                        },
+                        {
+                            x: new Date('2011-04-11T15:15:00'),
+                            y: 18
+                        },
+                        {
+                            x: new Date('2011-04-11T17:00:00'),
+                            y: 25
+                        },
+                        {
+                            x: new Date('2011-04-11T21:00:00'),
+                            y: 24
+                        },
+                        {
+                            x: new Date('2011-04-12T13:00:00'),
+                            y: 24
+                        }
+                    ]
+                }];
 
-
-    window.onload = function() {
         var ctx = document.getElementById("scatterChart").getContext("2d");
-        window.myScatter = Chart.Scatter(ctx, {
-            data: scatterChartData,
-            options: {
-            scales: {
-            xAxes: [{
-            position: 'top',
-            gridLines: {
-            zeroLineColor: "rgba(0,255,0,1)"
-            },
-            scaleLabel: {
-            show: true,
-            labelString: 'Patient ID'
-            }
-            }],
-            yAxes: [{
-            position: 'right',
-            gridLines: {
-            zeroLineColor: "rgba(0,255,0,1)"
-        },
-            scaleLabel: {
-            show: true,
-            labelString: 'Compliance'
-        }
-    }]
-}
-}
-});
-};
+        var myDateLineChart = new Chart(ctx).Scatter(scatterChartData, {
+                bezierCurve: true,
+                showTooltips: true,
+                scaleShowHorizontalLines: true,
+                scaleShowLabels: true,
+                scaleType: "date",
+                scaleLabel: "<%=value%>°C"
+            });
 </script>
