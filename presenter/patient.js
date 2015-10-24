@@ -88,32 +88,4 @@ module.exports = function (request, reply) {
         surveys: surveys,
         surveysJson: JSON.stringify(surveys) 
     });
-
-    var scatterChartData = {
-        datasets: [{
-            label: "Compliance Chart",
-            data: [{
-                    x: 1,
-                    y: 0
-                }, {
-                    x: 1,
-                    y: 51
-                }, {
-                    x: 2,
-                    y: 52
-                }, {
-                    x: 3,
-                    y: 53
-                }, {
-                    x: 4,
-                    y: 54
-                }
-            ], 
-            borderColor: "rgba(220,220,220,1)",
-            backgroundColor: "rgba(220,220,220,0.2)",
-            pointBorderColor: "rgba(220,220,220,1)",
-            pointBackgroundColor: "rgba(220,220,220,1)",
-            pointBorderWidth: "1"
-        }] 
-    }
     }; 

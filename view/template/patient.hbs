@@ -123,11 +123,11 @@
 
 	});
 
-     var scatterChartData = {
+    var scatterChartData = {
         datasets: [{
-            label: "My First dataset",
+            label: "Compliance Chart",
             data: [{
-                    x: 0,
+                    x: 1,
                     y: 0
                 }, {
                     x: 1,
@@ -142,16 +142,17 @@
                     x: 4,
                     y: 54
                 }
-            ], // data
+            ], 
             borderColor: "rgba(220,220,220,1)",
             backgroundColor: "rgba(220,220,220,0.2)",
             pointBorderColor: "rgba(220,220,220,1)",
             pointBackgroundColor: "rgba(220,220,220,1)",
             pointBorderWidth: "1"
-        }] // datasets
-    }; //chartData
+        }] 
+    }
 
-     window.onload = function() {
+
+    window.onload = function() {
         var ctx = document.getElementById("scatterChart").getContext("2d");
         window.myScatter = Chart.Scatter(ctx, {
             data: scatterChartData,
@@ -164,7 +165,7 @@
             },
             scaleLabel: {
             show: true,
-            labelString: 'x axis'
+            labelString: 'Patient ID'
             }
             }],
             yAxes: [{
@@ -174,7 +175,7 @@
         },
             scaleLabel: {
             show: true,
-            labelString: 'y axis'
+            labelString: 'Compliance'
         }
     }]
 }
