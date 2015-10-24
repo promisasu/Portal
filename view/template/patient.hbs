@@ -119,7 +119,11 @@
             events: surveys
         });
 
-        var chartData = {
+       
+
+	});
+
+     var scatterChartData = {
         datasets: [{
             label: "My First dataset",
             data: [{
@@ -147,42 +151,34 @@
         }] // datasets
     }; //chartData
 
-        Chart.Type.extend({
-    // Passing in a name registers this chart in the Chart namespace
-    name: "Scatter",
-    // Providing a defaults will also register the deafults in the chart namespace
-    defaults : {
-        options: "Here",
-        available: "at this.options"
-    },
-    // Initialize is fired when the chart is initialized - Data is passed in as a parameter
-    // Config is automatically merged by the core of Chart.js, and is available at this.options
-    initialize:  function(data){
-        this.chart.ctx // The drawing context for this chart
-        this.chart.canvas // the canvas node for this chart
-    },
-    // Used to draw something on the canvas
-    draw: function() {
-    }
-});
-
-
-        var ctx = document.getElementById('scatterChart').getContext('2d');
-        Chart.defaults.global.responsive = true;
-
-    var myNewChart = new Chart(ctx).Scatter({
-            data: chartData,
+     window.onload = function() {
+        var ctx = document.getElementById("scatterChart").getContext("2d");
+        window.myScatter = Chart.Scatter(ctx, {
+            data: scatterChartData,
             options: {
-                responsive: true,
-                hoverMode: 'single',
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            zeroLineColor: "rgba(0,0,0,1)"
-                        }
-                    }]
-                }
+            scales: {
+            xAxes: [{
+            position: 'top',
+            gridLines: {
+            zeroLineColor: "rgba(0,255,0,1)"
+            },
+            scaleLabel: {
+            show: true,
+            labelString: 'x axis'
             }
-    }); 
-	});
+            }],
+            yAxes: [{
+            position: 'right',
+            gridLines: {
+            zeroLineColor: "rgba(0,255,0,1)"
+        },
+            scaleLabel: {
+            show: true,
+            labelString: 'y axis'
+        }
+    }]
+}
+}
+});
+};
 </script>
