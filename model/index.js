@@ -11,8 +11,6 @@ const addTrialModel = require('./trial');
 const addPatientModel = require('./patient');
 const addSurveyTemplateModel = require('./survey-template');
 const addSurveyInstanceModel = require('./survey-instance');
-const addScheduleTemplateModel = require('./schedule-template');
-const addScheduleInstanceModel = require('./schedule-instance');
 const addQuestionTemplateModel = require('./question-template');
 const addQuestionInstanceModel = require('./question-instance');
 const addQuestionOptionModel = require('./question-option');
@@ -21,7 +19,6 @@ const addQuestionOptionModel = require('./question-option');
 const addJoinTrialsAndSurveys = require('./join-trials-and-surveys');
 const addJoinSurveysAndQuestions = require('./join-surveys-and-questions');
 const addJoinQuestionsAndOptions = require('./join-questions-and-options');
-const addJoinPatientsSurveysAndSchedules = require('./join-patients-surveys-and-schedules');
 
 /**
  * a DatabaseConfiguration is a collection of the settings needed to connect to the database.
@@ -59,8 +56,6 @@ module.exports.setup = function (configuration) {
     addPatientModel(sequelize);
     addSurveyTemplateModel(sequelize);
     addSurveyInstanceModel(sequelize);
-    addScheduleTemplateModel(sequelize);
-    addScheduleInstanceModel(sequelize);
     addQuestionTemplateModel(sequelize);
     addQuestionInstanceModel(sequelize);
     addQuestionOptionModel(sequelize);
@@ -69,15 +64,12 @@ module.exports.setup = function (configuration) {
     addJoinTrialsAndSurveys(sequelize);
     addJoinSurveysAndQuestions(sequelize);
     addJoinQuestionsAndOptions(sequelize);
-    addJoinPatientsSurveysAndSchedules(sequelize);
 
     // Get the newly created ORM wrappers
     const patient = sequelize.model('patient');
     const questionInstance = sequelize.model('question_instance');
     const questionOption = sequelize.model('question_option');
     const questionTemplate = sequelize.model('question_template');
-    const scheduleInstance = sequelize.model('schedule_instance');
-    const scheduleTemplate = sequelize.model('schedule_template');
     const surveyInstance = sequelize.model('survey_instance');
     const surveyTemplate = sequelize.model('survey_template');
     const trial = sequelize.model('trial');
@@ -86,15 +78,12 @@ module.exports.setup = function (configuration) {
     const joinTrialsAndSurveys = sequelize.model('join_trials_and_surveys');
     const joinSurveysAndQuestions = sequelize.model('join_surveys_and_questions');
     const joinQuestionsAndOptions = sequelize.model('join_questions_and_options');
-    const joinPatientsSurveysAndSchedules = sequelize.model('join_patients_surveys_and_schedules');
 
     // establish relationships between tables
 
     /* ===== ONE TO MANY ===== */
     patient.hasMany(surveyInstance);
     questionTemplate.hasMany(questionInstance);
-    scheduleTemplate.hasMany(scheduleInstance);
-    scheduleTemplate.hasMany(surveyTemplate);
     surveyInstance.hasMany(questionInstance);
     surveyTemplate.hasMany(surveyInstance);
     trial.hasMany(patient);
@@ -109,11 +98,6 @@ module.exports.setup = function (configuration) {
 
     questionTemplate.belongsToMany(questionOption, {through: joinQuestionsAndOptions});
     questionOption.belongsToMany(questionTemplate, {through: joinQuestionsAndOptions});
-
-    patient.belongsToMany(scheduleInstance, {through: joinPatientsSurveysAndSchedules});
-    surveyTemplate.belongsToMany(scheduleInstance, {through: joinPatientsSurveysAndSchedules});
-    scheduleInstance.belongsToMany(patient, {through: joinPatientsSurveysAndSchedules});
-    scheduleInstance.belongsToMany(surveyTemplate, {through: joinPatientsSurveysAndSchedules});
 
     // export configured sequelize to allow for access to database models
     module.exports.sequelize = sequelize;
