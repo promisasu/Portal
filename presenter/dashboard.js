@@ -101,12 +101,12 @@ function processTrial (currentTrial) {
         recruitedCount: recruitedCount,
         activeCount: activeCount,
         compliantCount: compliantCount,
-        recruitedPercent: ((recruitedCount / targetCount)*100).toFixed(2),
-        unrecruitedPercent: (100 - (recruitedCount / targetCount)*100).toFixed(2),
-        activePercent: ((activeCount / recruitedCount)*100).toFixed(2),
-        completedPercent: (100 - (activeCount / recruitedCount)*100).toFixed(2),
-        compliantPercent: ((compliantCount / activeCount)*100).toFixed(2),
-        noncompliantPercent: (100 - (compliantCount / activeCount)*100).toFixed(2),
+        recruitedPercent: (recruitedCount / targetCount * 100).toFixed(2),
+        unrecruitedPercent: (100 - recruitedCount / targetCount * 100).toFixed(2),
+        activePercent: (activeCount / recruitedCount * 100).toFixed(2),
+        completedPercent: (100 - activeCount / recruitedCount * 100).toFixed(2),
+        compliantPercent: (compliantCount / activeCount * 100).toFixed(2),
+        noncompliantPercent: (100 - compliantCount / activeCount * 100).toFixed(2),
         status: status
     };
 }
