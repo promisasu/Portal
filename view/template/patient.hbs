@@ -93,11 +93,6 @@
         'use strict';
         var surveys = JSON.parse('{{{ surveysJson }}}');
 
-        $('#calendar').fullCalendar({
-            allDayDefault: true,
-            events: surveys
-        });
-
         var config = {
             type: 'line',
             data: {
@@ -146,6 +141,11 @@
 
         var ctx = document.getElementById('complianceChart').getContext('2d');
 
-        window.radarChart = new Chart(ctx, config);
+        $('#calendar').fullCalendar({
+            allDayDefault: true,
+            events: surveys
+        });
+
+        new Chart(ctx, config);
 	});
 </script>
