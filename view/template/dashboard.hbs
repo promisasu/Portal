@@ -60,35 +60,49 @@
                         </h4>
                     </div>
                     <div class="col-sm-6">
-                        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addModal">
-                            ADD NEW
-                        </button>
+                        <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+                                ADD NEW
+                            </button>
+                          </div>
+                          <div class="btn-group" role="group">
+                            <div class="dropdown">
+                              <button class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown">
+                                Status
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Pending</a>
+                                <a class="dropdown-item" href="#">Upcoming</a>
+                                <a class="dropdown-item" href="#">In Progress</a>
+                                <a class="dropdown-item" href="#">Completed</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                     </div>
-                </div>
+                </div><br>
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>
                                     Name
                                 </th>
                                 <th>
-                                    Status
+                                    Target
                                 </th>
                                 <th>
-                                    # Noncompliant
+                                    Recruited
                                 </th>
                                 <th>
-                                    Total Patients
+                                    Active
                                 </th>
                                 <th>
-                                    Duration
+                                    IRB Approval Date
                                 </th>
                                 <th>
-                                    Start Date
-                                </th>
-                                <th>
-                                    End Date
+                                    IRB End Date
                                 </th>
                             </tr>
                         </thead>
@@ -109,29 +123,55 @@
                             {{/unless}}
                             {{#each trials}}
                                 <tr>
-                                    <td>
+                                    <td rowspan=2>
                                         <a href="/trial/{{ id }}">
                                             {{ name }}
                                             <i class="fa fa-search"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        {{ status }}
+                                        {{ targetCount }} Patients
                                     </td>
                                     <td>
-                                        {{ noncompliantCount }}
+                                        {{ recruitedCount }} Patients
                                     </td>
                                     <td>
-                                        {{ patientCount }}
+                                        {{ activeCount }} Patients
                                     </td>
-                                    <td>
-                                        {{ duration }}
-                                    </td>
-                                    <td>
+                                    <td rowspan=2>
                                         {{ start }}
                                     </td>
-                                    <td>
+                                    <td rowspan=2>
                                         {{ end }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <progress id="successFailProgress" class="progress" value="{{ recruitedPercent }}" max="100">
+                                          <div class="progress">
+                                            <span class="progress-bar" style="width: {{ recruitedPercent }}%;">25%</span>
+                                          </div>
+                                        </progress>
+                                        {{ recruitedPercent }}% Recruited <br>
+                                        {{ unrecruitedPercent }}% Unrecruited
+                                    </td>
+                                    <td>
+                                        <progress id="doneUndoneProgress" class="progress" value="{{ activePercent }}" max="100">
+                                          <div class="progress">
+                                            <span class="progress-bar" style="width: {{ activePercent }}%;">25%</span>
+                                          </div>
+                                        </progress>
+                                        {{ activePercent }}% Active <br>
+                                        {{ completedPercent }}% Completed
+                                    </td>
+                                    <td>
+                                        <progress id="successFailProgress" class="progress" value="{{ compliantPercent }}" max="100">
+                                          <div class="progress">
+                                            <span class="progress-bar" style="width: {{ compliantPercent }}%;">25%</span>
+                                          </div>
+                                        </progress>
+                                        {{ compliantPercent }}% Compliant <br>
+                                        {{ noncompliantPercent }}% Noncompliant
                                     </td>
                                 </tr>
                             {{/each}}

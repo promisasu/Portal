@@ -69,14 +69,20 @@ function processTrial (currentTrial) {
     const endDate = moment(trial.endAt);
 
     return {
+
         id: trial.id,
         name: trial.name,
         description: trial.description,
         start: startDate.format('L'),
+         // TODO: Currently fake data, make this live data
         duration: startDate.to(endDate, true),
-        // TODO: Currently fake data, make this live data
         patientCount: Math.floor(Math.random() * 900 + 100),
-        noncompliantCount: Math.floor(Math.random() * 100)
+        noncompliantCount: Math.floor(Math.random() * 100),
+        targetNumberOfPatients: Math.floor(Math.random() * 150),
+        recruitedNumberOfPatients: Math.floor(Math.random() * 200),
+        activePatients: Math.floor(Math.random() * 50),
+        completedPatients: Math.floor(Math.random() * 40),
+        compliantCount: Math.floor(Math.random() * 80)
     };
 }
 
