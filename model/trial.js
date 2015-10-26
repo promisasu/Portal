@@ -49,74 +49,21 @@ module.exports = function (sequelize) {
                 type: Sequelize.DATE,
                 allowNull: false
             },
-            'use strict';
-
-/**
- * @module model/trial
- */
-
-const Sequelize = require('sequelize');
-
-/**
- * a clinical Trial has many Patients taking Surveys
- * @typedef {Object} Trial
- * @property {String} name - trial name
- */
-
-/**
- * Registers model with Sequelize
- * @function register
- * @param {Sequelize} sequelize - database instance
- * @returns {Null} nothing
- */
-module.exports = function (sequelize) {
-    sequelize.define('trial',
-        {
-            name: {
-                type: Sequelize.STRING,
-                allowNull: false,
-                validate: {
-                    notEmpty: true,
-                    min: 3
-                }
-            },
-            description: {
-                type: Sequelize.STRING,
+            targetCount: {
+                type: Sequelize.INTEGER,
                 allowNull: false
             },
-            IRBID: {
-                type: Sequelize.STRING,
-                allowNull: false,
-                validate: {
-                    notEmpty: true,
-                    min: 4
-                }
-            },
-            startAt: {
-                type: Sequelize.DATE,
+            recruitedCount: {
+                type: Sequelize.INTEGER,
                 allowNull: false
             },
-            endAt: {
-                type: Sequelize.DATE,
+            activeCount: {
+                type: Sequelize.INTEGER,
                 allowNull: false
-            }
-            dateStarted: {
-                type: Sequelize.DATE
             },
-            dateCompleted: {
-                type: Sequelize.DATE
-            },
-            targetCount {
-                type: Sequelize.INTEGER
-            },
-            recruitedCount {
-                type: Sequelize.INTEGER
-            },
-            activeCount {
-                type: Sequelize.INTEGER
-            },
-            compliantCount {
-                type: Sequelize.INTEGER
+            compliantCount: {
+                type: Sequelize.INTEGER,
+                allowNull: false
             }
         },           
         {
@@ -126,10 +73,3 @@ module.exports = function (sequelize) {
     );
 };
 
-        },
-        {
-            freezeTableName: true,
-            paranoid: true
-        }
-    );
-};
