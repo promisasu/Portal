@@ -93,12 +93,7 @@
         'use strict';
         var surveys = JSON.parse('{{{ surveysJson }}}');
 
-        $('#calendar').fullCalendar({
-            allDayDefault: true,
-            events: surveys
-        });
-
-        let config = {
+        var config = {
             type: 'line',
             data: {
                 labels: ['01/01/2015 20:00', '01/02/2015 21:00', '01/03/2015 22:00', '01/04/2015 23:00', '01/05/2015 03:00', '01/06/2015 10:00', '01/07/2015 04:00'],
@@ -144,8 +139,13 @@
             }
         };
 
-        let ctx = document.getElementById('complianceChart').getContext('2d');
+        var ctx = document.getElementById('complianceChart').getContext('2d');
 
-        window.radarChart = new Chart(ctx, config);
+        $('#calendar').fullCalendar({
+            allDayDefault: true,
+            events: surveys
+        });
+
+        new Chart(ctx, config);
 	});
 </script>
