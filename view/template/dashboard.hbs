@@ -5,62 +5,72 @@
             Dashboard
         </li>
     </ol>
-    <div class="col-lg-4 col-md-12">
-        <div class="card">
+    <div class="col-sm-12">
+      <div class="col-sm-6">
+          <div class="card">
             <div class="card-block">
-                <h4 class="card-title">
-                    Quick Actions
-                </h4>
-                <div class="card-block">
-                    <p class="card-text">
-                        You have
-                        <strong>
-                            {{ status.patientCount }}
-                        </strong>
-                        total patients.
-                    </p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
-                        ADD NEW
-                    </button>
-                </div>
-                <div class="card-block">
-                    <p class="card-text">
-                        You have
-                        <strong>
-                            {{ status.noncompliantCount }}
-                        </strong>
-                        total noncompliant patients.
-                    </p>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#notifyModal">
-                        NOTIFY
-                    </button>
-                </div>
+              <h4 class="card-title">Welcome, Clinician Name!</h4>
+              <p class="card-text">Global Stats</p>
+              <table class="table">
+                  <tbody>
+                      <tr>
+                          <th scope="row">
+                              In progress trials:
+                          </th>
+                          <td>
+                              {{ trial.start }}
+                          </td>
+                      </tr>
+                      <tr>
+                          <th scope="row">
+                              Average Percent Recruited:
+                          </th>
+                          <td>
+                              {{ trial.duration }}
+                          </td>
+                      </tr>
+                      <tr>
+                          <th scope="row">
+                              Average Percent Compliant:
+                          </th>
+                          <td>
+                              {{ trial.patientCount }}
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
             </div>
+          </div>
+          <div id="legend" class="card col-sm-12">
+              <div class="card-block">
+                  <h4 class="card-title">
+                      Legend
+                  </h4>
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <canvas id="radarChart" width="100%" height="100%"></canvas>
+          </div>
         </div>
     </div>
-    <div class="col-lg-4 col-md-6">
-        <canvas id="radarChart" width="400" height="400"></canvas>
-    </div>
-    <div class="col-lg-4 col-md-6">
-        <div id="legend" class="card">
-            <div class="card-block">
-                <h4 class="card-title">
-                    Legend
-                </h4>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-12">
+    <div class="col-xs-12"><br>
         <div class="card">
             <div class="card-block">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <h4 class="card-title">
                             Trials
                         </h4>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-9">
                         <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary" data-toggle="modal">
+                                GENERATE REPORT
+                            </button>
+                          </div>
                           <div class="btn-group" role="group">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
                                 ADD NEW
@@ -69,7 +79,7 @@
                           <div class="btn-group" role="group">
                             <div class="dropdown">
                               <button class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown">
-                                Status
+                                STATUS
                               </button>
                               <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Pending</a>
