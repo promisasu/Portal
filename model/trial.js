@@ -1,17 +1,13 @@
 'use strict';
-
 /**
  * @module model/trial
  */
-
 const Sequelize = require('sequelize');
-
 /**
  * a clinical Trial has many Patients taking Surveys
  * @typedef {Object} Trial
  * @property {String} name - trial name
  */
-
 /**
  * Registers model with Sequelize
  * @function register
@@ -19,57 +15,53 @@ const Sequelize = require('sequelize');
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('trial',
-        {
-            name: {
-                type: Sequelize.STRING,
-                allowNull: false,
-                validate: {
-                    notEmpty: true,
-                    min: 3
-                }
-            },
-            description: {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
-            IRBID: {
-                type: Sequelize.STRING,
-                allowNull: false,
-                validate: {
-                    notEmpty: true,
-                    min: 4
-                }
-            },
-            startAt: {
-                type: Sequelize.DATE,
-                allowNull: false
-            },
-            endAt: {
-                type: Sequelize.DATE,
-                allowNull: false
-            },
-            targetCount: {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
-            recruitedCount: {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
-            activeCount: {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
-            compliantCount: {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            }
-        },           
-        {
-            freezeTableName: true,
-            paranoid: true
-        }
-    );
+  sequelize.define('trial', {
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        min: 3
+      }
+    },
+    description: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    IRBID: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        min: 4
+      }
+    },
+    startAt: {
+      type: Sequelize.DATE,
+      allowNull: false
+    },
+    endAt: {
+      type: Sequelize.DATE,
+      allowNull: false
+    },
+    targetCount: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    recruitedCount: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    activeCount: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    compliantCount: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    }
+  }, {
+    freezeTableName: true,
+    paranoid: true
+  });
 };
-
