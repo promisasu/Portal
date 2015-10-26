@@ -15,32 +15,11 @@
             Patient: {{ patient.id }}
         </li>
     </ol>
-    <div class="col-sm-8">
+    <div class="col-sm-6">
         <div id="calendar"></div>
     </div>
-    <div class="col-lg-4 col-md-6">
-        <canvas id="scatterChart" width="400" height="400"></canvas>
-    </div>
-    <div class="col-xs-12">
-        <div class="card">
-            <div class="card-block">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h4 class="card-title">
-                            Trials
-                        </h4>
-                    </div>
-    <div class="col-sm-4">
-        <div class="card card-inverse card-primary">
-            <div class="card-block">
-                <p class="card-text">
-                    Here is where we would have a sweet graph of the clinician's total patients over time for this trial.
-                </p>
-                <a href="#" class="btn btn-secondary btn-block">
-                    ADD NEW
-                </a>
-            </div>
-        </div>
+    <div class="col-sm-6">
+        <canvas id="complianceChart" width="400" height="400"></canvas>
     </div>
     <div class="col-sm-12">
         <div class="card">
@@ -117,88 +96,56 @@
         $('#calendar').fullCalendar({
             allDayDefault: true,
             events: surveys
-        }); 
-	});
+        });
 
-    var scatterChartData = {
+        let config = {
             type: 'line',
             data: {
-                datasets: [{
-                    label: "Dataset with point data",
-                    data: [{
-                        x: "12/31/2014 06:00",
-                        y: 1
-                    }, {
-                        x: "01/04/2015 13:00",
-                        y: 3
-                    }, {
-                        x: "01/07/2015 01:15",
-                        y: 5
-                    }, {
-                        x: "01/15/2015 01:15",
-                        y: 7
-                    }],
-                    fill: false
-                }]
+                labels: ['01/01/2015 20:00', '01/02/2015 21:00', '01/03/2015 22:00', '01/04/2015 23:00', '01/05/2015 03:00', '01/06/2015 10:00', '01/07/2015 04:00'],
+                datasets: [
+                    {
+                        label: 'Hours until survey expired',
+                        data: [23, 18, 20, 15, 4, 0, 1]
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 scales: {
-                    xAxes: [{
-                        type: "time",
-                        display: true,
-                        time: {
-                            format: 'MM/DD/YYYY HH:mm',
-                        },
-                        scaleLabel: {
-                            show: true,
-                            labelString: 'Date'
+                    xAxes: [
+                        {
+                            type: 'time',
+                            display: true,
+                            time: {
+                                format: 'MMDDYYYY HHmm',
+                                round: 'day'
+                            },
+                            scaleLabel: {
+                                show: true,
+                                labelString: 'Date'
+                            }
                         }
-                    }, ],
-                    yAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            show: true,
-                            labelString: 'value'
+                    ],
+                    yAxes: [
+                        {
+                            display: true,
+                            scaleLabel: {
+                                show: true,
+                                labelString: 'Hours until survey expires'
+                            }
                         }
-                    }]
+                    ]
                 },
                 elements: {
                     line: {
                         tension: 0.3
                     }
-                },
+                }
             }
         };
 
- window.onload = function() {
-        var ctx = document.getElementById("scatterChart").getContext("2d");
-        window.myScatter = Chart.Scatter(ctx, {
-            data: scatterChartData,
-            options: {
-            scales: {
-            xAxes: [{
-            position: 'top',
-            gridLines: {
-            zeroLineColor: "rgba(0,255,0,1)"
-            },
-            scaleLabel: {
-            show: true,
-            labelString: 'Patient ID'
-            }
-            }],
-            yAxes: [{
-            position: 'right',
-            gridLines: {
-            zeroLineColor: "rgba(0,255,0,1)"
-        },
-            scaleLabel: {
-            show: true,
-            labelString: 'Compliance Time Series'
-        }
-    }]
-}
-}
-});
-};
+        let ctx = document.getElementById('complianceChart').getContext('2d');
+
+        window.radarChart = new Chart(ctx, config);
+	});
 </script>

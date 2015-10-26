@@ -86,6 +86,6 @@ module.exports = function (request, reply) {
             name: 'test'
         },
         surveys: surveys,
-        surveysJson: JSON.stringify(surveys) 
+        surveysJson: JSON.stringify(surveys)
     });
-    }; 
+};
