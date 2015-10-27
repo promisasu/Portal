@@ -49,7 +49,7 @@ module.exports = function (sequelize) {
                 type: Sequelize.DATE,
                 allowNull: false
             },
-            targetPatientCount: {
+            targetCount: {
                 type: Sequelize.INTEGER,
                 allowNull: false
             }
