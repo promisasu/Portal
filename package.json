@@ -27,7 +27,6 @@
     "eslint": "^1.7.3",
     "eslint-plugin-html": "^1.0.4",
     "eslint-plugin-lodash3": "^0.1.12",
-    "globule": "^0.2.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "handlebars": "^4.0.3",
     "hapi": "^11.0.2",
