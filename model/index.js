@@ -9,6 +9,8 @@ const Sequelize = require('sequelize');
 // Database Models
 const addTrialModel = require('./trial');
 const addPatientModel = require('./patient');
+const addEventListener = require('./event-listener');
+const addStage = require('./stage');
 const addSurveyTemplateModel = require('./survey-template');
 const addSurveyInstanceModel = require('./survey-instance');
 const addQuestionTemplateModel = require('./question-template');
@@ -54,6 +56,8 @@ module.exports.setup = function (configuration) {
     // add models to sequelize
     addTrialModel(sequelize);
     addPatientModel(sequelize);
+    addEventListener(sequelize);
+    addStage(sequelize);
     addSurveyTemplateModel(sequelize);
     addSurveyInstanceModel(sequelize);
     addQuestionTemplateModel(sequelize);
@@ -66,13 +70,15 @@ module.exports.setup = function (configuration) {
     addJoinQuestionsAndOptions(sequelize);
 
     // Get the newly created ORM wrappers
+    const trial = sequelize.model('trial');
     const patient = sequelize.model('patient');
+    const stage = sequelize.model('stage');
+    const eventListener = sequelize.model('event_listener');
     const questionInstance = sequelize.model('question_instance');
     const questionOption = sequelize.model('question_option');
     const questionTemplate = sequelize.model('question_template');
     const surveyInstance = sequelize.model('survey_instance');
     const surveyTemplate = sequelize.model('survey_template');
-    const trial = sequelize.model('trial');
 
     // Get the join tables
     const joinTrialsAndSurveys = sequelize.model('join_trials_and_surveys');
@@ -82,11 +88,14 @@ module.exports.setup = function (configuration) {
     // establish relationships between tables
 
     /* ===== ONE TO MANY ===== */
-    patient.hasMany(surveyInstance);
-    questionTemplate.hasMany(questionInstance);
-    surveyInstance.hasMany(questionInstance);
-    surveyTemplate.hasMany(surveyInstance);
     trial.hasMany(patient);
+    trial.hasMany(stage);
+    patient.hasMany(surveyInstance);
+    stage.hasMany(patient);
+    stage.hasMany(eventListener);
+    questionTemplate.hasMany(questionInstance);
+    surveyTemplate.hasMany(surveyInstance);
+    surveyInstance.hasMany(questionInstance);
     questionOption.hasMany(questionInstance);
 
     /* ===== MANY TO MANY ===== */
