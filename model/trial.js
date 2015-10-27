@@ -48,6 +48,10 @@ module.exports = function (sequelize) {
             endAt: {
                 type: Sequelize.DATE,
                 allowNull: false
+            },
+            targetPatientCount: {
+                type: Sequelize.INTEGER,
+                allowNull: false
             }
         },
         {
