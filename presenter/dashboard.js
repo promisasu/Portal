@@ -95,6 +95,7 @@ function processTrial (currentTrial) {
     return {
         id: trial.id,
         name: trial.name,
+        IRBID: trial.IRBID,
         start: startDate.format('L'),
         end: endDate.format('L'),
         targetCount: targetCount,

@@ -73,6 +73,7 @@ function processTrial (currentTrial) {
         id: trial.id,
         name: trial.name,
         description: trial.description,
+        IRBID: trial.IRBID,
         start: startDate.format('L'),
          // TODO: Currently fake data, make this live data
         duration: startDate.to(endDate, true),
