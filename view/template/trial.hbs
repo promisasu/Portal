@@ -181,7 +181,8 @@
     var options = {
         legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.labels.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[0].backgroundColor[i]%>" class="fa fa-circle"></i> <%=data.labels[i]%></li><%}%></ul>'
     };
-    var myNewChart = new Chart.Doughnut(ctx, {
+    var myNewChart = new Chart(ctx, {
+        type: 'doughnut',
         data: data,
         options: options
     });
