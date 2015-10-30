@@ -87,7 +87,7 @@ function processTrial (currentTrial) {
     const statuses = ['Pending', 'Upcoming', 'In Progress', 'Completed'];
     const status = statuses[Math.floor(Math.random() * 4)];
     // TODO: Currently fake data, make this live data
-    const targetCount = Math.floor(Math.random() * 900 + 500);
+    const targetCount = moment(trial.targetCount);
     const recruitedCount = targetCount - 153;
     const activeCount = recruitedCount - 23;
     const compliantCount = activeCount - 67;

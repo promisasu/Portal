@@ -80,7 +80,6 @@ function processTrial (currentTrial) {
         duration: startDate.to(endDate, true),
         patientCount: Math.floor(Math.random() * 900 + 100),
         noncompliantCount: Math.floor(Math.random() * 100),
-        targetNumberOfPatients: Math.floor(Math.random() * 150),
         recruitedNumberOfPatients: Math.floor(Math.random() * 200),
         activePatients: Math.floor(Math.random() * 50),
         completedPatients: Math.floor(Math.random() * 40),
