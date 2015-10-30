@@ -149,28 +149,28 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <progress id="successFailProgress" class="progress" value="{{ recruitedPercent }}" max="100">
-                                          <div class="progress">
-                                            <span class="progress-bar" style="width: {{ recruitedPercent }}%;">25%</span>
-                                          </div>
+                                        <progress class="progress progress-good-and-bad" value="{{ recruitedPercent }}" max="100">
+                                            <div class="progress">
+                                                <span class="progress-bar" style="width: {{ recruitedPercent }}%;">25%</span>
+                                            </div>
                                         </progress>
                                         {{ recruitedPercent }}% Recruited <br>
                                         {{ unrecruitedPercent }}% Unrecruited
                                     </td>
                                     <td>
-                                        <progress id="doneUndoneProgress" class="progress" value="{{ activePercent }}" max="100">
-                                          <div class="progress">
-                                            <span class="progress-bar" style="width: {{ activePercent }}%;">25%</span>
-                                          </div>
+                                        <progress class="progress" value="{{ activePercent }}" max="100">
+                                            <div class="progress">
+                                                <span class="progress-bar" style="width: {{ activePercent }}%;">25%</span>
+                                            </div>
                                         </progress>
                                         {{ activePercent }}% Active <br>
                                         {{ completedPercent }}% Completed
                                     </td>
                                     <td>
-                                        <progress id="successFailProgress" class="progress" value="{{ compliantPercent }}" max="100">
-                                          <div class="progress">
-                                            <span class="progress-bar" style="width: {{ compliantPercent }}%;">25%</span>
-                                          </div>
+                                        <progress class="progress progress-good-and-bad" value="{{ compliantPercent }}" max="100">
+                                            <div class="progress">
+                                                <span class="progress-bar" style="width: {{ compliantPercent }}%;">25%</span>
+                                            </div>
                                         </progress>
                                         {{ compliantPercent }}% Compliant <br>
                                         {{ noncompliantPercent }}% Noncompliant
