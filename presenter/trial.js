@@ -73,7 +73,9 @@ function processTrial (currentTrial) {
         id: trial.id,
         name: trial.name,
         description: trial.description,
+        IRBID: trial.IRBID,
         start: startDate.format('L'),
+        end: startDate.format('L'),
          // TODO: Currently fake data, make this live data
         duration: startDate.to(endDate, true),
         patientCount: Math.floor(Math.random() * 900 + 100),

@@ -25,7 +25,8 @@ module.exports = [
                     description: Joi.string().empty(''),
                     IRBID: Joi.string().min(4),
                     startAt: Joi.date(),
-                    endAt: Joi.date()
+                    endAt: Joi.date(),
+                    targetCount: Joi.number().integer().min(0)
                 }
             }
         }
