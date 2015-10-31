@@ -22,7 +22,7 @@ module.exports = [
             validate: {
                 payload: {
                     name: Joi.string().min(3),
-                    description: Joi.string().empty(''),
+                    description: Joi.string(),
                     IRBID: Joi.string().min(4),
                     startAt: Joi.date(),
                     endAt: Joi.date(),
