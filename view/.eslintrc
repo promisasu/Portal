@@ -16,6 +16,7 @@ rules:
 
     # Best Practices
     block-scoped-var: 2
+    no-new: 0
     vars-on-top: 2
 
     # Strict Mode

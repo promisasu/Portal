@@ -22,9 +22,17 @@
                 </p>
                 <table class="table">
                     <tbody>
+                         <tr>
+                            <th scope="row">
+                                IRB ID
+                            </th>
+                            <td>
+                                {{ trial.IRBID }}
+                            </td>
+                        </tr>
                         <tr>
                             <th scope="row">
-                                Start Date
+                                IRB Start Date
                             </th>
                             <td>
                                 {{ trial.start }}
@@ -32,10 +40,10 @@
                         </tr>
                         <tr>
                             <th scope="row">
-                                Duration
+                                IRB End Date
                             </th>
                             <td>
-                                {{ trial.duration }}
+                                {{ trial.end }}
                             </td>
                         </tr>
                         <tr>
@@ -181,7 +189,8 @@
     var options = {
         legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.labels.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[0].backgroundColor[i]%>" class="fa fa-circle"></i> <%=data.labels[i]%></li><%}%></ul>'
     };
-    var myNewChart = new Chart.Doughnut(ctx, {
+    var myNewChart = new Chart(ctx, {
+        type: 'doughnut',
         data: data,
         options: options
     });
