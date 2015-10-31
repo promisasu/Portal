@@ -12,7 +12,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-        <script src="https://cdn.rawgit.com/nnnick/Chart.js/2.0.0-beta/Chart.min.js"></script>
+        <script src="https://cdn.rawgit.com/nnnick/Chart.js/2.0.0-alpha4/Chart.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.js"></script>
 
         <!-- Polyfills -->
@@ -20,17 +20,25 @@
         <script src="https://cdn.rawgit.com/chemerisuk/better-i18n-plugin/v1.0.3/dist/better-i18n-plugin.js"></script>
         <script src="https://cdn.rawgit.com/chemerisuk/better-dateinput-polyfill/v1.5.2/dist/better-dateinput-polyfill.js"></script>
         <style>
-            #successFailProgress::-webkit-progress-bar {
-              background-color: #d9534f;
+            .progress-good-and-bad {
+                color: #d9534f;
+                background: #d9534f;
             }
-            #successFailProgress::-webkit-progress-value {
-              background-color: #5cb85c;
+
+            .progress-good-and-bad::-webkit-progress-bar {
+                background: #d9534f !important;
             }
-            #doneUndoneProgress::-webkit-progress-bar {
-              background-color: #ccc;
+
+            .progress-good-and-bad::-webkit-progress-value {
+                background-color: #5cb85c !important;
             }
-            #doneUndoneProgress::-webkit-progress-value {
-              background-color: #0275d8;
+
+            .progress-good-and-bad::-moz-progress-bar {
+                background-color: #5cb85c;
+            }
+
+            .progress-good-and-bad > .progress-bar {
+                background-color: #5cb85c;
             }
         </style>
     </head>
