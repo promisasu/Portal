@@ -1,67 +1,67 @@
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <form action="/trial" method="POST">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>
-                        &times;
-                    </span>
-                    <span class="sr-only">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>
+                            &times;
+                        </span>
+                        <span class="sr-only">
+                            Close
+                        </span>
+                    </button>
+                    <h4 class="modal-title">
+                        Add New Trial
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="trial-name">
+                            Name
+                        </label>
+                        <input id="trial-name" class="form-control" name="name" type="text" pattern=".{3,}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="trial-description">
+                            Description
+                        </label>
+                        <input id="trial-description" class="form-control" name="description" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="trial-irb">
+                            IRB ID
+                        </label>
+                        <input id="trial-irb" class="form-control" name="IRBID" type="text" pattern=".{4,}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="trial-start">
+                            IRB Start Date
+                        </label>
+                        <input id="trial-start" class="form-control" name="startAt" type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="trial-end">
+                            IRB End Date
+                        </label>
+                        <input id="trial-end" class="form-control" name="endAt" type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="target-count">
+                            Target Count
+                        </label>
+                        <input id="trial-count" class="form-control" type="number" min="0" name="targetCount" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         Close
-                    </span>
-                </button>
-                <h4 class="modal-title">
-                    Add New Trial
-                </h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="trial-name">
-                        Name
-                    </label>
-                    <input id="trial-name" class="form-control" name="name" type="text" required>
-                </div>
-                <div class="form-group">
-                    <label for="trial-description">
-                        Description
-                    </label>
-                    <input id="trial-description" class="form-control" name="description" type="text" required>
-                </div>
-                <div class="form-group">
-                    <label for="trial-irb">
-                        IRB ID
-                    </label>
-                    <input id="trial-irb" class="form-control" name="IRBID" type="text" required>
-                </div>
-                <div class="form-group">
-                    <label for="trial-start">
-                        IRB Start Date
-                    </label>
-                    <input id="trial-start" class="form-control" name="startAt" type="date" required>
-                </div>
-                <div class="form-group">
-                    <label for="trial-end">
-                        IRB End Date
-                    </label>
-                    <input id="trial-end" class="form-control" name="endAt" type="date" required>
-                </div>
-                <div class="form-group">
-                    <label for="target-count">
-                        Target Count
-                    </label>
-                    <input id="trial-count" class="form-control" type="number" min="0" name="targetCount">
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Add
+                    </button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
-                </button>
-                <button type="submit" class="btn btn-primary">
-                    Add
-                </button>
-            </div>
-        </div>
         </form>
     </div>
 </div>
