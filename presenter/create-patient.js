@@ -38,14 +38,16 @@ module.exports = function (request, reply) {
 };
 
 /**
-* Takes in the patient.id and length of patient.id as parameters.
-* Determines the required zero padding as per the length and then creates the required 3 digit PIN
+* Converts the patient.id into temporary patient.pin with zero padding making it 3 digit pin.
+* @function addPadding
+* @param {pin} pin - patient.id
+* @param {len} len - lenght of patient.id
+* @returns {pin} returns the patient temporary pin
 */
 function addPadding (pin, len) {
     const padding = '0';
 
-    while(len < 3){
-        
+    while (len < 3) {
         pin = padding + pin;
         len++;
     }
