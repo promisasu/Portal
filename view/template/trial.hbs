@@ -10,78 +10,76 @@
             Trial: {{ trial.name }}
         </li>
     </ol>
-    <div class="col-sm-12">
-      <div class="col-sm-12 col-md-5 col-lg-6 col-xl-6">
-        <div class="col-sm-8 col-md-12 col-lg-12 col-xl-12">
-          <div class="card">
-            <div class="card-block">
-                <h4 class="card-title text-center">
-                    {{ trial.name }} Trial
-                </h4>
-                <p class="card-text">
-                    {{ trial.description }}
-                </p>
-                <table class="table">
-                    <tbody>
-                         <tr>
-                            <th scope="row">
-                                IRB ID
-                            </th>
-                            <td>
-                                {{ trial.IRBID }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                IRB Start Date
-                            </th>
-                            <td>
-                                {{ trial.start }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                IRB End Date
-                            </th>
-                            <td>
-                                {{ trial.end }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                Patient Count
-                            </th>
-                            <td>
-                                {{ trial.patientCount }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                Noncompliant Count
-                            </th>
-                            <td>
-                                {{ trial.noncompliantCount }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4 col-md-12 col-lg-12 col-xl-12">
-          <div id="legend" class="card col-sm-12">
-              <div class="card-block">
-                  <h4 class="card-title">
-                      Legend
-                  </h4>
-              </div>
+    <div class="col-sm-12 col-md-5 col-lg-6 col-xl-6">
+      <div class="col-sm-8 col-md-12 col-lg-12 col-xl-12">
+        <div class="card">
+          <div class="card-block">
+              <h4 class="card-title text-center">
+                  {{ trial.name }} Trial
+              </h4>
+              <p class="card-text">
+                  {{ trial.description }}
+              </p>
+              <table class="table">
+                  <tbody>
+                       <tr>
+                          <th scope="row">
+                              IRB ID
+                          </th>
+                          <td>
+                              {{ trial.IRBID }}
+                          </td>
+                      </tr>
+                      <tr>
+                          <th scope="row">
+                              IRB Start Date
+                          </th>
+                          <td>
+                              {{ trial.start }}
+                          </td>
+                      </tr>
+                      <tr>
+                          <th scope="row">
+                              IRB End Date
+                          </th>
+                          <td>
+                              {{ trial.end }}
+                          </td>
+                      </tr>
+                      <tr>
+                          <th scope="row">
+                              Patient Count
+                          </th>
+                          <td>
+                              {{ trial.patientCount }}
+                          </td>
+                      </tr>
+                      <tr>
+                          <th scope="row">
+                              Noncompliant Count
+                          </th>
+                          <td>
+                              {{ trial.noncompliantCount }}
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-md-7 col-lg-6 col-xl-6">
-        <div class="card">
-          <canvas id="trialChart" height="200%"></canvas>
+      <div class="col-sm-4 col-md-12 col-lg-12 col-xl-12">
+        <div id="legend" class="card col-sm-12">
+            <div class="card-block">
+                <h4 class="card-title">
+                    Legend
+                </h4>
+            </div>
         </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-7 col-lg-6 col-xl-6">
+      <div class="card">
+        <canvas id="trialChart" height="200%"></canvas>
       </div>
     </div>
     <div class="col-xs-12">
