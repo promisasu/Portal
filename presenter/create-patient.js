@@ -25,8 +25,9 @@ module.exports = function (request, reply) {
     .then(function (data) {
         newPatient = data[0];
         const currentTrial = data[1];
-        const temp = addPadding(newPatient.id.toString(),newPatient.id.toString().length);
+        const temp = addPadding(newPatient.id.toString(), newPatient.id.toString().length);
         const pin = currentTrial.id.toString().concat(temp);
+
         newPatient.pin = pin;
         newPatient.save();
         return currentTrial.addPatient(newPatient);
@@ -36,10 +37,15 @@ module.exports = function (request, reply) {
     });
 };
 
-function addPadding(pin, len){
-    const padding = "0";
+/**
+* Takes in the patient.id and length of patient.id as parameters.
+* Determines the required zero padding as per the length and then creates the required 3 digit PIN
+*/
+function addPadding (pin, len) {
+    const padding = '0';
+
     while(len < 3){
-        console.log("Inside while loop");
+        
         pin = padding + pin;
         len++;
     }
