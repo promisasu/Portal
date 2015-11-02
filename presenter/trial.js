@@ -108,7 +108,7 @@ function processPatient (currentPatient) {
     const randomDateDisplay = moment(randomDate).format('L');
 
     return {
-        id: patient.id,
+        pin: patient.pin,
         status: statuses[randomStatus],
         statusType: statusTypes[randomStatus],
         stage: randomStage,
