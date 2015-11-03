@@ -4,7 +4,7 @@
  * @module presenter/create-trial
  */
 
-const database = require('../model');
+const database = require('../../model');
 
 /**
  * Creates a new Trial

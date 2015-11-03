@@ -2,11 +2,11 @@
 
 const Joi = require('joi');
 
-const createTrial = require('./presenter/create-trial');
-const createPatient = require('./presenter/create-patient');
-const dashboardPresenter = require('./presenter/dashboard');
-const trialPresenter = require('./presenter/trial');
-const patientPresenter = require('./presenter/patient');
+const createTrial = require('./handler/create-trial');
+const createPatient = require('./handler/create-patient');
+const dashboardPresenter = require('./handler/dashboard');
+const trialPresenter = require('./handler/trial');
+const patientPresenter = require('./handler/patient');
 
 module.exports = [
     {

@@ -7,7 +7,7 @@
 const _ = require('lodash');
 const moment = require('moment');
 
-const database = require('../model');
+const database = require('../../model');
 
 /**
  * A dashboard view with overview of all trials and patients.

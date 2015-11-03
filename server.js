@@ -7,7 +7,8 @@ const vision = require('vision');
 const handlebars = require('handlebars');
 
 // load router and database
-const router = require('./router');
+const dashboardRouter = require('./controller/router');
+const apiRouter = require('./api/router');
 const database = require('./model');
 
 module.exports = function (configuration) {
@@ -53,7 +54,8 @@ module.exports = function (configuration) {
     database.setup(configuration.database);
 
     // load application routes
-    server.route(router);
+    server.route(dashboardRouter);
+    server.route(apiRouter);
 
     // start the server
     server.start(() => {
