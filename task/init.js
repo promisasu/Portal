@@ -26,7 +26,7 @@ function init (done) {
         prompt: 'hostname:',
         default: 'localhost'
     })
-    .then(function (serverHostname) {
+    .then((serverHostname) => {
         config.server = {};
         config.server.hostname = serverHostname;
 
@@ -35,7 +35,7 @@ function init (done) {
             default: 3000
         });
     })
-    .then(function (port) {
+    .then((port) => {
         config.server.port = port;
 
         console.log('');
@@ -47,7 +47,7 @@ function init (done) {
             default: 'localhost'
         });
     })
-    .then(function (databaseHostname) {
+    .then((databaseHostname) => {
         config.database = {};
         config.database.hostname = databaseHostname;
 
@@ -56,7 +56,7 @@ function init (done) {
             default: 'prp_development'
         });
     })
-    .then(function (databaseName) {
+    .then((databaseName) => {
         config.database.name = databaseName;
 
         return read({
@@ -64,7 +64,7 @@ function init (done) {
             default: 'developer'
         });
     })
-    .then(function (databaseUsername) {
+    .then((databaseUsername) => {
         config.database.username = databaseUsername;
 
         return read({
@@ -72,7 +72,7 @@ function init (done) {
             default: 'password'
         });
     })
-    .then(function (databasePassword) {
+    .then((databasePassword) => {
         config.database.password = databasePassword;
 
         return read({
@@ -80,7 +80,7 @@ function init (done) {
             default: 'mysql'
         });
     })
-    .then(function (dialect) {
+    .then((dialect) => {
         config.database.dialect = dialect;
 
         writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, 2));

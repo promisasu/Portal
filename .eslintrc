@@ -161,9 +161,19 @@ rules:
     require-jsdoc: 2
 
     # ECMAScript 6
+    arrow-body-style:
+        - 2
+        - always
+    arrow-parens: 2
+    arrow-spacing: 2
+    no-arrow-condition: 2
     no-const-assign: 2
     no-var: 2
+    prefer-arrow-callback: 2
     prefer-const: 2
+    prefer-spread: 2
+    prefer-template: 2
+    require-yield: 2
 
     # Lodash
     lodash3/prop-shorthand: 2

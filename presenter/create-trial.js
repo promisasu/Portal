@@ -16,7 +16,7 @@ const database = require('../model');
 module.exports = function (request, reply) {
     const trial = database.sequelize.model('trial');
 
-    trial.create(request.payload).then(function (newTrial) {
-        reply.redirect('/trial/' + newTrial.id);
+    trial.create(request.payload).then((newTrial) => {
+        reply.redirect(`/trial/${newTrial.id}`);
     });
 };

@@ -14,11 +14,11 @@ const npmPackage = require('../package.json');
  * @returns {Null} nothing
  */
 function doc (done) {
-    npm.load(npmPackage, function (err) {
+    npm.load(npmPackage, (err) => {
         if (err) {
             console.log(err);
         }
-        npm.commands.runScript(['documentation'], function (err) {
+        npm.commands.runScript(['documentation'], (err) => {
             if (err) {
                 console.log(err);
             }

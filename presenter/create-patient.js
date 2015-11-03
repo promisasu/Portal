@@ -22,7 +22,7 @@ module.exports = function (request, reply) {
         patient.create({}),
         trial.findById(request.payload.trialId)
     ])
-    .then(function (data) {
+    .then((data) => {
         newPatient = data[0];
         const currentTrial = data[1];
         const temp = addPadding(newPatient.id.toString(), newPatient.id.toString().length);
@@ -32,8 +32,8 @@ module.exports = function (request, reply) {
         newPatient.save();
         return currentTrial.addPatient(newPatient);
     })
-    .then(function () {
-        reply.redirect('/patient/' + newPatient.id);
+    .then(() => {
+        reply.redirect(`/patient/${newPatient.id}`);
     });
 };
 

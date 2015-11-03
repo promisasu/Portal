@@ -31,4 +31,6 @@ rules:
     # ECMAScript 6
     no-const-assign: 0
     no-var: 0
+    prefer-arrow-callback: 0
     prefer-const: 0
+    prefer-template: 0
