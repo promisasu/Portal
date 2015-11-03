@@ -20,7 +20,7 @@ module.exports = function (configuration) {
                 register: vision
             }
         ],
-        function (err) {
+        (err) => {
             if (err) {
                 console.log(err);
             }
@@ -56,7 +56,7 @@ module.exports = function (configuration) {
     server.route(router);
 
     // start the server
-    server.start(function () {
+    server.start(() => {
         console.log('Server running at:', server.info.uri);
     });
 };

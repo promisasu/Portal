@@ -19,7 +19,7 @@ const database = require('../model');
 module.exports = function (request, reply) {
     const trial = database.sequelize.model('trial');
 
-    trial.findAll().then(function (trials) {
+    trial.findAll().then((trials) => {
         // Process data into format expected in view
         const trialData = _.map(trials, processTrial);
 

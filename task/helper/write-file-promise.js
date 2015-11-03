@@ -3,8 +3,8 @@
 const fs = require('fs');
 
 module.exports = function (filename, data, options) {
-    return new Promise(function (resolve, reject) {
-        fs.writeFile(filename, data, options, function (err) {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(filename, data, options, (err) => {
             if (err) {
                 reject(err);
             } else {

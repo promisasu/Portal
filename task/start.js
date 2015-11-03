@@ -14,13 +14,13 @@ const path = require('path');
  * @returns {Null} nothing
  */
 function start (done) {
-    processManager.connect(function () {
+    processManager.connect(() => {
         processManager.start(
             {
                 name: 'prp-server',
                 script: path.resolve(__dirname, 'helper', 'start-server.js')
             },
-            function () {
+            () => {
                 processManager.disconnect(done);
             }
         );

@@ -14,7 +14,7 @@ const database = require('../model');
 function sync (done) {
     database.setup(require('../config.json').database); // eslint-disable-line global-require
     database.sequelize.sync({force: true})
-        .then(function () {
+        .then(() => {
             database.sequelize.close();
             done();
         });

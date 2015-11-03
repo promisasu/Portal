@@ -21,12 +21,12 @@ const database = require('../model');
 module.exports = function (request, reply) {
     const trial = database.sequelize.model('trial');
 
-    trial.findById(request.params.id).then(function (currentTrial) {
+    trial.findById(request.params.id).then((currentTrial) => {
         if (currentTrial === null) {
             reply.redirect('/404');
         } else {
             currentTrial.getPatients()
-            .then(function (patients) {
+            .then((patients) => {
                 reply.view('trial', {
                     title: 'Pain Reporting Portal',
                     trial: processTrial(currentTrial),

@@ -12,8 +12,8 @@ const processManager = require('pm2');
  * @returns {Null} nothing
  */
 function stop (done) {
-    processManager.connect(function () {
-        processManager.delete('prp-server', function () {
+    processManager.connect(() => {
+        processManager.delete('prp-server', () => {
             processManager.disconnect(done);
         });
     });
