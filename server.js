@@ -7,7 +7,7 @@ const vision = require('vision');
 const handlebars = require('handlebars');
 
 // load router and database
-const router = require('./router');
+const router = require('./controller/router');
 const database = require('./model');
 
 module.exports = function (configuration) {
