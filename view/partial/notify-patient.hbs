@@ -17,46 +17,20 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <div class="dropdown open">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
-                                Trial
-                            </button>
-                            <div class="dropdown-menu">
-                                {{#each trials}}
-                                    <a class="dropdown-item" href="#">
-                                        <span class="label label-pill label-danger">
-                                            {{ noncompliantCount }}
-                                        </span>
-                                        {{ name }}
-                                    </a>
-                                {{/each}}
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">
-                                    <span class="label label-pill label-danger">
-                                        {{ status.noncompliantCount }}
-                                    </span>
-                                    All
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="dropdown open">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
-                                Notification Type
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">
-                                    In App
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    Toast
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    Push
-                                </a>
-                            </div>
-                        </div>
+                        <label>
+                            Notification Type
+                        </label>
+                        <select class="form-control">
+                            <option>
+                                In App
+                            </option>
+                            <option>
+                                Toast
+                            </option>
+                            <option>
+                                Push
+                            </option>
+                        </select>
                     </div>
                 </form>
             </div>
