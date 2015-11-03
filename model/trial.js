@@ -15,7 +15,7 @@ const Sequelize = require('sequelize');
  * @property {Date} IRBStart - Institutional Review Board permit starts
  * @property {Date} IRDEnd - Institutional Review Board permit ends
  * @property {Number} targetCount - Number of Patients that will participate in Trial
- * @property {Number} patientPinCounter - Count off patient id within Trail
+ * @property {Number} patientPinCounter - Count off patient id within Trial
  */
 
 /**
