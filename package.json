@@ -31,7 +31,7 @@
     "handlebars": "^4.0.4",
     "hapi": "^11.0.3",
     "joi": "^7.0.0",
-    "jsdoc": "^3.3.3",
+    "jsdoc": "github:jsdoc3/jsdoc",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "mysql": "^2.9.0",

@@ -82,8 +82,8 @@ module.exports = function (request, reply) {
  */
 function processTrial (currentTrial) {
     const trial = currentTrial.dataValues;
-    const startDate = moment(trial.startAt);
-    const endDate = moment(trial.endAt);
+    const startDate = moment(trial.IRBStart);
+    const endDate = moment(trial.IRBEnd);
     const statuses = ['Pending', 'Upcoming', 'In Progress', 'Completed'];
     const status = statuses[Math.floor(Math.random() * 4)];
     const targetCount = trial.targetCount;
