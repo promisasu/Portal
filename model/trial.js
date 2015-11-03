@@ -10,6 +10,12 @@ const Sequelize = require('sequelize');
  * a clinical Trial has many Patients taking Surveys
  * @typedef {Object} Trial
  * @property {String} name - trial name
+ * @property {String} description - short blurb about the trial
+ * @property {String} IRBID - Institutional Review Board Identifier
+ * @property {Date} IRBStart - Institutional Review Board permit starts
+ * @property {Date} IRDEnd - Institutional Review Board permit ends
+ * @property {Number} targetCount - Number of Patients that will participate in Trial
+ * @property {Number} patientPinCounter - Count off patient id within Trail
  */
 
 /**
@@ -41,16 +47,21 @@ module.exports = function (sequelize) {
                     min: 4
                 }
             },
-            startAt: {
+            IRBStart: {
                 type: Sequelize.DATE,
                 allowNull: false
             },
-            endAt: {
+            IRBEnd: {
                 type: Sequelize.DATE,
                 allowNull: false
             },
             targetCount: {
                 type: Sequelize.INTEGER,
+                allowNull: false
+            },
+            patientPinCounter: {
+                type: Sequelize.INTEGER,
+                defaultValue: 0,
                 allowNull: false
             }
         },

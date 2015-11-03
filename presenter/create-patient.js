@@ -16,40 +16,31 @@ const database = require('../model');
 module.exports = function (request, reply) {
     const patient = database.sequelize.model('patient');
     const trial = database.sequelize.model('trial');
+    let currentTrial;
     let newPatient;
+    let pin;
 
-    Promise.all([
-        patient.create({}),
-        trial.findById(request.payload.trialId)
-    ])
-    .then((data) => {
-        newPatient = data[0];
-        const currentTrial = data[1];
-        const temp = addPadding(newPatient.id.toString(), newPatient.id.toString().length);
-        const pin = currentTrial.id.toString().concat(temp);
+    // Get Trial the patient will be added to
+    trial.findById(request.payload.trialId)
+    // Get next availible Patient Pin
+    .then((tempTrial) => {
+        currentTrial = tempTrial;
 
-        newPatient.pin = pin;
-        newPatient.save();
+        pin = currentTrial.id * 1000 + currentTrial.patientPinCounter;
+        currentTrial.patientPinCounter++;
+        return currentTrial.save();
+    })
+    // Create the new Patient
+    .then(() => {
+        return patient.create({pin: pin});
+    })
+    // Link patient to Trial
+    .then((tempPatient) => {
+        newPatient = tempPatient;
         return currentTrial.addPatient(newPatient);
     })
+    // Show the new Patient
     .then(() => {
-        reply.redirect(`/patient/${newPatient.id}`);
+        reply.redirect(`/patient/${newPatient.pin}`);
     });
 };
-
-/**
-* Converts the patient.id into temporary patient.pin with zero padding making it 3 digit pin.
-* @function addPadding
-* @param {pin} pin - patient.id
-* @param {len} len - lenght of patient.id
-* @returns {pin} returns the patient temporary pin
-*/
-function addPadding (pin, len) {
-    const padding = '0';
-
-    while (len < 3) {
-        pin = padding + pin;
-        len++;
-    }
-    return pin;
-}

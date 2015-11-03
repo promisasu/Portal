@@ -22,7 +22,8 @@ module.exports = function (sequelize) {
     sequelize.define('patient',
         {
             pin: {
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                primary: true
             },
             deviceType: {
                 type: Sequelize.ENUM,

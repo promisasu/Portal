@@ -24,8 +24,8 @@ module.exports = [
                     name: Joi.string().min(3),
                     description: Joi.string(),
                     IRBID: Joi.string().min(4),
-                    startAt: Joi.date(),
-                    endAt: Joi.date(),
+                    IRBStart: Joi.date(),
+                    IRBEnd: Joi.date(),
                     targetCount: Joi.number().integer().min(0)
                 }
             }
@@ -58,12 +58,12 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/patient/{id}',
+        path: '/patient/{pin}',
         handler: patientPresenter,
         config: {
             validate: {
                 params: {
-                    id: Joi.number().integer()
+                    pin: Joi.number().integer()
                 }
             }
         }
