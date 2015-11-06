@@ -40,6 +40,8 @@ module.exports = function (configuration) {
         layoutPath: 'layout',
         // partial elements that can be mixed into pages
         partialsPath: 'partial',
+        // helpers to generate snippets programatticaly
+        helpersPath: 'helper',
         // sets default layout to 'layout/default.handlebars'
         layout: 'default'
     });

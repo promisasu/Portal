@@ -99,7 +99,7 @@
                             </button>
                           </div>
                           <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" id="enrollPatient">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPatient">
                                 ENROLL NEW PATIENT
                             </button>
                           </div>
@@ -200,15 +200,4 @@
     var legend = document.getElementById('legend');
 
     legend.innerHTML += myNewChart.generateLegend();
-
-    $('#enrollPatient').click(function () {
-        'use strict';
-        $('tbody tr').hide();
-    });
-
-    $('#btn').click(function () {
-        'use strict';
-        $('tbody tr').show();
-    });
-
 </script>

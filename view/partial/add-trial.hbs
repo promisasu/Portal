@@ -1,4 +1,4 @@
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="addTrial" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <form action="/trial" method="POST">
             <div class="modal-content">
@@ -38,13 +38,13 @@
                         <label for="trial-start">
                             IRB Start Date
                         </label>
-                        <input id="trial-start" class="form-control" name="IRBStart" type="date" required>
+                        <input id="trial-start" class="form-control" name="IRBStart" type="date" min="{{ today }}" required>
                     </div>
                     <div class="form-group">
                         <label for="trial-end">
                             IRB End Date
                         </label>
-                        <input id="trial-end" class="form-control" name="IRBEnd" type="date" required>
+                        <input id="trial-end" class="form-control" name="IRBEnd" type="date" min="{{ today }}" required>
                     </div>
                     <div class="form-group">
                         <label for="target-count">
