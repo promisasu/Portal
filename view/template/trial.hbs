@@ -200,4 +200,15 @@
     var legend = document.getElementById('legend');
 
     legend.innerHTML += myNewChart.generateLegend();
+
+    $('#enrollPatient').click(function () {
+        'use strict';
+        $('tbody tr').hide();
+    });
+
+    $('#btn').click(function () {
+        'use strict';
+        $('tbody tr').show();
+    });
+
 </script>
