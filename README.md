@@ -20,7 +20,7 @@
 1. run `gulp start`
 
 ### Test the Portal
-1. run `gulp lint`
+1. run `gulp test`
 
 ### View Code Documentation
 1. run `gulp doc`

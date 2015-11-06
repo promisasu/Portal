@@ -57,8 +57,5 @@ module.exports = function (configuration) {
     server.route(dashboardRouter);
     server.route(apiRouter);
 
-    // start the server
-    server.start(() => {
-        console.log('Server running at:', server.info.uri);
-    });
+    return server;
 };
