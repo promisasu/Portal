@@ -8,6 +8,8 @@ const stop = require('./task/stop');
 const sync = require('./task/sync');
 const dev = require('./task/dev');
 const lint = require('./task/lint');
+const unit = require('./task/unit');
+const syncTest = require('./task/syncTest');
 const doc = require('./task/doc');
 
 gulp.task(init);
@@ -16,4 +18,7 @@ gulp.task(stop);
 gulp.task(sync);
 gulp.task(dev);
 gulp.task(lint);
+gulp.task(syncTest);
+gulp.task(unit);
+gulp.task('test', gulp.series('lint', 'syncTest', 'unit'));
 gulp.task(doc);

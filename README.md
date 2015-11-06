@@ -20,7 +20,9 @@
 1. run `gulp start`
 
 ### Test the Portal
-1. run `gulp lint`
+*Ensure that there is a database named `prp_test`*
+
+1. run `gulp test`
 
 ### View Code Documentation
 1. run `gulp doc`
