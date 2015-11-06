@@ -26,22 +26,22 @@
   "dependencies": {
     "ava": "^0.3.0",
     "colors.css": "^2.3.0",
-    "eslint": "^1.8.0",
+    "eslint": "^1.9.0",
     "eslint-plugin-html": "^1.1.0",
     "eslint-plugin-lodash3": "^0.1.13",
     "gulp": "github:gulpjs/gulp#4.0",
     "handlebars": "^4.0.4",
-    "hapi": "^11.0.4",
+    "hapi": "^11.1.0",
     "joi": "^7.0.0",
     "jsdoc": "github:jsdoc3/jsdoc",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "mysql": "^2.9.0",
-    "npm": "^3.3.12",
-    "pm2": "^0.15.9",
+    "npm": "^3.4.0",
+    "pm2": "^0.15.10",
     "read": "^1.0.7",
     "sequelize": "^3.13.0",
-    "vision": "^3.0.0"
+    "vision": "^4.0.0"
   },
   "engines": {
     "node": ">=4.0.0"
