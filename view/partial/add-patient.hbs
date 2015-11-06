@@ -1,4 +1,10 @@
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog">
+<style>
+    .modal-backdrop.in {
+        opacity: 1;
+    }
+</style>
+
+<div class="modal fade" id="addPatient" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <form action="/patient" method="POST">
             <div class="modal-content">
@@ -21,7 +27,7 @@
                         <label for="patient-stage">
                             Stage
                         </label>
-                        <select class="form-control" name="stageId" id="patient-stage" id="btn">
+                        <select class="form-control" name="stageId" id="patient-stage">
                             <option value="0">
                                 Stage 1
                             </option>
@@ -32,7 +38,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         Close
                     </button>
                     <button type="submit" class="btn btn-primary">

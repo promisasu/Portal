@@ -66,8 +66,8 @@ module.exports = function (request, reply) {
  */
 function processTrial (currentTrial) {
     const trial = currentTrial.dataValues;
-    const startDate = moment(trial.startAt);
-    const endDate = moment(trial.endAt);
+    const startDate = moment(trial.IRBStart);
+    const endDate = moment(trial.IRBEnd);
 
     return {
         id: trial.id,
@@ -75,7 +75,7 @@ function processTrial (currentTrial) {
         description: trial.description,
         IRBID: trial.IRBID,
         start: startDate.format('L'),
-        end: startDate.format('L'),
+        end: endDate.format('L'),
          // TODO: Currently fake data, make this live data
         duration: startDate.to(endDate, true),
         patientCount: Math.floor(Math.random() * 900 + 100),

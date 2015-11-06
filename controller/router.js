@@ -24,8 +24,8 @@ module.exports = [
                     name: Joi.string().min(3),
                     description: Joi.string(),
                     IRBID: Joi.string().min(4),
-                    IRBStart: Joi.date(),
-                    IRBEnd: Joi.date(),
+                    IRBStart: Joi.date().min('now'),
+                    IRBEnd: Joi.date().min('now'),
                     targetCount: Joi.number().integer().min(0)
                 }
             }
