@@ -3,6 +3,7 @@
 /**
  * @module model/join-surveys-and-questions
  */
+const Sequelize = require('sequelize');
 
 /**
  * This joins the SurveyTemplate table and QuestionTemplate table
@@ -16,5 +17,19 @@
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('join_surveys_and_questions', {}, {paranoid: true});
+    sequelize.define(
+        'join_surveys_and_questions',
+        {
+            questionOrder: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
+            }
+        },
+        {
+            paranoid: true
+        }
+    );
 };

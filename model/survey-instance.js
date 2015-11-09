@@ -19,7 +19,8 @@ const Sequelize = require('sequelize');
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('survey_instance',
+    sequelize.define(
+        'survey_instance',
         {
             startTime: {
                 type: Sequelize.DATE,
