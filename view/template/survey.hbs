@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <br>
+    <ol class="breadcrumb">
+        <li>
+            <a href="/">
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="/trial/{{ trial.id }}">
+                Trial: {{ trial.name }}
+            </a>
+        </li>
+        <li>
+            <a href="/trial/{{ trial.id }}">
+                Patient: {{ patient.pin }}
+            </a>
+        </li>
+        <li class="active">
+            Survey: {{ survey.id }}
+        </li>
+    </ol>
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">
+                    Survey
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        'use strict';
+        var survey = JSON.parse('{{{ surveyJson }}}');
+	});
+</script>

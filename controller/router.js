@@ -7,6 +7,7 @@ const createPatient = require('./handler/create-patient');
 const dashboardPresenter = require('./handler/dashboard');
 const trialPresenter = require('./handler/trial');
 const patientPresenter = require('./handler/patient');
+const surveyPresenter = require('./handler/survey');
 
 module.exports = [
     {
@@ -64,6 +65,18 @@ module.exports = [
             validate: {
                 params: {
                     pin: Joi.number().integer()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/survey/{id}',
+        handler: surveyPresenter,
+        config: {
+            validate: {
+                params: {
+                    id: Joi.number().integer()
                 }
             }
         }
