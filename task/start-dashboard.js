@@ -1,24 +1,24 @@
 'use strict';
 
 /**
- * @module task/start
+ * @module task/start-dashboard
  */
 
 const processManager = require('pm2');
 const path = require('path');
 
 /**
- * Starts the server as a system service.
+ * Starts the dashboard as a system service.
  * This allows for running on a production server.
  * @param {Function} done - completion callback
  * @returns {Null} nothing
  */
-function start (done) {
+function startDashboard (done) {
     processManager.connect(() => {
         processManager.start(
             {
-                name: 'prp-server',
-                script: path.resolve(__dirname, 'helper', 'start-server.js')
+                name: 'prp-dashboard',
+                script: path.resolve(__dirname, 'helper', 'start-dashboard.js')
             },
             () => {
                 processManager.disconnect(done);
@@ -27,6 +27,6 @@ function start (done) {
     });
 }
 
-start.description = 'Starts the server as a system service.';
+startDashboard.description = 'Starts the dashboard as a system service.';
 
-module.exports = start;
+module.exports = startDashboard;

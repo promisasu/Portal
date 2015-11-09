@@ -5,7 +5,7 @@ const config = require('../../config.json');
 
 config.database.name = 'prp_test';
 
-const server = require('../../server')(config);
+const server = require('../server')(config);
 
 test('redirect when trial does not exist', (t) => {
     server.inject(
