@@ -1,24 +1,24 @@
 'use strict';
 
 /**
- * @module task/stop
+ * @module task/stop-api
  */
 
 const processManager = require('pm2');
 
 /**
- * Stops the server system service.
+ * Stops the api system service.
  * @param {Function} done - completion callback
  * @returns {Null} nothing
  */
-function stop (done) {
+function stopApi (done) {
     processManager.connect(() => {
-        processManager.delete('prp-server', () => {
+        processManager.delete('prp-api', () => {
             processManager.disconnect(done);
         });
     });
 }
 
-stop.description = 'Stops the server system service.';
+stopApi.description = 'Stops the api system service.';
 
-module.exports = stop;
+module.exports = stopApi;

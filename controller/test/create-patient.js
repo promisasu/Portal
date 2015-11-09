@@ -5,7 +5,7 @@ const config = require('../../config.json');
 
 config.database.name = 'prp_test';
 
-const server = require('../../server')(config);
+const server = require('../server')(config);
 
 test('invalid patient cannot be added', (t) => {
     server.inject(

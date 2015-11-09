@@ -5,7 +5,7 @@ const config = require('../../config.json');
 
 config.database.name = 'prp_test';
 
-const server = require('../../server')(config);
+const server = require('../server')(config);
 
 test('trial name must have at least 3 letters', (t) => {
     server.inject(
