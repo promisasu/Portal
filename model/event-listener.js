@@ -19,7 +19,8 @@ const Sequelize = require('sequelize');
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('event_listener',
+    sequelize.define(
+        'event_listener',
         {
             rule: {
                 type: Sequelize.STRING,

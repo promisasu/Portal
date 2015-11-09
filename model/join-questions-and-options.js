@@ -16,5 +16,11 @@
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('join_questions_and_options', {}, {paranoid: true});
+    sequelize.define(
+        'join_questions_and_options',
+        {},
+        {
+            paranoid: true
+        }
+    );
 };

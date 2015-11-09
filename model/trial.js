@@ -25,7 +25,8 @@ const Sequelize = require('sequelize');
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('trial',
+    sequelize.define(
+        'trial',
         {
             name: {
                 type: Sequelize.STRING,
