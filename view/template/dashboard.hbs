@@ -95,7 +95,7 @@
                     </div>
                 </div><br>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="trials">
                         <thead>
                             <tr>
                                 <th>
@@ -213,4 +213,17 @@
     var legend = document.getElementById('legend');
 
     legend.innerHTML += radarChart.generateLegend();
+
+    $(document).ready(function () {
+        'use strict';
+        $('#trials').DataTable()
+        .columnFilter({
+            aoColumns: [{type: 'select', values: ['Pending', 'Upcoming', 'Active', 'Completed']},
+            {type: 'text'},
+            null,
+            {type: 'number'},
+            {type: 'select'}
+            ]
+        });
+    });
 </script>
