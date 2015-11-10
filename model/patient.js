@@ -23,7 +23,8 @@ const Sequelize = require('sequelize');
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('patient',
+    sequelize.define(
+        'patient',
         {
             pin: {
                 type: Sequelize.INTEGER,

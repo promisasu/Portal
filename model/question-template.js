@@ -19,7 +19,8 @@ const Sequelize = require('sequelize');
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('question_template',
+    sequelize.define(
+        'question_template',
         {
             questionText: {
                 type: Sequelize.STRING,

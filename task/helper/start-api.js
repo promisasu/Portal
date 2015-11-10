@@ -1,7 +1,7 @@
 'use strict';
 
 const config = require('../../config.json');
-const server = require('../../server')(config);
+const server = require('../../api/server')(config);
 
 // start the server
 server.start(() => {

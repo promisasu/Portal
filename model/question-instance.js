@@ -19,8 +19,9 @@
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('question_instance',
-       {},
+    sequelize.define(
+        'question_instance',
+        {},
         {
             freezeTableName: true,
             paranoid: true
