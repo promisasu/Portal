@@ -83,6 +83,15 @@
                               <button class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown">
                                 STATUS
                               </button>
+                               <div>
+                              <select id="select-status">
+                              <option value="Pending">Pending</option>
+                              <option value="Upcoming">Upcoming</option>
+                              <option value="In Progress">In Progress</option>
+                              <option value="Completed">Completed</option>
+                              </select>
+                              </div>
+
                               <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Pending</a>
                                 <a class="dropdown-item" href="#">Upcoming</a>
@@ -202,6 +211,12 @@
 <script>
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('radarChart').getContext('2d');
+    var dataTable = $('#example').dataTable();
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+
     var options = {
         legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.datasets.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[i].backgroundColor%>" class="fa fa-circle"></i> <%=data.datasets[i].label%></li><%}%></ul>'
     };
@@ -210,20 +225,30 @@
         data: data,
         options: options
     });
+
     var legend = document.getElementById('legend');
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    today = dd + '/' + mm + '/' + yyyy;
 
     legend.innerHTML += radarChart.generateLegend();
 
-    $(document).ready(function () {
+    $.fn.dataTableExt.afnFiltering.push(function (oSettings, aData) {
         'use strict';
-        $('#trials').DataTable()
-        .columnFilter({
-            aoColumns: [{type: 'select', values: ['Pending', 'Upcoming', 'Active', 'Completed']},
-            {type: 'text'},
-            null,
-            {type: 'number'},
-            {type: 'select'}
-            ]
-        });
-    });
+        if ($('#select-status').val() === 'Pending') {
+            return aData[4] > today;
+        }
+    }
+    );
+    $('#select-status').change(function () {
+        'use strict';
+        dataTable.fnDraw();
+    }
+    );
+
 </script>
