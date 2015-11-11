@@ -207,7 +207,9 @@
     var dd = today.getDate();
     var mm = today.getMonth() + 1;
     var yyyy = today.getFullYear();
-    var dataTable = $('#trials').dataTable();
+    var api = new $.fn.dataTable.Api('#trials');
+    var td = api.cell(this);
+    var table;
     
     var options = {
         legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.datasets.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[i].backgroundColor%>" class="fa fa-circle"></i> <%=data.datasets[i].label%></li><%}%></ul>'
@@ -230,31 +232,28 @@
 
     legend.innerHTML += radarChart.generateLegend();
 
-    $('#trials').dataTable( {
-      "columnDefs": [ {
-      "targets": [4, 5],
-      "searchable": true,
-      render: function(data, type, full, meta){
-      if(type === 'filter' || type === 'sort'){
-      var api = new $.fn.dataTable.Api(meta.settings);
-      var td = api.cell({row: meta.row, column: meta.col}).node();
-      data = $('select, input', td).val();
+    table = $('#trials').dataTable({
+        columnDefs: [{
+            targets: [4, 5],
+            searchable: true,
+            render: function (data, type) {
+                'use strict';
+                if (type === 'filter' || type === 'sort') {
+                    data = $('select, input', td).val();
+                }
+                return data;
+            }
+        }]
+});
 
-      }
-      return data;
-    } ]
-} );
+    $('tbody select, tbody input', table.table().node()).on('change', function () {
+        'use strict';
+        table.row($(this).closest('tr')).invalidate();
+});
 
-    $('tbody select, tbody input', table.table().node()).on('change', function(){
-     table.row($(this).closest('tr')).invalidate();
-});  
-   
     $('#select-status').change(function () {
         'use strict';
-
-    }
-    );
-
-
+}
+);
 
 </script>
