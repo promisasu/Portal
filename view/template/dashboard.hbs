@@ -83,14 +83,6 @@
                               <button class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown">
                                 STATUS
                               </button>
-                               <div>
-                              <select id="select-status">
-                              <option value="Pending">Pending</option>
-                              <option value="Upcoming">Upcoming</option>
-                              <option value="In Progress">In Progress</option>
-                              <option value="Completed">Completed</option>
-                              </select>
-                              </div>
 
                               <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Pending</a>
@@ -211,12 +203,12 @@
 <script>
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('radarChart').getContext('2d');
-    var dataTable = $('#example').dataTable();
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1;
     var yyyy = today.getFullYear();
-
+    var dataTable = $('#trials').dataTable();
+    
     var options = {
         legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.datasets.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[i].backgroundColor%>" class="fa fa-circle"></i> <%=data.datasets[i].label%></li><%}%></ul>'
     };
@@ -234,21 +226,35 @@
     if (mm < 10) {
         mm = '0' + mm;
     }
-    today = dd + '/' + mm + '/' + yyyy;
+    today = yyyy + '/' + mm + '/' + dd;
 
     legend.innerHTML += radarChart.generateLegend();
 
-    $.fn.dataTableExt.afnFiltering.push(function (oSettings, aData) {
-        'use strict';
-        if ($('#select-status').val() === 'Pending') {
-            return aData[4] > today;
-        }
-    }
-    );
+    $('#trials').dataTable( {
+      "columnDefs": [ {
+      "targets": [4, 5],
+      "searchable": true,
+      render: function(data, type, full, meta){
+      if(type === 'filter' || type === 'sort'){
+      var api = new $.fn.dataTable.Api(meta.settings);
+      var td = api.cell({row: meta.row, column: meta.col}).node();
+      data = $('select, input', td).val();
+
+      }
+      return data;
+    } ]
+} );
+
+    $('tbody select, tbody input', table.table().node()).on('change', function(){
+     table.row($(this).closest('tr')).invalidate();
+});  
+   
     $('#select-status').change(function () {
         'use strict';
-        dataTable.fnDraw();
+
     }
     );
+
+
 
 </script>
