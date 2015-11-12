@@ -245,6 +245,13 @@
         }]
 });
 
+ table = $('#trials').dataTable({
+        columnDefs: [{
+            visible: false,
+            targets: 0
+        }]
+});
+
     $('tbody select, tbody input', table.table().node()).on('change', function () {
         'use strict';
         table.row($(this).closest('tr')).invalidate();
