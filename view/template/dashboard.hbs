@@ -79,11 +79,10 @@
                             </button>
                           </div>
                           <div class="btn-group" role="group">
-                            <div class="dropdown">
+                            <div class="dropdown" id="status">
                               <button class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown">
                                 STATUS
                               </button>
-
                               <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Pending</a>
                                 <a class="dropdown-item" href="#">Upcoming</a>
@@ -251,8 +250,9 @@
         table.row($(this).closest('tr')).invalidate();
 });
 
-    $('#select-status').change(function () {
+    $('#status').on('click', 'a', function () {
         'use strict';
+        alert('Status Filter clicked');
 }
 );
 
