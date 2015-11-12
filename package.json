@@ -24,11 +24,11 @@
   },
   "homepage": "https://github.com/ser515asu/PRP-Manhattan-Project#readme",
   "dependencies": {
-    "ava": "^0.3.0",
+    "ava": "^0.4.2",
     "colors.css": "^2.3.0",
     "eslint": "^1.9.0",
     "eslint-plugin-html": "^1.1.0",
-    "eslint-plugin-lodash3": "^0.1.13",
+    "eslint-plugin-lodash3": "^0.1.15",
     "gulp": "github:gulpjs/gulp#4.0",
     "handlebars": "^4.0.4",
     "hapi": "^11.1.0",
@@ -41,7 +41,7 @@
     "pm2": "^0.15.10",
     "read": "^1.0.7",
     "sequelize": "^3.13.0",
-    "vision": "^4.0.0"
+    "vision": "^4.0.1"
   },
   "engines": {
     "node": ">=4.0.0"
