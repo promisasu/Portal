@@ -206,10 +206,10 @@
     var dd = today.getDate();
     var mm = today.getMonth() + 1;
     var yyyy = today.getFullYear();
-    var api = new $.fn.dataTable.Api('#trials');
-    var td = api.cell(this);
     var table;
-    
+    var max;
+    var date;
+
     var options = {
         legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.datasets.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[i].backgroundColor%>" class="fa fa-circle"></i> <%=data.datasets[i].label%></li><%}%></ul>'
     };
@@ -227,35 +227,25 @@
     if (mm < 10) {
         mm = '0' + mm;
     }
-    today = yyyy + '/' + mm + '/' + dd;
+    today = mm + '/' + dd + '/' + yyyy;
 
     legend.innerHTML += radarChart.generateLegend();
 
-    table = $('#trials').dataTable({
-        columnDefs: [{
-            targets: [4, 5],
-            searchable: true,
-            render: function (data, type) {
-                'use strict';
-                if (type === 'filter' || type === 'sort') {
-                    data = $('select, input', td).val();
-                }
-                return data;
-            }
-        }]
-});
-
- table = $('#trials').dataTable({
-        columnDefs: [{
-            visible: false,
-            targets: 0
-        }]
-});
-
-    $('tbody select, tbody input', table.table().node()).on('change', function () {
+    $.fn.dataTable.ext.search.push(
+    function (settings, data) {
         'use strict';
-        table.row($(this).closest('tr')).invalidate();
+        settings = 0;
+        max = '2015/11/13';
+        date = data[5];
+        if (date > max) {
+            return true;
+        }
+        return false;
 });
+
+table = $('#trials').DataTable();
+// Event listener to the two range filtering inputs to redraw on input
+table.draw();
 
     $('#status').on('click', 'a', function () {
         'use strict';
