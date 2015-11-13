@@ -7,9 +7,8 @@ const vision = require('vision');
 const handlebars = require('handlebars');
 
 // load router and database
-const dashboardRouter = require('./controller/router');
-const apiRouter = require('./api/router');
-const database = require('./model');
+const router = require('./router');
+const database = require('../model');
 
 module.exports = function (configuration) {
     const server = new hapi.Server();
@@ -33,7 +32,7 @@ module.exports = function (configuration) {
         engines: {
             hbs: handlebars
         },
-        relativeTo: path.join(__dirname, 'view'),
+        relativeTo: path.join(__dirname, '..', 'view'),
         // templates that views can render
         path: 'template',
         // layouts that templates can extend
@@ -56,8 +55,7 @@ module.exports = function (configuration) {
     database.setup(configuration.database);
 
     // load application routes
-    server.route(dashboardRouter);
-    server.route(apiRouter);
+    server.route(router);
 
     return server;
 };

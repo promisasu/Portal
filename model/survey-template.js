@@ -19,10 +19,11 @@ const Sequelize = require('sequelize');
  * @returns {Null} nothing
  */
 module.exports = function (sequelize) {
-    sequelize.define('survey_template',
+    sequelize.define(
+        'survey_template',
         {
-            questionOrder: {
-                type: Sequelize.INTEGER,
+            name: {
+                type: Sequelize.STRING,
                 allowNull: false,
                 validate: {
                     notEmpty: true

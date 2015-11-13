@@ -141,6 +141,7 @@
         var ctx = document.getElementById('complianceChart').getContext('2d');
 
         $('#calendar').fullCalendar({
+            defaultView: 'basicWeek',
             allDayDefault: true,
             events: surveys
         });
