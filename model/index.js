@@ -9,7 +9,7 @@ const Sequelize = require('sequelize');
 // Database Models
 const addTrialModel = require('./trial');
 const addPatientModel = require('./patient');
-const addEventListener = require('./event-listener');
+const addRule = require('./rule');
 const addStage = require('./stage');
 const addSurveyTemplateModel = require('./survey-template');
 const addSurveyInstanceModel = require('./survey-instance');
@@ -66,7 +66,7 @@ module.exports.setup = function (configuration) {
     // add models to sequelize
     addTrialModel(sequelize);
     addPatientModel(sequelize);
-    addEventListener(sequelize);
+    addRule(sequelize);
     addStage(sequelize);
     addSurveyTemplateModel(sequelize);
     addSurveyInstanceModel(sequelize);
@@ -83,7 +83,7 @@ module.exports.setup = function (configuration) {
     const trial = sequelize.model('trial');
     const patient = sequelize.model('patient');
     const stage = sequelize.model('stage');
-    const eventListener = sequelize.model('event_listener');
+    const rule = sequelize.model('rule');
     const questionInstance = sequelize.model('question_instance');
     const questionOption = sequelize.model('question_option');
     const questionTemplate = sequelize.model('question_template');
@@ -102,7 +102,7 @@ module.exports.setup = function (configuration) {
     trial.hasMany(stage);
     patient.hasMany(surveyInstance);
     stage.hasMany(patient);
-    stage.hasMany(eventListener);
+    stage.hasMany(rule);
     questionTemplate.hasMany(questionInstance);
     surveyTemplate.hasMany(surveyInstance);
     surveyInstance.hasMany(questionInstance);
