@@ -28,7 +28,7 @@
     "colors.css": "^2.3.0",
     "eslint": "^1.9.0",
     "eslint-plugin-html": "^1.1.0",
-    "eslint-plugin-lodash3": "^0.1.14",
+    "eslint-plugin-lodash3": "^0.1.15",
     "gulp": "github:gulpjs/gulp#4.0",
     "handlebars": "^4.0.4",
     "hapi": "^11.1.0",
