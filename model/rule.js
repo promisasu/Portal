@@ -1,13 +1,13 @@
 'use strict';
 
 /**
- * @module model/event-listener
+ * @module model/rule
  */
 
 const Sequelize = require('sequelize');
 
 /**
- * a EventListener is a singe Expert Ruleset
+ * a Rule is a singe Expert Ruleset
  * @typedef {Object} EventListener
  * @property {String} rule - Rules to listen for
  */
@@ -20,7 +20,7 @@ const Sequelize = require('sequelize');
  */
 module.exports = function (sequelize) {
     sequelize.define(
-        'event_listener',
+        'rule',
         {
             rule: {
                 type: Sequelize.STRING,
