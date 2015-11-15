@@ -15,11 +15,14 @@
             Patient: {{ patient.pin }}
         </li>
     </ol>
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         <div id="calendar"></div>
     </div>
-    <div class="col-sm-6">
-        <canvas id="complianceChart" width="400" height="400"></canvas>
+    <div class="col-sm-12">
+        <div class="card">
+          <br>
+          <canvas id="complianceChart" width="400" height="100px"></canvas>
+        </div>
     </div>
     <div class="col-sm-12">
         <div class="card">
@@ -99,8 +102,8 @@
                 labels: ['01/01/2015 20:00', '01/02/2015 21:00', '01/03/2015 22:00', '01/04/2015 23:00', '01/05/2015 03:00', '01/06/2015 10:00', '01/07/2015 04:00'],
                 datasets: [
                     {
-                        label: 'Hours until survey expired',
-                        data: [23, 18, 20, 15, 4, 0, 1]
+                        label: '% Time left until daily survey expired',
+                        data: [23, 18, 20, 0, 4, 5, 0]
                     }
                 ]
             },
@@ -116,7 +119,7 @@
                             },
                             scaleLabel: {
                                 show: true,
-                                labelString: 'Date'
+                                labelString: ''
                             }
                         }
                     ],
@@ -125,7 +128,7 @@
                             display: true,
                             scaleLabel: {
                                 show: true,
-                                labelString: 'Hours until survey expires'
+                                labelString: '% Time Left'
                             }
                         }
                     ]
@@ -143,6 +146,7 @@
         $('#calendar').fullCalendar({
             defaultView: 'basicWeek',
             allDayDefault: true,
+            contentHeight: 'auto',
             events: surveys
         });
 
