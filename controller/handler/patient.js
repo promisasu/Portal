@@ -19,7 +19,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 1234,
+        id: 2345,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
@@ -30,7 +30,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 2345,
+        id: 3456,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
@@ -41,7 +41,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 3456,
+        id: 4567,
         title: 'Daily',
         stage: 1,
         surveyType: 'Weekly',
@@ -52,7 +52,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 3456,
+        id: 5678,
         title: 'Weekly',
         stage: 1,
         surveyType: 'Weekly',
@@ -63,7 +63,7 @@ const surveys = [
         color: color.red
     },
     {
-        id: 4567,
+        id: 6789,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
@@ -74,7 +74,7 @@ const surveys = [
         color: color.red
     },
     {
-        id: 5678,
+        id: 7890,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
@@ -85,7 +85,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 5678,
+        id: 8901,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
@@ -96,7 +96,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 5678,
+        id: 9012,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',

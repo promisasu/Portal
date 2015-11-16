@@ -12,7 +12,7 @@
             </a>
         </li>
         <li class="active">
-            Patient: {{ patient.pin }}
+            Patient: {{ patient.id }}
         </li>
     </ol>
     <div class="col-sm-12">
@@ -61,7 +61,10 @@
                             {{#each surveys}}
                                 <tr class="table-{{#if completed}}success{{else}}danger{{/if}}">
                                     <th scope="row">
-                                        {{ id }}
+                                        <a href="/survey/{{ id }}">
+                                            {{ id }}
+                                            <i class="fa fa-search"></i>
+                                        </a>
                                     </th>
                                     <td>
                                         {{ completed }}
