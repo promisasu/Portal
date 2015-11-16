@@ -6,56 +6,56 @@
         </li>
     </ol>
     <div class="col-sm-12 col-md-5 col-lg-6 col-xl-6">
-      <div class="col-sm-8 col-md-12 col-lg-12 col-xl-12">
-        <div class="card">
-          <div class="card-block">
-            <h4 class="card-title">Welcome, Clinician Name!</h4>
-            <p class="card-text">Global Stats</p>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            In progress trials:
-                        </th>
-                        <td>
-                            {{ trial.start }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            Average Percent Recruited:
-                        </th>
-                        <td>
-                            {{ trial.duration }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            Average Percent Compliant:
-                        </th>
-                        <td>
-                            {{ trial.patientCount }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4 col-md-12 col-lg-12 col-xl-12">
-        <div id="legend" class="card col-sm-12">
-            <div class="card-block">
-                <h4 class="card-title">
-                    Legend
-                </h4>
+        <div class="col-sm-8 col-md-12 col-lg-12 col-xl-12">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Welcome, Clinician Name!</h4>
+                    <p class="card-text">Global Stats</p>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">
+                                    In progress trials:
+                                </th>
+                                <td>
+                                    {{ trial.start }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Average Percent Recruited:
+                                </th>
+                                <td>
+                                    {{ trial.duration }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Average Percent Compliant:
+                                </th>
+                                <td>
+                                    {{ trial.patientCount }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-      </div>
+        <div class="col-sm-4 col-md-12 col-lg-12 col-xl-12">
+            <div id="legend" class="card col-sm-12">
+                <div class="card-block">
+                    <h4 class="card-title">
+                        Legend
+                    </h4>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-sm-12 col-md-7 col-lg-6 col-xl-6">
-      <div class="card">
-        <canvas id="radarChart" width="100%" height="100%"></canvas>
-      </div>
+        <div class="card">
+            <canvas id="radarChart" width="100%" height="100%"></canvas>
+        </div>
     </div>
     <div class="col-xs-12"><br>
         <div class="card">
@@ -68,32 +68,41 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
-                          <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-primary" data-toggle="modal">
-                                GENERATE REPORT
-                            </button>
-                          </div>
-                          <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTrial">
-                                ADD NEW
-                            </button>
-                          </div>
-                          <div class="btn-group" role="group">
-                            <div class="dropdown">
-                              <button class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown">
-                                STATUS
-                              </button>
-                              <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Pending</a>
-                                <a class="dropdown-item" href="#">Upcoming</a>
-                                <a class="dropdown-item" href="#">In Progress</a>
-                                <a class="dropdown-item" href="#">Completed</a>
-                              </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" data-toggle="modal">
+                                    GENERATE REPORT
+                                </button>
                             </div>
-                          </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTrial">
+                                    ADD NEW
+                                </button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown">
+                                        STATUS
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">
+                                            Pending
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            Upcoming
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            In Progress
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            Completed
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div><br>
+                </div>
+                <br>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -163,7 +172,9 @@
                                     <td>
                                         <progress class="progress progress-good-and-bad" value="{{ recruitedPercent }}" max="100">
                                             <div class="progress">
-                                                <span class="progress-bar" style="width: {{ recruitedPercent }}%;">25%</span>
+                                                <span class="progress-bar" style="width: {{ recruitedPercent }}%;">
+                                                    25%
+                                                </span>
                                             </div>
                                         </progress>
                                         {{ recruitedPercent }}% Recruited <br>
@@ -172,7 +183,9 @@
                                     <td>
                                         <progress class="progress" value="{{ activePercent }}" max="100">
                                             <div class="progress">
-                                                <span class="progress-bar" style="width: {{ activePercent }}%;">25%</span>
+                                                <span class="progress-bar" style="width: {{ activePercent }}%;">
+                                                    25%
+                                                </span>
                                             </div>
                                         </progress>
                                         {{ activePercent }}% Active <br>
@@ -181,7 +194,9 @@
                                     <td>
                                         <progress class="progress progress-good-and-bad" value="{{ compliantPercent }}" max="100">
                                             <div class="progress">
-                                                <span class="progress-bar" style="width: {{ compliantPercent }}%;">25%</span>
+                                                <span class="progress-bar" style="width: {{ compliantPercent }}%;">
+                                                    25%
+                                                </span>
                                             </div>
                                         </progress>
                                         {{ compliantPercent }}% Compliant <br>
