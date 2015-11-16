@@ -20,7 +20,7 @@ const difficultyOptions = [
     'Not able to do'
 ];
 
-//const scaleOptions = [
+// const scaleOptions = [
 //    '1',
 //    '2',
 //    '3',
@@ -31,7 +31,7 @@ const difficultyOptions = [
 //    '8',
 //    '9',
 //    '10'
-//];
+// ];
 
 const bodyOptions = [
     'Front head',
