@@ -5,6 +5,8 @@
  */
 
 const color = require('colors.css');
+const database = require('../../model');
+const processPatient = require('../helper/process-patient');
 
 const surveys = [
     {
@@ -117,20 +119,29 @@ const surveys = [
  * @returns {View} Rendered page
  */
 module.exports = function (request, reply) {
-    reply.view('patient', {
-        title: 'Pain Reporting Portal',
-        patient: {
-            id: 1234,
-            start: '08/25/2015',
-            duration: '60 days',
-            patientCount: 1023,
-            noncompliantCount: 8
-        },
-        trial: {
-            id: 1,
-            name: 'test'
-        },
-        surveys: surveys,
-        surveysJson: JSON.stringify(surveys)
+    const patient = database.sequelize.model('patient');
+    const trial = database.sequelize.model('trial');
+
+    trial.find({
+        include: [
+            {
+                model: patient,
+                where: {
+                    pin: request.params.pin
+                }
+            }
+        ]
+    })
+    .then((currentTrial) => {
+        reply.view('patient', {
+            title: 'Pain Reporting Portal',
+            patient: processPatient(currentTrial.patients[0]),
+            trial: currentTrial,
+            surveys: surveys,
+            surveysJson: JSON.stringify(surveys)
+        });
+    })
+    .catch(() => {
+        reply.redirect('/404');
     });
 };
