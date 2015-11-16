@@ -220,6 +220,7 @@
     });
 
     var legend = document.getElementById('legend');
+    var wait = document.getElementById('wait');
 
     if (dd < 10) {
         dd = '0' + dd;
@@ -252,5 +253,20 @@ table.draw();
         alert('Status Filter clicked');
 }
 );
+    wait.innerHTML += legend + wait;
+    legend.innerHTML += radarChart.generateLegend();
+
+    onInactive(900000, function () {
+        'use strict';
+        $('#myModal').modal('show');
+    });
+
+function onInactive (ms, cb) {
+        'use strict';
+        wait = setTimeout(cb, ms);
+        document.onmousemove = document.mousedown = document.mouseup = document.onkeydown = document.onkeyup = document.focus = function () {
+            wait = setTimeout(cb, ms);
+        };
+}
 
 </script>
