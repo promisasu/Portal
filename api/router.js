@@ -1,7 +1,9 @@
 'use strict';
+
 const Joi = require('joi');
 const listTrials = require('./handler/list-trials');
 const checkSurveys = require('./handler/checkSurveys');
+const getSurvey = require('./handler/getSurvey');
 
 module.exports = [
     {
@@ -17,6 +19,18 @@ module.exports = [
             validate: {
                 query: {
                     userPIN: Joi.number().integer()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/api/get_survey',
+        handler: getSurvey,
+        config: {
+            validate: {
+                query: {
+                    surveyInstanceID: Joi.number().integer()
                 }
             }
         }
