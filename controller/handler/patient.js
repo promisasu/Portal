@@ -5,64 +5,111 @@
  */
 
 const color = require('colors.css');
+const database = require('../../model');
+const processPatient = require('../helper/process-patient');
 
 const surveys = [
     {
         id: 1234,
-        title: 'Monthly Survey',
+        title: 'Monthly',
         stage: 1,
         surveyType: 'Monthly',
-        start: '10/01/2015',
-        end: '10/01/2015',
-        userSubmissionTime: '10/01/2015 15:43:35',
+        start: '11/15/2015',
+        end: '11/15/2015',
+        userSubmissionTime: '11/15/2015 15:43:35',
+        completed: true,
+        color: color.green
+    },
+    {
+        id: 1234,
+        title: 'Daily',
+        stage: 1,
+        surveyType: 'Daily',
+        start: '11/15/2015',
+        end: '11/15/2015',
+        userSubmissionTime: '11/15/2015 15:43:35',
         completed: true,
         color: color.green
     },
     {
         id: 2345,
-        title: 'Daily Survey',
+        title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
-        start: '10/02/2015',
-        end: '10/02/2015',
-        userSubmissionTime: '10/02/2015 13:11:15',
+        start: '11/16/2015',
+        end: '11/16/2015',
+        userSubmissionTime: '11/16/2015 13:11:15',
         completed: true,
         color: color.green
     },
     {
         id: 3456,
-        title: 'Weekly Survey',
+        title: 'Daily',
         stage: 1,
         surveyType: 'Weekly',
-        start: '10/05/2015',
-        end: '10/05/2015',
-        userSubmissionTime: '10/05/2015 11:12:43',
+        start: '11/17/2015',
+        end: '11/17/2015',
+        userSubmissionTime: '11/17/2015 11:12:43',
         completed: true,
         color: color.green
     },
     {
+        id: 3456,
+        title: 'Weekly',
+        stage: 1,
+        surveyType: 'Weekly',
+        start: '11/18/2015',
+        end: '11/18/2015',
+        userSubmissionTime: 'N/A',
+        completed: false,
+        color: color.red
+    },
+    {
         id: 4567,
-        title: 'Daily Survey',
+        title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
-        start: '10/06/2015',
-        end: '10/06/2015',
+        start: '11/18/2015',
+        end: '11/18/2015',
         userSubmissionTime: 'N/A',
         completed: false,
         color: color.red
     },
     {
         id: 5678,
-        title: 'Daily Survey',
+        title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
-        start: '10/07/2015',
-        end: '10/07/2015',
-        userSubmissionTime: '10/07/2015 05:56:11',
+        start: '11/19/2015',
+        end: '11/19/2015',
+        userSubmissionTime: '11/19/2015 05:56:11',
         completed: true,
         color: color.green
+    },
+    {
+        id: 5678,
+        title: 'Daily',
+        stage: 1,
+        surveyType: 'Daily',
+        start: '11/20/2015',
+        end: '11/20/2015',
+        userSubmissionTime: '11/20/2015 05:56:11',
+        completed: true,
+        color: color.green
+    },
+    {
+        id: 5678,
+        title: 'Daily',
+        stage: 1,
+        surveyType: 'Daily',
+        start: '11/21/2015',
+        end: '11/21/2015',
+        userSubmissionTime: 'N/A',
+        completed: false,
+        color: color.red
     }
 ];
+
 
 /**
  * A dashboard with an overview of a specific patient.
@@ -72,20 +119,29 @@ const surveys = [
  * @returns {View} Rendered page
  */
 module.exports = function (request, reply) {
-    reply.view('patient', {
-        title: 'Pain Reporting Portal',
-        patient: {
-            id: 1234,
-            start: '08/25/2015',
-            duration: '60 days',
-            patientCount: 1023,
-            noncompliantCount: 8
-        },
-        trial: {
-            id: 1,
-            name: 'test'
-        },
-        surveys: surveys,
-        surveysJson: JSON.stringify(surveys)
+    const patient = database.sequelize.model('patient');
+    const trial = database.sequelize.model('trial');
+
+    trial.find({
+        include: [
+            {
+                model: patient,
+                where: {
+                    pin: request.params.pin
+                }
+            }
+        ]
+    })
+    .then((currentTrial) => {
+        reply.view('patient', {
+            title: 'Pain Reporting Portal',
+            patient: processPatient(currentTrial.patients[0]),
+            trial: currentTrial,
+            surveys: surveys,
+            surveysJson: JSON.stringify(surveys)
+        });
+    })
+    .catch(() => {
+        reply.redirect('/404');
     });
 };
