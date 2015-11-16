@@ -140,5 +140,8 @@ module.exports = function (request, reply) {
             surveys: surveys,
             surveysJson: JSON.stringify(surveys)
         });
+    })
+    .catch(() => {
+        reply.redirect('/404');
     });
 };
