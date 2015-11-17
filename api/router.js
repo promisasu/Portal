@@ -1,17 +1,12 @@
 'use strict';
 
 const Joi = require('joi');
-const listTrials = require('./handler/list-trials');
-const checkSurveys = require('./handler/checkSurveys');
-const getSurvey = require('./handler/getSurvey');
-const submitSurvey = require('./handler/submitSurvey');
+
+const checkSurveys = require('./handler/check-surveys');
+const getSurvey = require('./handler/get-survey');
+const submitSurvey = require('./handler/submit-survey');
 
 module.exports = [
-    {
-        method: 'GET',
-        path: '/api/trials',
-        handler: listTrials
-    },
     {
         method: 'GET',
         path: '/api/check_surveys',

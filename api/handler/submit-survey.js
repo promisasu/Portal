@@ -1,4 +1,4 @@
-
+/* eslint no-loop-func: 0, max-nested-callbacks: [2, 3]  */
 'use strict';
 
 const database = require('../../model');
@@ -81,7 +81,10 @@ module.exports = function (request, reply) {
         currentSurveyInstance.actualSubmissionTime = moment();
         currentSurveyInstance.surveyInstanceCompleted = true;
         currentSurveyInstance.save();
-        reply('Success');
+        reply({
+            statusCode: 500,
+            message: 'Success'
+        });
     })
     .catch((err) => {
         reply(boom.badRequest(err));
