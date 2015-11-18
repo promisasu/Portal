@@ -51,8 +51,8 @@ module.exports = [
                             ),
                             bodyPain: Joi.array().items(
                                 Joi.object().keys({
-                                    location: Joi.string().empty(''),
-                                    intensity: Joi.number().integer().empty('')
+                                    location: Joi.string(),
+                                    intensity: Joi.number().integer()
                                 })
                             )
                         })
