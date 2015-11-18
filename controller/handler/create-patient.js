@@ -1,19 +1,18 @@
 'use strict';
 
 /**
- * @module presenter/create-patient
+ * @module controller/handler/create-patient
  */
 
 const database = require('../../model');
 
 /**
  * Creates a new Patient
- * @function createPatient
  * @param {Request} request - Hapi request
  * @param {Reply} reply - Hapi Reply
  * @returns {Null} Redirect
  */
-module.exports = function (request, reply) {
+function createPatient (request, reply) {
     const patient = database.sequelize.model('patient');
     const trial = database.sequelize.model('trial');
     let currentTrial;
@@ -43,4 +42,6 @@ module.exports = function (request, reply) {
     .then(() => {
         reply.redirect(`/patient/${newPatient.pin}`);
     });
-};
+}
+
+module.exports = createPatient;

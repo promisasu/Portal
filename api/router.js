@@ -1,22 +1,65 @@
 'use strict';
+
 const Joi = require('joi');
-const listTrials = require('./handler/list-trials');
-const checkSurveys = require('./handler/checkSurveys');
+
+const checkSurveys = require('./handler/check-surveys');
+const getSurvey = require('./handler/get-survey');
+const submitSurvey = require('./handler/submit-survey');
 
 module.exports = [
     {
         method: 'GET',
-        path: '/api/trials',
-        handler: listTrials
-    },
-    {
-        method: 'GET',
-        path: '/api/check_surveys',
+        path: '/check_surveys',
         handler: checkSurveys,
         config: {
+            cors: true,
             validate: {
                 query: {
                     userPIN: Joi.number().integer()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/get_survey',
+        handler: getSurvey,
+        config: {
+            cors: true,
+            validate: {
+                query: {
+                    surveyInstanceID: Joi.number().integer()
+                }
+            }
+        }
+    },
+    {
+        method: 'POST',
+        path: '/submit_survey',
+        handler: submitSurvey,
+        config: {
+            cors: true,
+            validate: {
+                query: {
+                    surveyInstanceID: Joi.number().integer()
+                },
+                payload: {
+                    surveyInstanceID: Joi.number().integer(),
+                    timeStamp: Joi.date(),
+                    surveyResults: Joi.array().items(
+                        Joi.object().keys({
+                            quesID: Joi.number().integer(),
+                            selectedOptions: Joi.array().items(
+                                Joi.number().integer().empty('')
+                            ),
+                            bodyPain: Joi.array().items(
+                                Joi.object().keys({
+                                    location: Joi.string(),
+                                    intensity: Joi.number().integer()
+                                })
+                            )
+                        })
+                    )
                 }
             }
         }

@@ -1,0 +1,104 @@
+/* eslint no-loop-func: 0, max-nested-callbacks: [2, 3]  */
+'use strict';
+
+/**
+ * @module api/handler/submit-survey
+ */
+
+const database = require('../../model');
+const boom = require('boom');
+const _ = require('lodash');
+const moment = require('moment');
+
+/**
+ * Fills in answered QuestionInstances for a submitted SurveyInstance
+ * @param {Request} request - Hapi request
+ * @param {Reply} reply - Hapi Reply
+ * @returns {Null} responds with JSON data structure
+ */
+function submitSurvey (request, reply) {
+    const questionInstance = database.sequelize.model('question_instance');
+    const surveyInstance = database.sequelize.model('survey_instance');
+    const questionOption = database.sequelize.model('question_option');
+    const surveyInstanceId = request.query.surveyInstanceID;
+    const questionInstArr = [];
+
+    let currentSurveyInstance;
+
+    surveyInstance.find({
+        where: {
+            id: request.query.surveyInstanceID,
+            surveyInstanceCompleted: false
+        }
+    })
+    .then((survey) => {
+        return new Promise((resolve, reject) => {
+            if (survey) {
+                currentSurveyInstance = survey;
+                resolve();
+            } else {
+                reject('Either survey_instance does not exist or its already completed');
+            }
+        });
+    })
+    .then(() => {
+        for (let index = 0; index < request.payload.surveyResults.length; index++) {
+            const currentQuestion = request.payload.surveyResults[index];
+
+            if (_.has(currentQuestion, 'bodyPain[0].location')) {
+                questionInstArr.push(
+                    questionOption.find({
+                        where: {
+                            optionText: currentQuestion.bodyPain[0].location
+                        }
+                    })
+                    .then((data) => {
+                        return questionInstance.create({
+                            questionTemplateId: currentQuestion.quesID,
+                            surveyInstanceId: surveyInstanceId,
+                            questionOptionId: data.id
+                        });
+                    })
+                );
+                questionInstArr.push(
+                    questionOption.find({
+                        where: {
+                            optionText: currentQuestion.bodyPain[0].intensity
+                        }
+                    })
+                    .then((data) => {
+                        return questionInstance.create({
+                            questionTemplateId: currentQuestion.quesID,
+                            surveyInstanceId: surveyInstanceId,
+                            questionOptionId: data.id
+                        });
+                    })
+                );
+            } else {
+                questionInstArr.push(
+                   questionInstance.create({
+                       questionTemplateId: currentQuestion.quesID,
+                       surveyInstanceId: surveyInstanceId,
+                       questionOptionId: currentQuestion.selectedOptions[0]
+                   })
+                );
+            }
+        }
+        return Promise.all(questionInstArr);
+    })
+    .then(() => {
+        currentSurveyInstance.userSubmissionTime = request.payload.timeStamp;
+        currentSurveyInstance.actualSubmissionTime = moment();
+        currentSurveyInstance.surveyInstanceCompleted = true;
+        currentSurveyInstance.save();
+        reply({
+            statusCode: 500,
+            message: 'Success'
+        });
+    })
+    .catch((err) => {
+        reply(boom.badRequest(err));
+    });
+}
+
+module.exports = submitSurvey;

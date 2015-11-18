@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @module controller/helper/process-patient
+ */
+
 const moment = require('moment');
 
 /**

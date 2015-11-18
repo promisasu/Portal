@@ -2,15 +2,15 @@
 'use strict';
 
 /**
- * @module presenter/trial
+ * @module controller/handler/trial
  */
 
-const moment = require('moment');
 const _ = require('lodash');
 const color = require('colors.css');
 
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
+const processTrial = require('../helper/process-trial');
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -19,7 +19,7 @@ const processPatient = require('../helper/process-patient');
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
  */
-module.exports = function (request, reply) {
+function trial (request, reply) {
     const trial = database.sequelize.model('trial');
 
     trial.findById(request.params.id).then((currentTrial) => {
@@ -56,32 +56,6 @@ module.exports = function (request, reply) {
     .catch(() => {
         reply.redirect('/404');
     });
-};
-
-/**
- * Takes in a Trial model and processes it into human readable format
- * @param {Trial} currentTrial - a single Trial object
- * @returns {Object} processed Trial
- */
-function processTrial (currentTrial) {
-    const trial = currentTrial.dataValues;
-    const startDate = moment(trial.IRBStart);
-    const endDate = moment(trial.IRBEnd);
-
-    return {
-        id: trial.id,
-        name: trial.name,
-        description: trial.description,
-        IRBID: trial.IRBID,
-        start: startDate.format('L'),
-        end: endDate.format('L'),
-         // TODO: Currently fake data, make this live data
-        duration: startDate.to(endDate, true),
-        patientCount: Math.floor(Math.random() * 900 + 100),
-        noncompliantCount: Math.floor(Math.random() * 100),
-        recruitedNumberOfPatients: Math.floor(Math.random() * 200),
-        activePatients: Math.floor(Math.random() * 50),
-        completedPatients: Math.floor(Math.random() * 40),
-        compliantCount: Math.floor(Math.random() * 80)
-    };
 }
+
+module.exports = trial;
