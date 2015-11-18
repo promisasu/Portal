@@ -32,9 +32,9 @@ function submitSurvey (request, reply) {
         }
     })
     .then((survey) => {
-        currentSurveyInstance = survey;
         return new Promise((resolve, reject) => {
             if (survey) {
+                currentSurveyInstance = survey;
                 resolve();
             } else {
                 reject('Either survey_instance does not exist or its already completed');
@@ -45,15 +45,15 @@ function submitSurvey (request, reply) {
         for (let index = 0; index < request.payload.surveyResults.length; index++) {
             const currentQuestion = request.payload.surveyResults[index];
 
-            if (_.isNumber(currentQuestion.selectedOptions)) {
+            if (_.isEmpty(currentQuestion.selectedOptions[index])) {
                 questionInstArr.push(
-                    questionInstance.create({
-                        questionTemplateId: currentQuestion.quesID,
-                        surveyInstanceId: surveyInstanceId,
-                        questionOptionId: currentQuestion.selectedOptions[0]
-                    })
-                );
-            } else {
+                   questionInstance.create({
+                       questionTemplateId: currentQuestion.quesID,
+                       surveyInstanceId: surveyInstanceId,
+                       questionOptionId: currentQuestion.selectedOptions[0]
+                   })
+               );
+            } else if (_.has(currentQuestion, 'bodyPain[0].location')) {
                 questionInstArr.push(
                     questionOption.find({
                         where: {
