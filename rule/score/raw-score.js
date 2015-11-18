@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @module rule/score/raw-score
+ */
+
 const database = require('../../model');
 
 /**

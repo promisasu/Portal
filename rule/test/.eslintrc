@@ -1,0 +1,7 @@
+rules:
+    max-nested-callbacks: 0
+    id-length:
+        - 2
+        - exceptions:
+            - _
+            - t

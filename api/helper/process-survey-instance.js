@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @module api/helper/process-survey-instance
+ */
+
 const _ = require('lodash');
 
 /**

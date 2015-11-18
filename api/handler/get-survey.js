@@ -1,10 +1,20 @@
 'use strict';
 
+/**
+ * @module api/handler/get-survey
+ */
+
 const database = require('../../model');
 const processSurveyInstance = require('../helper/process-survey-instance');
 const _ = require('lodash');
 
-module.exports = function (request, reply) {
+/**
+ * Gets all of the QuestionTemplates and QuestionOptions for a SurveyTemplate
+ * @param {Request} request - Hapi request
+ * @param {Reply} reply - Hapi Reply
+ * @returns {Null} responds with JSON data structure
+ */
+function getSurvey (request, reply) {
     database.sequelize.query(
         `
         SELECT *
@@ -39,4 +49,6 @@ module.exports = function (request, reply) {
 
         reply(final);
     });
-};
+}
+
+module.exports = getSurvey;

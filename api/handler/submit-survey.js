@@ -1,12 +1,22 @@
 /* eslint no-loop-func: 0, max-nested-callbacks: [2, 3]  */
 'use strict';
 
+/**
+ * @module api/handler/submit-survey
+ */
+
 const database = require('../../model');
 const boom = require('boom');
 const _ = require('lodash');
 const moment = require('moment');
 
-module.exports = function (request, reply) {
+/**
+ * Fills in answered QuestionInstances for a submitted SurveyInstance
+ * @param {Request} request - Hapi request
+ * @param {Reply} reply - Hapi Reply
+ * @returns {Null} responds with JSON data structure
+ */
+function submitSurvey (request, reply) {
     const questionInstance = database.sequelize.model('question_instance');
     const surveyInstance = database.sequelize.model('survey_instance');
     const questionOption = database.sequelize.model('question_option');
@@ -89,4 +99,6 @@ module.exports = function (request, reply) {
     .catch((err) => {
         reply(boom.badRequest(err));
     });
-};
+}
+
+module.exports = submitSurvey;
