@@ -216,9 +216,6 @@
 <script>
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('radarChart').getContext('2d');
-    var table;
-    var max;
-    var date;
 
     var options = {
         legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.datasets.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[i].backgroundColor%>" class="fa fa-circle"></i> <%=data.datasets[i].label%></li><%}%></ul>'
@@ -233,6 +230,5 @@
 
     legend.innerHTML += radarChart.generateLegend();
 
-
-    table = $('#trials').DataTable();
+    $('#trials').DataTable();
 </script>
