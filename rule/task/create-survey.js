@@ -19,7 +19,7 @@ function createSurveyInstance (patientId, surveyTemplateId, open, duration, unit
 
     // Get Patient and SurveyTemplate to link to
     // Create new SurveyInstance
-    Promise.all([
+    return Promise.all([
         patient.findById(patientId),
         surveyTemplate.findById(surveyTemplateId),
         surveyInstance.create({
@@ -33,7 +33,7 @@ function createSurveyInstance (patientId, surveyTemplateId, open, duration, unit
         const currentSurveyTemplate = data[1];
         const newSurveyInstance = data[2];
 
-        newSurveyInstance.addPatient(currentPatient);
+        currentPatient.addSurveyInstance(newSurveyInstance);
         newSurveyInstance.addSurveyTemplate(currentSurveyTemplate);
     });
 }

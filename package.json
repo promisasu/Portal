@@ -4,7 +4,7 @@
   "description": "Pain Reporting Portal",
   "main": "index.js",
   "scripts": {
-    "documentation": "jsdoc model presenter task --recurse --destination documentation",
+    "documentation": "jsdoc api controller model rule task --recurse --destination documentation",
     "lint": "eslint . view/**/*.hbs",
     "test": "ava */test/*.js"
   },
@@ -33,7 +33,7 @@
     "handlebars": "^4.0.4",
     "hapi": "^11.1.1",
     "joi": "^7.0.0",
-    "jsdoc": "github:jsdoc3/jsdoc",
+    "jsdoc": "^3.4.0",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "mysql": "^2.9.0",
