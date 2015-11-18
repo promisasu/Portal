@@ -9,7 +9,7 @@ const submitSurvey = require('./handler/submit-survey');
 module.exports = [
     {
         method: 'GET',
-        path: '/api/check_surveys',
+        path: '/check_surveys',
         handler: checkSurveys,
         config: {
             validate: {
@@ -21,7 +21,7 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/api/get_survey',
+        path: '/get_survey',
         handler: getSurvey,
         config: {
             validate: {
@@ -33,7 +33,7 @@ module.exports = [
     },
     {
         method: 'POST',
-        path: '/api/submit_survey',
+        path: '/submit_survey',
         handler: submitSurvey,
         config: {
             validate: {
