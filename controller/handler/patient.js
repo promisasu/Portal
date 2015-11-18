@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @module presenter/patient
+ * @module controller/handler/patient
  */
 
 const color = require('colors.css');

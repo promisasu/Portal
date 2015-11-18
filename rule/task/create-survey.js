@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @module rule/task/create-survey
+ */
+
 const moment = require('moment');
 const database = require('../../model');
 

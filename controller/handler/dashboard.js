@@ -1,22 +1,21 @@
 'use strict';
 
 /**
- * @module presenter/dashboard
+ * @module controller/handler/dashboard
  */
 
 const _ = require('lodash');
-const moment = require('moment');
+const processTrial = require('../helper/process-trial');
 
 const database = require('../../model');
 
 /**
  * A dashboard view with overview of all trials and patients.
- * @function dashboard
  * @param {Request} request - Hapi request
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
  */
-module.exports = function (request, reply) {
+function dashboard (request, reply) {
     const trial = database.sequelize.model('trial');
 
     trial.findAll().then((trials) => {
@@ -73,41 +72,6 @@ module.exports = function (request, reply) {
             })
         });
     });
-};
-
-/**
- * Takes in a Trial model and processes them into human readable format
- * @param {Trial} currentTrial - a single Trial object
- * @returns {Object} processed Trial
- */
-function processTrial (currentTrial) {
-    const trial = currentTrial.dataValues;
-    const startDate = moment(trial.IRBStart);
-    const endDate = moment(trial.IRBEnd);
-    const statuses = ['Pending', 'Upcoming', 'In Progress', 'Completed'];
-    const status = statuses[Math.floor(Math.random() * 4)];
-    const targetCount = trial.targetCount;
-    // TODO: Currently fake data, make this live data
-    const recruitedCount = targetCount - 153;
-    const activeCount = recruitedCount - 23;
-    const compliantCount = activeCount - 67;
-
-    return {
-        id: trial.id,
-        name: trial.name,
-        IRBID: trial.IRBID,
-        start: startDate.format('L'),
-        end: endDate.format('L'),
-        targetCount: targetCount,
-        recruitedCount: recruitedCount,
-        activeCount: activeCount,
-        compliantCount: compliantCount,
-        recruitedPercent: (recruitedCount / targetCount * 100).toFixed(2),
-        unrecruitedPercent: (100 - recruitedCount / targetCount * 100).toFixed(2),
-        activePercent: (activeCount / recruitedCount * 100).toFixed(2),
-        completedPercent: (100 - activeCount / recruitedCount * 100).toFixed(2),
-        compliantPercent: (compliantCount / activeCount * 100).toFixed(2),
-        noncompliantPercent: (100 - compliantCount / activeCount * 100).toFixed(2),
-        status: status
-    };
 }
+
+module.exports = dashboard;
