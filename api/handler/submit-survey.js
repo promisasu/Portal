@@ -34,8 +34,12 @@ function submitSurvey (request, reply) {
     .then((survey) => {
         return new Promise((resolve, reject) => {
             if (survey) {
-                currentSurveyInstance = survey;
-                resolve();
+                if (moment() > survey.endTime) {
+                    reject('Error - Survey has expired');
+                } else {
+                    currentSurveyInstance = survey;
+                    resolve();
+                }
             } else {
                 reject('Either survey_instance does not exist or its already completed');
             }
