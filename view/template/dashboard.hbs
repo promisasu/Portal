@@ -144,32 +144,18 @@
                             {{/unless}}
                             {{#each trials}}
                                 <tr>
-                                    <td rowspan=2>
+                                    <td data-search="{{ name }}" data-order="{{ name }}">
                                         <a href="/trial/{{ id }}">
                                             {{ name }}
                                             <i class="fa fa-search"></i>
                                         </a>
-                                        <br></br>
+                                        <br>
+                                        <br>
                                         IRB ID: {{ IRBID }}
                                     </td>
-                                    <td>
+                                    <td data-search="{{ targetCount }}" data-order="{{ targetCount }}">
                                         {{ targetCount }} Patients
-                                    </td>
-                                    <td>
-                                        {{ recruitedCount }} Patients
-                                    </td>
-                                    <td>
-                                        {{ activeCount }} Patients
-                                    </td>
-                                    <td rowspan=2>
-                                        {{ start }}
-                                    </td>
-                                    <td rowspan=2>
-                                        {{ end }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
+                                        <hr>
                                         <progress class="progress progress-good-and-bad" value="{{ recruitedPercent }}" max="100">
                                             <div class="progress">
                                                 <span class="progress-bar" style="width: {{ recruitedPercent }}%;">
@@ -177,10 +163,13 @@
                                                 </span>
                                             </div>
                                         </progress>
-                                        {{ recruitedPercent }}% Recruited <br>
+                                        {{ recruitedPercent }}% Recruited
+                                        <br>
                                         {{ unrecruitedPercent }}% Unrecruited
                                     </td>
-                                    <td>
+                                    <td data-search="{{ recruitedCount }}" data-order="{{ recruitedCount }}">
+                                        {{ recruitedCount }} Patients
+                                        <hr>
                                         <progress class="progress" value="{{ activePercent }}" max="100">
                                             <div class="progress">
                                                 <span class="progress-bar" style="width: {{ activePercent }}%;">
@@ -188,10 +177,13 @@
                                                 </span>
                                             </div>
                                         </progress>
-                                        {{ activePercent }}% Active <br>
+                                        {{ activePercent }}% Active
+                                        <br>
                                         {{ completedPercent }}% Completed
                                     </td>
-                                    <td>
+                                    <td data-search="{{ activeCount }}" data-order="{{ activeCount }}">
+                                        {{ activeCount }} Patients
+                                        <hr>
                                         <progress class="progress progress-good-and-bad" value="{{ compliantPercent }}" max="100">
                                             <div class="progress">
                                                 <span class="progress-bar" style="width: {{ compliantPercent }}%;">
@@ -199,8 +191,15 @@
                                                 </span>
                                             </div>
                                         </progress>
-                                        {{ compliantPercent }}% Compliant <br>
+                                        {{ compliantPercent }}% Compliant
+                                        <br>
                                         {{ noncompliantPercent }}% Noncompliant
+                                    </td>
+                                    <td>
+                                        {{ start }}
+                                    </td>
+                                    <td>
+                                        {{ end }}
                                     </td>
                                 </tr>
                             {{/each}}
@@ -234,23 +233,6 @@
 
     legend.innerHTML += radarChart.generateLegend();
 
-    $.fn.dataTable.ext.search.push(
-    function (settings, data) {
-        'use strict';
-        settings = 0;
-        max = '2015/11/13';
-        date = data[5];
-        if (date > max) {
-            return true;
-        }
-        return false;
-    });
 
     table = $('#trials').DataTable();
-    // Event listener to the two range filtering inputs to redraw on input
-    table.draw();
-    $('#status').on('click', 'a', function () {
-        'use strict';
-        alert('Status Filter clicked');
-    });
 </script>
