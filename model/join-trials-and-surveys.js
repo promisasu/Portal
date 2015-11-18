@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @module model/join-trails-and-surveys
+ * @module model/join-trials-and-surveys
  */
 
 /**

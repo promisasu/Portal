@@ -1,10 +1,20 @@
 'use strict';
 
+/**
+ * @module api/handler/check-surveys
+ */
+
 const database = require('../../model');
 const _ = require('lodash');
 const processSurveys = require('../helper/process-surveys');
 
-module.exports = function (request, reply) {
+/**
+ * Checks for availible Surveys for a Patient to take
+ * @param {Request} request - Hapi request
+ * @param {Reply} reply - Hapi Reply
+ * @returns {Null} responds with JSON data structure
+ */
+function checkSurveys (request, reply) {
     console.log(request.query.userPIN);
 
     database.sequelize.query(
@@ -30,4 +40,6 @@ module.exports = function (request, reply) {
             surveys: _.map(surveys, processSurveys)
         });
     });
-};
+}
+
+module.exports = checkSurveys;
