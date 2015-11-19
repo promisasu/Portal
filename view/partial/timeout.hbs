@@ -24,18 +24,8 @@
 </div>
 
 <script>
-    var timeoutTimer; // eslint-disable-line no-unused-vars
-
-    onInactive(900000, function () {
+    setTimeout(function () {
         'use strict';
         $('#timeoutModal').modal('show');
-    });
-
-    function onInactive (ms, cb) {
-        'use strict';
-        timeoutTimer = setTimeout(cb, ms);
-        document.onmousemove = document.mousedown = document.mouseup = document.onkeydown = document.onkeyup = document.focus = function () {
-            timeoutTimer = setTimeout(cb, ms);
-        };
-    }
+    }, 900000);
 </script>
