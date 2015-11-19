@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @module controller/server
+ */
+
 // load node modules
 const path = require('path');
 const hapi = require('hapi');
