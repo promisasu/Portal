@@ -20,8 +20,7 @@ const moment = require('moment');
 function checkSurveys (request, reply) {
     const patient = database.sequelize.model('patient');
     let currentPatient;
-    const currentDate = moment();
-    const surveyCompletedStatus = 0;
+    const currentDate = new Date();
 
     patient.find({
         where: {
@@ -52,15 +51,14 @@ function checkSurveys (request, reply) {
                 WHERE pa.pin = ?
                 AND si.startTime <= ?
                 AND si.endTime > ?
-                AND si.surveyInstanceCompleted = ?
+                AND si.surveyInstanceCompleted = false
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         currentPatient.pin,
                         currentDate.toISOString(),
-                        currentDate.toISOString(),
-                        surveyCompletedStatus
+                        currentDate.toISOString()
                     ]
                 }
             )
