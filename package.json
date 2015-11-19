@@ -33,6 +33,7 @@
     "gulp": "github:gulpjs/gulp#4.0",
     "handlebars": "^4.0.4",
     "hapi": "^11.1.1",
+    "hapi-auth-basic": "^4.1.0",
     "joi": "^7.0.0",
     "jsdoc": "^3.4.0",
     "lodash": "^3.10.1",
