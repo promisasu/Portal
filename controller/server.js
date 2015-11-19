@@ -65,7 +65,11 @@ module.exports = function (configuration) {
                         validateFunc: validate
                     }
                 );
-                server.auth.default('simple');
+
+                // allow authentication to be disabled for test
+                if (configuration.server.auth !== false) {
+                    server.auth.default('simple');
+                }
             }
         }
     );
