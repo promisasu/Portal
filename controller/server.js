@@ -14,29 +14,7 @@ const handlebars = require('handlebars');
 // load router and database
 const router = require('./router');
 const database = require('../model');
-
-/**
- * Checks that a login is valid
- * @param {Object} request - the Hapi request
- * @param {String} username - username for login
- * @param {String} password - password for login
- * @param {Function} callback - alerts Hapi if login is valid or not
- * @returns {Null} nothing
- */
-function validate (request, username, password, callback) {
-    // TODO Use actual usernames and passwords, hash and salt passwords
-    const err = null;
-    const isValid = true;
-
-    return callback(
-        err,
-        isValid,
-        {
-            id: 1,
-            name: username
-        }
-    );
-}
+const validate = require('./helper/validate');
 
 module.exports = function (configuration) {
     const server = new hapi.Server();

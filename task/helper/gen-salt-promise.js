@@ -2,7 +2,12 @@
 
 const bcrypt = require('bcrypt');
 
-module.exports = function (rounds) {
+/**
+ * Generate salt value for hashing
+ * @param {Number} rounds - number of rounds to hash value
+ * @returns {Promise.<String>} salt value
+ */
+function genSaltPromise (rounds) {
     return new Promise((resolve, reject) => {
         bcrypt.genSalt(rounds, (err, salt) => {
             if (err) {
@@ -12,4 +17,6 @@ module.exports = function (rounds) {
             }
         });
     });
-};
+}
+
+module.exports = genSaltPromise;

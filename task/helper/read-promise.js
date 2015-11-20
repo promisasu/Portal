@@ -2,7 +2,12 @@
 
 const read = require('read');
 
-module.exports = function (options) {
+/**
+ * Read values from CLI
+ * @param {Object} options - read options
+ * @returns {Promise.<String>} value entered
+ */
+function readPromise (options) {
     return new Promise((resolve, reject) => {
         read(options, (err, data) => {
             if (err) {
@@ -12,4 +17,6 @@ module.exports = function (options) {
             }
         });
     });
-};
+}
+
+module.exports = readPromise;
