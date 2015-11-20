@@ -30,7 +30,7 @@ function register (sequelize) {
             },
             questionType: {
                 type: Sequelize.ENUM,
-                values: ['multipleChoice', 'bodyPain'],
+                values: ['multiChoiceSingleAnswer', 'bodyPain'],
                 allowNull: false,
                 validate: {
                     notEmpty: true
