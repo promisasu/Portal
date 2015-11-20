@@ -7,7 +7,7 @@
 const Sequelize = require('sequelize');
 
 // Database Models
-const addClinicianModel = require('./clinician');
+const addUserModel = require('./user');
 const addTrialModel = require('./trial');
 const addPatientModel = require('./patient');
 const addRule = require('./rule');
@@ -19,7 +19,7 @@ const addQuestionInstanceModel = require('./question-instance');
 const addQuestionOptionModel = require('./question-option');
 
 // Database Join Tables
-const addJoinCliniciansAndTrials = require('./join-clinicians-and-trials');
+const addJoinUsersAndTrials = require('./join-users-and-trials');
 const addJoinTrialsAndSurveys = require('./join-trials-and-surveys');
 const addJoinSurveysAndQuestions = require('./join-surveys-and-questions');
 const addJoinQuestionsAndOptions = require('./join-questions-and-options');
@@ -64,7 +64,7 @@ function setup (configuration) {
     });
 
     // add models to sequelize
-    addClinicianModel(sequelize, configuration.salt);
+    addUserModel(sequelize, configuration.salt);
     addTrialModel(sequelize);
     addPatientModel(sequelize);
     addRule(sequelize);
@@ -76,13 +76,13 @@ function setup (configuration) {
     addQuestionOptionModel(sequelize);
 
     // add the many to many join tables
-    addJoinCliniciansAndTrials(sequelize);
+    addJoinUsersAndTrials(sequelize);
     addJoinTrialsAndSurveys(sequelize);
     addJoinSurveysAndQuestions(sequelize);
     addJoinQuestionsAndOptions(sequelize);
 
     // Get the newly created ORM wrappers
-    const clinician = sequelize.model('clinician');
+    const user = sequelize.model('user');
     const trial = sequelize.model('trial');
     const patient = sequelize.model('patient');
     const stage = sequelize.model('stage');
@@ -94,7 +94,7 @@ function setup (configuration) {
     const surveyTemplate = sequelize.model('survey_template');
 
     // Get the join tables
-    const joinCliniciansAndTrials = sequelize.model('join_clinicians_and_trials');
+    const joinUsersAndTrials = sequelize.model('join_users_and_trials');
     const joinTrialsAndSurveys = sequelize.model('join_trials_and_surveys');
     const joinSurveysAndQuestions = sequelize.model('join_surveys_and_questions');
     const joinQuestionsAndOptions = sequelize.model('join_questions_and_options');
@@ -122,8 +122,8 @@ function setup (configuration) {
     questionTemplate.belongsToMany(questionOption, {through: joinQuestionsAndOptions});
     questionOption.belongsToMany(questionTemplate, {through: joinQuestionsAndOptions});
 
-    clinician.belongsToMany(trial, {through: joinCliniciansAndTrials});
-    trial.belongsToMany(clinician, {through: joinCliniciansAndTrials});
+    user.belongsToMany(trial, {through: joinUsersAndTrials});
+    trial.belongsToMany(user, {through: joinUsersAndTrials});
 
     // export configured sequelize to allow for access to database models
     module.exports.sequelize = sequelize;

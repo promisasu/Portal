@@ -1,18 +1,20 @@
 'use strict';
 
 /**
- * @module model/clinician
+ * @module model/user
  */
 
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 
 /**
- * a Clinician has one or more Trials
- * @typedef {Object} Clinician
- * @property {String} username - Clinician username
+ * a generic User
+ * can be a clinician or an admin
+ * @typedef {Object} User
+ * @property {String} username - User's screen name
+ * @property {String} role - can be 'admin' or 'clinician'
  * @property {String} password - A setter to generate passwordHash
- * @property {String} passwordHash - Clinician's salted and hashed password
+ * @property {String} passwordHash - Users's salted and hashed password
  */
 
 /**
@@ -23,7 +25,7 @@ const bcrypt = require('bcrypt');
  */
 function register (sequelize, salt) {
     sequelize.define(
-        'clinician',
+        'user',
         {
             username: {
                 type: Sequelize.STRING,
@@ -36,6 +38,11 @@ function register (sequelize, salt) {
                     len: [5, 25]
                 }
             },
+            role: {
+                type: Sequelize.ENUM,
+                values: ['admin', 'clinician'],
+                allowNull: false
+            },
             passwordHash: {
                 type: Sequelize.STRING,
                 allowNull: false
@@ -45,15 +52,9 @@ function register (sequelize, salt) {
                 type: Sequelize.VIRTUAL,
                 set: function (password) {
                     // runs password against validator
-                    this.setDatValue('password', password);
+                    this.setDataValue('password', password);
                     // stores salted and hashed password
-                    bcrypt.hash(password, salt, (err, res) => {
-                        if (err) {
-                            console.error(err);
-                        } else {
-                            this.setDatValue('passwordHash', res);
-                        }
-                    });
+                    this.setDataValue('passwordHash', bcrypt.hashSync(password, salt)); // eslint-disable-line no-sync
                 },
                 validate: {
                     // Password must have

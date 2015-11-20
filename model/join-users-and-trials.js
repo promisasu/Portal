@@ -1,12 +1,12 @@
 'use strict';
 
 /**
- * @module model/join-clinicians-and-trials
+ * @module model/join-users-and-trials
  */
 
 /**
- * This joins the Clinician table and Trial table
- * @typedef {Object} JoinCliniciansAndTrials
+ * This joins the User table and Trial table
+ * @typedef {Object} JoinUsersAndTrials
  */
 
 /**
@@ -16,7 +16,7 @@
  */
 function register (sequelize) {
     sequelize.define(
-        'join_clinicians_and_trials',
+        'join_users_and_trials',
         {},
         {
             paranoid: true
