@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @module controller/helper/compare-promise
+ */
+
 const bcrypt = require('bcrypt');
 
 /**

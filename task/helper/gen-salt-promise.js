@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @module task/helper/gen-promise-salt
+ */
+
 const bcrypt = require('bcrypt');
 
 /**

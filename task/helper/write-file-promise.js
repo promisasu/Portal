@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @module task/helper/write-file-promise
+ */
+
 const fs = require('fs');
 
 /**
