@@ -1,28 +1,57 @@
 'use strict';
 
+/**
+ * @module controller/server
+ */
+
 // load node modules
 const path = require('path');
 const hapi = require('hapi');
 const vision = require('vision');
+const authBasic = require('hapi-auth-basic');
 const handlebars = require('handlebars');
 
 // load router and database
 const router = require('./router');
 const database = require('../model');
+const validate = require('./helper/validate');
 
 module.exports = function (configuration) {
     const server = new hapi.Server();
+
+    // configure server connection
+    server.connection({
+        port: configuration.server.port,
+        host: configuration.server.hostname
+    });
 
     // register hapi plugins
     server.register(
         [
             {
                 register: vision
+            },
+            {
+                register: authBasic
             }
         ],
         (err) => {
             if (err) {
                 console.log(err);
+            } else {
+                // Secure dashboard with login
+                server.auth.strategy(
+                    'simple',
+                    'basic',
+                    {
+                        validateFunc: validate
+                    }
+                );
+
+                // allow authentication to be disabled for test
+                if (configuration.server.auth !== false) {
+                    server.auth.default('simple');
+                }
             }
         }
     );
@@ -43,12 +72,6 @@ module.exports = function (configuration) {
         helpersPath: 'helper',
         // sets default layout to 'layout/default.handlebars'
         layout: 'default'
-    });
-
-    // configure server connection
-    server.connection({
-        port: configuration.server.port,
-        host: configuration.server.hostname
     });
 
     // configure database connection

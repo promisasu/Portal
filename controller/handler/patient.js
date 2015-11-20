@@ -110,7 +110,6 @@ const surveys = [
     }
 ];
 
-
 /**
  * A dashboard with an overview of a specific patient.
  * @function patient

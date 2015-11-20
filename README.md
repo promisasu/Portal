@@ -15,6 +15,7 @@
 2. create a new empty database `CREATE SCHEMA prp_development;`
 3. run `gulp init`
 4. run `gulp sync`
+5. run `gulp user`
 
 ### Start the Portal
 1. run `gulp start`
