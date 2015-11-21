@@ -269,7 +269,7 @@ $.fn.dataTable.ext.search.push(
           endDate = data[5].split('/');
           endDate = new Date(parseInt(endDate[2], 10), parseInt(endDate[0], 10) - 1, parseInt(endDate[1], 10));
           if ($('#selectedChoice').val().indexOf('All Trials') !== -1) {
-              window.location.reload();
+              return true;
           } else if ($('#selectedChoice').val().indexOf('Upcoming') !== -1) {
               if (startDate > date) {
                   return true;
