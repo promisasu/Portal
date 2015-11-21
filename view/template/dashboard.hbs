@@ -11,6 +11,7 @@
                 <div class="card-block">
                     <h4 class="card-title">Welcome, Clinician Name!</h4>
                     <p class="card-text">Global Stats</p>
+                    <input type="hidden" id="selectedChoice"/>
                     <table class="table">
                         <tbody>
                             <tr>
@@ -84,18 +85,21 @@
                                         STATUS
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">
+                                        <div class="dropdown-item">
+                                            All Trials
+                                        </div>
+                                        <div class="dropdown-item">
                                             Pending
-                                        </a>
-                                        <a class="dropdown-item" href="#">
+                                        </div>
+                                        <div class="dropdown-item">
                                             Upcoming
-                                        </a>
-                                        <a class="dropdown-item" href="#">
+                                        </div>
+                                        <div class="dropdown-item">
                                             In Progress
-                                        </a>
-                                        <a class="dropdown-item" href="#">
+                                        </div>
+                                        <div class="dropdown-item">
                                             Completed
-                                        </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +108,7 @@
                 </div>
                 <br>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="trials">
                         <thead>
                             <tr>
                                 <th>
@@ -144,32 +148,18 @@
                             {{/unless}}
                             {{#each trials}}
                                 <tr>
-                                    <td rowspan=2>
+                                    <td data-search="{{ name }}" data-order="{{ name }}">
                                         <a href="/trial/{{ id }}">
                                             {{ name }}
                                             <i class="fa fa-search"></i>
                                         </a>
-                                        <br></br>
+                                        <br>
+                                        <br>
                                         IRB ID: {{ IRBID }}
                                     </td>
-                                    <td>
+                                    <td data-search="{{ targetCount }}" data-order="{{ targetCount }}">
                                         {{ targetCount }} Patients
-                                    </td>
-                                    <td>
-                                        {{ recruitedCount }} Patients
-                                    </td>
-                                    <td>
-                                        {{ activeCount }} Patients
-                                    </td>
-                                    <td rowspan=2>
-                                        {{ start }}
-                                    </td>
-                                    <td rowspan=2>
-                                        {{ end }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
+                                        <hr>
                                         <progress class="progress progress-good-and-bad" value="{{ recruitedPercent }}" max="100">
                                             <div class="progress">
                                                 <span class="progress-bar" style="width: {{ recruitedPercent }}%;">
@@ -177,10 +167,13 @@
                                                 </span>
                                             </div>
                                         </progress>
-                                        {{ recruitedPercent }}% Recruited <br>
+                                        {{ recruitedPercent }}% Recruited
+                                        <br>
                                         {{ unrecruitedPercent }}% Unrecruited
                                     </td>
-                                    <td>
+                                    <td data-search="{{ recruitedCount }}" data-order="{{ recruitedCount }}">
+                                        {{ recruitedCount }} Patients
+                                        <hr>
                                         <progress class="progress" value="{{ activePercent }}" max="100">
                                             <div class="progress">
                                                 <span class="progress-bar" style="width: {{ activePercent }}%;">
@@ -188,10 +181,13 @@
                                                 </span>
                                             </div>
                                         </progress>
-                                        {{ activePercent }}% Active <br>
+                                        {{ activePercent }}% Active
+                                        <br>
                                         {{ completedPercent }}% Completed
                                     </td>
-                                    <td>
+                                    <td data-search="{{ activeCount }}" data-order="{{ activeCount }}">
+                                        {{ activeCount }} Patients
+                                        <hr>
                                         <progress class="progress progress-good-and-bad" value="{{ compliantPercent }}" max="100">
                                             <div class="progress">
                                                 <span class="progress-bar" style="width: {{ compliantPercent }}%;">
@@ -199,8 +195,15 @@
                                                 </span>
                                             </div>
                                         </progress>
-                                        {{ compliantPercent }}% Compliant <br>
+                                        {{ compliantPercent }}% Compliant
+                                        <br>
                                         {{ noncompliantPercent }}% Noncompliant
+                                    </td>
+                                    <td>
+                                        {{ start }}
+                                    </td>
+                                    <td>
+                                        {{ end }}
                                     </td>
                                 </tr>
                             {{/each}}
@@ -217,6 +220,7 @@
 <script>
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('radarChart').getContext('2d');
+
     var options = {
         legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.datasets.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[i].backgroundColor%>" class="fa fa-circle"></i> <%=data.datasets[i].label%></li><%}%></ul>'
     };
@@ -225,7 +229,47 @@
         data: data,
         options: options
     });
+
     var legend = document.getElementById('legend');
+    var table = $('#trials').DataTable();
 
     legend.innerHTML += radarChart.generateLegend();
+
+    $('.dropdown-menu').on('click', 'div', function () {
+        'use strict';
+        var selectedVal = $(this).text().trim();
+
+        $('#selectedChoice').val(selectedVal);
+        table.draw();
+    });
+
+    $.fn.dataTable.ext.search.push(
+        function (settings, data) {
+            'use strict';
+            var date = new Date();
+            var startDate = moment(data[4], 'MM-DD-YYYY');
+            var endDate = moment(data[5], 'MM-DD-YYYY');
+            var choice = $('#selectedChoice').val();
+
+            switch (choice) {
+                case 'All Trials':
+                    return true;
+                case 'Upcoming':
+                    if (startDate > date) {
+                        return true;
+                    }
+                    return false;
+                case 'In Progress':
+                    if (date > startDate && date < endDate) {
+                        return true;
+                    }
+                    return false;
+                case 'Completed':
+                    if (endDate < date) {
+                        return true;
+                    }
+                    return false;
+            }
+        }
+    );
 </script>
