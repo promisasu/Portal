@@ -4,7 +4,6 @@
  * @module api/helper/process-surveys
  */
 
-
 const moment = require('moment');
 
 /**

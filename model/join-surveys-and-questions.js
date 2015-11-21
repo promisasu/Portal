@@ -12,11 +12,10 @@ const Sequelize = require('sequelize');
 
 /**
  * Registers model with Sequelize
- * @function register
  * @param {Sequelize} sequelize - database instance
  * @returns {Null} nothing
  */
-module.exports = function (sequelize) {
+function register (sequelize) {
     sequelize.define(
         'join_surveys_and_questions',
         {
@@ -32,4 +31,6 @@ module.exports = function (sequelize) {
             paranoid: true
         }
     );
-};
+}
+
+module.exports = register;

@@ -3,6 +3,7 @@
 const gulp = require('gulp');
 
 const init = require('./task/init');
+const user = require('./task/user');
 const startApi = require('./task/start-api');
 const startDashboard = require('./task/start-dashboard');
 const stopApi = require('./task/stop-api');
@@ -16,6 +17,7 @@ const syncTest = require('./task/syncTest');
 const doc = require('./task/doc');
 
 gulp.task(init);
+gulp.task(user);
 gulp.task(startApi);
 gulp.task(startDashboard);
 gulp.task('start', gulp.series('startApi', 'startDashboard'));
