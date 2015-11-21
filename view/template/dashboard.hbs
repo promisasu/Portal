@@ -11,6 +11,7 @@
                 <div class="card-block">
                     <h4 class="card-title">Welcome, Clinician Name!</h4>
                     <p class="card-text">Global Stats</p>
+                    <input type="hidden" id="selectedChoice"/>
                     <table class="table">
                         <tbody>
                             <tr>
@@ -84,6 +85,9 @@
                                         STATUS
                                     </button>
                                     <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">
+                                            All Trials
+                                        </a>
                                         <a class="dropdown-item" href="#">
                                             Pending
                                         </a>
@@ -216,13 +220,6 @@
 <script>
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('radarChart').getContext('2d');
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1;
-    var yyyy = today.getFullYear();
-    var x = 0;
-    var y = 0;
-    var date = new Date();
 
     var options = {
         legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.datasets.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[i].backgroundColor%>" class="fa fa-circle"></i> <%=data.datasets[i].label%></li><%}%></ul>'
@@ -234,65 +231,61 @@
     });
 
     var legend = document.getElementById('legend');
-
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-    today = mm + '/' + dd + '/' + yyyy;
+    var table = $('#trials').DataTable();
+    var selectedVal = 'Pending';
+    var date = new Date();
+    var startDate = new Date();
+    var endDate = new Date();
 
     legend.innerHTML += radarChart.generateLegend();
 
-    $('#trials').DataTable({
-    
-        columns: [{
-        orderDataType: 'date-eu'
-    }
-    ]
-    });
-
-    function calculateDate(date) {
-        date = date.replace(' ', '');
-    if (date.indexOf('.') > 0) {
-        /*date a, format dd.mn.(yyyy) ; (year is optional)*/
-        eu_date = date.split('.');
-    } else {
-        /*date a, format dd/mn/(yyyy) ; (year is optional)*/
-        eu_date = date.split('/');
-    }
-      
-    /*year (optional)*/
-    if (eu_date[2]) {
-        var year = eu_date[2];
-    } else {
-        var year = 0;
-    }
-      
-    /*month*/
-    var month = eu_date[1];
-    if (month.length == 1) {
-        month = 0+month;
-    }
-      
-    /*day*/
-    var day = eu_date[0];
-    if (day.length == 1) {
-        day = 0+day;
-    }
-      
-    return (year + month + day) * 1;
-}
     $('.dropdown-menu').on('click', 'a', function () {
-        alert('Status Filter clicked');
-    jQuery.fn.dataTableExt.oSort['eu_date-asc'] = function(date1, date2) {
         'use strict';
-        x = calculateDate(date1);
-        y = calculateDate(date2);
-        alert(x);
-        alert(y);
-};
+        selectedVal = $(this).text();
+        if (selectedVal.indexOf('All Trials') !== -1) {
+            $('#selectedChoice').val('All Trials');
+        }
+        if (selectedVal.indexOf('Pending') !== -1) {
+            $('#selectedChoice').val('Pending');
+        }
+        if (selectedVal.indexOf('Upcoming') !== -1) {
+            $('#selectedChoice').val('Upcoming');
+        }
+        if (selectedVal.indexOf('In Progress') !== -1) {
+            $('#selectedChoice').val('In Progress');
+        }
+        if (selectedVal.indexOf('Completed') !== -1) {
+            $('#selectedChoice').val('Completed');
+        }
+        table.draw();
 }
+);
+
+$.fn.dataTable.ext.search.push(
+      function (settings, data) {
+          'use strict';
+          startDate = data[4].split('/');
+          startDate = new Date(parseInt(startDate[2], 10), parseInt(startDate[0], 10) - 1, parseInt(startDate[1], 10));
+          endDate = data[5].split('/');
+          endDate = new Date(parseInt(endDate[2], 10), parseInt(endDate[0], 10) - 1, parseInt(endDate[1], 10));
+          if ($('#selectedChoice').val().indexOf('All Trials') !== -1) {
+              table.ajax.reload();
+          } else if ($('#selectedChoice').val().indexOf('Upcoming') !== -1) {
+              if (startDate > date) {
+                  return true;
+              }
+              return false;
+          } else if ($('#selectedChoice').val().indexOf('In Progress') !== -1) {
+              if (date > startDate && date < endDate) {
+                  return true;
+              }
+              return false;
+          } else if ($('#selectedChoice').val().indexOf('Completed') !== -1) {
+              if (endDate < date) {
+                  return true;
+              }
+              return false;
+          }
+  }
 );
 </script>
