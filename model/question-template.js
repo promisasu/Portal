@@ -14,11 +14,10 @@ const Sequelize = require('sequelize');
 
 /**
  * Registers model with Sequelize
- * @function register
  * @param {Sequelize} sequelize - database instance
  * @returns {Null} nothing
  */
-module.exports = function (sequelize) {
+function register (sequelize) {
     sequelize.define(
         'question_template',
         {
@@ -31,7 +30,7 @@ module.exports = function (sequelize) {
             },
             questionType: {
                 type: Sequelize.ENUM,
-                values: ['multipleChoice', 'bodyPain'],
+                values: ['multiChoiceSingleAnswer', 'bodyPain'],
                 allowNull: false,
                 validate: {
                     notEmpty: true
@@ -43,4 +42,6 @@ module.exports = function (sequelize) {
             paranoid: true
         }
     );
-};
+}
+
+module.exports = register;

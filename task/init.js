@@ -7,6 +7,7 @@
 const path = require('path');
 const read = require('./helper/read-promise');
 const writeFile = require('./helper/write-file-promise');
+const genSalt = require('./helper/gen-salt-promise');
 
 /**
  * Writes a server configuration file.
@@ -104,9 +105,17 @@ function init (done) {
     .then((dialect) => {
         config.database.dialect = dialect;
 
+        return genSalt(10);
+    })
+    .then((salt) => {
+        config.database.salt = salt;
+
         writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, 2));
     })
-    .then(done);
+    .then(done)
+    .catch((err) => {
+        console.error(err);
+    });
 }
 
 init.description = 'Writes a server configuration file.';

@@ -7,6 +7,7 @@
 const Sequelize = require('sequelize');
 
 // Database Models
+const addUserModel = require('./user');
 const addTrialModel = require('./trial');
 const addPatientModel = require('./patient');
 const addRule = require('./rule');
@@ -18,6 +19,7 @@ const addQuestionInstanceModel = require('./question-instance');
 const addQuestionOptionModel = require('./question-option');
 
 // Database Join Tables
+const addJoinUsersAndTrials = require('./join-users-and-trials');
 const addJoinTrialsAndSurveys = require('./join-trials-and-surveys');
 const addJoinSurveysAndQuestions = require('./join-surveys-and-questions');
 const addJoinQuestionsAndOptions = require('./join-questions-and-options');
@@ -35,12 +37,10 @@ const addJoinQuestionsAndOptions = require('./join-questions-and-options');
 /**
  * Takes in database configuration and returns Sequelize object
  * that is both configured and has the models attached
- * @exports setup
- * @function setup
  * @param {DatabaseConfiguration} configuration - settings for connecting to database
  * @returns {Sequelize} configured sequelize object
  */
-module.exports.setup = function (configuration) {
+function setup (configuration) {
     let logger;
 
     // disable query logging for tests
@@ -64,6 +64,7 @@ module.exports.setup = function (configuration) {
     });
 
     // add models to sequelize
+    addUserModel(sequelize, configuration.salt);
     addTrialModel(sequelize);
     addPatientModel(sequelize);
     addRule(sequelize);
@@ -75,11 +76,13 @@ module.exports.setup = function (configuration) {
     addQuestionOptionModel(sequelize);
 
     // add the many to many join tables
+    addJoinUsersAndTrials(sequelize);
     addJoinTrialsAndSurveys(sequelize);
     addJoinSurveysAndQuestions(sequelize);
     addJoinQuestionsAndOptions(sequelize);
 
     // Get the newly created ORM wrappers
+    const user = sequelize.model('user');
     const trial = sequelize.model('trial');
     const patient = sequelize.model('patient');
     const stage = sequelize.model('stage');
@@ -91,6 +94,7 @@ module.exports.setup = function (configuration) {
     const surveyTemplate = sequelize.model('survey_template');
 
     // Get the join tables
+    const joinUsersAndTrials = sequelize.model('join_users_and_trials');
     const joinTrialsAndSurveys = sequelize.model('join_trials_and_surveys');
     const joinSurveysAndQuestions = sequelize.model('join_surveys_and_questions');
     const joinQuestionsAndOptions = sequelize.model('join_questions_and_options');
@@ -118,7 +122,12 @@ module.exports.setup = function (configuration) {
     questionTemplate.belongsToMany(questionOption, {through: joinQuestionsAndOptions});
     questionOption.belongsToMany(questionTemplate, {through: joinQuestionsAndOptions});
 
+    user.belongsToMany(trial, {through: joinUsersAndTrials});
+    trial.belongsToMany(user, {through: joinUsersAndTrials});
+
     // export configured sequelize to allow for access to database models
     module.exports.sequelize = sequelize;
     return sequelize;
-};
+}
+
+module.exports.setup = setup;
