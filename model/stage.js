@@ -28,6 +28,10 @@ function register (sequelize) {
                 validate: {
                     notEmpty: true
                 }
+            },
+            rule: {
+                type: Sequelize.STRING,
+                allowNull: false
             }
         },
         {
