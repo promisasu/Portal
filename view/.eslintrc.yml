@@ -9,6 +9,7 @@ plugins:
 
 globals:
     Chart: true
+    moment: true
 
 rules:
     # Possible Errors

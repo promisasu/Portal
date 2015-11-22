@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @module controller/helper/process-patient
+ */
+
 const moment = require('moment');
 
 /**
@@ -32,6 +36,5 @@ function processPatient (currentPatient) {
         consecutiveMissed: randomConsecutiveMissed
     };
 }
-
 
 module.exports = processPatient;

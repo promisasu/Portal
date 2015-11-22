@@ -4,7 +4,7 @@
   "description": "Pain Reporting Portal",
   "main": "index.js",
   "scripts": {
-    "documentation": "jsdoc model presenter task --recurse --destination documentation",
+    "documentation": "jsdoc api controller model rule task --recurse --destination documentation",
     "lint": "eslint . view/**/*.hbs",
     "test": "ava */test/*.js"
   },
@@ -25,26 +25,30 @@
   "homepage": "https://github.com/ser515asu/PRP-Manhattan-Project#readme",
   "dependencies": {
     "ava": "^0.5.0",
+    "bcrypt": "^0.8.5",
+    "boom": "^3.0.0",
     "colors.css": "^2.3.0",
-    "eslint": "^1.9.0",
+    "eslint": "^1.10.1",
     "eslint-plugin-html": "^1.1.0",
-    "eslint-plugin-lodash3": "^0.1.15",
+    "eslint-plugin-lodash3": "^0.2.0",
     "gulp": "github:gulpjs/gulp#4.0",
-    "handlebars": "^4.0.4",
+    "handlebars": "^4.0.5",
     "hapi": "^11.1.1",
+    "hapi-auth-basic": "^4.1.0",
     "joi": "^7.0.0",
-    "jsdoc": "github:jsdoc3/jsdoc",
+    "jsdoc": "^3.4.0",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "mysql": "^2.9.0",
     "nools": "^0.4.1",
-    "npm": "^3.4.1",
+    "npm": "^3.5.0",
     "pm2": "^0.15.10",
     "read": "^1.0.7",
-    "sequelize": "^3.13.0",
+    "sequelize": "^3.14.1",
     "vision": "^4.0.1"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=4.0.0",
+    "npm": ">=3.0.0"
   }
 }

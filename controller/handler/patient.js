@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @module presenter/patient
+ * @module controller/handler/patient
  */
 
 const color = require('colors.css');
@@ -109,7 +109,6 @@ const surveys = [
         color: color.red
     }
 ];
-
 
 /**
  * A dashboard with an overview of a specific patient.
