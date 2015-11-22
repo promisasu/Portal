@@ -124,7 +124,9 @@ rules:
     no-continue: 2
     no-inline-comments: 2
     no-lonely-if: 2
-    no-multiple-empty-lines: 2
+    no-multiple-empty-lines:
+        - 2
+        - max: 1
     no-negated-condition: 2
     no-new-object: 2
     no-new-object: 2
@@ -177,21 +179,24 @@ rules:
     require-yield: 2
 
     # Lodash
-    lodash3/prop-shorthand: 2
+    lodash3/collection-return: 2
     lodash3/matches-prop-shorthand: 2
-    lodash3/prefer-chain: 2
-    lodash3/preferred-alias: 2
-    lodash3/no-single-chain: 2
-    lodash3/prefer-reject: 2
-    lodash3/prefer-filter: 2
-    lodash3/no-unnecessary-bind: 2
-    lodash3/unwrap: 2
-    lodash3/prefer-compact: 2
+    lodash3/matches-shorthand: 2
+    lodash3/no-commit: 2
     lodash3/no-double-unwrap: 2
-    lodash3/prefer-map: 2
-    lodash3/prefer-wrapper-method: 2
+    lodash3/no-single-chain: 2
+    lodash3/no-unnecessary-bind: 2
+    lodash3/prefer-chain: 2
+    lodash3/prefer-compact: 2
+    lodash3/prefer-filter: 2
     lodash3/prefer-invoke: 2
-    lodash3/prefer-thru: 2
     lodash3/prefer-lodash-method: 2
     lodash3/prefer-lodash-typecheck: 2
-    lodash3/no-commit: 2
+    lodash3/prefer-map: 2
+    lodash3/prefer-matches: 2
+    lodash3/prefer-reject: 2
+    lodash3/prefer-thru: 2
+    lodash3/prefer-wrapper-method: 2
+    lodash3/preferred-alias: 2
+    lodash3/prop-shorthand: 2
+    lodash3/unwrap: 2

@@ -37,5 +37,4 @@ function processPatient (currentPatient) {
     };
 }
 
-
 module.exports = processPatient;
