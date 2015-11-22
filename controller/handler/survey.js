@@ -4,7 +4,6 @@
  * @module controller/handler/survey
  */
 
-
 const database = require('../../model');
 const processSurvey = require('../helper/process-survey');
 
@@ -39,7 +38,6 @@ module.exports = function (request, reply) {
         }
     )
     .then((currentSurvey) => {
-
         reply.view('survey', {
             title: 'Pain Reporting Portal',
             patient: {
