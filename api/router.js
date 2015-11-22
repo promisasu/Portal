@@ -40,9 +40,6 @@ module.exports = [
         config: {
             cors: true,
             validate: {
-                query: {
-                    surveyInstanceID: Joi.number().integer()
-                },
                 payload: {
                     surveyInstanceID: Joi.number().integer(),
                     timeStamp: Joi.date(),

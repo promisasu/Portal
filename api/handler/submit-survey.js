@@ -20,14 +20,14 @@ function submitSurvey (request, reply) {
     const questionInstance = database.sequelize.model('question_instance');
     const surveyInstance = database.sequelize.model('survey_instance');
     const questionOption = database.sequelize.model('question_option');
-    const surveyInstanceId = request.query.surveyInstanceID;
+    const surveyInstanceId = request.payload.surveyInstanceID;
     const questionInstArr = [];
 
     let currentSurveyInstance;
 
     surveyInstance.find({
         where: {
-            id: request.query.surveyInstanceID,
+            id: request.payload.surveyInstanceID,
             surveyInstanceCompleted: false
         }
     })
