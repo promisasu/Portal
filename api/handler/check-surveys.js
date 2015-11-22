@@ -49,14 +49,16 @@ function checkSurveys (request, reply) {
                 JOIN survey_template st
                 ON si.surveyTemplateId = st.id
                 WHERE pa.pin = ?
-                AND si.startTime <= ?
-                AND si.endTime > ?
+                AND ((si.startTime <= ?
+                AND si.endTime > ?)
+                OR (si.startTime > ?))
                 AND si.surveyInstanceCompleted = false
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         currentPatient.pin,
+                        currentDate.toISOString(),
                         currentDate.toISOString(),
                         currentDate.toISOString()
                     ]
