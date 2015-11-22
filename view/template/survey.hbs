@@ -24,7 +24,7 @@
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">
-                    {{ survey.type }} Survey
+                    {{ survey.name }}
                 </h4>
                 <p class="card-text">
                     Available {{ survey.startTime }} to {{ survey.endTime}}.
@@ -53,12 +53,12 @@
                                         {{ questionText }}
                                     </td>
                                     <td>
-                                        {{#each questionType}}
+                                        {{#each options}}
                                         <li>{{this}}</li>
                                         {{/each}}
                                     </td>
                                     <td>
-                                        {{ questionInstance }}
+                                        {{ optionText }}
                                     </td>
                                 </tr>
                             {{/each}}
