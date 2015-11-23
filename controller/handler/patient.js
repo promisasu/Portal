@@ -142,33 +142,22 @@ module.exports = function (request, reply) {
             JOIN survey_template st
             ON si.surveyTemplateId = st.id
             WHERE pa.pin = ?
-            AND ((si.startTime <= ?
-            AND si.endTime > ?)
-            OR (si.startTime > ?))
-            AND si.surveyInstanceCompleted = false
             `,
             {
                 type: database.sequelize.QueryTypes.SELECT,
                 replacements: [
-                    request.params.pin,
-                    currentDate.toISOString(),
-                    currentDate.toISOString(),
-                    currentDate.toISOString()
+                    request.params.pin
                 ]
             }
         )
     ])
     .then((data) => {
-        console.log(data);
         reply.view('patient', {
             title: 'Pain Reporting Portal',
             patient: processPatient(data[0].patients[0]),
             trial: data[0],
-            surveys: surveys,
+            surveys: data[1],
             surveysJson: JSON.stringify(surveys)
         });
-    })
-    .catch(() => {
-        reply.redirect('/404');
     });
 };

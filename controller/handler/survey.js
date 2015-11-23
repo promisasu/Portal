@@ -30,22 +30,21 @@ module.exports = function (request, reply) {
         WHERE si.id = 1
         `,
         {
-            type: database.sequelize.QueryTypes.SELECT
-//          ,
-//            replacements: [
-//                request.params.id
-//            ]
+            type: database.sequelize.QueryTypes.SELECT,
+            replacements: [
+                request.params.id
+            ]
         }
     )
     .then((currentSurvey) => {
         reply.view('survey', {
             title: 'Pain Reporting Portal',
             patient: {
-                id: 1234
+                id: 2000
             },
             trial: {
-                id: 1,
-                name: 'test'
+                id: 2,
+                name: 'Sickle Cell'
             },
             survey: processSurvey(currentSurvey)
         });
