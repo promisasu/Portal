@@ -61,22 +61,25 @@
                             {{#each surveys}}
                                 <tr class="table-{{#if completed}}success{{else}}danger{{/if}}">
                                     <th scope="row">
-                                        {{ id }}
+                                        <a href="/survey/{{ id }}">
+                                            {{ id }}
+                                            <i class="fa fa-search"></i>
+                                        </a>
                                     </th>
                                     <td>
                                         {{ completed }}
                                     </td>
                                     <td>
-                                        {{ stage }}
+                                        {{ stageId }}
                                     </td>
                                     <td>
-                                        {{ surveyType }}
+                                        {{ name }}
                                     </td>
                                     <td>
-                                        {{ start }}
+                                        {{ startTime }}
                                     </td>
                                     <td>
-                                        {{ end }}
+                                        {{ endTime }}
                                     </td>
                                     <td>
                                         {{ userSubmissionTime }}

@@ -21,7 +21,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 1234,
+        id: 2345,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
@@ -32,7 +32,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 2345,
+        id: 3456,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
@@ -43,7 +43,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 3456,
+        id: 4567,
         title: 'Daily',
         stage: 1,
         surveyType: 'Weekly',
@@ -54,7 +54,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 3456,
+        id: 5678,
         title: 'Weekly',
         stage: 1,
         surveyType: 'Weekly',
@@ -65,7 +65,7 @@ const surveys = [
         color: color.red
     },
     {
-        id: 4567,
+        id: 6789,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
@@ -76,7 +76,7 @@ const surveys = [
         color: color.red
     },
     {
-        id: 5678,
+        id: 7890,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
@@ -87,7 +87,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 5678,
+        id: 8901,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
@@ -98,7 +98,7 @@ const surveys = [
         color: color.green
     },
     {
-        id: 5678,
+        id: 9012,
         title: 'Daily',
         stage: 1,
         surveyType: 'Daily',
@@ -121,26 +121,42 @@ module.exports = function (request, reply) {
     const patient = database.sequelize.model('patient');
     const trial = database.sequelize.model('trial');
 
-    trial.find({
-        include: [
-            {
-                model: patient,
-                where: {
-                    pin: request.params.pin
+    return Promise.all([
+        trial.find({
+            include: [
+                {
+                    model: patient,
+                    where: {
+                        pin: request.params.pin
+                    }
                 }
+            ]
+        }),
+        database.sequelize.query(
+            `
+            SELECT *, si.id
+            FROM survey_instance si
+            JOIN patient pa
+            ON si.patientId = pa.id
+            JOIN survey_template st
+            ON si.surveyTemplateId = st.id
+            WHERE pa.pin = ?
+            `,
+            {
+                type: database.sequelize.QueryTypes.SELECT,
+                replacements: [
+                    request.params.pin
+                ]
             }
-        ]
-    })
-    .then((currentTrial) => {
+        )
+    ])
+    .then((data) => {
         reply.view('patient', {
             title: 'Pain Reporting Portal',
-            patient: processPatient(currentTrial.patients[0]),
-            trial: currentTrial,
-            surveys: surveys,
+            patient: processPatient(data[0].patients[0]),
+            trial: data[0],
+            surveys: data[1],
             surveysJson: JSON.stringify(surveys)
         });
-    })
-    .catch(() => {
-        reply.redirect('/404');
     });
 };
