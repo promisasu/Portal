@@ -120,7 +120,6 @@ const surveys = [
 module.exports = function (request, reply) {
     const patient = database.sequelize.model('patient');
     const trial = database.sequelize.model('trial');
-    const currentDate = new Date();
 
     return Promise.all([
         trial.find({
