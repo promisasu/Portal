@@ -70,7 +70,7 @@
                     <div class="col-sm-9">
                         <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-primary" data-toggle="modal">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" id="generateReport">
                                     GENERATE REPORT
                                 </button>
                             </div>
@@ -272,4 +272,11 @@
             }
         }
     );
+
+    $('#generateReport').click(function () {
+        'use strict';
+        var csvValue = $('#trials').table2CSV({delivery: 'value'});
+
+        $('#csv_text').val(csvValue);
+    });
 </script>
