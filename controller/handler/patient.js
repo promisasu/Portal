@@ -150,11 +150,11 @@ module.exports = function (request, reply) {
             {
                 type: database.sequelize.QueryTypes.SELECT,
                 replacements: [
-                        request.params.pin,
-                        currentDate.toISOString(),
-                        currentDate.toISOString(),
-                        currentDate.toISOString()
-                    ]
+                    request.params.pin,
+                    currentDate.toISOString(),
+                    currentDate.toISOString(),
+                    currentDate.toISOString()
+                ]
             }
         )
     ])
