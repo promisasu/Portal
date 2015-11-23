@@ -120,22 +120,50 @@ const surveys = [
 module.exports = function (request, reply) {
     const patient = database.sequelize.model('patient');
     const trial = database.sequelize.model('trial');
+    const currentDate = new Date();
 
-    trial.find({
-        include: [
-            {
-                model: patient,
-                where: {
-                    pin: request.params.pin
+    return Promise.all([
+        trial.find({
+            include: [
+                {
+                    model: patient,
+                    where: {
+                        pin: request.params.pin
+                    }
                 }
+            ]
+        }),
+        database.sequelize.query(
+            `
+            SELECT *, si.id
+            FROM survey_instance si
+            JOIN patient pa
+            ON si.patientId = pa.id
+            JOIN survey_template st
+            ON si.surveyTemplateId = st.id
+            WHERE pa.pin = ?
+            AND ((si.startTime <= ?
+            AND si.endTime > ?)
+            OR (si.startTime > ?))
+            AND si.surveyInstanceCompleted = false
+            `,
+            {
+                type: database.sequelize.QueryTypes.SELECT,
+                replacements: [
+                        request.params.pin,
+                        currentDate.toISOString(),
+                        currentDate.toISOString(),
+                        currentDate.toISOString()
+                    ]
             }
-        ]
-    })
-    .then((currentTrial) => {
+        )
+    ])
+    .then((data) => {
+        console.log(data);
         reply.view('patient', {
             title: 'Pain Reporting Portal',
-            patient: processPatient(currentTrial.patients[0]),
-            trial: currentTrial,
+            patient: processPatient(data[0].patients[0]),
+            trial: data[0],
             surveys: surveys,
             surveysJson: JSON.stringify(surveys)
         });
