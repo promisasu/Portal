@@ -190,7 +190,7 @@ rules:
     lodash3/prefer-compact: 2
     lodash3/prefer-filter: 2
     lodash3/prefer-invoke: 2
-    lodash3/prefer-lodash-method: 2
+    lodash3/prefer-lodash-method: 0
     lodash3/prefer-lodash-typecheck: 2
     lodash3/prefer-map: 2
     lodash3/prefer-matches: 2
