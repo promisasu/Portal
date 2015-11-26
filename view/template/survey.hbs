@@ -12,8 +12,8 @@
             </a>
         </li>
         <li>
-            <a href="/patient/{{ patient.id }}">
-                Patient: {{ patient.id }}
+            <a href="/patient/{{ patient.pin }}">
+                Patient: {{ patient.pin }}
             </a>
         </li>
         <li class="active">
@@ -54,7 +54,9 @@
                                     </td>
                                     <td>
                                         {{#each options}}
-                                        <li>{{this}}</li>
+                                            <li>
+                                                {{this}}
+                                            </li>
                                         {{/each}}
                                     </td>
                                     <td>
