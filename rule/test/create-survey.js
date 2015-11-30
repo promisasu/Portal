@@ -8,15 +8,6 @@ database.name = 'prp_test';
 require('../../model').setup(database);
 const createSurvey = require('../task/create-survey');
 
-test('create can create a survey instance', (t) => {
-    createSurvey(1, 1, 1, 1, 'day')
-    .then(() => {
-        t.pass();
-        t.end();
-    })
-    .catch((err) => {
-        console.error(err);
-        t.fail();
-        t.end();
-    });
+test('create can create a survey instance', () => {
+    return createSurvey(1, 1, 1, 1, 'day');
 });

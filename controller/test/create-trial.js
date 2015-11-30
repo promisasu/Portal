@@ -9,7 +9,7 @@ config.server.auth = false;
 
 const server = require('../server')(config);
 
-test('trial name must have at least 3 letters', (t) => {
+test.cb('trial name must have at least 3 letters', (t) => {
     server.inject(
         {
             method: 'POST',
@@ -30,7 +30,7 @@ test('trial name must have at least 3 letters', (t) => {
     );
 });
 
-test('IRB id must have at least 4 letters', (t) => {
+test.cb('IRB id must have at least 4 letters', (t) => {
     server.inject(
         {
             method: 'POST',
@@ -51,7 +51,7 @@ test('IRB id must have at least 4 letters', (t) => {
     );
 });
 
-test('IRB start date must be future', (t) => {
+test.cb('IRB start date must be future', (t) => {
     server.inject(
         {
             method: 'POST',
@@ -72,7 +72,7 @@ test('IRB start date must be future', (t) => {
     );
 });
 
-test('IRB end date must be future', (t) => {
+test.cb('IRB end date must be future', (t) => {
     server.inject(
         {
             method: 'POST',

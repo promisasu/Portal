@@ -4,7 +4,7 @@ const test = require('ava');
 const joi = require('joi');
 const processPatient = require('../helper/process-patient');
 
-test('patient data has correct format', (t) => {
+test.cb('patient data has correct format', (t) => {
     const example = {
         dataValues: {
             pin: 1

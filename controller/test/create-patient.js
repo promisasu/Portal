@@ -8,7 +8,7 @@ config.server.auth = false;
 
 const server = require('../server')(config);
 
-test('invalid patient cannot be added', (t) => {
+test.cb('invalid patient cannot be added', (t) => {
     server.inject(
         {
             method: 'POST',
