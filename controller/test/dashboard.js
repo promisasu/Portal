@@ -8,7 +8,7 @@ config.server.auth = false;
 
 const server = require('../server')(config);
 
-test('dashboard loads okay', (t) => {
+test.cb('dashboard loads okay', (t) => {
     server.inject(
         {
             method: 'GET',

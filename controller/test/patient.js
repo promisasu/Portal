@@ -8,7 +8,7 @@ config.server.auth = false;
 
 const server = require('../server')(config);
 
-test('invalid patient pin errors', (t) => {
+test.cb('invalid patient pin errors', (t) => {
     server.inject(
         {
             method: 'GET',

@@ -8,7 +8,7 @@ config.server.auth = false;
 
 const server = require('../server')(config);
 
-test('redirect when trial does not exist', (t) => {
+test.cb('redirect when trial does not exist', (t) => {
     server.inject(
         {
             method: 'GET',
@@ -21,7 +21,7 @@ test('redirect when trial does not exist', (t) => {
     );
 });
 
-test('invalid trial id errors', (t) => {
+test.cb('invalid trial id errors', (t) => {
     server.inject(
         {
             method: 'GET',
