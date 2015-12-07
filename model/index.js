@@ -10,7 +10,6 @@ const Sequelize = require('sequelize');
 const addUserModel = require('./user');
 const addTrialModel = require('./trial');
 const addPatientModel = require('./patient');
-const addRule = require('./rule');
 const addStage = require('./stage');
 const addSurveyTemplateModel = require('./survey-template');
 const addSurveyInstanceModel = require('./survey-instance');
@@ -67,7 +66,6 @@ function setup (configuration) {
     addUserModel(sequelize, configuration.salt);
     addTrialModel(sequelize);
     addPatientModel(sequelize);
-    addRule(sequelize);
     addStage(sequelize);
     addSurveyTemplateModel(sequelize);
     addSurveyInstanceModel(sequelize);
@@ -86,7 +84,6 @@ function setup (configuration) {
     const trial = sequelize.model('trial');
     const patient = sequelize.model('patient');
     const stage = sequelize.model('stage');
-    const rule = sequelize.model('rule');
     const questionInstance = sequelize.model('question_instance');
     const questionOption = sequelize.model('question_option');
     const questionTemplate = sequelize.model('question_template');
@@ -106,7 +103,6 @@ function setup (configuration) {
     trial.hasMany(stage);
     patient.hasMany(surveyInstance);
     stage.hasMany(patient);
-    stage.hasMany(rule);
     questionTemplate.hasMany(questionInstance);
     surveyTemplate.hasMany(surveyInstance);
     surveyInstance.hasMany(questionInstance);
