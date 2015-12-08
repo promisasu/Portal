@@ -25,6 +25,7 @@ function dashboard (request, reply) {
         // Display view
         reply.view('dashboard', {
             title: 'Pain Reporting Portal',
+            user: request.auth.credentials,
             status: {
                 patientCount: 2032,
                 riskCount: 52,

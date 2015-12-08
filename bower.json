@@ -11,6 +11,7 @@
     "better-i18n-plugin": "1.0.4",
     "bootstrap": "4.0.0-alpha.2",
     "chart.js": "https://github.com/nnnick/Chart.js.git#2.0.0-beta1",
+    "colors": "https://github.com/mrmrs/colors.git#v2.2.0",
     "datatables": "1.10.10",
     "font-awesome": "4.5.0",
     "fullcalendar": "2.5.0",

@@ -68,12 +68,26 @@
         </div>
       </div>
       <div class="col-sm-4 col-md-12 col-lg-12 col-xl-12">
-        <div id="legend" class="card col-sm-12">
+        <div class="card col-sm-12">
             <div class="card-block">
                 <h4 class="card-title">
                     Legend
                 </h4>
             </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fa fa-circle green"></i>
+                    Compliant
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-circle yellow"></i>
+                    Semicompliant
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-circle red"></i>
+                    Noncompliant
+                </li>
+            </ul>
         </div>
       </div>
     </div>
@@ -189,15 +203,8 @@
 <script>
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('trialChart').getContext('2d');
-    var options = {
-        legendTemplate: '<ul class="list-group list-group-flush"><% for (var i = 0; i < data.labels.length; i++){%><li class="list-group-item"><i style="color:<%=data.datasets[0].backgroundColor[i]%>" class="fa fa-circle"></i> <%=data.labels[i]%></li><%}%></ul>'
-    };
     var myNewChart = new Chart(ctx, {
         type: 'doughnut',
-        data: data,
-        options: options
+        data: data
     });
-    var legend = document.getElementById('legend');
-
-    legend.innerHTML += myNewChart.generateLegend();
 </script>
