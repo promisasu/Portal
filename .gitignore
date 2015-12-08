@@ -10,6 +10,12 @@ documentation/
 # Temporary editor files
 *~
 
+# Bower
+bower_components
+.bower-cache
+.bower-registry
+.bower-tmp
+
 # Intellij
 *.iml
 *.ipr
@@ -36,9 +42,6 @@ coverage
 
 # node-waf configuration
 .lock-wscript
-
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git

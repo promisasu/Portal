@@ -8,6 +8,7 @@
 const path = require('path');
 const hapi = require('hapi');
 const vision = require('vision');
+const inert = require('inert');
 const authBasic = require('hapi-auth-basic');
 const handlebars = require('handlebars');
 
@@ -30,6 +31,9 @@ module.exports = function (configuration) {
         [
             {
                 register: vision
+            },
+            {
+                register: inert
             },
             {
                 register: authBasic

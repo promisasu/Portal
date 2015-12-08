@@ -1,0 +1,21 @@
+{
+  "name": "pain-reporting-portal",
+  "authors": [
+    "Arizona State University"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "better-dateinput-polyfill": "1.5.2",
+    "better-dom": "2.1.4",
+    "better-i18n-plugin": "1.0.4",
+    "bootstrap": "4.0.0-alpha.2",
+    "chart.js": "https://github.com/nnnick/Chart.js.git#2.0.0-beta1",
+    "datatables": "1.10.10",
+    "font-awesome": "4.5.0",
+    "fullcalendar": "2.5.0",
+    "jquery": "2.1.4",
+    "moment": "2.10.6",
+    "tether": "1.1.1"
+  }
+}

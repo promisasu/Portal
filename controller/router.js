@@ -17,6 +17,15 @@ module.exports = [
         handler: dashboardPresenter
     },
     {
+        method: 'GET',
+        path: '/vendor/{param*}',
+        handler: {
+            directory: {
+                path: 'bower_components'
+            }
+        }
+    },
+    {
         method: 'POST',
         path: '/trial',
         handler: createTrial,
