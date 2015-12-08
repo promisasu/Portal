@@ -199,6 +199,7 @@
 <script>
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('trialChart').getContext('2d');
+
     new Chart(ctx, {
         type: 'doughnut',
         data: data

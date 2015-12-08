@@ -6,54 +6,50 @@
         </li>
     </ol>
     <div class="col-sm-12 col-md-5 col-lg-6 col-xl-6">
-        <div class="col-sm-8 col-md-12 col-lg-12 col-xl-12">
-            <div class="card">
-                <div class="card-block">
-                    <h4 class="card-title">
-                        Welcome, {{ user.username }}!
-                    </h4>
-                    <p class="card-text">
-                        Global Stats
-                    </p>
-                    <input type="hidden" id="selectedChoice"/>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th scope="row">
-                                    In progress trials:
-                                </th>
-                                <td>
-                                    {{ trial.start }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    Average Percent Recruited:
-                                </th>
-                                <td>
-                                    {{ trial.duration }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    Average Percent Compliant:
-                                </th>
-                                <td>
-                                    {{ trial.patientCount }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">
+                    Welcome, {{ user.username }}!
+                </h4>
+                <p class="card-text">
+                    Global Stats
+                </p>
+                <input type="hidden" id="selectedChoice"/>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                In progress trials:
+                            </th>
+                            <td>
+                                {{ trial.start }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                Average Percent Recruited:
+                            </th>
+                            <td>
+                                {{ trial.duration }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                Average Percent Compliant:
+                            </th>
+                            <td>
+                                {{ trial.patientCount }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="col-sm-4 col-md-12 col-lg-12 col-xl-12">
-            <div id="legend" class="card col-sm-12">
-                <div class="card-block">
-                    <h4 class="card-title">
-                        Legend
-                    </h4>
-                </div>
+        <div id="legend" class="card">
+            <div class="card-block">
+                <h4 class="card-title">
+                    Legend
+                </h4>
             </div>
         </div>
     </div>
