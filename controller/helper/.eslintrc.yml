@@ -1,0 +1,4 @@
+rules:
+    max-params:
+        - 2
+        - 4

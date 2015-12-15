@@ -5,6 +5,7 @@
  */
 
 const database = require('../../model');
+const trialOffset = 1000;
 
 /**
  * Creates a new Patient
@@ -15,9 +16,9 @@ const database = require('../../model');
 function createPatient (request, reply) {
     const patient = database.sequelize.model('patient');
     const trial = database.sequelize.model('trial');
-    let currentTrial;
-    let newPatient;
-    let pin;
+    let currentTrial = null;
+    let newPatient = null;
+    let pin = null;
 
     // Get Trial the patient will be added to
     trial.findById(request.payload.trialId)
@@ -25,8 +26,8 @@ function createPatient (request, reply) {
     .then((tempTrial) => {
         currentTrial = tempTrial;
 
-        pin = currentTrial.id * 1000 + currentTrial.patientPinCounter;
-        currentTrial.patientPinCounter++;
+        pin = currentTrial.id * trialOffset + currentTrial.patientPinCounter;
+        currentTrial.patientPinCounter += 1;
         return currentTrial.save();
     })
     // Create the new Patient

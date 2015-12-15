@@ -7,6 +7,8 @@
 const color = require('colors.css');
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
+const first = 0;
+const second = 1;
 
 const surveys = [
     {
@@ -112,12 +114,11 @@ const surveys = [
 
 /**
  * A dashboard with an overview of a specific patient.
- * @function patient
  * @param {Request} request - Hapi request
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
  */
-module.exports = function (request, reply) {
+function patientView (request, reply) {
     const patient = database.sequelize.model('patient');
     const trial = database.sequelize.model('trial');
 
@@ -153,10 +154,12 @@ module.exports = function (request, reply) {
     .then((data) => {
         reply.view('patient', {
             title: 'Pain Reporting Portal',
-            patient: processPatient(data[0].patients[0]),
-            trial: data[0],
-            surveys: data[1],
+            patient: processPatient(data[first].patients[first]),
+            trial: data[first],
+            surveys: data[second],
             surveysJson: JSON.stringify(surveys)
         });
     });
-};
+}
+
+module.exports = patientView;

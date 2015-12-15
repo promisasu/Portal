@@ -1,4 +1,3 @@
-/* eslint max-nested-callbacks: [2, 3]  */
 'use strict';
 
 /**
@@ -19,18 +18,18 @@ const moment = require('moment');
  */
 function checkSurveys (request, reply) {
     const patient = database.sequelize.model('patient');
-    let currentPatient;
     const currentDate = new Date();
+    let currentPatient = null;
 
     patient.find({
         where: {
             pin: request.query.userPIN
         }
-    }).then((patient) => {
+    }).then((resultPatient) => {
         return new Promise((resolve, reject) => {
-            if (patient) {
-                if (moment() > patient.dateStarted && moment() < patient.dateCompleted) {
-                    currentPatient = patient;
+            if (resultPatient) {
+                if (moment() > resultPatient.dateStarted && moment() < resultPatient.dateCompleted) {
+                    currentPatient = resultPatient;
                     resolve();
                 } else {
                     reject('Your PIN is not active');

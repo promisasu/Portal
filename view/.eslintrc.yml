@@ -17,8 +17,10 @@ rules:
 
     # Best Practices
     block-scoped-var: 2
-    no-new: 0
     vars-on-top: 2
+    new-cap: 0
+    no-invalid-this: 0
+    no-new: 0
 
     # Strict Mode
     strict:
@@ -28,10 +30,23 @@ rules:
     # Stylistic Issues
     no-multiple-empty-lines: 0
     require-jsdoc: 0
+    spaced-comment: 0
 
     # ECMAScript 6
+    arrow-body-style: 0
+    arrow-parens: 0
+    arrow-spacing: 0
+    constructor-super: 0
+    generator-star-spacing: 0
+    no-arrow-condition: 0 # soon no-confusing-arrow
+    no-class-assign: 0
     no-const-assign: 0
+    no-dupe-class-members: 0
+    no-this-before-super: 0
     no-var: 0
     prefer-arrow-callback: 0
     prefer-const: 0
+    prefer-spread: 0
     prefer-template: 0
+    require-yield: 0
+    yield-star-spacing: 0

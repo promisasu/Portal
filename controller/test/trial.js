@@ -7,6 +7,8 @@ config.database.name = 'prp_test';
 config.server.auth = false;
 
 const server = require('../server')(config);
+const httpFoundRedirect = 302;
+const httpBadRequest = 400;
 
 test.cb('redirect when trial does not exist', (t) => {
     server.inject(
@@ -15,7 +17,7 @@ test.cb('redirect when trial does not exist', (t) => {
             url: '/trial/10000'
         },
         (response) => {
-            t.is(response.statusCode, 302);
+            t.is(response.statusCode, httpFoundRedirect);
             t.end();
         }
     );
@@ -28,7 +30,7 @@ test.cb('invalid trial id errors', (t) => {
             url: '/trial/breaks'
         },
         (response) => {
-            t.is(response.statusCode, 400);
+            t.is(response.statusCode, httpBadRequest);
             t.end();
         }
     );

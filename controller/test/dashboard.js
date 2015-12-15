@@ -7,6 +7,7 @@ config.database.name = 'prp_test';
 config.server.auth = false;
 
 const server = require('../server')(config);
+const httpOk = 200;
 
 test.cb('dashboard loads okay', (t) => {
     server.inject(
@@ -15,7 +16,7 @@ test.cb('dashboard loads okay', (t) => {
             url: '/'
         },
         (response) => {
-            t.is(response.statusCode, 200);
+            t.is(response.statusCode, httpOk);
             t.end();
         }
     );

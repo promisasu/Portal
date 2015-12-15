@@ -1,4 +1,3 @@
-/* eslint max-nested-callbacks: [2, 2] */
 'use strict';
 
 /**
@@ -11,6 +10,11 @@ const color = require('colors.css');
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
 const processTrial = require('../helper/process-trial');
+const fakeData = {
+    small: 10,
+    medium: 50,
+    large: 100
+};
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -19,7 +23,7 @@ const processTrial = require('../helper/process-trial');
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
  */
-function trial (request, reply) {
+function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
 
     trial.findById(request.params.id).then((currentTrial) => {
@@ -32,9 +36,9 @@ function trial (request, reply) {
                     datasets: [
                         {
                             data: [
-                                100,
-                                50,
-                                10
+                                fakeData.large,
+                                fakeData.medium,
+                                fakeData.small
                             ],
                             backgroundColor: [
                                 color.green,
@@ -58,4 +62,4 @@ function trial (request, reply) {
     });
 }
 
-module.exports = trial;
+module.exports = trialView;

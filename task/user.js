@@ -13,9 +13,9 @@ const read = require('./helper/read-promise');
  * @returns {Null} nothing
  */
 function user (done) {
-    database.setup(require('../config.json').database); // eslint-disable-line global-require
+    database.setup(require('../config.json').database);
 
-    const user = database.sequelize.model('user');
+    const userModel = database.sequelize.model('user');
 
     console.log('This utility will walk you through creating a new user.');
     console.log('');
@@ -65,7 +65,7 @@ function user (done) {
         });
     })
     .then(() => {
-        return user.create(newUser);
+        return userModel.create(newUser);
     })
     .then(() => {
         console.log('');

@@ -36,7 +36,7 @@ view
 ### CLI
 The CLI is a collection of tools to help administrators and developers manage all the Pain Reporting Portal components.
 
-The CLI leverages [Gulp](http://gulpjs.com/) for running tasks, [ESLint](http://eslint.org/) for lint checking, [AVA](https://github.com/sindresorhus/ava) for testing, [JSDoc](https://github.com/jsdoc3/jsdoc) for documentation, and [PM2](http://pm2.keymetrics.io/) for production server management.
+The CLI leverages [Gulp](http://gulpjs.com/) for running tasks, [ESLint](http://eslint.org/) for lint checking, [AVA](https://github.com/sindresorhus/ava) for testing, [JSDoc](https://github.com/jsdoc3/jsdoc) for documentation, [Bower](http://bower.io/) to manage UI libraries, and [PM2](http://pm2.keymetrics.io/) for production server management.
 
 **Relevant File and Folder**
 ```

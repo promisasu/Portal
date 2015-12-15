@@ -12,7 +12,7 @@ const database = require('../model');
  * @returns {Null} nothing
  */
 function sync (done) {
-    database.setup(require('../config.json').database); // eslint-disable-line global-require
+    database.setup(require('../config.json').database);
     database.sequelize.sync({force: true})
         .then(() => {
             database.sequelize.close();

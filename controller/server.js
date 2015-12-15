@@ -8,6 +8,7 @@
 const path = require('path');
 const hapi = require('hapi');
 const vision = require('vision');
+const inert = require('inert');
 const authBasic = require('hapi-auth-basic');
 const handlebars = require('handlebars');
 
@@ -16,7 +17,12 @@ const router = require('./router');
 const database = require('../model');
 const validate = require('./helper/validate');
 
-module.exports = function (configuration) {
+/**
+ * Sets up a the Hapi server
+ * @param {Object} configuration - server options
+ * @returns {Object} Hapi server instance
+ */
+function dashboardServer (configuration) {
     const server = new hapi.Server();
 
     // configure server connection
@@ -30,6 +36,9 @@ module.exports = function (configuration) {
         [
             {
                 register: vision
+            },
+            {
+                register: inert
             },
             {
                 register: authBasic
@@ -81,4 +90,6 @@ module.exports = function (configuration) {
     server.route(router);
 
     return server;
-};
+}
+
+module.exports = dashboardServer;

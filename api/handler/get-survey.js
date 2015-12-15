@@ -1,4 +1,3 @@
-/* eslint max-nested-callbacks: [2, 3]  */
 'use strict';
 
 /**
@@ -19,23 +18,23 @@ const moment = require('moment');
  */
 function getSurvey (request, reply) {
     const surveyInstance = database.sequelize.model('survey_instance');
-    let currentSurveyInstance;
+    let currentSurveyInstance = null;
 
     surveyInstance.find({
         where: {
             id: request.query.surveyInstanceID
         }
-    }).then((surveyInstance) => {
+    }).then((resultSurveyInstance) => {
         return new Promise((resolve, reject) => {
-            if (surveyInstance) {
-                if (moment() < surveyInstance.startTime) {
+            if (resultSurveyInstance) {
+                if (moment() < resultSurveyInstance.startTime) {
                     reject('Survey instance is not active');
-                } else if (moment() > surveyInstance.endTime) {
+                } else if (moment() > resultSurveyInstance.endTime) {
                     reject('Survey instance has expired');
-                } else if (surveyInstance.surveyInstanceCompleted) {
+                } else if (resultSurveyInstance.surveyInstanceCompleted) {
                     reject('Survey instance has been completed');
                 } else {
-                    currentSurveyInstance = surveyInstance;
+                    currentSurveyInstance = resultSurveyInstance;
                     resolve();
                 }
             } else {

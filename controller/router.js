@@ -9,6 +9,9 @@ const dashboardPresenter = require('./handler/dashboard');
 const trialPresenter = require('./handler/trial');
 const patientPresenter = require('./handler/patient');
 const surveyPresenter = require('./handler/survey');
+const minimumNameLength = 3;
+const minimumIrbLength = 4;
+const mimimumTargetCount = 0;
 
 module.exports = [
     {
@@ -17,18 +20,27 @@ module.exports = [
         handler: dashboardPresenter
     },
     {
+        method: 'GET',
+        path: '/vendor/{param*}',
+        handler: {
+            directory: {
+                path: 'bower_components'
+            }
+        }
+    },
+    {
         method: 'POST',
         path: '/trial',
         handler: createTrial,
         config: {
             validate: {
                 payload: {
-                    name: Joi.string().min(3),
+                    name: Joi.string().min(minimumNameLength),
                     description: Joi.string(),
-                    IRBID: Joi.string().min(4),
+                    IRBID: Joi.string().min(minimumIrbLength),
                     IRBStart: Joi.date().min(moment().format('YYYY-MM-DD')),
                     IRBEnd: Joi.date().min(moment().format('YYYY-MM-DD')),
-                    targetCount: Joi.number().integer().min(0)
+                    targetCount: Joi.number().integer().min(mimimumTargetCount)
                 }
             }
         }
