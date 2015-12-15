@@ -12,7 +12,7 @@ const database = require('../model');
  * @returns {Null} nothing
  */
 function syncTest (done) {
-    const config = require('../config.json'); // eslint-disable-line global-require
+    const config = require('../config.json');
 
     config.database.name = 'prp_test';
     database.setup(config.database);

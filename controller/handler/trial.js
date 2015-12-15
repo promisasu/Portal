@@ -1,4 +1,3 @@
-/* eslint max-nested-callbacks: [2, 2] */
 'use strict';
 
 /**

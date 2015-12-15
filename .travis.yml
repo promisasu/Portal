@@ -3,4 +3,4 @@ node_js: v4
 
 install: npm install --global eslint@next eslint-plugin-html eslint-plugin-lodash3
 
-script: eslint . view/**/*.hbs
+script: eslint . view/**/*.hbs --inline-config=false

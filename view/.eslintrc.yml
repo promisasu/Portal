@@ -30,6 +30,7 @@ rules:
     # Stylistic Issues
     no-multiple-empty-lines: 0
     require-jsdoc: 0
+    spaced-comment: 0
 
     # ECMAScript 6
     arrow-body-style: 0

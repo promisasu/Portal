@@ -1,4 +1,3 @@
-/* eslint no-loop-func: 0, max-nested-callbacks: [2, 3]  */
 'use strict';
 
 /**

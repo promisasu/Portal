@@ -56,7 +56,7 @@ function register (sequelize, salt) {
                     // runs password against validator
                     this.setDataValue('password', password);
                     // stores salted and hashed password
-                    this.setDataValue('passwordHash', bcrypt.hashSync(password, salt)); // eslint-disable-line no-sync
+                    this.setDataValue('passwordHash', bcrypt.hashSync(password, salt));
                 },
                 validate: {
                     // Password must have
