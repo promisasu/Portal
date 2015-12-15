@@ -208,7 +208,9 @@ rules:
         - 2
         - never
     operator-assignment: 2
-    operator-linebreak: 2
+    operator-linebreak:
+        - 2
+        - before
     padded-blocks:
         - 2
         - never
