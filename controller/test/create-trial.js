@@ -8,6 +8,8 @@ config.database.name = 'prp_test';
 config.server.auth = false;
 
 const server = require('../server')(config);
+const httpBadRequest = 400;
+const one = 1;
 
 test.cb('trial name must have at least 3 letters', (t) => {
     server.inject(
@@ -24,7 +26,7 @@ test.cb('trial name must have at least 3 letters', (t) => {
             }
         },
         (response) => {
-            t.is(response.statusCode, 400);
+            t.is(response.statusCode, httpBadRequest);
             t.end();
         }
     );
@@ -45,7 +47,7 @@ test.cb('IRB id must have at least 4 letters', (t) => {
             }
         },
         (response) => {
-            t.is(response.statusCode, 400);
+            t.is(response.statusCode, httpBadRequest);
             t.end();
         }
     );
@@ -60,13 +62,13 @@ test.cb('IRB start date must be future', (t) => {
                 name: 'test',
                 description: 'a test description',
                 IRBID: 'test',
-                IRBStart: moment().subtract(1, 'day'),
+                IRBStart: moment().subtract(one, 'day'),
                 IRBEnd: moment(),
                 targetCount: 1
             }
         },
         (response) => {
-            t.is(response.statusCode, 400);
+            t.is(response.statusCode, httpBadRequest);
             t.end();
         }
     );
@@ -82,12 +84,12 @@ test.cb('IRB end date must be future', (t) => {
                 description: 'a test description',
                 IRBID: 'test',
                 IRBStart: moment(),
-                IRBEnd: moment().subtract(1, 'day'),
+                IRBEnd: moment().subtract(one, 'day'),
                 targetCount: 1
             }
         },
         (response) => {
-            t.is(response.statusCode, 400);
+            t.is(response.statusCode, httpBadRequest);
             t.end();
         }
     );

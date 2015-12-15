@@ -41,7 +41,7 @@ const addJoinQuestionsAndOptions = require('./join-questions-and-options');
  * @returns {Sequelize} configured sequelize object
  */
 function setup (configuration) {
-    let logger;
+    let logger = null;
 
     // disable query logging for tests
     if (configuration.name === 'prp_test') {

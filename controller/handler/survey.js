@@ -6,15 +6,16 @@
 
 const database = require('../../model');
 const processSurvey = require('../helper/process-survey');
+const first = 0;
+const second = 1;
 
 /**
  * A dashboard with an overview of a specific survey.
- * @function survey
  * @param {Request} request - Hapi request
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
  */
-module.exports = function (request, reply) {
+function surveyView (request, reply) {
     Promise.all([
         database.sequelize.query(
             `
@@ -56,8 +57,8 @@ module.exports = function (request, reply) {
         )
     ])
     .then((data) => {
-        const currentSurvey = data[0];
-        const patientAndTrial = data[1][0];
+        const currentSurvey = data[first];
+        const patientAndTrial = data[second][first];
 
         reply.view('survey', {
             title: 'Pain Reporting Portal',
@@ -74,4 +75,6 @@ module.exports = function (request, reply) {
     .catch(() => {
         reply.redirect('/404');
     });
-};
+}
+
+module.exports = surveyView;

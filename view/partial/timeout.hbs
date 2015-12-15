@@ -24,8 +24,12 @@
 </div>
 
 <script>
-    setTimeout(function () {
-        'use strict';
+(function showTimeoutMessage () {
+    'use strict';
+    var timeInMilliseconds = 900000;
+
+    setTimeout(function showMessage () {
         $('#timeoutModal').modal('show');
-    }, 900000);
+    }, timeInMilliseconds);
+}());
 </script>

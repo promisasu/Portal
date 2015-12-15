@@ -7,7 +7,12 @@ const hapi = require('hapi');
 const router = require('./router');
 const database = require('../model');
 
-module.exports = function (configuration) {
+/**
+ * Sets up a the Hapi server
+ * @param {Object} configuration - server options
+ * @returns {Object} Hapi server instance
+ */
+function apiServer (configuration) {
     const server = new hapi.Server();
 
     // configure server connection
@@ -23,4 +28,6 @@ module.exports = function (configuration) {
     server.route(router);
 
     return server;
-};
+}
+
+module.exports = apiServer;

@@ -9,6 +9,7 @@ const database = require('../../model');
 const boom = require('boom');
 const _ = require('lodash');
 const moment = require('moment');
+const first = 0;
 
 /**
  * Fills in answered QuestionInstances for a submitted SurveyInstance
@@ -23,7 +24,7 @@ function submitSurvey (request, reply) {
     const surveyInstanceId = request.payload.surveyInstanceID;
     const questionInstArr = [];
 
-    let currentSurveyInstance;
+    let currentSurveyInstance = null;
 
     surveyInstance.find({
         where: {
@@ -46,14 +47,14 @@ function submitSurvey (request, reply) {
         });
     })
     .then(() => {
-        for (let index = 0; index < request.payload.surveyResults.length; index++) {
+        for (let index = 0; index < request.payload.surveyResults.length; index += 1) {
             const currentQuestion = request.payload.surveyResults[index];
 
             if (_.has(currentQuestion, 'bodyPain[0].location')) {
                 questionInstArr.push(
                     questionOption.find({
                         where: {
-                            optionText: currentQuestion.bodyPain[0].location
+                            optionText: currentQuestion.bodyPain[first].location
                         }
                     })
                     .then((data) => {
@@ -67,7 +68,7 @@ function submitSurvey (request, reply) {
                 questionInstArr.push(
                     questionOption.find({
                         where: {
-                            optionText: currentQuestion.bodyPain[0].intensity
+                            optionText: currentQuestion.bodyPain[first].intensity
                         }
                     })
                     .then((data) => {
@@ -83,7 +84,7 @@ function submitSurvey (request, reply) {
                    questionInstance.create({
                        questionTemplateId: currentQuestion.quesID,
                        surveyInstanceId: surveyInstanceId,
-                       questionOptionId: currentQuestion.selectedOptions[0]
+                       questionOptionId: currentQuestion.selectedOptions[first]
                    })
                 );
             }

@@ -5,6 +5,7 @@
  */
 
 const _ = require('lodash');
+const first = 0;
 
 /**
  * Takes in a survey_instance model and processes it into a format recognized by app.
@@ -13,9 +14,9 @@ const _ = require('lodash');
  */
 function processSurveyInstance (questionRecord) {
     return {
-        quesID: questionRecord[0].questionTemplateId,
-        questionType: questionRecord[0].questionType,
-        questionText: questionRecord[0].questionText,
+        quesID: questionRecord[first].questionTemplateId,
+        questionType: questionRecord[first].questionType,
+        questionText: questionRecord[first].questionText,
         answerOptions: _.map(questionRecord, processAnswers)
     };
 }

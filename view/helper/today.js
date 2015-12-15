@@ -2,8 +2,8 @@
 
 const moment = require('moment');
 
-module.exports = function () {
-    const today = moment(new Date());
+function today () {
+    return moment().format('YYYY-MM-DD');
+}
 
-    return today.format('YYYY-MM-DD');
-};
+module.exports = today;

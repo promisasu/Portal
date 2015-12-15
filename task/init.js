@@ -8,6 +8,8 @@ const path = require('path');
 const read = require('./helper/read-promise');
 const writeFile = require('./helper/write-file-promise');
 const genSalt = require('./helper/gen-salt-promise');
+const numberOfHashIterations = 10;
+const jsonIndent = 2;
 
 /**
  * Writes a server configuration file.
@@ -105,12 +107,12 @@ function init (done) {
     .then((dialect) => {
         config.database.dialect = dialect;
 
-        return genSalt(10);
+        return genSalt(numberOfHashIterations);
     })
     .then((salt) => {
         config.database.salt = salt;
 
-        writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, 2));
+        writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
     })
     .then(done)
     .catch((err) => {

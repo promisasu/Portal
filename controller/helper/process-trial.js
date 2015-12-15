@@ -5,6 +5,14 @@
  */
 
 const moment = require('moment');
+const twoDecimalPoints = 2;
+const fakeData = {
+    numberOfStatuses: 4,
+    targetOffset: 152,
+    recruitedOffset: 23,
+    activeOffset: 67,
+    multiplier: 100
+};
 
 /**
  * Takes in a Trial model and processes them into human readable format
@@ -16,12 +24,12 @@ function processTrial (currentTrial) {
     const startDate = moment(trial.IRBStart);
     const endDate = moment(trial.IRBEnd);
     const statuses = ['Pending', 'Upcoming', 'In Progress', 'Completed'];
-    const status = statuses[Math.floor(Math.random() * 4)];
+    const status = statuses[Math.floor(Math.random() * fakeData.noncompliantCount)];
     const targetCount = trial.targetCount;
     // TODO: Currently fake data, make this live data
-    const recruitedCount = targetCount - 153;
-    const activeCount = recruitedCount - 23;
-    const compliantCount = activeCount - 67;
+    const recruitedCount = targetCount - fakeData.targetOffset;
+    const activeCount = recruitedCount - fakeData.recruitedOffset;
+    const compliantCount = activeCount - fakeData.activeOffset;
 
     return {
         id: trial.id,
@@ -35,12 +43,15 @@ function processTrial (currentTrial) {
         activeCount: activeCount,
         compliantCount: compliantCount,
         // TODO: Currently fake data, make this live data
-        recruitedPercent: (recruitedCount / targetCount * 100).toFixed(2),
-        unrecruitedPercent: (100 - recruitedCount / targetCount * 100).toFixed(2),
-        activePercent: (activeCount / recruitedCount * 100).toFixed(2),
-        completedPercent: (100 - activeCount / recruitedCount * 100).toFixed(2),
-        compliantPercent: (compliantCount / activeCount * 100).toFixed(2),
-        noncompliantPercent: (100 - compliantCount / activeCount * 100).toFixed(2),
+        recruitedPercent: (recruitedCount / targetCount * fakeData.multiplier).toFixed(twoDecimalPoints),
+        unrecruitedPercent: (fakeData.multiplier - recruitedCount / targetCount * fakeData.multiplier)
+            .toFixed(twoDecimalPoints),
+        activePercent: (activeCount / recruitedCount * fakeData.multiplier).toFixed(twoDecimalPoints),
+        completedPercent: (fakeData.multiplier - activeCount / recruitedCount * fakeData.multiplier)
+            .toFixed(twoDecimalPoints),
+        compliantPercent: (compliantCount / activeCount * fakeData.multiplier).toFixed(twoDecimalPoints),
+        noncompliantPercent: (fakeData.multiplier - compliantCount / activeCount * fakeData.multiplier)
+            .toFixed(twoDecimalPoints),
         noncompliantCount: compliantCount - activeCount,
         status: status
     };

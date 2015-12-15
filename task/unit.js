@@ -13,13 +13,13 @@ const npmPackage = require('../package.json');
  * @returns {Null} nothing
  */
 function unit (done) {
-    npm.load(npmPackage, (err) => {
-        if (err) {
-            console.log(err);
+    npm.load(npmPackage, (loadErr) => {
+        if (loadErr) {
+            console.log(loadErr);
         }
-        npm.commands.runScript(['test'], (err) => {
-            if (err) {
-                console.log(err);
+        npm.commands.runScript(['test'], (commandErr) => {
+            if (commandErr) {
+                console.log(commandErr);
             }
             done();
         });

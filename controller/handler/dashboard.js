@@ -9,13 +9,22 @@ const processTrial = require('../helper/process-trial');
 
 const database = require('../../model');
 
+const fakeData = {
+    patientCount: 2032,
+    riskCount: 52,
+    noncompliantCount: 11,
+    large: 100,
+    medium: 50,
+    small: 10
+};
+
 /**
  * A dashboard view with overview of all trials and patients.
  * @param {Request} request - Hapi request
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
  */
-function dashboard (request, reply) {
+function dashboardView (request, reply) {
     const trial = database.sequelize.model('trial');
 
     trial.findAll().then((trials) => {
@@ -27,9 +36,9 @@ function dashboard (request, reply) {
             title: 'Pain Reporting Portal',
             user: request.auth.credentials,
             status: {
-                patientCount: 2032,
-                riskCount: 52,
-                noncompliantCount: 11
+                patientCount: fakeData.patientCount,
+                riskCount: fakeData.riskCount,
+                noncompliantCount: fakeData.noncompliantCount
             },
             trials: trialData,
             graphData: JSON.stringify({
@@ -44,9 +53,9 @@ function dashboard (request, reply) {
                         backgroundColor: 'rgba(133, 17, 75, 0.2)',
                         pointBackgroundColor: 'rgb(133, 17, 75)',
                         data: [
-                            100,
-                            10,
-                            50
+                            fakeData.large,
+                            fakeData.small,
+                            fakeData.medium
                         ]
                     },
                     {
@@ -54,9 +63,9 @@ function dashboard (request, reply) {
                         backgroundColor: 'rgba(0, 31, 62, 0.2)',
                         pointBackgroundColor: 'rgb(0, 31, 62)',
                         data: [
-                            10,
-                            50,
-                            100
+                            fakeData.small,
+                            fakeData.medium,
+                            fakeData.large
                         ]
                     },
                     {
@@ -64,9 +73,9 @@ function dashboard (request, reply) {
                         backgroundColor: 'rgba(177, 13, 201, 0.2)',
                         pointBackgroundColor: 'rgb(177, 13, 201)',
                         data: [
-                            50,
-                            100,
-                            10
+                            fakeData.medium,
+                            fakeData.large,
+                            fakeData.small
                         ]
                     }
                 ]
@@ -75,4 +84,4 @@ function dashboard (request, reply) {
     });
 }
 
-module.exports = dashboard;
+module.exports = dashboardView;
