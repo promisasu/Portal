@@ -10,7 +10,7 @@
  * @returns {Null} nothing
  */
 function devDashboard () {
-    require('./helper/start-dashboard'); // eslint-disable-line global-require
+    require('./helper/start-dashboard');
 }
 
 devDashboard.description = 'Starts the dashboard in the console process.';

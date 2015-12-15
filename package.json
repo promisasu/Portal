@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "documentation": "jsdoc --recurse api controller model rule task --destination documentation",
-    "lint": "eslint . view/**/*.hbs",
+    "lint": "eslint . view/**/*.hbs --inline-config=false",
     "test": "ava */test/*.js",
     "postinstall": "bower install"
   },

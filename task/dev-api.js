@@ -10,7 +10,7 @@
  * @returns {Null} nothing
  */
 function devApi () {
-    require('./helper/start-api'); // eslint-disable-line global-require
+    require('./helper/start-api');
 }
 
 devApi.description = 'Starts the api in the console process.';

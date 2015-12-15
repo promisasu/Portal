@@ -13,7 +13,7 @@ const read = require('./helper/read-promise');
  * @returns {Null} nothing
  */
 function user (done) {
-    database.setup(require('../config.json').database); // eslint-disable-line global-require
+    database.setup(require('../config.json').database);
 
     const userModel = database.sequelize.model('user');
 
