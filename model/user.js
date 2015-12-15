@@ -6,6 +6,8 @@
 
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
+const minimumNameLength = 5;
+const maximumNameLength = 25;
 
 /**
  * a generic User
@@ -35,7 +37,7 @@ function register (sequelize, salt) {
                     // Username is only Latin letters
                     // and is 5-25 characters in length
                     isAlpha: true,
-                    len: [5, 25]
+                    len: [minimumNameLength, maximumNameLength]
                 }
             },
             role: {
@@ -50,7 +52,7 @@ function register (sequelize, salt) {
             password: {
                 // plain text password is not stored
                 type: Sequelize.VIRTUAL,
-                set: function (password) {
+                set (password) {
                     // runs password against validator
                     this.setDataValue('password', password);
                     // stores salted and hashed password

@@ -13,13 +13,13 @@ const npmPackage = require('../package.json');
  * @returns {Null} nothing
  */
 function lint (done) {
-    npm.load(npmPackage, (err) => {
-        if (err) {
-            console.log(err);
+    npm.load(npmPackage, (loadErr) => {
+        if (loadErr) {
+            console.log(loadErr);
         }
-        npm.commands.runScript(['lint'], (err) => {
-            if (err) {
-                console.log(err);
+        npm.commands.runScript(['lint'], (commandErr) => {
+            if (commandErr) {
+                console.log(commandErr);
             }
             done();
         });

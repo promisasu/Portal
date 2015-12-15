@@ -17,7 +17,7 @@ const database = require('../../model');
  */
 function validate (request, username, password, callback) {
     const user = database.sequelize.model('user');
-    let selectedUser;
+    let selectedUser = null;
 
     // search for selected user
     user.find({
