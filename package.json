@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/ser515asu/PRP-Manhattan-Project#readme",
   "dependencies": {
-    "ava": "^0.7.0",
+    "ava": "^0.8.0",
     "bcrypt": "^0.8.5",
     "boom": "^3.0.0",
     "bower": "^1.7.1",
