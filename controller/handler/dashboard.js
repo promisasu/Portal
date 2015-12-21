@@ -3,8 +3,6 @@
 /**
  * @module controller/handler/dashboard
  */
-
-const _ = require('lodash');
 const processTrial = require('../helper/process-trial');
 
 const database = require('../../model');
@@ -29,7 +27,7 @@ function dashboardView (request, reply) {
 
     trial.findAll().then((trials) => {
         // Process data into format expected in view
-        const trialData = _.map(trials, processTrial);
+        const trialData = trials.map(processTrial);
 
         // Display view
         reply.view('dashboard', {

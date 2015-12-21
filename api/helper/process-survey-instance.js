@@ -4,7 +4,6 @@
  * @module api/helper/process-survey-instance
  */
 
-const _ = require('lodash');
 const first = 0;
 
 /**
@@ -17,7 +16,7 @@ function processSurveyInstance (questionRecord) {
         quesID: questionRecord[first].questionTemplateId,
         questionType: questionRecord[first].questionType,
         questionText: questionRecord[first].questionText,
-        answerOptions: _.map(questionRecord, processAnswers)
+        answerOptions: questionRecord.map(processAnswers)
     };
 }
 

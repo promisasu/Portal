@@ -4,7 +4,6 @@
  * @module controller/handler/trial
  */
 
-const _ = require('lodash');
 const color = require('colors.css');
 
 const database = require('../../model');
@@ -53,7 +52,7 @@ function trialView (request, reply) {
                         'Noncompliant'
                     ]
                 }),
-                patients: _.map(patients, processPatient)
+                patients: patients.map(processPatient)
             });
         });
     })
