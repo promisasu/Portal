@@ -6,7 +6,7 @@
 ### Installation Instructions
 1. install [Node JS](https://nodejs.org/en/download/)
 2. install [MySql](https://www.mysql.com/)
-3. install [Node Gyp](https://github.com/nodejs/node-gyp#installation)
+3. install [Node Gyp](https://github.com/nodejs/node-gyp#installation) dependencies
 4. clone git repository `git clone https://github.com/ser515asu/PRP-Manhattan-Project`
 5. run `npm install`
 6. run `npm install --global gulpjs/gulp-cli#4.0`

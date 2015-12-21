@@ -3,5 +3,4 @@ rules:
     id-length:
         - 2
         - exceptions:
-            - _
             - t

@@ -2,9 +2,6 @@ env:
     node: true
     es6: true
 
-plugins:
-    - lodash3
-
 rules:
     # Possible Errors
     comma-dangle: 2
@@ -80,7 +77,7 @@ rules:
     no-iterator: 2
     no-labels: 2
     no-lone-blocks: 2
-    no-loop-func: 2
+    no-loop-func: 0 # no-var
     no-magic-numbers: 2
     no-multi-spaces: 2
     no-multi-str: 2
@@ -158,11 +155,9 @@ rules:
         - declaration
     id-length:
         - 2
-        - exceptions:
-            - _
     id-match:
         - 2
-        - ^([a-zA-Z]+|_)$
+        - ^[a-zA-Z]+$
     indent:
         - 2
         - 4
@@ -177,8 +172,7 @@ rules:
         - 120
     max-nested-callbacks:
         - 2
-        - 1
-    max-nested-callbacks: 2
+        - 2
     max-params: 2
     max-statements: 2
     new-cap: 2
@@ -263,26 +257,3 @@ rules:
     yield-star-spacing:
         - 2
         - both
-
-    # Lodash
-    lodash3/collection-return: 2
-    lodash3/matches-prop-shorthand: 2
-    lodash3/matches-shorthand: 2
-    lodash3/no-commit: 2
-    lodash3/no-double-unwrap: 2
-    lodash3/no-single-chain: 2
-    lodash3/no-unnecessary-bind: 2
-    lodash3/prefer-chain: 2
-    lodash3/prefer-compact: 2
-    lodash3/prefer-filter: 2
-    lodash3/prefer-invoke: 2
-    lodash3/prefer-lodash-method: 0
-    lodash3/prefer-lodash-typecheck: 0 # valid-typeof
-    lodash3/prefer-map: 2
-    lodash3/prefer-matches: 2
-    lodash3/prefer-reject: 2
-    lodash3/prefer-thru: 2
-    lodash3/prefer-wrapper-method: 2
-    lodash3/preferred-alias: 2
-    lodash3/prop-shorthand: 2
-    lodash3/unwrap: 2

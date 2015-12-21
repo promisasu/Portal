@@ -6,7 +6,6 @@
 
 const database = require('../../model');
 const boom = require('boom');
-const _ = require('lodash');
 const moment = require('moment');
 const first = 0;
 
@@ -49,7 +48,12 @@ function submitSurvey (request, reply) {
         for (let index = 0; index < request.payload.surveyResults.length; index += 1) {
             const currentQuestion = request.payload.surveyResults[index];
 
-            if (_.has(currentQuestion, 'bodyPain[0].location')) {
+            if (
+                currentQuestion
+                && currentQuestion.bodyPain
+                && currentQuestion.bodyPain[first]
+                && currentQuestion.bodyPain[first].location
+            ) {
                 questionInstArr.push(
                     questionOption.find({
                         where: {
