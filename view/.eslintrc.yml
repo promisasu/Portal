@@ -20,6 +20,7 @@ rules:
     vars-on-top: 2
     new-cap: 0
     no-invalid-this: 0
+    no-loop-func: 2
     no-new: 0
 
     # Strict Mode
