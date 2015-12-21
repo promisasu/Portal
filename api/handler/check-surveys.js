@@ -5,7 +5,6 @@
  */
 
 const database = require('../../model');
-const _ = require('lodash');
 const processSurveys = require('../helper/process-surveys');
 const boom = require('boom');
 const moment = require('moment');
@@ -66,7 +65,7 @@ function checkSurveys (request, reply) {
             .then((surveys) => {
                 reply({
                     message: 'Success',
-                    surveys: _.map(surveys, processSurveys)
+                    surveys: surveys.map(processSurveys)
                 });
             });
         });
