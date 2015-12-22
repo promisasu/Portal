@@ -1,7 +1,7 @@
 # Pain Reporting Portal
 
-[![Build Status](https://travis-ci.org/ser515asu/PRP-Manhattan-Project.svg?branch=master)](https://travis-ci.org/ser515asu/PRP-Manhattan-Project)
-[![Dependency Status](https://david-dm.org/ser515asu/PRP-Manhattan-Project.svg)](https://david-dm.org/ser515asu/PRP-Manhattan-Project)
+[![Build Status](https://travis-ci.org/promisasu/Portal.svg?branch=seed-task)](https://travis-ci.org/promisasu/Portal)
+[![Dependency Status](https://david-dm.org/promisasu/Portal.svg)](https://david-dm.org/promisasu/Portal)
 
 ### Installation Instructions
 1. install [Node JS](https://nodejs.org/en/download/)
