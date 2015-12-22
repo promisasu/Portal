@@ -13,7 +13,7 @@
 1. Commit code and open a [Pull Request](https://help.github.com/articles/using-pull-requests/)
 2. Ensure that code passes tests
   * Test results are reported to [PR status](https://github.com/blog/1935-see-results-from-all-pull-request-status-checks)
-  * Tests can be run locally using `npm test`
+  * Tests can be run locally using `gulp test`
   * Disabling tests is not fixing them
 3. Get a code review
   * Reviewers are listed in `MAINTAINERS`
