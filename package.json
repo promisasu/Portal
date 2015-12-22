@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ser515asu/PRP-Manhattan-Project.git"
+    "url": "git+https://github.com/promisasu/Portal.git"
   },
   "keywords": [
     "medical",
@@ -21,9 +21,9 @@
   "license": "UNLICENSED",
   "private": true,
   "bugs": {
-    "url": "https://github.com/ser515asu/PRP-Manhattan-Project/issues"
+    "url": "https://github.com/promisasu/Portal/issues"
   },
-  "homepage": "https://github.com/ser515asu/PRP-Manhattan-Project#readme",
+  "homepage": "https://github.com/promisasu/Portal#readme",
   "dependencies": {
     "ava": "^0.8.0",
     "bcrypt": "^0.8.5",
