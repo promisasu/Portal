@@ -1,3 +1,13 @@
+env:
+    browser: false
+    jquery: false
+    node: true
+    es6: true
+
+globals:
+    Chart: false
+    moment: false
+
 rules:
     # Strict Mode
     strict:
