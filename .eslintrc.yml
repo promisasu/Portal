@@ -170,7 +170,7 @@ rules:
     max-depth: 2
     max-len:
         - 2
-        - 150
+        - 120
     max-nested-callbacks:
         - 2
         - 2
