@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @module task/syncTest
+ * @module task/sync-test
  */
 
 const database = require('../model');
