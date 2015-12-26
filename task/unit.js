@@ -4,15 +4,15 @@
  * @module task/unit
  */
 
-const npm = require('npm');
-const npmPackage = require('../package.json');
-
 /**
  * Runs the unit tests.
  * @param {Function} done - completion callback
  * @returns {Null} nothing
  */
 function unit (done) {
+    const npm = require('npm');
+    const npmPackage = require('../package.json');
+
     npm.load(npmPackage, (loadErr) => {
         if (loadErr) {
             console.log(loadErr);

@@ -4,14 +4,14 @@
  * @module task/sync
  */
 
-const database = require('../model');
-
 /**
  * Creates the database tables.
  * @param {Function} done - completion callback
  * @returns {Null} nothing
  */
 function sync (done) {
+    const database = require('../model');
+
     database.setup(require('../config.json').database);
     database.sequelize.sync({force: true})
         .then(() => {

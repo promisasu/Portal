@@ -23,26 +23,26 @@ function processTrial (currentTrial) {
     const trial = currentTrial.dataValues;
     const startDate = moment(trial.IRBStart);
     const endDate = moment(trial.IRBEnd);
+    // TODO: Currently fake data, make this live data
     const statuses = ['Pending', 'Upcoming', 'In Progress', 'Completed'];
     const status = statuses[Math.floor(Math.random() * fakeData.noncompliantCount)];
     const targetCount = trial.targetCount;
-    // TODO: Currently fake data, make this live data
     const recruitedCount = targetCount - fakeData.targetOffset;
     const activeCount = recruitedCount - fakeData.recruitedOffset;
     const compliantCount = activeCount - fakeData.activeOffset;
 
     return {
+        targetCount,
+        recruitedCount,
+        activeCount,
+        compliantCount,
+        status,
         id: trial.id,
         name: trial.name,
         description: trial.description,
         IRBID: trial.IRBID,
         start: startDate.format('L'),
         end: endDate.format('L'),
-        targetCount: targetCount,
-        recruitedCount: recruitedCount,
-        activeCount: activeCount,
-        compliantCount: compliantCount,
-        // TODO: Currently fake data, make this live data
         recruitedPercent: (recruitedCount / targetCount * fakeData.multiplier).toFixed(twoDecimalPoints),
         unrecruitedPercent: (fakeData.multiplier - recruitedCount / targetCount * fakeData.multiplier)
             .toFixed(twoDecimalPoints),
@@ -52,8 +52,7 @@ function processTrial (currentTrial) {
         compliantPercent: (compliantCount / activeCount * fakeData.multiplier).toFixed(twoDecimalPoints),
         noncompliantPercent: (fakeData.multiplier - compliantCount / activeCount * fakeData.multiplier)
             .toFixed(twoDecimalPoints),
-        noncompliantCount: compliantCount - activeCount,
-        status: status
+        noncompliantCount: compliantCount - activeCount
     };
 }
 

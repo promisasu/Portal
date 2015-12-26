@@ -4,9 +4,6 @@
  * @module task/doc
  */
 
-const npm = require('npm');
-const npmPackage = require('../package.json');
-
 /**
  * Turns documentation comments into viewable wep pages.
  * @function doc
@@ -14,6 +11,9 @@ const npmPackage = require('../package.json');
  * @returns {Null} nothing
  */
 function doc (done) {
+    const npm = require('npm');
+    const npmPackage = require('../package.json');
+
     npm.load(npmPackage, (loadErr) => {
         if (loadErr) {
             console.log(loadErr);

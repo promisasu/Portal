@@ -4,15 +4,15 @@
  * @module task/user
  */
 
-const database = require('../model');
-const read = require('./helper/read-promise');
-
 /**
  * Creates a new user.
  * @param {Function} done - completion callback
  * @returns {Null} nothing
  */
 function user (done) {
+    const database = require('../model');
+    const read = require('./helper/read-promise');
+
     database.setup(require('../config.json').database);
 
     const userModel = database.sequelize.model('user');

@@ -4,9 +4,6 @@
  * @module task/start-api
  */
 
-const processManager = require('pm2');
-const path = require('path');
-
 /**
  * Starts the api as a system service.
  * This allows for running on a production server.
@@ -14,6 +11,9 @@ const path = require('path');
  * @returns {Null} nothing
  */
 function startApi (done) {
+    const processManager = require('pm2');
+    const path = require('path');
+
     processManager.connect(() => {
         processManager.start(
             {
