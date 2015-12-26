@@ -4,19 +4,19 @@
  * @module task/init
  */
 
-const path = require('path');
-const read = require('./helper/read-promise');
-const writeFile = require('./helper/write-file-promise');
-const genSalt = require('./helper/gen-salt-promise');
-const numberOfHashIterations = 10;
-const jsonIndent = 2;
-
 /**
  * Writes a server configuration file.
  * @param {Function} done - completion callback
  * @returns {Null} nothing
  */
 function init (done) {
+    const path = require('path');
+    const read = require('./helper/read-promise');
+    const writeFile = require('./helper/write-file-promise');
+    const genSalt = require('./helper/gen-salt-promise');
+    const numberOfHashIterations = 10;
+    const jsonIndent = 2;
+
     const config = {};
 
     console.log('This utility will walk you through creating a config.json file.');

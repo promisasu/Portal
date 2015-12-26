@@ -4,14 +4,13 @@
  * @module task/sync-test
  */
 
-const database = require('../model');
-
 /**
  * Creates the database tables for test.
  * @param {Function} done - completion callback
  * @returns {Null} nothing
  */
 function syncTest (done) {
+    const database = require('../model');
     const config = require('../config.json');
 
     config.database.name = 'prp_test';

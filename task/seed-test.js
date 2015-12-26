@@ -4,16 +4,15 @@
  * @module task/seed-test
  */
 
-const database = require('../model');
-const seedData = require('./helper/seed-data');
-
 /**
  * Adds seed values in the database for test.
  * @param {Function} done - completion callback
  * @returns {Null} nothing
  */
 function seedTest (done) {
-    const config = require('../config.json'); // eslint-disable-line global-require
+    const database = require('../model');
+    const seedData = require('./helper/seed-data');
+    const config = require('../config.json');
 
     config.database.name = 'prp_test';
     database.setup(config.database);
