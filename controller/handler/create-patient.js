@@ -32,7 +32,7 @@ function createPatient (request, reply) {
     })
     // Create the new Patient
     .then(() => {
-        return patient.create({pin: pin});
+        return patient.create({pin});
     })
     // Link patient to Trial
     .then((tempPatient) => {
