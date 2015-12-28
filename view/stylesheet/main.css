@@ -1,0 +1,20 @@
+.progress-good-and-bad {
+    color: #d9534f;
+    background: #d9534f;
+}
+
+.progress-good-and-bad::-webkit-progress-bar {
+    background: #d9534f !important;
+}
+
+.progress-good-and-bad::-webkit-progress-value {
+    background-color: #5cb85c !important;
+}
+
+.progress-good-and-bad::-moz-progress-bar {
+    background-color: #5cb85c;
+}
+
+.progress-good-and-bad > .progress-bar {
+    background-color: #5cb85c;
+}
