@@ -15,79 +15,81 @@
             Patient: {{ patient.pin }}
         </li>
     </ol>
-    <div class="col-sm-12">
-        <div id="calendar"></div>
-    </div>
-    <div class="col-sm-12">
-        <div class="card">
-          <br>
-          <canvas id="complianceChart" width="400" height="100px"></canvas>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="calendar"></div>
         </div>
-    </div>
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-block">
-                <h4 class="card-title">
-                    Patients' Surveys
-                </h4>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Survey ID
-                                </th>
-                                <th>
-                                    Completed
-                                </th>
-                                <th>
-                                    Stage
-                                </th>
-                                <th>
-                                    Survey Type
-                                </th>
-                                <th>
-                                    Start Time
-                                </th>
-                                <th>
-                                    End Time
-                                </th>
-                                <th>
-                                    User Submission Time
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each surveys}}
-                                <tr class="table-{{#if completed}}success{{else}}danger{{/if}}">
-                                    <th scope="row">
-                                        <a href="/survey/{{ id }}">
-                                            {{ id }}
-                                            <i class="fa fa-search"></i>
-                                        </a>
+        <div class="col-sm-12">
+            <div class="card">
+              <br>
+              <canvas id="complianceChart" width="400" height="100px"></canvas>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">
+                        Patients' Surveys
+                    </h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Survey ID
                                     </th>
-                                    <td>
-                                        {{ completed }}
-                                    </td>
-                                    <td>
-                                        {{ stageId }}
-                                    </td>
-                                    <td>
-                                        {{ name }}
-                                    </td>
-                                    <td>
-                                        {{ startTime }}
-                                    </td>
-                                    <td>
-                                        {{ endTime }}
-                                    </td>
-                                    <td>
-                                        {{ userSubmissionTime }}
-                                    </td>
+                                    <th>
+                                        Completed
+                                    </th>
+                                    <th>
+                                        Stage
+                                    </th>
+                                    <th>
+                                        Survey Type
+                                    </th>
+                                    <th>
+                                        Start Time
+                                    </th>
+                                    <th>
+                                        End Time
+                                    </th>
+                                    <th>
+                                        User Submission Time
+                                    </th>
                                 </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {{#each surveys}}
+                                    <tr class="table-{{#if completed}}success{{else}}danger{{/if}}">
+                                        <th scope="row">
+                                            <a href="/survey/{{ id }}">
+                                                {{ id }}
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        </th>
+                                        <td>
+                                            {{ completed }}
+                                        </td>
+                                        <td>
+                                            {{ stageId }}
+                                        </td>
+                                        <td>
+                                            {{ name }}
+                                        </td>
+                                        <td>
+                                            {{ startTime }}
+                                        </td>
+                                        <td>
+                                            {{ endTime }}
+                                        </td>
+                                        <td>
+                                            {{ userSubmissionTime }}
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
