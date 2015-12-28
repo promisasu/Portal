@@ -4,7 +4,11 @@
  * @module controller/handler/trial
  */
 
-const color = require('colors.css');
+const color = {
+    green: '#2ECC40',
+    yellow: '#FFDC00',
+    red: '#FF4136'
+};
 
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');

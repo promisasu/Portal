@@ -45,13 +45,6 @@
                 </table>
             </div>
         </div>
-        <div id="legend" class="card">
-            <div class="card-block">
-                <h4 class="card-title">
-                    Legend
-                </h4>
-            </div>
-        </div>
     </div>
     <div class="col-sm-12 col-md-7 col-lg-6 col-xl-6">
         <div class="card">
@@ -222,27 +215,13 @@
     'use strict';
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('radarChart').getContext('2d');
-
-    var options = {
-        legendTemplate: '<ul class="list-group list-group-flush">'
-            + '<% for (var i = 0; i < data.datasets.length; i++){%>'
-            + '<li class="list-group-item">'
-            + '<i style="color:<%=data.datasets[i].backgroundColor%>" class="fa fa-circle"></i>'
-            + ' <%=data.datasets[i].label%>'
-            + '</li>'
-            + '<%}%>'
-            + '</ul>'
-    };
-    var radarChart = new Chart(ctx, {
-        type: 'radar',
-        data: data,
-        options: options
-    });
-
-    var legend = document.getElementById('legend');
     var table = $('#trials').DataTable();
 
-    legend.innerHTML += radarChart.generateLegend();
+    new Chart(ctx, {
+        type: 'radar',
+        data: data,
+        options: {}
+    });
 
     $('.dropdown-menu').on('click', 'div', function selectItem () {
         var selectedVal = $(this).text().trim();
