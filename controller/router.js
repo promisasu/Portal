@@ -29,6 +29,24 @@ module.exports = [
         }
     },
     {
+        method: 'GET',
+        path: '/static/style/{param*}',
+        handler: {
+            directory: {
+                path: 'view/stylesheet'
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/static/script/{param*}',
+        handler: {
+            directory: {
+                path: 'view/script'
+            }
+        }
+    },
+    {
         method: 'POST',
         path: '/trial',
         handler: createTrial,
