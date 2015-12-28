@@ -178,14 +178,6 @@
 {{> add-patient}}
 
 <script>
-(function trial () {
-    'use strict';
-    var data = JSON.parse('{{{ graphData }}}');
-    var ctx = document.getElementById('trialChart').getContext('2d');
-
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: data
-    });
-}());
+    window.data = JSON.parse('{{{ graphData }}}');
 </script>
+<script src="/static/script/trial.js" defer></script>
