@@ -215,14 +215,13 @@
     'use strict';
     var data = JSON.parse('{{{ graphData }}}');
     var ctx = document.getElementById('radarChart').getContext('2d');
+    var table = $('#trials').DataTable();
 
-    var radarChart = new Chart(ctx, {
+    new Chart(ctx, {
         type: 'radar',
         data: data,
         options: {}
     });
-
-    var table = $('#trials').DataTable();
 
     $('.dropdown-menu').on('click', 'div', function selectItem () {
         var selectedVal = $(this).text().trim();
