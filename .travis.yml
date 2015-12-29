@@ -1,6 +1,8 @@
 language: node_js
 node_js: v4
 
-install: npm install --global eslint@next eslint-plugin-html
+install: npm install --global eslint@next eslint-plugin-html stylelint
 
-script: eslint . view/**/*.hbs --inline-config=false
+script:
+    - eslint . view/**/*.hbs --inline-config=false
+    - stylelint view/stylesheet/*.css
