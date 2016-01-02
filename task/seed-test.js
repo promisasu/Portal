@@ -9,7 +9,7 @@ const database = require('../model');
 const seedData = require('./helper/seed-data');
 const config = require('../config.json');
 
-config.database.name = 'portal_test';
+config.database.name = 'prp_test';
 database.setup(config.database);
 
 Promise.all([

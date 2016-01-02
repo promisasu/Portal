@@ -17,7 +17,7 @@
 ## Setup Instructions
 
 1. if you do not already have a database user, create one
-2. create a new empty database `CREATE SCHEMA portal_development;`
+2. create a new empty database `CREATE SCHEMA prp_development;`
 3. run `npm run init`
 4. run `npm run sync`
 5. run `npm run user`
@@ -28,7 +28,7 @@
 
 ## Test the Portal
 
-*Ensure that there is a database named `portal_test`*
+*Ensure that there is a database named `prp_test`*
 
 1. run `npm run test`
 

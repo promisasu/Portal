@@ -8,7 +8,7 @@
 const database = require('../model');
 const config = require('../config.json');
 
-config.database.name = 'portal_test';
+config.database.name = 'prp_test';
 database.setup(config.database);
 database.sequelize.sync({force: true})
 .then(() => {

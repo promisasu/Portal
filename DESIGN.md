@@ -55,7 +55,7 @@ and [PM2](http://pm2.keymetrics.io/) for production server management.
 **Relevant File and Folder**
 
 ``` sh
-gulpfile.js
+package.json
 task
 ```
 

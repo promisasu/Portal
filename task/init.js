@@ -72,7 +72,7 @@ read({
 
     return read({
         prompt: 'database name:',
-        default: 'portal_development'
+        default: 'prp_development'
     });
 })
 .then((databaseName) => {

@@ -12,7 +12,7 @@ const path = require('path');
 processManager.connect(() => {
     processManager.start(
         {
-            name: 'portal-api',
+            name: 'prp-api',
             script: path.resolve(__dirname, 'dev-api.js')
         },
         () => {

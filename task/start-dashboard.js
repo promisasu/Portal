@@ -12,7 +12,7 @@ const path = require('path');
 processManager.connect(() => {
     processManager.start(
         {
-            name: 'portal-dashboard',
+            name: 'prp-dashboard',
             script: path.resolve(__dirname, 'dev-dashboard.js')
         },
         () => {
