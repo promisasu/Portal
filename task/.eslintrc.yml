@@ -1,8 +1,4 @@
 rules:
-    global-require: 0
     max-len:
         - 2
         - 150
-    max-statements:
-        - 2
-        - 15
