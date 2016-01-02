@@ -13,31 +13,47 @@
 5. clone git repository `git clone https://github.com/promisasu/Portal`
 6. open the folder `cd Portal`
 7. run `npm install`
-8. run `npm install --global gulpjs/gulp-cli#4.0`
 
 ## Setup Instructions
 
 1. if you do not already have a database user, create one
 2. create a new empty database `CREATE SCHEMA prp_development;`
-3. run `gulp init`
-4. run `gulp sync`
-5. run `gulp user`
+3. run `npm run init`
+4. run `npm run sync`
+5. run `npm run user`
 
 ## Start the Portal
 
-1. run `gulp start`
+1. run `npm run start`
 
 ## Test the Portal
 
 *Ensure that there is a database named `prp_test`*
 
-1. run `gulp test`
+1. run `npm run test`
 
 ## View Code Documentation
 
-1. run `gulp doc`
+1. run `npm run documentation`
 2. open `documentation/index.html` in a browser
 
-## View All Server Tasks
+## Tasks
 
-1. run `gulp --tasks`
+Tasks can be run by calling `npm run <task>`
+
+* `dev-api` start api in developer mode
+* `dev-dashboard` start dashboard in developer mode
+* `documentation` generate code documentation
+* `init` create a server configuration file
+* `lint` lint check project files
+* `seed` fill database with sample data
+* `start` start production dashboard and api
+* `start-api` start production api
+* `start-dashboard` start production dashboard
+* `status` check production server status
+* `stop` stop production dashboard and api
+* `stop-api` stop production api
+* `stop-dashboard` stop production dashboard
+* `sync` syncronize database schema
+* `test` run the test suite
+* `user` create a new user

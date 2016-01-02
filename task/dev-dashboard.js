@@ -2,17 +2,13 @@
 
 /**
  * @module task/dev-dashboard
- */
-
-/**
  * Starts the dashboard in the console process.
  * This allows for `console.log` to be used for debugging.
- * @returns {Null} nothing
  */
-function devDashboard () {
-    require('./helper/start-dashboard');
-}
 
-devDashboard.description = 'Starts the dashboard in the console process.';
+const config = require('../config.json');
+const server = require('../controller/server')(config);
 
-module.exports = devDashboard;
+server.start(() => {
+    console.log('Server running at:', server.info.uri);
+});
