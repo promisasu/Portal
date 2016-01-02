@@ -37,7 +37,7 @@
 1. run `npm run documentation`
 2. open `documentation/index.html` in a browser
 
-## NPM Tasks
+## Tasks
 
 Tasks can be run by calling `npm run <task>`
 
