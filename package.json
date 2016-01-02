@@ -15,6 +15,7 @@
     "start": "node task/start-dashboard && node task/start-api",
     "start-api": "node task/start-api",
     "start-dashboard": "node task/start-dashboard",
+    "status": "pm2 ls",
     "stop": "pm2 delete portal-dashboard && pm2 delete portal-api",
     "stop-api": "pm2 delete portal-api",
     "stop-dashboard": "pm2 delete portal-dashboard",

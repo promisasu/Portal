@@ -50,6 +50,7 @@ Tasks can be run by calling `npm run <task>`
 * `start` start production dashboard and api
 * `start-api` start production api
 * `start-dashboard` start production dashboard
+* `status` check production server status
 * `stop` stop production dashboard and api
 * `stop-api` stop production api
 * `stop-dashboard` stop production dashboard
