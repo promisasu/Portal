@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "documentation": "jsdoc --recurse api controller model rule task --destination documentation",
-    "lint-js": "eslint . view/**/*.hbs --inline-config=false",
-    "lint-css": "stylelint view/stylesheet/*.css",
+    "lint": "eslint . view/**/*.hbs --inline-config=false && stylelint view/stylesheet/*.css && remark *.md",
     "test": "ava */test/*.js",
     "postinstall": "bower install"
   },
@@ -48,6 +47,10 @@
     "npm": "^3.5.3",
     "pm2": "^0.15.10",
     "read": "^1.0.7",
+    "remark": "^3.1.0",
+    "remark-lint": "^2.0.2",
+    "remark-slug": "^3.0.1",
+    "remark-validate-links": "^2.0.2",
     "stylelint": "^3.1.4"
   },
   "engines": {

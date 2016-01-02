@@ -1,15 +1,15 @@
 'use strict';
 
 /**
- * @module task/lint-css
+ * @module task/lint
  */
 
 /**
- * Checks that the Cascading Stylesheet code is valid.
+ * Checks that Javascript, Cascading Stylesheets and Markdown are valid.
  * @param {Function} done - completion callback
  * @returns {Null} nothing
  */
-function lintCSS (done) {
+function lint (done) {
     const npm = require('npm');
     const npmPackage = require('../package.json');
 
@@ -17,7 +17,7 @@ function lintCSS (done) {
         if (loadErr) {
             console.log(loadErr);
         }
-        npm.commands.runScript(['lint-css'], (commandErr) => {
+        npm.commands.runScript(['lint'], (commandErr) => {
             if (commandErr) {
                 console.log(commandErr);
             }
@@ -26,6 +26,6 @@ function lintCSS (done) {
     });
 }
 
-lintCSS.description = 'Checks that the Cascading Stylesheet code is valid.';
+lint.description = 'Checks that Javascript, Cascading Stylesheets and Markdown are valid.';
 
-module.exports = lintCSS;
+module.exports = lint;
