@@ -1,8 +1,9 @@
 language: node_js
-node_js: v4
+node_js: 5
 
-install: npm install --global eslint@next eslint-plugin-html stylelint
+install: npm install --global eslint@next eslint-plugin-html remark remark-lint remark-slug remark-validate-links stylelint
 
 script:
     - eslint . view/**/*.hbs --inline-config=false
+    - remark *.md
     - stylelint view/stylesheet/*.css
