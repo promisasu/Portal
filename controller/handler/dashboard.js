@@ -24,8 +24,32 @@ const fakeData = {
  */
 function dashboardView (request, reply) {
     const trial = database.sequelize.model('trial');
+    let trialPromise = null;
 
-    trial.findAll().then((trials) => {
+    if (request.auth.credentials.role === 'admin') {
+        trialPromise = trial.findAll();
+    } else {
+        trialPromise = database.sequelize.query(
+            `
+            SELECT trial
+            FROM trial
+            JOIN join_users_and_trials AS jus
+            ON jus.trialId = trial.id
+            JOIN user
+            ON user.id = jus.trialId
+            WHERE user.id = ?
+            `,
+            {
+                type: database.sequelize.QueryTypes.SELECT,
+                replacements: [
+                    request.auth.credentials.id
+                ],
+                model: 'trial'
+            }
+        );
+    }
+
+    trialPromise.then((trials) => {
         // Process data into format expected in view
         const trialData = trials.map(processTrial);
 
