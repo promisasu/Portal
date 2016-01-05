@@ -4,7 +4,13 @@
  * @module controller/helper/compare-promise
  */
 
-const bcrypt = require('bcrypt');
+let bcrypt = null;
+
+try {
+    bcrypt = require('bcrypt');
+} catch (err) {
+    bcrypt = require('../../bcrypt-shim');
+}
 
 /**
  * Checks a value matches its hashed value.
