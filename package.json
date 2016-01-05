@@ -10,6 +10,7 @@
     "init": "node task/init",
     "postinstall": "bower install",
     "lint": "eslint . view/**/*.hbs --inline-config=false && stylelint view/stylesheet/*.css && remark *.md",
+    "log": "pm2 logs",
     "preseed": "node task/sync",
     "seed": "node task/seed",
     "start": "node task/start-dashboard && node task/start-api",

@@ -46,6 +46,7 @@ Tasks can be run by calling `npm run <task>`
 * `documentation` generate code documentation
 * `init` create a server configuration file
 * `lint` lint check project files
+* `log` view server log
 * `seed` fill database with sample data
 * `start` start production dashboard and api
 * `start-api` start production api
@@ -54,6 +55,6 @@ Tasks can be run by calling `npm run <task>`
 * `stop` stop production dashboard and api
 * `stop-api` stop production api
 * `stop-dashboard` stop production dashboard
-* `sync` syncronize database schema
+* `sync` synchronize database schema
 * `test` run the test suite
 * `user` create a new user
