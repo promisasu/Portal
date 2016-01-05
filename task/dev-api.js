@@ -2,17 +2,13 @@
 
 /**
  * @module task/dev-api
- */
-
-/**
  * Starts the api in the console process.
  * This allows for `console.log` to be used for debugging.
- * @returns {Null} nothing
  */
-function devApi () {
-    require('./helper/start-api');
-}
 
-devApi.description = 'Starts the api in the console process.';
+const config = require('../config.json');
+const server = require('../api/server')(config);
 
-module.exports = devApi;
+server.start(() => {
+    console.log('Server running at:', server.info.uri);
+});

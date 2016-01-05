@@ -4,7 +4,6 @@
  * @module controller/handler/patient
  */
 
-const color = require('colors.css');
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
 const first = 0;
@@ -20,7 +19,7 @@ const surveys = [
         end: '11/15/2015',
         userSubmissionTime: '11/15/2015 15:43:35',
         completed: true,
-        color: color.green
+        className: 'bg-green'
     },
     {
         id: 2345,
@@ -31,7 +30,7 @@ const surveys = [
         end: '11/15/2015',
         userSubmissionTime: '11/15/2015 15:43:35',
         completed: true,
-        color: color.green
+        className: 'bg-green'
     },
     {
         id: 3456,
@@ -42,7 +41,7 @@ const surveys = [
         end: '11/16/2015',
         userSubmissionTime: '11/16/2015 13:11:15',
         completed: true,
-        color: color.green
+        className: 'bg-green'
     },
     {
         id: 4567,
@@ -53,7 +52,7 @@ const surveys = [
         end: '11/17/2015',
         userSubmissionTime: '11/17/2015 11:12:43',
         completed: true,
-        color: color.green
+        className: 'bg-green'
     },
     {
         id: 5678,
@@ -64,7 +63,7 @@ const surveys = [
         end: '11/18/2015',
         userSubmissionTime: 'N/A',
         completed: false,
-        color: color.red
+        className: 'bg-red'
     },
     {
         id: 6789,
@@ -75,7 +74,7 @@ const surveys = [
         end: '11/18/2015',
         userSubmissionTime: 'N/A',
         completed: false,
-        color: color.red
+        className: 'bg-red'
     },
     {
         id: 7890,
@@ -86,7 +85,7 @@ const surveys = [
         end: '11/19/2015',
         userSubmissionTime: '11/19/2015 05:56:11',
         completed: true,
-        color: color.green
+        className: 'bg-green'
     },
     {
         id: 8901,
@@ -97,7 +96,7 @@ const surveys = [
         end: '11/20/2015',
         userSubmissionTime: '11/20/2015 05:56:11',
         completed: true,
-        color: color.green
+        className: 'bg-green'
     },
     {
         id: 9012,
@@ -108,7 +107,7 @@ const surveys = [
         end: '11/21/2015',
         userSubmissionTime: 'N/A',
         completed: false,
-        color: color.red
+        className: 'bg-red'
     }
 ];
 

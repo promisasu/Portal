@@ -1,0 +1,14 @@
+{
+  "plugins": {
+    "lint": {
+      "list-item-indent": "space",
+      "maximum-line-length": 120
+    },
+    "slug": {
+      "library": "github"
+    },
+    "validate-links": {
+      "repository": "promisasu/Portal"
+    }
+  }
+}

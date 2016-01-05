@@ -62,8 +62,8 @@ function submitSurvey (request, reply) {
                     })
                     .then((data) => {
                         return questionInstance.create({
+                            surveyInstanceId,
                             questionTemplateId: currentQuestion.quesID,
-                            surveyInstanceId: surveyInstanceId,
                             questionOptionId: data.id
                         });
                     })
@@ -76,8 +76,8 @@ function submitSurvey (request, reply) {
                     })
                     .then((data) => {
                         return questionInstance.create({
+                            surveyInstanceId,
                             questionTemplateId: currentQuestion.quesID,
-                            surveyInstanceId: surveyInstanceId,
                             questionOptionId: data.id
                         });
                     })
@@ -85,8 +85,8 @@ function submitSurvey (request, reply) {
             } else {
                 questionInstArr.push(
                    questionInstance.create({
+                       surveyInstanceId,
                        questionTemplateId: currentQuestion.quesID,
-                       surveyInstanceId: surveyInstanceId,
                        questionOptionId: currentQuestion.selectedOptions[first]
                    })
                 );

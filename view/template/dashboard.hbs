@@ -5,210 +5,205 @@
             Dashboard
         </li>
     </ol>
-    <div class="col-sm-12 col-md-5 col-lg-6 col-xl-6">
-        <div class="card">
-            <div class="card-block">
-                <h4 class="card-title">
-                    Welcome, {{ user.username }}!
-                </h4>
-                <p class="card-text">
-                    Global Stats
-                </p>
-                <input type="hidden" id="selectedChoice"/>
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th scope="row">
-                                In progress trials:
-                            </th>
-                            <td>
-                                {{ trial.start }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                Average Percent Recruited:
-                            </th>
-                            <td>
-                                {{ trial.duration }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                Average Percent Compliant:
-                            </th>
-                            <td>
-                                {{ trial.patientCount }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="row">
+        <div class="col-sm-12 col-md-5 col-lg-6 col-xl-6">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">
+                        Welcome, {{ user.username }}!
+                    </h4>
+                    <p class="card-text">
+                        Global Stats
+                    </p>
+                    <input type="hidden" id="selectedChoice"/>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">
+                                    In progress trials:
+                                </th>
+                                <td>
+                                    {{ trial.start }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Average Percent Recruited:
+                                </th>
+                                <td>
+                                    {{ trial.duration }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Average Percent Compliant:
+                                </th>
+                                <td>
+                                    {{ trial.patientCount }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <div id="legend" class="card">
-            <div class="card-block">
-                <h4 class="card-title">
-                    Legend
-                </h4>
+        <div class="col-sm-12 col-md-7 col-lg-6 col-xl-6">
+            <div class="card">
+                <canvas id="radarChart" width="100%" height="100%"></canvas>
             </div>
         </div>
-    </div>
-    <div class="col-sm-12 col-md-7 col-lg-6 col-xl-6">
-        <div class="card">
-            <canvas id="radarChart" width="100%" height="100%"></canvas>
-        </div>
-    </div>
-    <div class="col-xs-12"><br>
-        <div class="card">
-            <div class="card-block">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h4 class="card-title">
-                            Trials
-                        </h4>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-primary" data-toggle="modal">
-                                    GENERATE REPORT
-                                </button>
-                            </div>
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTrial">
-                                    ADD NEW
-                                </button>
-                            </div>
-                            <div class="btn-group" role="group">
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown">
-                                        STATUS
+        <div class="col-xs-12"><br>
+            <div class="card">
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h4 class="card-title">
+                                Trials
+                            </h4>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal">
+                                        GENERATE REPORT
                                     </button>
-                                    <div class="dropdown-menu">
-                                        <div class="dropdown-item">
-                                            All Trials
-                                        </div>
-                                        <div class="dropdown-item">
-                                            Pending
-                                        </div>
-                                        <div class="dropdown-item">
-                                            Upcoming
-                                        </div>
-                                        <div class="dropdown-item">
-                                            In Progress
-                                        </div>
-                                        <div class="dropdown-item">
-                                            Completed
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTrial">
+                                        ADD NEW
+                                    </button>
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown">
+                                            STATUS
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <div class="dropdown-item">
+                                                All Trials
+                                            </div>
+                                            <div class="dropdown-item">
+                                                Pending
+                                            </div>
+                                            <div class="dropdown-item">
+                                                Upcoming
+                                            </div>
+                                            <div class="dropdown-item">
+                                                In Progress
+                                            </div>
+                                            <div class="dropdown-item">
+                                                Completed
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <br>
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="trials">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Name
-                                </th>
-                                <th>
-                                    Target
-                                </th>
-                                <th>
-                                    Recruited
-                                </th>
-                                <th>
-                                    Active
-                                </th>
-                                <th>
-                                    IRB Approval Date
-                                </th>
-                                <th>
-                                    IRB End Date
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#unless trials.length}}
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="trials">
+                            <thead>
                                 <tr>
-                                    <td colspan="8">
-                                        <div class="card card-inverse card-info text-center card-block">
-                                            <div class="card-title">
-                                                No Clinical Trials
-                                            </div>
-                                            <div class="card-text">
-                                                Please contact an administrator to create a new trial.
-                                            </div>
-                                        </div>
-                                    </td>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Target
+                                    </th>
+                                    <th>
+                                        Recruited
+                                    </th>
+                                    <th>
+                                        Active
+                                    </th>
+                                    <th>
+                                        IRB Approval Date
+                                    </th>
+                                    <th>
+                                        IRB End Date
+                                    </th>
                                 </tr>
-                            {{/unless}}
-                            {{#each trials}}
-                                <tr>
-                                    <td data-search="{{ name }}" data-order="{{ name }}">
-                                        <a href="/trial/{{ id }}">
-                                            {{ name }}
-                                            <i class="fa fa-search"></i>
-                                        </a>
-                                        <br>
-                                        <br>
-                                        IRB ID: {{ IRBID }}
-                                    </td>
-                                    <td data-search="{{ targetCount }}" data-order="{{ targetCount }}">
-                                        {{ targetCount }} Patients
-                                        <hr>
-                                        <progress class="progress progress-good-and-bad" value="{{ recruitedPercent }}" max="100">
-                                            <div class="progress">
-                                                <span class="progress-bar" style="width: {{ recruitedPercent }}%;">
-                                                    25%
-                                                </span>
+                            </thead>
+                            <tbody>
+                                {{#unless trials.length}}
+                                    <tr>
+                                        <td colspan="8">
+                                            <div class="card card-inverse card-info text-center card-block">
+                                                <div class="card-title">
+                                                    No Clinical Trials
+                                                </div>
+                                                <div class="card-text">
+                                                    Please contact an administrator to create a new trial.
+                                                </div>
                                             </div>
-                                        </progress>
-                                        {{ recruitedPercent }}% Recruited
-                                        <br>
-                                        {{ unrecruitedPercent }}% Unrecruited
-                                    </td>
-                                    <td data-search="{{ recruitedCount }}" data-order="{{ recruitedCount }}">
-                                        {{ recruitedCount }} Patients
-                                        <hr>
-                                        <progress class="progress" value="{{ activePercent }}" max="100">
-                                            <div class="progress">
-                                                <span class="progress-bar" style="width: {{ activePercent }}%;">
-                                                    25%
-                                                </span>
-                                            </div>
-                                        </progress>
-                                        {{ activePercent }}% Active
-                                        <br>
-                                        {{ completedPercent }}% Completed
-                                    </td>
-                                    <td data-search="{{ activeCount }}" data-order="{{ activeCount }}">
-                                        {{ activeCount }} Patients
-                                        <hr>
-                                        <progress class="progress progress-good-and-bad" value="{{ compliantPercent }}" max="100">
-                                            <div class="progress">
-                                                <span class="progress-bar" style="width: {{ compliantPercent }}%;">
-                                                    25%
-                                                </span>
-                                            </div>
-                                        </progress>
-                                        {{ compliantPercent }}% Compliant
-                                        <br>
-                                        {{ noncompliantPercent }}% Noncompliant
-                                    </td>
-                                    <td>
-                                        {{ start }}
-                                    </td>
-                                    <td>
-                                        {{ end }}
-                                    </td>
-                                </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                                        </td>
+                                    </tr>
+                                {{/unless}}
+                                {{#each trials}}
+                                    <tr>
+                                        <td data-search="{{ name }}" data-order="{{ name }}">
+                                            <a href="/trial/{{ id }}">
+                                                {{ name }}
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                            <br>
+                                            <br>
+                                            IRB ID: {{ IRBID }}
+                                        </td>
+                                        <td data-search="{{ targetCount }}" data-order="{{ targetCount }}">
+                                            {{ targetCount }} Patients
+                                            <hr>
+                                            <progress class="progress progress-good-and-bad" value="{{ recruitedPercent }}" max="100">
+                                                <div class="progress">
+                                                    <span class="progress-bar" style="width: {{ recruitedPercent }}%;">
+                                                        25%
+                                                    </span>
+                                                </div>
+                                            </progress>
+                                            {{ recruitedPercent }}% Recruited
+                                            <br>
+                                            {{ unrecruitedPercent }}% Unrecruited
+                                        </td>
+                                        <td data-search="{{ recruitedCount }}" data-order="{{ recruitedCount }}">
+                                            {{ recruitedCount }} Patients
+                                            <hr>
+                                            <progress class="progress" value="{{ activePercent }}" max="100">
+                                                <div class="progress">
+                                                    <span class="progress-bar" style="width: {{ activePercent }}%;">
+                                                        25%
+                                                    </span>
+                                                </div>
+                                            </progress>
+                                            {{ activePercent }}% Active
+                                            <br>
+                                            {{ completedPercent }}% Completed
+                                        </td>
+                                        <td data-search="{{ activeCount }}" data-order="{{ activeCount }}">
+                                            {{ activeCount }} Patients
+                                            <hr>
+                                            <progress class="progress progress-good-and-bad" value="{{ compliantPercent }}" max="100">
+                                                <div class="progress">
+                                                    <span class="progress-bar" style="width: {{ compliantPercent }}%;">
+                                                        25%
+                                                    </span>
+                                                </div>
+                                            </progress>
+                                            {{ compliantPercent }}% Compliant
+                                            <br>
+                                            {{ noncompliantPercent }}% Noncompliant
+                                        </td>
+                                        <td>
+                                            {{ start }}
+                                        </td>
+                                        <td>
+                                            {{ end }}
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -218,70 +213,6 @@
 {{> add-trial}}
 
 <script>
-(function dashboard () {
-    'use strict';
-    var data = JSON.parse('{{{ graphData }}}');
-    var ctx = document.getElementById('radarChart').getContext('2d');
-
-    var options = {
-        legendTemplate: '<ul class="list-group list-group-flush">'
-            + '<% for (var i = 0; i < data.datasets.length; i++){%>'
-            + '<li class="list-group-item">'
-            + '<i style="color:<%=data.datasets[i].backgroundColor%>" class="fa fa-circle"></i>'
-            + ' <%=data.datasets[i].label%>'
-            + '</li>'
-            + '<%}%>'
-            + '</ul>'
-    };
-    var radarChart = new Chart(ctx, {
-        type: 'radar',
-        data: data,
-        options: options
-    });
-
-    var legend = document.getElementById('legend');
-    var table = $('#trials').DataTable();
-
-    legend.innerHTML += radarChart.generateLegend();
-
-    $('.dropdown-menu').on('click', 'div', function selectItem () {
-        var selectedVal = $(this).text().trim();
-
-        $('#selectedChoice').val(selectedVal);
-        table.draw();
-    });
-
-    $.fn.dataTable.ext.search.push(
-        function testRow (settings, rowContent) {
-            var startDateIndex = 4;
-            var endDateIndex = 5;
-            var date = new Date();
-            var startDate = moment(rowContent[startDateIndex], 'MM-DD-YYYY');
-            var endDate = moment(rowContent[endDateIndex], 'MM-DD-YYYY');
-            var choice = $('#selectedChoice').val();
-
-            switch (choice) {
-                case 'All Trials':
-                    return true;
-                case 'Upcoming':
-                    if (startDate > date) {
-                        return true;
-                    }
-                    return false;
-                case 'In Progress':
-                    if (date > startDate && date < endDate) {
-                        return true;
-                    }
-                    return false;
-                case 'Completed':
-                    if (endDate < date) {
-                        return true;
-                    }
-                    return false;
-                default:
-                    return true;
-            }
-        }
-    );
-}());
+    window.data = JSON.parse('{{{ graphData }}}');
 </script>
+<script src="/static/script/dashboard.js" defer></script>

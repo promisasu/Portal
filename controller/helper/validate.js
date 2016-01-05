@@ -22,7 +22,7 @@ function validate (request, username, password, callback) {
     // search for selected user
     user.find({
         where: {
-            username: username
+            username
         }
     })
     // if user does not exist error out

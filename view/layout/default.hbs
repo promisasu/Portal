@@ -5,7 +5,8 @@
             {{ title }}
         </title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
 
         <!-- Stylesheets -->
         <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/dist/css/bootstrap.css">
@@ -13,43 +14,21 @@
         <link rel="stylesheet" type="text/css" href="/vendor/fullcalendar/dist/fullcalendar.min.css">
         <link rel="stylesheet" type="text/css" href="/vendor/datatables/media/css/jquery.dataTables.min.css"/>
         <link rel="stylesheet" type="text/css" href="/vendor/colors/css/colors.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/style/main.css">
 
         <!-- Scripts -->
-        <script type="text/javascript" src="/vendor/jquery/dist/jquery.min.js"></script>
-        <script type="text/javascript" src="/vendor/tether/dist/js/tether.min.js"></script>
-        <script type="text/javascript" src="/vendor/bootstrap/dist/js/bootstrap.js"></script>
-        <script type="text/javascript" src="/vendor/moment/min/moment.min.js"></script>
-        <script type="text/javascript" src="/vendor/chart.js/Chart.min.js"></script>
-        <script type="text/javascript" src="/vendor/fullcalendar/dist/fullcalendar.min.js"></script>
-        <script type="text/javascript" src="/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="/vendor/jquery/dist/jquery.min.js" defer></script>
+        <script type="text/javascript" src="/vendor/tether/dist/js/tether.min.js" defer></script>
+        <script type="text/javascript" src="/vendor/bootstrap/dist/js/bootstrap.js" defer></script>
+        <script type="text/javascript" src="/vendor/moment/min/moment.min.js" defer></script>
+        <script type="text/javascript" src="/vendor/chart.js/Chart.min.js" defer></script>
+        <script type="text/javascript" src="/vendor/fullcalendar/dist/fullcalendar.min.js" defer></script>
+        <script type="text/javascript" src="/vendor/datatables/media/js/jquery.dataTables.min.js" defer></script>
 
         <!-- Polyfills -->
-        <script src="/vendor/better-dom/dist/better-dom.min.js"></script>
-        <script src="/vendor/better-i18n-plugin/dist/better-i18n-plugin.js"></script>
-        <script src="/vendor/better-dateinput-polyfill/dist/better-dateinput-polyfill.js"></script>
-
-        <style>
-            .progress-good-and-bad {
-                color: #d9534f;
-                background: #d9534f;
-            }
-
-            .progress-good-and-bad::-webkit-progress-bar {
-                background: #d9534f !important;
-            }
-
-            .progress-good-and-bad::-webkit-progress-value {
-                background-color: #5cb85c !important;
-            }
-
-            .progress-good-and-bad::-moz-progress-bar {
-                background-color: #5cb85c;
-            }
-
-            .progress-good-and-bad > .progress-bar {
-                background-color: #5cb85c;
-            }
-        </style>
+        <script src="/vendor/better-dom/dist/better-dom.min.js" defer></script>
+        <script src="/vendor/better-i18n-plugin/dist/better-i18n-plugin.js" defer></script>
+        <script src="/vendor/better-dateinput-polyfill/dist/better-dateinput-polyfill.js" defer></script>
     </head>
     <body>
         <nav class="navbar navbar-dark bg-inverse">

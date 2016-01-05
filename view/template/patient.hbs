@@ -15,79 +15,81 @@
             Patient: {{ patient.pin }}
         </li>
     </ol>
-    <div class="col-sm-12">
-        <div id="calendar"></div>
-    </div>
-    <div class="col-sm-12">
-        <div class="card">
-          <br>
-          <canvas id="complianceChart" width="400" height="100px"></canvas>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="calendar"></div>
         </div>
-    </div>
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-block">
-                <h4 class="card-title">
-                    Patients' Surveys
-                </h4>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Survey ID
-                                </th>
-                                <th>
-                                    Completed
-                                </th>
-                                <th>
-                                    Stage
-                                </th>
-                                <th>
-                                    Survey Type
-                                </th>
-                                <th>
-                                    Start Time
-                                </th>
-                                <th>
-                                    End Time
-                                </th>
-                                <th>
-                                    User Submission Time
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each surveys}}
-                                <tr class="table-{{#if completed}}success{{else}}danger{{/if}}">
-                                    <th scope="row">
-                                        <a href="/survey/{{ id }}">
-                                            {{ id }}
-                                            <i class="fa fa-search"></i>
-                                        </a>
+        <div class="col-sm-12">
+            <div class="card">
+              <br>
+              <canvas id="complianceChart" width="400" height="100px"></canvas>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">
+                        Patients' Surveys
+                    </h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Survey ID
                                     </th>
-                                    <td>
-                                        {{ completed }}
-                                    </td>
-                                    <td>
-                                        {{ stageId }}
-                                    </td>
-                                    <td>
-                                        {{ name }}
-                                    </td>
-                                    <td>
-                                        {{ startTime }}
-                                    </td>
-                                    <td>
-                                        {{ endTime }}
-                                    </td>
-                                    <td>
-                                        {{ userSubmissionTime }}
-                                    </td>
+                                    <th>
+                                        Completed
+                                    </th>
+                                    <th>
+                                        Stage
+                                    </th>
+                                    <th>
+                                        Survey Type
+                                    </th>
+                                    <th>
+                                        Start Time
+                                    </th>
+                                    <th>
+                                        End Time
+                                    </th>
+                                    <th>
+                                        User Submission Time
+                                    </th>
                                 </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {{#each surveys}}
+                                    <tr class="table-{{#if completed}}success{{else}}danger{{/if}}">
+                                        <th scope="row">
+                                            <a href="/survey/{{ id }}">
+                                                {{ id }}
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        </th>
+                                        <td>
+                                            {{ completed }}
+                                        </td>
+                                        <td>
+                                            {{ stageId }}
+                                        </td>
+                                        <td>
+                                            {{ name }}
+                                        </td>
+                                        <td>
+                                            {{ startTime }}
+                                        </td>
+                                        <td>
+                                            {{ endTime }}
+                                        </td>
+                                        <td>
+                                            {{ userSubmissionTime }}
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -95,89 +97,6 @@
 </div>
 
 <script>
-(function patient () {
-    'use strict';
-    var surveys = JSON.parse('{{{ surveysJson }}}');
-    var fakeData = {
-        aa: 100,
-        bb: 70,
-        cc: 75,
-        dd: 0,
-        ee: 40,
-        ff: 50,
-        gg: 0
-    };
-
-    var config = {
-        type: 'line',
-        data: {
-            labels: [
-                '01/01/2015 20:00',
-                '01/02/2015 21:00',
-                '01/03/2015 22:00',
-                '01/04/2015 23:00',
-                '01/05/2015 03:00',
-                '01/06/2015 10:00',
-                '01/07/2015 04:00'
-            ],
-            datasets: [
-                {
-                    label: '% Time left until daily survey expired',
-                    data: [
-                        fakeData.aa,
-                        fakeData.bb,
-                        fakeData.cc,
-                        fakeData.dd,
-                        fakeData.ee,
-                        fakeData.ff,
-                        fakeData.gg
-                    ]
-                }
-            ]
-        },
-        options: {
-            scales: {
-                xAxes: [
-                    {
-                        type: 'time',
-                        display: true,
-                        time: {
-                            format: 'MMDDYYYY HHmm',
-                            round: 'day'
-                        },
-                        scaleLabel: {
-                            show: true,
-                            labelString: ''
-                        }
-                    }
-                ],
-                yAxes: [
-                    {
-                        display: true,
-                        scaleLabel: {
-                            show: true,
-                            labelString: '% Time Left'
-                        }
-                    }
-                ]
-            },
-            elements: {
-                line: {
-                    tension: 0.3
-                }
-            }
-        }
-    };
-
-    var ctx = document.getElementById('complianceChart').getContext('2d');
-
-    $('#calendar').fullCalendar({
-        defaultView: 'basicWeek',
-        allDayDefault: true,
-        contentHeight: 'auto',
-        events: surveys
-    });
-
-    new Chart(ctx, config);
-}());
+    window.data = JSON.parse('{{{ surveysJson }}}');
 </script>
+<script src="/static/script/patient.js" defer></script>

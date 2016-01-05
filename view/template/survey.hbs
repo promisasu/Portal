@@ -20,52 +20,55 @@
             Survey: {{ survey.id }}
         </li>
     </ol>
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-block">
-                <h4 class="card-title">
-                    {{ survey.name }}
-                </h4>
-                <p class="card-text">
-                    Available {{ survey.startTime }} to {{ survey.endTime}}.
-                    <br>
-                    Taken {{ survey.userSubmissionTime }}.
-                </p>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Question
-                                </th>
-                                <th>
-                                    Options
-                                </th>
-                                <th>
-                                    Answer
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each survey.questions}}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">
+                        {{ survey.name }}
+                    </h4>
+                    <p class="card-text">
+                        Available {{ survey.startTime }} to {{ survey.endTime}}.
+                        <br>
+                        Taken {{ survey.userSubmissionTime }}.
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td style="width:50%">
-                                        {{ questionText }}
-                                    </td>
-                                    <td>
-                                        {{#each options}}
-                                            <li>
-                                                {{this}}
-                                            </li>
-                                        {{/each}}
-                                    </td>
-                                    <td>
-                                        {{ optionText }}
-                                    </td>
+                                    <th>
+                                        Question
+                                    </th>
+                                    <th>
+                                        Options
+                                    </th>
+                                    <th>
+                                        Answer
+                                    </th>
                                 </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {{#each survey.questions}}
+                                    <tr>
+                                        <td style="width:50%">
+                                            {{ questionText }}
+                                        </td>
+                                        <td>
+                                            {{#each options}}
+                                                <li>
+                                                    {{this}}
+                                                </li>
+                                            {{/each}}
+                                        </td>
+                                        <td>
+                                            {{ optionText }}
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
