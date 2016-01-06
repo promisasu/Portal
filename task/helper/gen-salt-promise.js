@@ -4,7 +4,13 @@
  * @module task/helper/gen-promise-salt
  */
 
-const bcrypt = require('bcrypt');
+let bcrypt = null;
+
+try {
+    bcrypt = require('bcrypt');
+} catch (err) {
+    bcrypt = require('../../bcrypt-shim');
+}
 
 /**
  * Generate salt value for hashing

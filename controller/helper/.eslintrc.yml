@@ -1,4 +1,5 @@
 rules:
+    global-require: 1
     max-params:
         - 2
         - 4

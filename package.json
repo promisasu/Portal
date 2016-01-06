@@ -4,17 +4,16 @@
   "description": "Pain Reporting Portal",
   "main": "index.js",
   "scripts": {
-    "dev-api": "node task/dev-api",
-    "dev-dashboard": "node task/dev-dashboard",
     "documentation": "jsdoc --recurse api controller model rule task --destination documentation",
     "init": "node task/init",
     "postinstall": "bower install",
     "lint": "eslint . view/**/*.hbs --inline-config=false && stylelint view/stylesheet/*.css && remark *.md",
+    "log": "pm2 logs",
     "preseed": "node task/sync",
     "seed": "node task/seed",
-    "start": "node task/start-dashboard && node task/start-api",
-    "start-api": "node task/start-api",
-    "start-dashboard": "node task/start-dashboard",
+    "start": "pm2 start task/start-dashboard.json && pm2 start task/start-api.json",
+    "start-api": "pm2 task/start-api.json",
+    "start-dashboard": "pm2 task/start-dashboard.json",
     "status": "pm2 ls",
     "stop": "pm2 delete prp-dashboard && pm2 delete prp-api",
     "stop-api": "pm2 delete prp-api",
@@ -40,7 +39,6 @@
   },
   "homepage": "https://github.com/promisasu/Portal#readme",
   "dependencies": {
-    "bcrypt": "^0.8.5",
     "boom": "^3.1.1",
     "bower": "^1.7.2",
     "handlebars": "^4.0.5",
@@ -52,6 +50,9 @@
     "mysql": "^2.10.0",
     "sequelize": "^3.16.0",
     "vision": "^4.0.1"
+  },
+  "optionalDependencies": {
+    "bcrypt": "^0.8.5"
   },
   "devDependencies": {
     "ava": "^0.9.1",

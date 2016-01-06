@@ -6,8 +6,8 @@
  * This allows for `console.log` to be used for debugging.
  */
 
-const config = require('../config.json');
-const server = require('../controller/server')(config);
+const config = require('../../config.json');
+const server = require('../../controller/server')(config);
 
 server.start(() => {
     console.log('Server running at:', server.info.uri);

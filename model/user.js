@@ -5,9 +5,16 @@
  */
 
 const Sequelize = require('sequelize');
-const bcrypt = require('bcrypt');
 const minimumNameLength = 5;
 const maximumNameLength = 25;
+
+let bcrypt = null;
+
+try {
+    bcrypt = require('bcrypt');
+} catch (err) {
+    bcrypt = require('../bcrypt-shim');
+}
 
 /**
  * a generic User
