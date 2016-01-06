@@ -25,6 +25,7 @@
 ## Start the Portal
 
 1. run `npm run start`
+2. optionally run `npm run log` at any time to view logs
 
 ## Test the Portal
 
@@ -41,8 +42,6 @@
 
 Tasks can be run by calling `npm run <task>`
 
-* `dev-api` start api in developer mode
-* `dev-dashboard` start dashboard in developer mode
 * `documentation` generate code documentation
 * `init` create a server configuration file
 * `lint` lint check project files
