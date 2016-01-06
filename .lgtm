@@ -1,2 +1,2 @@
 approvals = 1
-pattern = "(?i)LGTM|:\\+1:|:shipit:"
+pattern = "(?i)LGTM|:shipit:"
