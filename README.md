@@ -9,7 +9,7 @@
 1. install [Git](https://git-scm.com/downloads)
 2. install [Node JS](https://nodejs.org/en/download/)
 3. install [MySql](https://www.mysql.com/)
-4. install [Node Gyp](https://github.com/nodejs/node-gyp#installation) dependencies
+4. optionally install [Node Gyp](https://github.com/nodejs/node-gyp#installation) dependencies (strongly recommended)
 5. clone git repository `git clone https://github.com/promisasu/Portal`
 6. open the folder `cd Portal`
 7. run `npm install`
