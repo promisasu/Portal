@@ -38,7 +38,8 @@
 
 *Ensure that there is a database named `prp_test`*
 
-1. run `npm run test`
+1. run `npm run lint`
+2. run `npm run test`
 
 ## View Code Documentation
 
