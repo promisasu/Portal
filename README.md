@@ -26,7 +26,13 @@
 ## Start the Portal
 
 1. run `npm run start`
-2. optionally run `npm run log` at any time to view logs
+
+## Debug the Portal
+
+* run `npm run status` to view status of all servers
+* run `npm run log` to view server logs
+* run `npm run describe-api` to view details of running api
+* run `npm run desribe-dashboard` to view details of running dashboard
 
 ## Test the Portal
 
@@ -43,10 +49,13 @@
 
 Tasks can be run by calling `npm run <task>`
 
+* `describe-api` view details of running api
+* `describe-dashboard` view details of running dashboard
 * `documentation` generate code documentation
 * `init` create a server configuration file
 * `lint` lint check project files
 * `log` view server log
+* `outdated` view outdated server and browser packages
 * `seed` fill database with sample data
 * `start` start production dashboard and api
 * `start-api` start production api
