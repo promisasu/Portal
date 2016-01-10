@@ -4,9 +4,10 @@
 
 1. Check that the issue has not already been reported ([search here](https://github.com/promisasu/Portal/issues)).
 2. Document the steps that were followed that resulted in an error.
-3. Document any error messages that were printed in the console.
-4. Ensure any error messages or code snippets are noted with a [fenced code block](https://help.github.com/articles/github-flavored-markdown/#fenced-code-blocks).
-5. Screenshots for UI errors are helpful.
+3. Document any error messages that were printed in the server log (`npm run log`).
+4. Document any error messages that were printed in the browser log ( [chrome](https://developers.google.com/web/tools/chrome-devtools/debug/console/console-ui), [firefox](https://www.mozilla.org/en-US/firefox/developer/), [edge](https://dev.windows.com/en-us/microsoft-edge/platform/documentation/f12-devtools-guide/console/)).
+5. Ensure any error messages or code snippets are noted with a [fenced code block](https://help.github.com/articles/github-flavored-markdown/#fenced-code-blocks).
+6. Screenshots for UI errors are helpful.
 
 ## Pull Request
 
@@ -15,7 +16,7 @@
 2. Ensure that code passes tests
 
    * Test results are reported to [PR status](https://github.com/blog/1935-see-results-from-all-pull-request-status-checks)
-   * Tests can be run locally using `npm lint` and `npm test`
+   * Tests can be run locally using `npm run lint` and `npm run test`
    * Disabling tests is not fixing them
 
 3. Get a code review
