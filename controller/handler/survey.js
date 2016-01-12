@@ -6,8 +6,6 @@
 
 const database = require('../../model');
 const processSurvey = require('../helper/process-survey');
-const first = 0;
-const second = 1;
 
 /**
  * A dashboard with an overview of a specific survey.
@@ -57,8 +55,8 @@ function surveyView (request, reply) {
         )
     ])
     .then((data) => {
-        const currentSurvey = data[first];
-        const patientAndTrial = data[second][first];
+        const currentSurvey = data[0];
+        const patientAndTrial = data[1][0];
 
         reply.view('survey', {
             title: 'Pain Reporting Portal',

@@ -19,11 +19,9 @@
 
     $.fn.dataTable.ext.search.push(
         function testRow (settings, rowContent) {
-            var startDateIndex = 4;
-            var endDateIndex = 5;
             var date = new Date();
-            var startDate = moment(rowContent[startDateIndex], 'MM-DD-YYYY');
-            var endDate = moment(rowContent[endDateIndex], 'MM-DD-YYYY');
+            var startDate = moment(rowContent[4], 'MM-DD-YYYY');
+            var endDate = moment(rowContent[5], 'MM-DD-YYYY');
             var choice = $('#selectedChoice').val();
 
             switch (choice) {
