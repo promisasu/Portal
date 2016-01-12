@@ -50,7 +50,7 @@
     "inert": "^3.2.0",
     "joi": "^7.1.0",
     "moment": "^2.11.1",
-    "mysql": "^2.10.0",
+    "mysql": "^2.10.1",
     "sequelize": "^3.17.1",
     "vision": "^4.0.1"
   },
@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "ava": "^0.9.1",
-    "eslint": "^2.0.0-alpha-2",
+    "eslint": "^2.0.0-beta.1",
     "eslint-plugin-html": "^1.1.0",
     "jsdoc": "^3.4.0",
     "pm2": "^1.0.0",
