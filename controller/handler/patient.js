@@ -6,8 +6,6 @@
 
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
-const first = 0;
-const second = 1;
 
 const surveys = [
     {
@@ -153,9 +151,9 @@ function patientView (request, reply) {
     .then((data) => {
         reply.view('patient', {
             title: 'Pain Reporting Portal',
-            patient: processPatient(data[first].patients[first]),
-            trial: data[first],
-            surveys: data[second],
+            patient: processPatient(data[0].patients[0]),
+            trial: data[0],
+            surveys: data[1],
             surveysJson: JSON.stringify(surveys)
         });
     });
