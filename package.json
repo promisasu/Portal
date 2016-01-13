@@ -50,7 +50,7 @@
     "inert": "^3.2.0",
     "joi": "^7.1.0",
     "moment": "^2.11.1",
-    "mysql": "^2.10.1",
+    "mysql": "^2.10.2",
     "sequelize": "^3.17.1",
     "vision": "^4.0.1"
   },
@@ -65,7 +65,7 @@
     "pm2": "^1.0.0",
     "read": "^1.0.7",
     "remark": "^3.2.0",
-    "remark-lint": "^2.1.0",
+    "remark-lint": "^2.2.0",
     "remark-slug": "^3.0.1",
     "remark-validate-links": "^2.0.2",
     "stylelint": "^3.2.2"
