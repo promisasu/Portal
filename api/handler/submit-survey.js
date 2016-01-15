@@ -7,7 +7,6 @@
 const database = require('../../model');
 const boom = require('boom');
 const moment = require('moment');
-const first = 0;
 
 /**
  * Fills in answered QuestionInstances for a submitted SurveyInstance
@@ -51,13 +50,13 @@ function submitSurvey (request, reply) {
             if (
                 currentQuestion
                 && currentQuestion.bodyPain
-                && currentQuestion.bodyPain[first]
-                && currentQuestion.bodyPain[first].location
+                && currentQuestion.bodyPain[0]
+                && currentQuestion.bodyPain[0].location
             ) {
                 questionInstArr.push(
                     questionOption.find({
                         where: {
-                            optionText: currentQuestion.bodyPain[first].location
+                            optionText: currentQuestion.bodyPain[0].location
                         }
                     })
                     .then((data) => {
@@ -71,7 +70,7 @@ function submitSurvey (request, reply) {
                 questionInstArr.push(
                     questionOption.find({
                         where: {
-                            optionText: currentQuestion.bodyPain[first].intensity
+                            optionText: currentQuestion.bodyPain[0].intensity
                         }
                     })
                     .then((data) => {
@@ -87,7 +86,7 @@ function submitSurvey (request, reply) {
                    questionInstance.create({
                        surveyInstanceId,
                        questionTemplateId: currentQuestion.quesID,
-                       questionOptionId: currentQuestion.selectedOptions[first]
+                       questionOptionId: currentQuestion.selectedOptions[0]
                    })
                 );
             }

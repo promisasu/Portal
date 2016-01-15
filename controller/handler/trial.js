@@ -4,20 +4,9 @@
  * @module controller/handler/trial
  */
 
-const color = {
-    green: '#2ECC40',
-    yellow: '#FFDC00',
-    red: '#FF4136'
-};
-
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
 const processTrial = require('../helper/process-trial');
-const fakeData = {
-    small: 10,
-    medium: 50,
-    large: 100
-};
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -36,20 +25,8 @@ function trialView (request, reply) {
                 title: 'Pain Reporting Portal',
                 trial: processTrial(currentTrial),
                 graphData: JSON.stringify({
-                    datasets: [
-                        {
-                            data: [
-                                fakeData.large,
-                                fakeData.medium,
-                                fakeData.small
-                            ],
-                            backgroundColor: [
-                                color.green,
-                                color.yellow,
-                                color.red
-                            ]
-                        }
-                    ],
+                    // TODO add real data
+                    datasets: [],
                     labels: [
                         'Compliant',
                         'Semicompliant',
