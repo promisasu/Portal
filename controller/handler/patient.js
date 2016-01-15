@@ -7,108 +7,6 @@
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
 
-const surveys = [
-    {
-        id: 1234,
-        title: 'Monthly',
-        stage: 1,
-        surveyType: 'Monthly',
-        start: '11/15/2015',
-        end: '11/15/2015',
-        userSubmissionTime: '11/15/2015 15:43:35',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 2345,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/15/2015',
-        end: '11/15/2015',
-        userSubmissionTime: '11/15/2015 15:43:35',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 3456,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/16/2015',
-        end: '11/16/2015',
-        userSubmissionTime: '11/16/2015 13:11:15',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 4567,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Weekly',
-        start: '11/17/2015',
-        end: '11/17/2015',
-        userSubmissionTime: '11/17/2015 11:12:43',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 5678,
-        title: 'Weekly',
-        stage: 1,
-        surveyType: 'Weekly',
-        start: '11/18/2015',
-        end: '11/18/2015',
-        userSubmissionTime: 'N/A',
-        completed: false,
-        className: 'bg-red'
-    },
-    {
-        id: 6789,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/18/2015',
-        end: '11/18/2015',
-        userSubmissionTime: 'N/A',
-        completed: false,
-        className: 'bg-red'
-    },
-    {
-        id: 7890,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/19/2015',
-        end: '11/19/2015',
-        userSubmissionTime: '11/19/2015 05:56:11',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 8901,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/20/2015',
-        end: '11/20/2015',
-        userSubmissionTime: '11/20/2015 05:56:11',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 9012,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/21/2015',
-        end: '11/21/2015',
-        userSubmissionTime: 'N/A',
-        completed: false,
-        className: 'bg-red'
-    }
-];
-
 /**
  * A dashboard with an overview of a specific patient.
  * @param {Request} request - Hapi request
@@ -154,7 +52,8 @@ function patientView (request, reply) {
             patient: processPatient(data[0].patients[0]),
             trial: data[0],
             surveys: data[1],
-            surveysJson: JSON.stringify(surveys)
+            // TODO get real survey data
+            surveysJson: JSON.stringify([])
         });
     });
 }
