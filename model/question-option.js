@@ -27,6 +27,13 @@ function register (sequelize) {
                 validate: {
                     notEmpty: true
                 }
+            },
+            order: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                validate: {
+                    min: 0
+                }
             }
         },
         {

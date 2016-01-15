@@ -335,6 +335,7 @@ module.exports.questionTemplate = [
     }
 ];
 
+// FIXME move this data into question_option data
 module.exports.joinQuestionsAndOptions = [
     {
         optionOrder: '1',

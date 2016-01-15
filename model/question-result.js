@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @module model/question-instance
+ * @module model/question-result
  */
 
 /**
@@ -19,7 +19,7 @@
  */
 function register (sequelize) {
     sequelize.define(
-        'question_instance',
+        'question_result',
         {},
         {
             freezeTableName: true,

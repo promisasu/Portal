@@ -52,12 +52,10 @@ function getSurvey (request, reply) {
                 ON jsq.surveyTemplateId = st.id
                 JOIN question_template qt
                 ON qt.id = jsq.questionTemplateId
-                JOIN join_questions_and_options jqo
-                ON jqo.questionTemplateId = qt.id
                 JOIN question_option qo
-                ON qo.id = jqo.questionOptionId
+                ON qo.questionTemplateId = qt.id
                 WHERE si.id = ?
-                ORDER BY jsq.questionOrder, jqo.optionOrder
+                ORDER BY jsq.questionOrder, qo.order
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,

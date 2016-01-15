@@ -21,12 +21,12 @@ function surveyView (request, reply) {
             FROM survey_instance si
             JOIN survey_template st
             ON st.id = si.surveyTemplateId
-            JOIN question_instance qi
-            ON qi.surveyInstanceId = si.id
+            JOIN question_result qr
+            ON qr.surveyInstanceId = si.id
             JOIN question_template qt
-            ON qt.id = qi.questionTemplateId
+            ON qt.id = qr.questionTemplateId
             JOIN question_option qo
-            ON qo.id = qi.questionOptionId
+            ON qo.id = qr.questionOptionId
             WHERE si.id = ?
             `,
             {

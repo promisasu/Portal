@@ -15,7 +15,7 @@ const moment = require('moment');
  * @returns {Null} responds with JSON data structure
  */
 function submitSurvey (request, reply) {
-    const questionInstance = database.sequelize.model('question_instance');
+    const questionResult = database.sequelize.model('question_result');
     const surveyInstance = database.sequelize.model('survey_instance');
     const questionOption = database.sequelize.model('question_option');
     const surveyInstanceId = request.payload.surveyInstanceID;
@@ -60,7 +60,7 @@ function submitSurvey (request, reply) {
                         }
                     })
                     .then((data) => {
-                        return questionInstance.create({
+                        return questionResult.create({
                             surveyInstanceId,
                             questionTemplateId: currentQuestion.quesID,
                             questionOptionId: data.id
@@ -74,7 +74,7 @@ function submitSurvey (request, reply) {
                         }
                     })
                     .then((data) => {
-                        return questionInstance.create({
+                        return questionResult.create({
                             surveyInstanceId,
                             questionTemplateId: currentQuestion.quesID,
                             questionOptionId: data.id
@@ -83,7 +83,7 @@ function submitSurvey (request, reply) {
                 );
             } else {
                 questionInstArr.push(
-                   questionInstance.create({
+                   questionResult.create({
                        surveyInstanceId,
                        questionTemplateId: currentQuestion.quesID,
                        questionOptionId: currentQuestion.selectedOptions[0]
