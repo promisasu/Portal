@@ -9,7 +9,6 @@ const processSurveyInstance = require('../helper/process-survey-instance');
 const groupBy = require('../helper/group-by');
 const boom = require('boom');
 const moment = require('moment');
-const first = 0;
 
 /**
  * Gets all of the QuestionTemplates and QuestionOptions for a SurveyTemplate
@@ -69,8 +68,8 @@ function getSurvey (request, reply) {
             )
             .then((data) => {
                 const final = {
-                    surveyInstanceID: data[first].id,
-                    surveyName: data[first].name,
+                    surveyInstanceID: data[0].id,
+                    surveyName: data[0].name,
                     message: 'SUCCESS',
                     questions: groupBy(data, 'questionOrder').map(processSurveyInstance)
                 };

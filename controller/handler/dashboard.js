@@ -25,9 +25,9 @@ function dashboardView (request, reply) {
             title: 'Pain Reporting Portal',
             user: request.auth.credentials,
             status: {
-                patientCount: 'null',
-                riskCount: 'null',
-                noncompliantCount: 'null'
+                patientCount: null,
+                riskCount: null,
+                noncompliantCount: null
             },
             trials: trialData,
             graphData: JSON.stringify({
