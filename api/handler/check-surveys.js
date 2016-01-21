@@ -41,10 +41,10 @@ function checkSurveys (request, reply) {
             database.sequelize.query(
                 `
                 SELECT *, si.id
-                FROM survey_instance si
-                JOIN patient pa
+                FROM survey_instance AS si
+                JOIN patient AS pa
                 ON si.patientId = pa.id
-                JOIN survey_template st
+                JOIN survey_template AS st
                 ON si.surveyTemplateId = st.id
                 WHERE pa.pin = ?
                 AND ((si.startTime <= ?

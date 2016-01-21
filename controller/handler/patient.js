@@ -31,11 +31,11 @@ function patientView (request, reply) {
         database.sequelize.query(
             `
             SELECT *, si.id
-            FROM survey_instance si
-            JOIN patient pa
+            FROM patient AS pa
+            JOIN survey_instance AS si
             ON si.patientId = pa.id
-            JOIN survey_template st
-            ON si.surveyTemplateId = st.id
+            JOIN survey_template AS st
+            ON st.id = si.surveyTemplateId
             WHERE pa.pin = ?
             `,
             {

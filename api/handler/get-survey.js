@@ -46,13 +46,13 @@ function getSurvey (request, reply) {
                 `
                 SELECT * , qo.id
                 FROM survey_instance AS si
-                JOIN survey_template st
+                JOIN survey_template AS st
                 ON st.id = si.surveyTemplateId
-                JOIN join_surveys_and_questions jsq
+                JOIN join_surveys_and_questions AS jsq
                 ON jsq.surveyTemplateId = st.id
-                JOIN question_template qt
+                JOIN question_template AS qt
                 ON qt.id = jsq.questionTemplateId
-                JOIN question_option qo
+                JOIN question_option AS qo
                 ON qo.questionTemplateId = qt.id
                 WHERE si.id = ?
                 ORDER BY jsq.questionOrder, qo.order
