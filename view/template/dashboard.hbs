@@ -15,15 +15,14 @@
                     <p class="card-text">
                         Global Stats
                     </p>
-                    <input type="hidden" id="selectedChoice"/>
                     <table class="table">
                         <tbody>
                             <tr>
                                 <th scope="row">
-                                    In progress trials:
+                                    In Progress Trials:
                                 </th>
                                 <td>
-                                    {{ trial.start }}
+                                    {{ overall.inProgress }}
                                 </td>
                             </tr>
                             <tr>
@@ -31,7 +30,7 @@
                                     Average Percent Recruited:
                                 </th>
                                 <td>
-                                    {{ trial.duration }}
+                                    {{ overall.percentRecruited }}
                                 </td>
                             </tr>
                             <tr>
@@ -39,7 +38,7 @@
                                     Average Percent Compliant:
                                 </th>
                                 <td>
-                                    {{ trial.patientCount }}
+                                    {{ overall.averageCompliance }}
                                 </td>
                             </tr>
                         </tbody>

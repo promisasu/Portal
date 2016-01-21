@@ -9,7 +9,7 @@
     "documentation": "jsdoc --recurse api controller model rule task --destination documentation",
     "init": "node task/init",
     "postinstall": "bower install",
-    "lint": "eslint . view/**/*.hbs --inline-config=false && remark *.md --config-path .remarkrc.json && stylelint view/stylesheet/*.css",
+    "lint": "eslint . view/**/*.hbs --inline-config=false && remark *.md && stylelint view/stylesheet/*.css",
     "log": "pm2 logs",
     "outdated": "npm outdated && bower list",
     "preseed": "node task/sync",

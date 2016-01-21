@@ -3,6 +3,7 @@
 
     var ctx = document.getElementById('radarChart').getContext('2d');
     var table = $('#trials').DataTable();
+    var selectedChoice = null;
 
     new Chart(ctx, {
         type: 'radar',
@@ -11,9 +12,8 @@
     });
 
     $('.dropdown-menu').on('click', 'div', function selectItem () {
-        var selectedVal = $(this).text().trim();
+        selectedChoice = $(this).text().trim();
 
-        $('#selectedChoice').val(selectedVal);
         table.draw();
     });
 
@@ -22,9 +22,8 @@
             var date = new Date();
             var startDate = moment(rowContent[4], 'MM-DD-YYYY');
             var endDate = moment(rowContent[5], 'MM-DD-YYYY');
-            var choice = $('#selectedChoice').val();
 
-            switch (choice) {
+            switch (selectedChoice) {
                 case 'All Trials':
                     return true;
                 case 'Upcoming':
