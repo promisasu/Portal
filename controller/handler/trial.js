@@ -16,25 +16,38 @@ const processTrial = require('../helper/process-trial');
  * @returns {View} Rendered page
  */
 function trialView (request, reply) {
-    const trial = database.sequelize.model('trial');
-
-    trial.findById(request.params.id).then((currentTrial) => {
-        currentTrial.getPatients()
-        .then((patients) => {
-            reply.view('trial', {
-                title: 'Pain Reporting Portal',
-                trial: processTrial(currentTrial),
-                graphData: JSON.stringify({
-                    // TODO add real data
-                    datasets: [],
-                    labels: [
-                        'Compliant',
-                        'Semicompliant',
-                        'Noncompliant'
-                    ]
-                }),
-                patients: patients.map(processPatient)
-            });
+    database.sequelize.query(
+        `
+        SELECT *
+        FROM trial as tr
+        JOIN stage AS st
+        ON st.trialId = tr.id
+        JOIN patient AS pa
+        ON pa.stageId = st.id
+        WHERE tr.id = ?
+        `,
+        {
+            type: database.sequelize.QueryTypes.SELECT,
+            replacements: [
+                request.params.id
+            ]
+        }
+    )
+    .then((data) => {
+        console.log(data);
+        reply.view('trial', {
+            title: 'Pain Reporting Portal',
+            trial: processTrial(data),
+            graphData: JSON.stringify({
+                // TODO add real data
+                datasets: [],
+                labels: [
+                    'Compliant',
+                    'Semicompliant',
+                    'Noncompliant'
+                ]
+            }),
+            patients: data.map(processPatient)
         });
     })
     .catch(() => {

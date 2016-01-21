@@ -44,7 +44,7 @@ function getSurvey (request, reply) {
         .then(() => {
             database.sequelize.query(
                 `
-                SELECT *
+                SELECT * , qo.id
                 FROM survey_instance AS si
                 JOIN survey_template st
                 ON st.id = si.surveyTemplateId
