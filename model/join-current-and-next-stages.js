@@ -9,7 +9,7 @@ const Sequelize = require('sequelize');
 /**
  * Give a rule to describe when one stage should transition to another
  * @typedef {Object} JoinCurrentAndNext
- * @property {String} rule - Rules to listen for
+ * @property {String} rule - Rule that describes transition to next stage
  */
 
 /**
@@ -19,7 +19,7 @@ const Sequelize = require('sequelize');
  */
 function register (sequelize) {
     sequelize.define(
-        'join_current_and_next_stage',
+        'join_current_and_next_stages',
         {
             rule: {
                 type: Sequelize.STRING,

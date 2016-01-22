@@ -19,9 +19,9 @@ const addQuestionOptionModel = require('./question-option');
 
 // Database Join Tables
 const addJoinUsersAndTrials = require('./join-users-and-trials');
-const addJoinTrialsAndSurveys = require('./join-trials-and-surveys');
+const addJoinStagesAndSurveys = require('./join-stages-and-surveys');
 const addJoinSurveysAndQuestions = require('./join-surveys-and-questions');
-const addJoinCurrentAndNextStage = require('./join-current-and-next-stage');
+const addJoinCurrentAndNextStages = require('./join-current-and-next-stages');
 
 /**
  * a DatabaseConfiguration is a collection of the settings needed to connect to the database.
@@ -75,9 +75,9 @@ function setup (configuration) {
 
     // add the many to many join tables
     addJoinUsersAndTrials(sequelize);
-    addJoinTrialsAndSurveys(sequelize);
+    addJoinStagesAndSurveys(sequelize);
     addJoinSurveysAndQuestions(sequelize);
-    addJoinCurrentAndNextStage(sequelize);
+    addJoinCurrentAndNextStages(sequelize);
 
     // Get the newly created ORM wrappers
     const user = sequelize.model('user');
@@ -92,9 +92,9 @@ function setup (configuration) {
 
     // Get the join tables
     const joinUsersAndTrials = sequelize.model('join_users_and_trials');
-    const joinTrialsAndSurveys = sequelize.model('join_trials_and_surveys');
+    const joinStagesAndSurveys = sequelize.model('join_stages_and_surveys');
     const joinSurveysAndQuestions = sequelize.model('join_surveys_and_questions');
-    const joinCurrentAndNextStage = sequelize.model('join_current_and_next_stage');
+    const joinCurrentAndNextStages = sequelize.model('join_current_and_next_stages');
 
     // establish relationships between tables
 
@@ -108,8 +108,8 @@ function setup (configuration) {
     questionOption.hasMany(questionResult);
 
     /* ===== MANY TO MANY ===== */
-    trial.belongsToMany(surveyTemplate, {through: joinTrialsAndSurveys});
-    surveyTemplate.belongsToMany(trial, {through: joinTrialsAndSurveys});
+    stage.belongsToMany(surveyTemplate, {through: joinStagesAndSurveys});
+    surveyTemplate.belongsToMany(stage, {through: joinStagesAndSurveys});
 
     surveyTemplate.belongsToMany(questionTemplate, {through: joinSurveysAndQuestions});
     questionTemplate.belongsToMany(surveyTemplate, {through: joinSurveysAndQuestions});
@@ -117,7 +117,7 @@ function setup (configuration) {
     user.belongsToMany(trial, {through: joinUsersAndTrials});
     trial.belongsToMany(user, {through: joinUsersAndTrials});
 
-    stage.belongsToMany(stage, {as: 'nextStage', through: joinCurrentAndNextStage});
+    stage.belongsToMany(stage, {as: 'nextStage', through: joinCurrentAndNextStages});
 
     // export configured sequelize to allow for access to database models
     module.exports.sequelize = sequelize;
