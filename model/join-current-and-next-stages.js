@@ -7,17 +7,16 @@
 const Sequelize = require('sequelize');
 
 /**
- * Give a rule to describe when one stage should transition to another
- * @typedef {Object} JoinCurrentAndNext
- * @property {String} rule - Rule that describes transition to next stage
- */
-
-/**
  * Registers model with Sequelize
  * @param {Sequelize} sequelize - database instance
  * @returns {Null} nothing
  */
 function register (sequelize) {
+    /**
+     * Give a rule to describe when one stage should transition to another
+     * @typedef {Object} JoinCurrentAndNext
+     * @property {String} rule - Rule that describes transition to next stage
+     */
     sequelize.define(
         'join_current_and_next_stages',
         {

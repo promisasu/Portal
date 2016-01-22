@@ -7,17 +7,16 @@
 const Sequelize = require('sequelize');
 
 /**
- * A Stage represents a Patient's state in a Trial
- * @typedef {Object} EventListener
- * @property {String} name - name of the Stage
- */
-
-/**
  * Registers model with Sequelize
  * @param {Sequelize} sequelize - database instance
  * @returns {Null} nothing
  */
 function register (sequelize) {
+    /**
+     * A Stage represents a Patient's state in a Trial
+     * @typedef {Object} Stage
+     * @property {String} name - name of the Stage
+     */
     sequelize.define(
         'stage',
         {

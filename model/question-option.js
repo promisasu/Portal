@@ -7,17 +7,17 @@
 const Sequelize = require('sequelize');
 
 /**
- * Each multiple choice QuestionTemplate can have many QuestionOption
- * @typedef {Object} QuestionOption
- * @property {String} name - questionOption name
- */
-
-/**
  * Registers model with Sequelize
  * @param {Sequelize} sequelize - database instance
  * @returns {Null} nothing
  */
 function register (sequelize) {
+    /**
+     * Each multiple choice QuestionTemplate can have many QuestionOption
+     * @typedef {Object} QuestionOption
+     * @property {String} optionText - text to appear for the option
+     * @property {Number} order - Order in which selectable options should appear in question
+     */
     sequelize.define(
         'question_option',
         {
