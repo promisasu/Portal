@@ -1,14 +1,14 @@
 'use strict';
 
 /**
- * @module model/rule
+ * @module model/join-current-and-next-stage
  */
 
 const Sequelize = require('sequelize');
 
 /**
- * a Rule is a single Expert Ruleset
- * @typedef {Object} EventListener
+ * Give a rule to describe when one stage should transition to another
+ * @typedef {Object} JoinCurrentAndNext
  * @property {String} rule - Rules to listen for
  */
 
@@ -19,7 +19,7 @@ const Sequelize = require('sequelize');
  */
 function register (sequelize) {
     sequelize.define(
-        'rule',
+        'join_current_and_next_stage',
         {
             rule: {
                 type: Sequelize.STRING,

@@ -10,7 +10,6 @@ const Sequelize = require('sequelize');
 const addUserModel = require('./user');
 const addTrialModel = require('./trial');
 const addPatientModel = require('./patient');
-const addRule = require('./rule');
 const addStage = require('./stage');
 const addSurveyTemplateModel = require('./survey-template');
 const addSurveyInstanceModel = require('./survey-instance');
@@ -22,6 +21,7 @@ const addQuestionOptionModel = require('./question-option');
 const addJoinUsersAndTrials = require('./join-users-and-trials');
 const addJoinTrialsAndSurveys = require('./join-trials-and-surveys');
 const addJoinSurveysAndQuestions = require('./join-surveys-and-questions');
+const addJoinCurrentAndNextStage = require('./join-current-and-next-stage');
 
 /**
  * a DatabaseConfiguration is a collection of the settings needed to connect to the database.
@@ -66,7 +66,6 @@ function setup (configuration) {
     addUserModel(sequelize, configuration.salt);
     addTrialModel(sequelize);
     addPatientModel(sequelize);
-    addRule(sequelize);
     addStage(sequelize);
     addSurveyTemplateModel(sequelize);
     addSurveyInstanceModel(sequelize);
@@ -78,13 +77,13 @@ function setup (configuration) {
     addJoinUsersAndTrials(sequelize);
     addJoinTrialsAndSurveys(sequelize);
     addJoinSurveysAndQuestions(sequelize);
+    addJoinCurrentAndNextStage(sequelize);
 
     // Get the newly created ORM wrappers
     const user = sequelize.model('user');
     const trial = sequelize.model('trial');
     const patient = sequelize.model('patient');
     const stage = sequelize.model('stage');
-    const rule = sequelize.model('rule');
     const questionResult = sequelize.model('question_result');
     const questionOption = sequelize.model('question_option');
     const questionTemplate = sequelize.model('question_template');
@@ -95,6 +94,7 @@ function setup (configuration) {
     const joinUsersAndTrials = sequelize.model('join_users_and_trials');
     const joinTrialsAndSurveys = sequelize.model('join_trials_and_surveys');
     const joinSurveysAndQuestions = sequelize.model('join_surveys_and_questions');
+    const joinCurrentAndNextStage = sequelize.model('join_current_and_next_stage');
 
     // establish relationships between tables
 
@@ -102,7 +102,6 @@ function setup (configuration) {
     trial.hasMany(stage);
     patient.hasMany(surveyInstance);
     stage.hasMany(patient);
-    stage.hasMany(rule);
     surveyTemplate.hasMany(surveyInstance);
     surveyInstance.hasMany(questionResult);
     questionTemplate.hasMany(questionOption);
@@ -117,6 +116,8 @@ function setup (configuration) {
 
     user.belongsToMany(trial, {through: joinUsersAndTrials});
     trial.belongsToMany(user, {through: joinUsersAndTrials});
+
+    stage.belongsToMany(stage, {as: 'nextStage', through: joinCurrentAndNextStage});
 
     // export configured sequelize to allow for access to database models
     module.exports.sequelize = sequelize;
