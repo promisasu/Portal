@@ -62,7 +62,6 @@ function submitSurvey (request, reply) {
                     .then((data) => {
                         return questionResult.create({
                             surveyInstanceId,
-                            questionTemplateId: currentQuestion.quesID,
                             questionOptionId: data.id
                         });
                     })
@@ -76,7 +75,6 @@ function submitSurvey (request, reply) {
                     .then((data) => {
                         return questionResult.create({
                             surveyInstanceId,
-                            questionTemplateId: currentQuestion.quesID,
                             questionOptionId: data.id
                         });
                     })
@@ -85,7 +83,6 @@ function submitSurvey (request, reply) {
                 questionInstArr.push(
                    questionResult.create({
                        surveyInstanceId,
-                       questionTemplateId: currentQuestion.quesID,
                        questionOptionId: currentQuestion.selectedOptions[0]
                    })
                 );
