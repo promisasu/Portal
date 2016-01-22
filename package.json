@@ -48,7 +48,7 @@
     "hapi": "^12.1.0",
     "hapi-auth-basic": "^4.1.0",
     "inert": "^3.2.0",
-    "joi": "^7.2.0",
+    "joi": "^7.2.2",
     "moment": "^2.11.1",
     "mysql": "^2.10.2",
     "sequelize": "^3.17.3",
@@ -60,15 +60,15 @@
   "devDependencies": {
     "ava": "^0.10.0",
     "eslint": "^2.0.0-beta.1",
-    "eslint-plugin-html": "^1.1.0",
+    "eslint-plugin-html": "^1.2.0",
     "jsdoc": "^3.4.0",
     "pm2": "^1.0.0",
     "read": "^1.0.7",
-    "remark": "^3.2.0",
+    "remark": "^3.2.1",
     "remark-lint": "^2.2.1",
     "remark-slug": "^3.0.1",
     "remark-validate-links": "^2.0.2",
-    "stylelint": "^3.2.3"
+    "stylelint": "^4.0.0"
   },
   "engines": {
     "node": ">=4.0.0",
