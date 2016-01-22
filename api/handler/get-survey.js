@@ -44,7 +44,7 @@ function getSurvey (request, reply) {
         .then(() => {
             database.sequelize.query(
                 `
-                SELECT * , qo.id
+                SELECT * , qo.id AS qoid, si.id AS sid
                 FROM survey_instance AS si
                 JOIN survey_template AS st
                 ON st.id = si.surveyTemplateId
@@ -66,7 +66,7 @@ function getSurvey (request, reply) {
             )
             .then((data) => {
                 const final = {
-                    surveyInstanceID: data[0].id,
+                    surveyInstanceID: data[0].sid,
                     surveyName: data[0].name,
                     message: 'SUCCESS',
                     questions: groupBy(data, 'questionOrder').map(processSurveyInstance)
