@@ -50,7 +50,7 @@ function checkSurveys (request, reply) {
                 AND ((si.startTime <= ?
                 AND si.endTime > ?)
                 OR (si.startTime > ?))
-                AND si.surveyInstanceCompleted = false
+                AND si.state = 'pending'
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,

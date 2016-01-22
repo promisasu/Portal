@@ -18,8 +18,8 @@ function register (sequelize) {
      * @property {String} name - SurveyInstance name
      * @property {Date} startTime - when the survey is availible
      * @property {Date} endTime - when the survey must be completed
-     * @property {Date} userSubmissionTime - time that the server recieved the submitted survey
-     * @property {Date} actualSubmissionTime - time that patient submitted survey on application
+     * @property {Date} userSubmissionTime - time that patient submitted survey on application
+     * @property {Date} actualSubmissionTime - time that the server marked survey as completed
      * @property {String} state - current state of SurveyInstance
      */
     sequelize.define(
