@@ -7,7 +7,7 @@
 const Sequelize = require('sequelize');
 
 /**
- * a Rule is a singe Expert Ruleset
+ * a Rule is a single Expert Ruleset
  * @typedef {Object} EventListener
  * @property {String} rule - Rules to listen for
  */

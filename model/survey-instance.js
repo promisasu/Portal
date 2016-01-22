@@ -7,7 +7,7 @@
 const Sequelize = require('sequelize');
 
 /**
- * Each Survey-instance consists of many survey instances
+ * Each SurveyInstance consists of many QuestionResults
  * @typedef {Object} SurveyInstance
  * @property {String} name - SurveyInstance name
  */

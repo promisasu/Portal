@@ -7,7 +7,7 @@
 const Sequelize = require('sequelize');
 
 /**
- * a clinical Trial has many Patients taking Surveys
+ * a clinical Trial has many Stages for Patients to take Surveys
  * @typedef {Object} Trial
  * @property {String} name - trial name
  * @property {String} description - short blurb about the trial

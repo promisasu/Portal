@@ -7,7 +7,7 @@
 const Sequelize = require('sequelize');
 
 /**
- * Each multiple choice question can have many QuestionOption
+ * Each multiple choice QuestionTemplate can have many QuestionOption
  * @typedef {Object} QuestionOption
  * @property {String} name - questionOption name
  */

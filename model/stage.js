@@ -7,8 +7,7 @@
 const Sequelize = require('sequelize');
 
 /**
- * a Stage is a collection of EventListeners used to evaluate a Patient
- * and to generate new SurveyInstances for a Patient
+ * A Stage represents a Patient's state in a Trial
  * @typedef {Object} EventListener
  * @property {String} name - name of the Stage
  */

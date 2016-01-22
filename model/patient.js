@@ -7,7 +7,8 @@
 const Sequelize = require('sequelize');
 
 /**
- * a Patient can have one or more Surveys
+ * a Patient is a person in a Stage of a clinical Trial
+ * and is filling out SurveyInstances and QuestionResults
  * @typedef {Object} Patient
  * @property {String} name - patient name
  * @property {String} deviceType - Device Patient registered with
