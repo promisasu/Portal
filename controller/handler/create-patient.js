@@ -23,8 +23,8 @@ function createPatient (request, reply) {
     let pin = null;
 
     database.sequelize.transaction()
-    .then((currentTransaction) => {
-        transaction = currentTransaction;
+    .then((newTransaction) => {
+        transaction = newTransaction;
         // Get Trial the patient will be added to
         return trial.findById(request.payload.trialId, {transaction});
     })
@@ -56,8 +56,8 @@ function createPatient (request, reply) {
         reply.redirect(`/patient/${newPatient.pin}`);
     })
     .catch((err) => {
-        console.error(err);
         transaction.rollback();
+        console.error(err);
         reply(boom.badRequest('Trial or Stage does not exist'));
     });
 }
