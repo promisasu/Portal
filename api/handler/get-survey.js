@@ -35,6 +35,8 @@ function getSurvey (request, reply) {
                     reject('Survey instance has been completed');
                 } else {
                     currentSurveyInstance = resultSurveyInstance;
+                    currentSurveyInstance.state = 'in progress';
+                    currentSurveyInstance.save();
                     resolve();
                 }
             } else {
