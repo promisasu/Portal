@@ -55,7 +55,8 @@ function createPatient (request, reply) {
         transaction.commit();
         reply.redirect(`/patient/${newPatient.pin}`);
     })
-    .catch(() => {
+    .catch((err) => {
+        console.error(err);
         transaction.rollback();
         reply(boom.badRequest('Trial or Stage does not exist'));
     });

@@ -70,7 +70,8 @@ function surveyView (request, reply) {
             survey: processSurvey(currentSurvey)
         });
     })
-    .catch(() => {
+    .catch((err) => {
+        console.error(err);
         reply.view('404', {
             title: 'Not Found'
         });

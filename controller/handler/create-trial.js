@@ -20,7 +20,8 @@ function createTrial (request, reply) {
     .then((newTrial) => {
         reply.redirect(`/trial/${newTrial.id}`);
     })
-    .catch(() => {
+    .catch((err) => {
+        console.error(err);
         reply(boom.badRequest('Invalid Trial'));
     });
 }
