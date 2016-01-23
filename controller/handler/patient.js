@@ -14,28 +14,45 @@ const processPatient = require('../helper/process-patient');
  * @returns {View} Rendered page
  */
 function patientView (request, reply) {
-    const patient = database.sequelize.model('patient');
-    const trial = database.sequelize.model('trial');
-
     return Promise.all([
-        trial.find({
-            include: [
-                {
-                    model: patient,
-                    where: {
-                        pin: request.params.pin
-                    }
-                }
-            ]
-        }),
+        database.sequelize.query(
+            `
+            SELECT *, st.name as stage
+            FROM patient AS pa
+            JOIN stage AS st
+            ON st.id = pa.stageId
+            WHERE pa.pin = ?
+            `,
+            {
+                type: database.sequelize.QueryTypes.SELECT,
+                replacements: [
+                    request.params.pin
+                ]
+            }
+        ),
         database.sequelize.query(
             `
             SELECT *, si.id
             FROM patient AS pa
             JOIN survey_instance AS si
             ON si.patientId = pa.id
-            JOIN survey_template AS st
-            ON st.id = si.surveyTemplateId
+            WHERE pa.pin = ?
+            `,
+            {
+                type: database.sequelize.QueryTypes.SELECT,
+                replacements: [
+                    request.params.pin
+                ]
+            }
+        ),
+        database.sequelize.query(
+            `
+            SELECT tr.name, tr.id
+            FROM patient AS pa
+            JOIN stage AS st
+            ON st.id = pa.stageId
+            JOIN trial AS tr
+            ON tr.id = st.trialId
             WHERE pa.pin = ?
             `,
             {
@@ -47,13 +64,23 @@ function patientView (request, reply) {
         )
     ])
     .then((data) => {
+        const currentPatient = data[0][0];
+        const surveyInstances = data[1];
+        const currentTrial = data[2][0];
+
         reply.view('patient', {
             title: 'Pain Reporting Portal',
-            patient: processPatient(data[0].patients[0]),
-            trial: data[0],
-            surveys: data[1],
+            patient: processPatient(currentPatient),
+            trial: currentTrial,
+            surveys: surveyInstances,
             // TODO get real survey data
             surveysJson: JSON.stringify([])
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        reply.view('404', {
+            title: 'Not Found'
         });
     });
 }
