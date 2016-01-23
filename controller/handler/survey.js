@@ -71,7 +71,9 @@ function surveyView (request, reply) {
         });
     })
     .catch(() => {
-        reply.redirect('/404');
+        reply.view('404', {
+            title: 'Not Found'
+        });
     });
 }
 

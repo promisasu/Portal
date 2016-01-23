@@ -13,7 +13,7 @@ const Sequelize = require('sequelize');
  */
 function register (sequelize) {
     /**
-     * A Stage represents a Patient's state in a Trial
+     * A Stage represents a group of Patients' state in a Trial
      * @typedef {Object} Stage
      * @property {String} name - name of the Stage
      */
