@@ -26,7 +26,7 @@ function submitSurvey (request, reply) {
     surveyInstance.find({
         where: {
             id: request.payload.surveyInstanceID,
-            surveyInstanceCompleted: false
+            state: 'in progress'
         }
     })
     .then((survey) => {
@@ -93,7 +93,7 @@ function submitSurvey (request, reply) {
     .then(() => {
         currentSurveyInstance.userSubmissionTime = request.payload.timeStamp;
         currentSurveyInstance.actualSubmissionTime = moment();
-        currentSurveyInstance.surveyInstanceCompleted = true;
+        currentSurveyInstance.state = 'completed';
         currentSurveyInstance.save();
         reply({
             statusCode: 500,
