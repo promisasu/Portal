@@ -48,6 +48,7 @@ function register (sequelize) {
             state: {
                 type: Sequelize.ENUM,
                 values: ['pending', 'in progress', 'completed', 'expired', 'invalid', 'cancelled'],
+                defaultValue: 'pending',
                 allowNull: false
             }
         },
