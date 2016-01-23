@@ -51,6 +51,7 @@ function checkSurveys (request, reply) {
                 AND si.endTime > ?)
                 OR (si.startTime > ?))
                 AND si.state = 'pending'
+                ORDER BY si.startTime
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
