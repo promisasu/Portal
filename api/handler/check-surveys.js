@@ -72,6 +72,7 @@ function checkSurveys (request, reply) {
         });
     })
     .catch((err) => {
+        console.error(err);
         reply(boom.badRequest(err));
     });
 }

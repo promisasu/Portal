@@ -28,12 +28,11 @@
                             Stage
                         </label>
                         <select class="form-control" name="stageId" id="patient-stage">
-                            <option value="0">
-                                Stage 1
-                            </option>
-                            <option value="1">
-                                Stage 2
-                            </option>
+                            {{#each stages}}
+                                <option value="{{ id }}">
+                                    {{ name }}
+                                </option>
+                            {{/each}}
                         </select>
                     </div>
                 </form>

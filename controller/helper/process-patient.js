@@ -6,18 +6,16 @@
 
 /**
  * Takes in a Patient model and processes it into human readable format
- * @param {Trial} currentPatient - a single Patient object
+ * @param {Trial} patient - a single Patient object
  * @returns {Object} processed Patient
  */
-function processPatient (currentPatient) {
-    const patient = currentPatient.dataValues;
-
+function processPatient (patient) {
     return {
         pin: patient.pin,
+        stage: patient.stage,
         // TODO add real data
         status: null,
         statusType: null,
-        stage: null,
         lastTaken: null,
         totalMissed: null,
         consecutiveMissed: null

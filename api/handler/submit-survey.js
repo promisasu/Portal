@@ -22,12 +22,20 @@ function submitSurvey (request, reply) {
     const questionInstArr = [];
 
     let currentSurveyInstance = null;
+    let transaction = null;
 
-    surveyInstance.find({
-        where: {
-            id: request.payload.surveyInstanceID,
-            state: 'in progress'
-        }
+    database.sequelize.transaction()
+    .then((newTransaction) => {
+        transaction = newTransaction;
+        return surveyInstance.find(
+            {
+                where: {
+                    id: request.payload.surveyInstanceID,
+                    state: 'in progress'
+                }
+            },
+            {transaction}
+        );
     })
     .then((survey) => {
         return new Promise((resolve, reject) => {
@@ -54,37 +62,52 @@ function submitSurvey (request, reply) {
                 && currentQuestion.bodyPain[0].location
             ) {
                 questionInstArr.push(
-                    questionOption.find({
-                        where: {
-                            optionText: currentQuestion.bodyPain[0].location
-                        }
-                    })
+                    questionOption.find(
+                        {
+                            where: {
+                                optionText: currentQuestion.bodyPain[0].location
+                            }
+                        },
+                        {transaction}
+                    )
                     .then((data) => {
-                        return questionResult.create({
-                            surveyInstanceId,
-                            questionOptionId: data.id
-                        });
+                        return questionResult.create(
+                            {
+                                surveyInstanceId,
+                                questionOptionId: data.id
+                            },
+                            {transaction}
+                        );
                     })
                 );
                 questionInstArr.push(
-                    questionOption.find({
-                        where: {
-                            optionText: currentQuestion.bodyPain[0].intensity
-                        }
-                    })
+                    questionOption.find(
+                        {
+                            where: {
+                                optionText: currentQuestion.bodyPain[0].intensity
+                            }
+                        },
+                        {transaction}
+                    )
                     .then((data) => {
-                        return questionResult.create({
-                            surveyInstanceId,
-                            questionOptionId: data.id
-                        });
+                        return questionResult.create(
+                            {
+                                surveyInstanceId,
+                                questionOptionId: data.id
+                            },
+                            {transaction}
+                        );
                     })
                 );
             } else {
                 questionInstArr.push(
-                   questionResult.create({
-                       surveyInstanceId,
-                       questionOptionId: currentQuestion.selectedOptions[0]
-                   })
+                   questionResult.create(
+                       {
+                           surveyInstanceId,
+                           questionOptionId: currentQuestion.selectedOptions[0]
+                       },
+                       {transaction}
+                   )
                 );
             }
         }
@@ -94,13 +117,18 @@ function submitSurvey (request, reply) {
         currentSurveyInstance.userSubmissionTime = request.payload.timeStamp;
         currentSurveyInstance.actualSubmissionTime = moment();
         currentSurveyInstance.state = 'completed';
-        currentSurveyInstance.save();
+        return currentSurveyInstance.save({transaction});
+    })
+    .then(() => {
+        transaction.commit();
         reply({
             statusCode: 500,
             message: 'Success'
         });
     })
     .catch((err) => {
+        transaction.rollback();
+        console.error(err);
         reply(boom.badRequest(err));
     });
 }

@@ -111,17 +111,5 @@ module.exports = [
                 }
             }
         }
-    },
-    {
-        method: 'GET',
-        path: '/404',
-        handler: {
-            view: {
-                template: '404',
-                context: {
-                    title: 'Not Found'
-                }
-            }
-        }
     }
 ];

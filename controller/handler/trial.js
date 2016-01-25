@@ -17,12 +17,18 @@ const processTrial = require('../helper/process-trial');
  */
 function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
+    const stage = database.sequelize.model('stage');
 
     Promise.all([
         trial.findById(request.params.id),
+        stage.findAll({
+            where: {
+                trialId: request.params.id
+            }
+        }),
         database.sequelize.query(
             `
-            SELECT *
+            SELECT *, st.name as stage
             FROM trial AS tr
             JOIN stage AS st
             ON st.trialId = tr.id
@@ -41,11 +47,14 @@ function trialView (request, reply) {
 
     .then((data) => {
         const currentTrial = data[0];
-        const patients = data[1];
+        const stages = data[1];
+        const patients = data[2];
 
         reply.view('trial', {
             title: 'Pain Reporting Portal',
             trial: processTrial(currentTrial),
+            stages,
+            patients: patients.map(processPatient),
             graphData: JSON.stringify({
                 // TODO add real data
                 datasets: [],
@@ -54,12 +63,14 @@ function trialView (request, reply) {
                     'Semicompliant',
                     'Noncompliant'
                 ]
-            }),
-            patients: patients.map(processPatient)
+            })
         });
     })
-    .catch(() => {
-        reply.redirect('/404');
+    .catch((err) => {
+        console.error(err);
+        reply.view('404', {
+            title: 'Not Found'
+        });
     });
 }
 

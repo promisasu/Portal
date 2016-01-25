@@ -44,7 +44,8 @@
 ## View Code Documentation
 
 1. run `npm run documentation`
-2. open `documentation/index.html` in a browser
+2. open the `documentation` folder in a file explorer
+3. open `index.html` in a browser
 
 ## Tasks
 
