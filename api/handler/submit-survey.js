@@ -15,19 +15,27 @@ const moment = require('moment');
  * @returns {Null} responds with JSON data structure
  */
 function submitSurvey (request, reply) {
-    const questionInstance = database.sequelize.model('question_instance');
+    const questionResult = database.sequelize.model('question_result');
     const surveyInstance = database.sequelize.model('survey_instance');
     const questionOption = database.sequelize.model('question_option');
     const surveyInstanceId = request.payload.surveyInstanceID;
     const questionInstArr = [];
 
     let currentSurveyInstance = null;
+    let transaction = null;
 
-    surveyInstance.find({
-        where: {
-            id: request.payload.surveyInstanceID,
-            surveyInstanceCompleted: false
-        }
+    database.sequelize.transaction()
+    .then((newTransaction) => {
+        transaction = newTransaction;
+        return surveyInstance.find(
+            {
+                where: {
+                    id: request.payload.surveyInstanceID,
+                    state: 'in progress'
+                }
+            },
+            {transaction}
+        );
     })
     .then((survey) => {
         return new Promise((resolve, reject) => {
@@ -54,40 +62,52 @@ function submitSurvey (request, reply) {
                 && currentQuestion.bodyPain[0].location
             ) {
                 questionInstArr.push(
-                    questionOption.find({
-                        where: {
-                            optionText: currentQuestion.bodyPain[0].location
-                        }
-                    })
+                    questionOption.find(
+                        {
+                            where: {
+                                optionText: currentQuestion.bodyPain[0].location
+                            }
+                        },
+                        {transaction}
+                    )
                     .then((data) => {
-                        return questionInstance.create({
-                            surveyInstanceId,
-                            questionTemplateId: currentQuestion.quesID,
-                            questionOptionId: data.id
-                        });
+                        return questionResult.create(
+                            {
+                                surveyInstanceId,
+                                questionOptionId: data.id
+                            },
+                            {transaction}
+                        );
                     })
                 );
                 questionInstArr.push(
-                    questionOption.find({
-                        where: {
-                            optionText: currentQuestion.bodyPain[0].intensity
-                        }
-                    })
+                    questionOption.find(
+                        {
+                            where: {
+                                optionText: currentQuestion.bodyPain[0].intensity
+                            }
+                        },
+                        {transaction}
+                    )
                     .then((data) => {
-                        return questionInstance.create({
-                            surveyInstanceId,
-                            questionTemplateId: currentQuestion.quesID,
-                            questionOptionId: data.id
-                        });
+                        return questionResult.create(
+                            {
+                                surveyInstanceId,
+                                questionOptionId: data.id
+                            },
+                            {transaction}
+                        );
                     })
                 );
             } else {
                 questionInstArr.push(
-                   questionInstance.create({
-                       surveyInstanceId,
-                       questionTemplateId: currentQuestion.quesID,
-                       questionOptionId: currentQuestion.selectedOptions[0]
-                   })
+                   questionResult.create(
+                       {
+                           surveyInstanceId,
+                           questionOptionId: currentQuestion.selectedOptions[0]
+                       },
+                       {transaction}
+                   )
                 );
             }
         }
@@ -96,14 +116,19 @@ function submitSurvey (request, reply) {
     .then(() => {
         currentSurveyInstance.userSubmissionTime = request.payload.timeStamp;
         currentSurveyInstance.actualSubmissionTime = moment();
-        currentSurveyInstance.surveyInstanceCompleted = true;
-        currentSurveyInstance.save();
+        currentSurveyInstance.state = 'completed';
+        return currentSurveyInstance.save({transaction});
+    })
+    .then(() => {
+        transaction.commit();
         reply({
             statusCode: 500,
             message: 'Success'
         });
     })
     .catch((err) => {
+        transaction.rollback();
+        console.error(err);
         reply(boom.badRequest(err));
     });
 }

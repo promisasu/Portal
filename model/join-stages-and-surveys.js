@@ -1,15 +1,10 @@
 'use strict';
 
 /**
- * @module model/join-questions-and-options
+ * @module model/join-stages-and-surveys
  */
 
 const Sequelize = require('sequelize');
-
-/**
- * This joins the QuestionTemplate table and QuestionOption table
- * @typedef {Object} JoinQuestionsAndOptions
- */
 
 /**
  * Registers model with Sequelize
@@ -17,11 +12,16 @@ const Sequelize = require('sequelize');
  * @returns {Null} nothing
  */
 function register (sequelize) {
+    /**
+     * This joins the Stage table and SurveyTemplate table
+     * @typedef {Object} JoinStagesAndSurveys
+     * @property {String} rule - Rule that describes when to generate SurveyInstance of SurveyTemplate
+     */
     sequelize.define(
-        'join_questions_and_options',
+        'join_stages_and_surveys',
         {
-            optionOrder: {
-                type: Sequelize.INTEGER,
+            rule: {
+                type: Sequelize.STRING,
                 allowNull: false,
                 validate: {
                     notEmpty: true

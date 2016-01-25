@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @module api/server
+ */
+
 // load node modules
 const hapi = require('hapi');
 

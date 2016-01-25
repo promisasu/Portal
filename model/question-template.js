@@ -7,17 +7,17 @@
 const Sequelize = require('sequelize');
 
 /**
- * a SurveyTemplate consists of multiple QuestionTemplates
- * @typedef {Object} QuestionTemplate
- * @property {String} name - question name
- */
-
-/**
  * Registers model with Sequelize
  * @param {Sequelize} sequelize - database instance
  * @returns {Null} nothing
  */
 function register (sequelize) {
+    /**
+     * a SurveyTemplate consists of multiple QuestionTemplates
+     * @typedef {Object} QuestionTemplate
+     * @property {String} questionText - Prompt for patient to answer question
+     * @property {String} questionType - Either multiple choice or body pain
+     */
     sequelize.define(
         'question_template',
         {
@@ -31,10 +31,7 @@ function register (sequelize) {
             questionType: {
                 type: Sequelize.ENUM,
                 values: ['multiChoiceSingleAnswer', 'bodyPain'],
-                allowNull: false,
-                validate: {
-                    notEmpty: true
-                }
+                allowNull: false
             }
         },
         {

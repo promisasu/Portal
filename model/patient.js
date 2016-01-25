@@ -7,21 +7,21 @@
 const Sequelize = require('sequelize');
 
 /**
- * a Patient can have one or more Surveys
- * @typedef {Object} Patient
- * @property {String} name - patient name
- * @property {String} deviceType - Device Patient registered with
- * @property {String} deviceVersion - OS version of device used to register
- * @property {Date} dateStarted - Date Patient began the Trial
- * @property {Date} dateCompleted - Date Patient completed the Trial
- */
-
-/**
  * Registers model with Sequelize
  * @param {Sequelize} sequelize - database instance
  * @returns {Null} nothing
  */
 function register (sequelize) {
+    /**
+     * a Patient is a person in a Stage of a clinical Trial
+     * and is filling out SurveyInstances and QuestionResults
+     * @typedef {Object} Patient
+     * @property {Number} pin - Deindentified representation of a patient
+     * @property {String} deviceType - Device Patient registered with
+     * @property {String} deviceVersion - OS version of device used to register
+     * @property {Date} dateStarted - Date Patient began the Trial
+     * @property {Date} dateCompleted - Date Patient completed the Trial
+     */
     sequelize.define(
         'patient',
         {

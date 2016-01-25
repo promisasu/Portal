@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @module model/join-users-and-trials
+ * @module model/question-result
  */
 
 /**
@@ -11,13 +11,15 @@
  */
 function register (sequelize) {
     /**
-     * This joins the User table and Trial table
-     * @typedef {Object} JoinUsersAndTrials
+     * Each QuestionResult will be associated with a SurveyInstance and a QuestionOption
+     * This represents a single response to a Survey QuestionTemplate
+     * @typedef {Object} QuestionResult
      */
     sequelize.define(
-        'join_users_and_trials',
+        'question_result',
         {},
         {
+            freezeTableName: true,
             paranoid: true
         }
     );

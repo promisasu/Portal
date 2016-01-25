@@ -18,15 +18,15 @@ function surveyView (request, reply) {
         database.sequelize.query(
             `
             SELECT *
-            FROM survey_instance si
-            JOIN survey_template st
+            FROM survey_instance AS si
+            JOIN survey_template AS st
             ON st.id = si.surveyTemplateId
-            JOIN question_instance qi
-            ON qi.surveyInstanceId = si.id
-            JOIN question_template qt
-            ON qt.id = qi.questionTemplateId
-            JOIN question_option qo
-            ON qo.id = qi.questionOptionId
+            JOIN question_result AS qr
+            ON qr.surveyInstanceId = si.id
+            JOIN question_template AS qt
+            ON qt.id = qr.questionTemplateId
+            JOIN question_option AS qo
+            ON qo.id = qr.questionOptionId
             WHERE si.id = ?
             `,
             {
@@ -39,11 +39,11 @@ function surveyView (request, reply) {
         database.sequelize.query(
             `
             SELECT p.pin, t.id, t.name
-            FROM survey_instance si
-            JOIN patient p
-            ON p.id = si.patientId
-            JOIN trial t
-            ON t.id = p.trialId
+            FROM survey_instance AS si
+            JOIN patient AS pa
+            ON pa.id = si.patientId
+            JOIN trial AS tr
+            ON tr.id = p.trialId
             WHERE si.id = ?
             `,
             {
@@ -70,8 +70,11 @@ function surveyView (request, reply) {
             survey: processSurvey(currentSurvey)
         });
     })
-    .catch(() => {
-        reply.redirect('/404');
+    .catch((err) => {
+        console.error(err);
+        reply.view('404', {
+            title: 'Not Found'
+        });
     });
 }
 

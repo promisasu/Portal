@@ -35,6 +35,8 @@ function getSurvey (request, reply) {
                     reject('Survey instance has been completed');
                 } else {
                     currentSurveyInstance = resultSurveyInstance;
+                    currentSurveyInstance.state = 'in progress';
+                    currentSurveyInstance.save();
                     resolve();
                 }
             } else {
@@ -44,20 +46,18 @@ function getSurvey (request, reply) {
         .then(() => {
             database.sequelize.query(
                 `
-                SELECT *
+                SELECT * , qo.id AS qoid, si.id AS sid
                 FROM survey_instance AS si
-                JOIN survey_template st
+                JOIN survey_template AS st
                 ON st.id = si.surveyTemplateId
-                JOIN join_surveys_and_questions jsq
+                JOIN join_surveys_and_questions AS jsq
                 ON jsq.surveyTemplateId = st.id
-                JOIN question_template qt
+                JOIN question_template AS qt
                 ON qt.id = jsq.questionTemplateId
-                JOIN join_questions_and_options jqo
-                ON jqo.questionTemplateId = qt.id
-                JOIN question_option qo
-                ON qo.id = jqo.questionOptionId
+                JOIN question_option AS qo
+                ON qo.questionTemplateId = qt.id
                 WHERE si.id = ?
-                ORDER BY jsq.questionOrder, jqo.optionOrder
+                ORDER BY jsq.questionOrder, qo.order
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -68,7 +68,7 @@ function getSurvey (request, reply) {
             )
             .then((data) => {
                 const final = {
-                    surveyInstanceID: data[0].id,
+                    surveyInstanceID: data[0].sid,
                     surveyName: data[0].name,
                     message: 'SUCCESS',
                     questions: groupBy(data, 'questionOrder').map(processSurveyInstance)
@@ -79,6 +79,7 @@ function getSurvey (request, reply) {
         });
     })
     .catch((err) => {
+        console.error(err);
         reply(boom.badRequest(err));
     });
 }

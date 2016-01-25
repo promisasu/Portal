@@ -4,6 +4,7 @@
  * @module controller/handler/create-trial
  */
 
+const boom = require('boom');
 const database = require('../../model');
 
 /**
@@ -15,8 +16,13 @@ const database = require('../../model');
 function createTrial (request, reply) {
     const trial = database.sequelize.model('trial');
 
-    trial.create(request.payload).then((newTrial) => {
+    trial.create(request.payload)
+    .then((newTrial) => {
         reply.redirect(`/trial/${newTrial.id}`);
+    })
+    .catch((err) => {
+        console.error(err);
+        reply(boom.badRequest('Invalid Trial'));
     });
 }
 

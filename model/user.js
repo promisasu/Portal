@@ -17,22 +17,20 @@ try {
 }
 
 /**
- * a generic User
- * can be a clinician or an admin
- * @typedef {Object} User
- * @property {String} username - User's screen name
- * @property {String} role - can be 'admin' or 'clinician'
- * @property {String} password - A setter to generate passwordHash
- * @property {String} passwordHash - Users's salted and hashed password
- */
-
-/**
  * Registers model with Sequelize
  * @param {Sequelize} sequelize - database instance
  * @param {String} salt - salt value to use when hashing password
  * @returns {Null} nothing
  */
 function register (sequelize, salt) {
+    /**
+     * a generic User can be a clinician or an admin
+     * @typedef {Object} User
+     * @property {String} username - User's screen name
+     * @property {String} role - can be 'admin' or 'clinician'
+     * @property {String} password - A setter to generate passwordHash
+     * @property {String} passwordHash - Users's salted and hashed password
+     */
     sequelize.define(
         'user',
         {

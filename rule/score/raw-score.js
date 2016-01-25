@@ -14,14 +14,12 @@ const database = require('../../model');
 function calculateRawScore (surveyInstanceId) {
     return database.sequelize.query(
         `
-        SELECT SUM(jqi.optionOrder), COUNT(qi.id)
+        SELECT SUM(qo.order), COUNT(qr.id)
         FROM survey_instance si
-        JOIN question_instance qi
-        ON qi.surveyInstanceId = si.id
-        JOIN question_template
-        ON qt.id = qi.surveyTemplateId
-        JOIN join_questions_and_options jqo
-        ON jqo.questionOptionId = qi.id
+        JOIN question_result qr
+        ON qr.surveyInstanceId = si.id
+        JOIN question_option qo
+        ON qo.id = qr.questionOptionId
         WHERE si.id = ?
         `,
         {

@@ -1,6 +1,10 @@
 'use strict';
 
 /**
+ * @module api/helper/group-by
+ */
+
+/**
  * Groups an {Array} of {Object} by values of a specific key
  * @param {Array<Object>} array - Array to group
  * @param {String} key - Object key to group values by

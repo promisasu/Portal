@@ -6,16 +6,16 @@
 const Sequelize = require('sequelize');
 
 /**
- * This joins the SurveyTemplate table and QuestionTemplate table
- * @typedef {Object} JoinSurveysAndQuestions
- */
-
-/**
  * Registers model with Sequelize
  * @param {Sequelize} sequelize - database instance
  * @returns {Null} nothing
  */
 function register (sequelize) {
+    /**
+     * This joins the SurveyTemplate table and QuestionTemplate table
+     * @typedef {Object} JoinSurveysAndQuestions
+     * @property {Number} questionOrder - the ordering for where this question should appear in a survey
+     */
     sequelize.define(
         'join_surveys_and_questions',
         {

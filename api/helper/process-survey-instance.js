@@ -25,7 +25,7 @@ function processSurveyInstance (questionRecord) {
  */
 function processAnswers (answer) {
     return {
-        answerID: answer.questionOptionId,
+        answerID: answer.qoid,
         answerText: answer.optionText
     };
 }
