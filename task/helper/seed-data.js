@@ -30,6 +30,217 @@ module.exports.trial = [
     }
 ];
 
+module.exports.surveyTemplate = [
+    {
+        id: '1',
+        name: 'Sickle Cell Survey'
+    },
+    {
+        id: '2',
+        name: 'Post Op Survey'
+    },
+    {
+        id: '3',
+        name: 'Post Op Pain Reporting Survey'
+    }
+];
+
+module.exports.stage = [
+    {
+        id: 1,
+        name: 'sickle cell weekly',
+        trialId: 2
+    },
+    {
+        id: 2,
+        name: 'ortho pre-operative',
+        trialId: 3
+    },
+    {
+        id: 3,
+        name: 'ortho post op weekly',
+        trialId: 3
+    },
+    {
+        id: 4,
+        name: 'ortho post op daily',
+        trialId: 3
+    },
+    {
+        id: 5,
+        name: 'ortho post op pain reporting weekly',
+        trialId: 3
+    },
+    {
+        id: 6,
+        name: 'pain post op weekly',
+        trialId: 4
+    },
+    {
+        id: 7,
+        name: 'pain post op daily',
+        trialId: 4
+    }
+];
+
+module.exports.questionTemplate = [
+    {
+        id: 1,
+        questionText: 'In the past 7 days, I had trouble sleeping when I had pain.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 2,
+        questionText: 'In the past 7 days, I had trouble doing schoolwork when I had pain.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 3,
+        questionText: 'In the past 7 days, It was hard for me to pay attention when I had pain.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 4,
+        questionText: 'In the past 7 days, It was hard for me to run when I had pain.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 5,
+        questionText: 'In the past 7 days, It was hard for me to walk one block when I had pain.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 6,
+        questionText: 'In the past 7 days, It was hard to have fun when I had pain.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 7,
+        questionText: 'In the past 7 days, It was hard to stay standing when I had pain.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 8,
+        questionText: 'In the past 7 days, I could do sports and exercise that others kids my age could do.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 9,
+        questionText: 'In the past 7 days, I could get up from the floor.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 10,
+        questionText: 'In the past 7 days, I could keep up when I played with other kids.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 11,
+        questionText: 'In the past 7 days, I could move my legs.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 12,
+        questionText: 'In the past 7 days, I could stand up by myself.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 13,
+        questionText: 'In the past 7 days, I could stand up on my tiptoes.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 14,
+        questionText: 'In the past 7 days, I could walk up stairs without holding on to anything.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 15,
+        questionText: 'In the past 7 days, I have been physically able to do the activities I enjoy most.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 16,
+        questionText: 'In the past 7 days, being tired made it hard for me to play or go out with my friends as much as I\'d like.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 17,
+        questionText: 'In the past 7 days, I felt weak.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 18,
+        questionText: 'In the past 7 days, I got tired easily.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 19,
+        questionText: 'In the past 7 days, being tired made it hard for me to keep up with my schoolwork.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 20,
+        questionText: 'In the past 7 days, I had trouble starting things because I was too tired.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 21,
+        questionText: 'In the past 7 days, I was so tired it was hard for me to pay attention.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 22,
+        questionText: 'In the past 7 days, I was too tired to do sport or exercise.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 23,
+        questionText: 'In the past 7 days, I was too tired to do things outside.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 24,
+        questionText: 'In the past 7 days, I was too tired to enjoy the things I like to do.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 25,
+        questionText: 'In the past 7 days, I felt nervous.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 26,
+        questionText: 'In the past 7 days, I felt worried.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 27,
+        questionText: 'In the past 7 days, I felt like something awful might happen.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 28,
+        questionText: 'In the past 7 days, I was afraid that I would make mistakes.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 29,
+        questionText: 'In the past 7 days, I worried about what could happen to me.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 30,
+        questionText: 'In the past 7 days, I worried when I went to bed at night.',
+        questionType: 'multiChoiceSingleAnswer'
+    },
+    {
+        id: 31,
+        questionText: 'Please indicate your body pain',
+        questionType: 'bodyPain'
+    }
+];
+
 module.exports.questionOption = [
     {
         id: 1,
@@ -1089,202 +1300,6 @@ module.exports.questionOption = [
     }
 ];
 
-module.exports.questionTemplate = [
-    {
-        id: 1,
-        questionText: 'In the past 7 days, I had trouble sleeping when I had pain.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 2,
-        questionText: 'In the past 7 days, I had trouble doing schoolwork when I had pain.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 3,
-        questionText: 'In the past 7 days, It was hard for me to pay attention when I had pain.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 4,
-        questionText: 'In the past 7 days, It was hard for me to run when I had pain.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 5,
-        questionText: 'In the past 7 days, It was hard for me to walk one block when I had pain.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 6,
-        questionText: 'In the past 7 days, It was hard to have fun when I had pain.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 7,
-        questionText: 'In the past 7 days, It was hard to stay standing when I had pain.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 8,
-        questionText: 'In the past 7 days, I could do sports and exercise that others kids my age could do.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 9,
-        questionText: 'In the past 7 days, I could get up from the floor.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 10,
-        questionText: 'In the past 7 days, I could keep up when I played with other kids.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 11,
-        questionText: 'In the past 7 days, I could move my legs.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 12,
-        questionText: 'In the past 7 days, I could stand up by myself.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 13,
-        questionText: 'In the past 7 days, I could stand up on my tiptoes.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 14,
-        questionText: 'In the past 7 days, I could walk up stairs without holding on to anything.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 15,
-        questionText: 'In the past 7 days, I have been physically able to do the activities I enjoy most.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 16,
-        questionText: 'In the past 7 days, being tired made it hard for me to play or go out with my friends as much as I\'d like.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 17,
-        questionText: 'In the past 7 days, I felt weak.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 18,
-        questionText: 'In the past 7 days, I got tired easily.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 19,
-        questionText: 'In the past 7 days, being tired made it hard for me to keep up with my schoolwork.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 20,
-        questionText: 'In the past 7 days, I had trouble starting things because I was too tired.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 21,
-        questionText: 'In the past 7 days, I was so tired it was hard for me to pay attention.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 22,
-        questionText: 'In the past 7 days, I was too tired to do sport or exercise.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 23,
-        questionText: 'In the past 7 days, I was too tired to do things outside.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 24,
-        questionText: 'In the past 7 days, I was too tired to enjoy the things I like to do.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 25,
-        questionText: 'In the past 7 days, I felt nervous.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 26,
-        questionText: 'In the past 7 days, I felt worried.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 27,
-        questionText: 'In the past 7 days, I felt like something awful might happen.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 28,
-        questionText: 'In the past 7 days, I was afraid that I would make mistakes.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 29,
-        questionText: 'In the past 7 days, I worried about what could happen to me.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 30,
-        questionText: 'In the past 7 days, I worried when I went to bed at night.',
-        questionType: 'multiChoiceSingleAnswer'
-    },
-    {
-        id: 31,
-        questionText: 'Please indicate your body pain',
-        questionType: 'bodyPain'
-    }
-];
-
-module.exports.surveyTemplate = [
-    {
-        id: '1',
-        name: 'Sickle Cell Weekly Survey'
-    },
-    {
-        id: '2',
-        name: 'Post Op Weekly Survey'
-    },
-    {
-        id: '3',
-        name: 'Post Op Daily Survey'
-    }
-];
-
-module.exports.joinTrialsAndSurveys = [
-    {
-        surveyTemplateId: '1',
-        trialId: '2'
-    },
-    {
-        surveyTemplateId: '2',
-        trialId: '3'
-    },
-    {
-        surveyTemplateId: '3',
-        trialId: '3'
-    },
-    {
-        surveyTemplateId: '2',
-        trialId: '4'
-    },
-    {
-        surveyTemplateId: '3',
-        trialId: '4'
-    }
-];
-
 module.exports.joinSurveysAndQuestions = [
     {
         questionOrder: '1',
@@ -1543,35 +1558,40 @@ module.exports.joinSurveysAndQuestions = [
     }
 ];
 
-module.exports.stage = [
+module.exports.joinStagesAndSurveys = [
     {
-        id: 1,
-        name: 'weekly',
-        trialId: 2
+        rule: 'weekly',
+        surveyTemplateId: '1',
+        stageId: '1'
     },
     {
-        id: 2,
-        name: 'weekly',
-        trialId: 3
+        rule: 'once',
+        surveyTemplateId: '2',
+        stageId: '2'
     },
     {
-        id: 3,
-        name: 'weekly and daily',
-        trialId: 3
+        rule: 'weekly',
+        surveyTemplateId: '2',
+        stageId: '3'
     },
     {
-        id: 4,
-        name: 'daily',
-        trialId: 3
+        rule: 'daily',
+        surveyTemplateId: '3',
+        stageId: '4'
     },
     {
-        id: 5,
-        name: 'weekly and daily',
-        trialId: 4
+        rule: 'weekly',
+        surveyTemplateId: '3',
+        stageId: '5'
     },
     {
-        id: 6,
-        name: 'daily',
-        trialId: 4
+        rule: 'weekly',
+        surveyTemplateId: '2',
+        stageId: '6'
+    },
+    {
+        rule: 'daily',
+        surveyTemplateId: '3',
+        stageId: '7'
     }
 ];
