@@ -4,6 +4,7 @@
  * @module controller/handler/create-patient
  */
 
+const boom = require('boom');
 const database = require('../../model');
 const trialOffset = 1000;
 
@@ -16,32 +17,48 @@ const trialOffset = 1000;
 function createPatient (request, reply) {
     const patient = database.sequelize.model('patient');
     const trial = database.sequelize.model('trial');
-    let currentTrial = null;
+    const stage = database.sequelize.model('stage');
+    let transaction = null;
     let newPatient = null;
     let pin = null;
 
-    // Get Trial the patient will be added to
-    trial.findById(request.payload.trialId)
+    database.sequelize.transaction()
+    .then((newTransaction) => {
+        transaction = newTransaction;
+        // Get Trial the patient will be added to
+        return trial.findById(request.payload.trialId, {transaction});
+    })
+
     // Get next availible Patient Pin
     .then((tempTrial) => {
-        currentTrial = tempTrial;
+        const currentTrial = tempTrial;
 
         pin = currentTrial.id * trialOffset + currentTrial.patientPinCounter;
         currentTrial.patientPinCounter += 1;
-        return currentTrial.save();
+        return currentTrial.save({transaction});
     })
     // Create the new Patient
     .then(() => {
-        return patient.create({pin});
+        return patient.create({pin}, {transaction});
     })
-    // Link patient to Trial
+    // Get stage that patient belongs to
     .then((tempPatient) => {
         newPatient = tempPatient;
-        return currentTrial.addPatient(newPatient);
+        return stage.findById(request.payload.stageId, {transaction});
+    })
+    // Add patient to stage
+    .then((currentStage) => {
+        return currentStage.addPatient(newPatient, {transaction});
     })
     // Show the new Patient
     .then(() => {
+        transaction.commit();
         reply.redirect(`/patient/${newPatient.pin}`);
+    })
+    .catch((err) => {
+        transaction.rollback();
+        console.error(err);
+        reply(boom.badRequest('Trial or Stage does not exist'));
     });
 }
 

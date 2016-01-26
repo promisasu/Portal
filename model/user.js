@@ -5,19 +5,16 @@
  */
 
 const Sequelize = require('sequelize');
-const bcrypt = require('bcrypt');
 const minimumNameLength = 5;
 const maximumNameLength = 25;
 
-/**
- * a generic User
- * can be a clinician or an admin
- * @typedef {Object} User
- * @property {String} username - User's screen name
- * @property {String} role - can be 'admin' or 'clinician'
- * @property {String} password - A setter to generate passwordHash
- * @property {String} passwordHash - Users's salted and hashed password
- */
+let bcrypt = null;
+
+try {
+    bcrypt = require('bcrypt');
+} catch (err) {
+    bcrypt = require('../bcrypt-shim');
+}
 
 /**
  * Registers model with Sequelize
@@ -26,6 +23,14 @@ const maximumNameLength = 25;
  * @returns {Null} nothing
  */
 function register (sequelize, salt) {
+    /**
+     * a generic User can be a clinician or an admin
+     * @typedef {Object} User
+     * @property {String} username - User's screen name
+     * @property {String} role - can be 'admin' or 'clinician'
+     * @property {String} password - A setter to generate passwordHash
+     * @property {String} passwordHash - Users's salted and hashed password
+     */
     sequelize.define(
         'user',
         {

@@ -7,15 +7,6 @@ const processTrial = require('../helper/process-trial');
 
 const database = require('../../model');
 
-const fakeData = {
-    patientCount: 2032,
-    riskCount: 52,
-    noncompliantCount: 11,
-    large: 100,
-    medium: 50,
-    small: 10
-};
-
 /**
  * A dashboard view with overview of all trials and patients.
  * @param {Request} request - Hapi request
@@ -33,10 +24,15 @@ function dashboardView (request, reply) {
         reply.view('dashboard', {
             title: 'Pain Reporting Portal',
             user: request.auth.credentials,
+            overall: {
+                inProgress: null,
+                percentRecruited: null,
+                averageCompliance: null
+            },
             status: {
-                patientCount: fakeData.patientCount,
-                riskCount: fakeData.riskCount,
-                noncompliantCount: fakeData.noncompliantCount
+                patientCount: null,
+                riskCount: null,
+                noncompliantCount: null
             },
             trials: trialData,
             graphData: JSON.stringify({
@@ -45,38 +41,8 @@ function dashboardView (request, reply) {
                     'Semicompliant',
                     'Noncompliant'
                 ],
-                datasets: [
-                    {
-                        label: 'Trial 1',
-                        backgroundColor: 'rgba(133, 17, 75, 0.2)',
-                        pointBackgroundColor: 'rgb(133, 17, 75)',
-                        data: [
-                            fakeData.large,
-                            fakeData.small,
-                            fakeData.medium
-                        ]
-                    },
-                    {
-                        label: 'Trial 2',
-                        backgroundColor: 'rgba(0, 31, 62, 0.2)',
-                        pointBackgroundColor: 'rgb(0, 31, 62)',
-                        data: [
-                            fakeData.small,
-                            fakeData.medium,
-                            fakeData.large
-                        ]
-                    },
-                    {
-                        label: 'Trial 3',
-                        backgroundColor: 'rgba(177, 13, 201, 0.2)',
-                        pointBackgroundColor: 'rgb(177, 13, 201)',
-                        data: [
-                            fakeData.medium,
-                            fakeData.large,
-                            fakeData.small
-                        ]
-                    }
-                ]
+                // TODO real data
+                datasets: []
             })
         });
     });

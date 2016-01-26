@@ -6,9 +6,6 @@
 
 const moment = require('moment');
 const database = require('../../model');
-const patientIndex = 0;
-const surveyTemplateIndex = 1;
-const surveyInstanceIndex = 2;
 
 /**
  * Creates a survey instance for a patient to complete
@@ -36,9 +33,9 @@ function createSurveyInstance (patientId, surveyTemplateId, open, duration, unit
     ])
     // Link SurveyInstance to Patient and SurveyTemplate
     .then((data) => {
-        const currentPatient = data[patientIndex];
-        const currentSurveyTemplate = data[surveyTemplateIndex];
-        const newSurveyInstance = data[surveyInstanceIndex];
+        const currentPatient = data[0];
+        const currentSurveyTemplate = data[1];
+        const newSurveyInstance = data[2];
 
         currentPatient.addSurveyInstance(newSurveyInstance);
         newSurveyInstance.addSurveyTemplate(currentSurveyTemplate);

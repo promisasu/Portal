@@ -1,9 +1,11 @@
 language: node_js
 node_js: 5
-
-install: npm install --global eslint@next eslint-plugin-html remark remark-lint remark-slug remark-validate-links stylelint
-
+install: npm install --global eslint@next eslint-plugin-html remark remark-lint remark-slug
+  remark-validate-links stylelint
 script:
-    - eslint . view/**/*.hbs --inline-config=false
-    - remark *.md
-    - stylelint view/stylesheet/*.css
+- eslint . view/**/*.hbs --inline-config=false
+- remark *.md
+- stylelint view/stylesheet/*.css
+notifications:
+  slack:
+    secure: i7Do+oa/nwjb+NS3elI2RsBoePF9k9VLQB5AkiQrVxZ2OQ+q6UZ2/laH7SRpXunHFiyc3EkU52QtgtoTXER7DaWmyBoWKQDqfL2oUFM8dJJPFjVDFbu7n4XNx9AG4RE+qugREVzNwewKy49IuuQz3WF9cEjdDVhwrgRO9mVkXmC28dE8yfg8eG5tMQnHtrwTZUJVHy4ZBwZY8fOmqgD+ulVF9V0IRgACIgIm3jGePO+lSzYan+TYLWZIF1Os/RaxWUoU94Q4d5JQV63Oc5sSvJfIZVC0u7rAXp4kIR7Ru8rcuLHknIZSzYUdnTaUVaLcK6FWCELKGEMvjnWBHXFNM17VkvmZsd0Wq3EAS3igS6FxH2GgAiGKzmvIhiXM0njuLBr0IC6HFIxkz12qgWGvHI58VD2PbjkQMHS6nmDI29RNVhWCPftKWRvOGOPr4dY+hbBo+VAFliziz/B02/yUsQNqT3xqdvD3J1t4MNAEfc95X1gutpWyevakRV4FM1cOq5NMTSWCFPkzf/qygKKVK5ixUyW0H0jQhqOvMkXqZxRlKDjZQ2nClOvp/gSNm26qXJHUuuzMPFcDK2zQTBthcL5q9Ooqo1CveQat6GQdptyo3Zw5c7XI9IaE8heL9fi5gtXkubibFOaPCdt4mYPCgxJ6viDLBsD+vegDn+k0eaA=

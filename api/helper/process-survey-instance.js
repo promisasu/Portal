@@ -4,8 +4,6 @@
  * @module api/helper/process-survey-instance
  */
 
-const first = 0;
-
 /**
  * Takes in a survey_instance model and processes it into a format recognized by app.
  * @param {Object} questionRecord - an object which has records of all questions and options for a surveyTemplate
@@ -13,9 +11,9 @@ const first = 0;
  */
 function processSurveyInstance (questionRecord) {
     return {
-        quesID: questionRecord[first].questionTemplateId,
-        questionType: questionRecord[first].questionType,
-        questionText: questionRecord[first].questionText,
+        quesID: questionRecord[0].questionTemplateId,
+        questionType: questionRecord[0].questionType,
+        questionText: questionRecord[0].questionText,
         answerOptions: questionRecord.map(processAnswers)
     };
 }
@@ -27,7 +25,7 @@ function processSurveyInstance (questionRecord) {
  */
 function processAnswers (answer) {
     return {
-        answerID: answer.questionOptionId,
+        answerID: answer.qoid,
         answerText: answer.optionText
     };
 }

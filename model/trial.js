@@ -7,23 +7,22 @@
 const Sequelize = require('sequelize');
 
 /**
- * a clinical Trial has many Patients taking Surveys
- * @typedef {Object} Trial
- * @property {String} name - trial name
- * @property {String} description - short blurb about the trial
- * @property {String} IRBID - Institutional Review Board Identifier
- * @property {Date} IRBStart - Institutional Review Board permit starts
- * @property {Date} IRDEnd - Institutional Review Board permit ends
- * @property {Number} targetCount - Number of Patients that will participate in Trial
- * @property {Number} patientPinCounter - Count off patient id within Trial
- */
-
-/**
  * Registers model with Sequelize
  * @param {Sequelize} sequelize - database instance
  * @returns {Null} nothing
  */
 function register (sequelize) {
+    /**
+     * a clinical Trial has many Stages for Patients to take Surveys
+     * @typedef {Object} Trial
+     * @property {String} name - trial name
+     * @property {String} description - short blurb about the trial
+     * @property {String} IRBID - Institutional Review Board Identifier
+     * @property {Date} IRBStart - Institutional Review Board permit starts
+     * @property {Date} IRDEnd - Institutional Review Board permit ends
+     * @property {Number} targetCount - Number of Patients that will participate in Trial
+     * @property {Number} patientPinCounter - Count off patient id within Trial
+     */
     sequelize.define(
         'trial',
         {

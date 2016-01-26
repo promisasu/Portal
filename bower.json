@@ -14,9 +14,9 @@
     "colors": "https://github.com/mrmrs/colors.git#v3.0.0",
     "datatables": "1.10.10",
     "font-awesome": "4.5.0",
-    "fullcalendar": "2.5.0",
-    "jquery": "2.1.4",
-    "moment": "2.10.6",
+    "fullcalendar": "2.6.0",
+    "jquery": "2.2.0",
+    "moment": "2.11.1",
     "tether": "1.1.1"
   }
 }

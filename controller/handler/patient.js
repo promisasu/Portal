@@ -6,110 +6,6 @@
 
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
-const first = 0;
-const second = 1;
-
-const surveys = [
-    {
-        id: 1234,
-        title: 'Monthly',
-        stage: 1,
-        surveyType: 'Monthly',
-        start: '11/15/2015',
-        end: '11/15/2015',
-        userSubmissionTime: '11/15/2015 15:43:35',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 2345,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/15/2015',
-        end: '11/15/2015',
-        userSubmissionTime: '11/15/2015 15:43:35',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 3456,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/16/2015',
-        end: '11/16/2015',
-        userSubmissionTime: '11/16/2015 13:11:15',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 4567,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Weekly',
-        start: '11/17/2015',
-        end: '11/17/2015',
-        userSubmissionTime: '11/17/2015 11:12:43',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 5678,
-        title: 'Weekly',
-        stage: 1,
-        surveyType: 'Weekly',
-        start: '11/18/2015',
-        end: '11/18/2015',
-        userSubmissionTime: 'N/A',
-        completed: false,
-        className: 'bg-red'
-    },
-    {
-        id: 6789,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/18/2015',
-        end: '11/18/2015',
-        userSubmissionTime: 'N/A',
-        completed: false,
-        className: 'bg-red'
-    },
-    {
-        id: 7890,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/19/2015',
-        end: '11/19/2015',
-        userSubmissionTime: '11/19/2015 05:56:11',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 8901,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/20/2015',
-        end: '11/20/2015',
-        userSubmissionTime: '11/20/2015 05:56:11',
-        completed: true,
-        className: 'bg-green'
-    },
-    {
-        id: 9012,
-        title: 'Daily',
-        stage: 1,
-        surveyType: 'Daily',
-        start: '11/21/2015',
-        end: '11/21/2015',
-        userSubmissionTime: 'N/A',
-        completed: false,
-        className: 'bg-red'
-    }
-];
 
 /**
  * A dashboard with an overview of a specific patient.
@@ -118,28 +14,45 @@ const surveys = [
  * @returns {View} Rendered page
  */
 function patientView (request, reply) {
-    const patient = database.sequelize.model('patient');
-    const trial = database.sequelize.model('trial');
-
     return Promise.all([
-        trial.find({
-            include: [
-                {
-                    model: patient,
-                    where: {
-                        pin: request.params.pin
-                    }
-                }
-            ]
-        }),
+        database.sequelize.query(
+            `
+            SELECT *, st.name as stage
+            FROM patient AS pa
+            JOIN stage AS st
+            ON st.id = pa.stageId
+            WHERE pa.pin = ?
+            `,
+            {
+                type: database.sequelize.QueryTypes.SELECT,
+                replacements: [
+                    request.params.pin
+                ]
+            }
+        ),
         database.sequelize.query(
             `
             SELECT *, si.id
-            FROM survey_instance si
-            JOIN patient pa
+            FROM patient AS pa
+            JOIN survey_instance AS si
             ON si.patientId = pa.id
-            JOIN survey_template st
-            ON si.surveyTemplateId = st.id
+            WHERE pa.pin = ?
+            `,
+            {
+                type: database.sequelize.QueryTypes.SELECT,
+                replacements: [
+                    request.params.pin
+                ]
+            }
+        ),
+        database.sequelize.query(
+            `
+            SELECT tr.name, tr.id
+            FROM patient AS pa
+            JOIN stage AS st
+            ON st.id = pa.stageId
+            JOIN trial AS tr
+            ON tr.id = st.trialId
             WHERE pa.pin = ?
             `,
             {
@@ -151,12 +64,23 @@ function patientView (request, reply) {
         )
     ])
     .then((data) => {
+        const currentPatient = data[0][0];
+        const surveyInstances = data[1];
+        const currentTrial = data[2][0];
+
         reply.view('patient', {
             title: 'Pain Reporting Portal',
-            patient: processPatient(data[first].patients[first]),
-            trial: data[first],
-            surveys: data[second],
-            surveysJson: JSON.stringify(surveys)
+            patient: processPatient(currentPatient),
+            trial: currentTrial,
+            surveys: surveyInstances,
+            // TODO get real survey data
+            surveysJson: JSON.stringify([])
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        reply.view('404', {
+            title: 'Not Found'
         });
     });
 }

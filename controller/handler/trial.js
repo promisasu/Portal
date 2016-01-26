@@ -4,20 +4,9 @@
  * @module controller/handler/trial
  */
 
-const color = {
-    green: '#2ECC40',
-    yellow: '#FFDC00',
-    red: '#FF4136'
-};
-
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
 const processTrial = require('../helper/process-trial');
-const fakeData = {
-    small: 10,
-    medium: 50,
-    large: 100
-};
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -28,40 +17,60 @@ const fakeData = {
  */
 function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
+    const stage = database.sequelize.model('stage');
 
-    trial.findById(request.params.id).then((currentTrial) => {
-        currentTrial.getPatients()
-        .then((patients) => {
-            reply.view('trial', {
-                title: 'Pain Reporting Portal',
-                trial: processTrial(currentTrial),
-                graphData: JSON.stringify({
-                    datasets: [
-                        {
-                            data: [
-                                fakeData.large,
-                                fakeData.medium,
-                                fakeData.small
-                            ],
-                            backgroundColor: [
-                                color.green,
-                                color.yellow,
-                                color.red
-                            ]
-                        }
-                    ],
-                    labels: [
-                        'Compliant',
-                        'Semicompliant',
-                        'Noncompliant'
-                    ]
-                }),
-                patients: patients.map(processPatient)
-            });
+    Promise.all([
+        trial.findById(request.params.id),
+        stage.findAll({
+            where: {
+                trialId: request.params.id
+            }
+        }),
+        database.sequelize.query(
+            `
+            SELECT *, st.name as stage
+            FROM trial AS tr
+            JOIN stage AS st
+            ON st.trialId = tr.id
+            JOIN patient AS pa
+            ON pa.stageId = st.id
+            WHERE tr.id = ?
+            `,
+            {
+                type: database.sequelize.QueryTypes.SELECT,
+                replacements: [
+                    request.params.id
+                ]
+            }
+        )
+    ])
+
+    .then((data) => {
+        const currentTrial = data[0];
+        const stages = data[1];
+        const patients = data[2];
+
+        reply.view('trial', {
+            title: 'Pain Reporting Portal',
+            trial: processTrial(currentTrial),
+            stages,
+            patients: patients.map(processPatient),
+            graphData: JSON.stringify({
+                // TODO add real data
+                datasets: [],
+                labels: [
+                    'Compliant',
+                    'Semicompliant',
+                    'Noncompliant'
+                ]
+            })
         });
     })
-    .catch(() => {
-        reply.redirect('/404');
+    .catch((err) => {
+        console.error(err);
+        reply.view('404', {
+            title: 'Not Found'
+        });
     });
 }
 
