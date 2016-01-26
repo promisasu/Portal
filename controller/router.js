@@ -83,7 +83,9 @@ module.exports = [
             validate: {
                 payload: {
                     stageId: Joi.number().integer(),
-                    trialId: Joi.number().integer()
+                    trialId: Joi.number().integer(),
+                    patStartDate: Joi.date().min(moment().format('YYYY-MM-DD')),
+                    patEndDate: Joi.date().min(moment().format('YYYY-MM-DD'))
                 }
             }
         }
