@@ -50,7 +50,8 @@ function checkSurveys (request, reply) {
                 AND ((si.startTime <= ?
                 AND si.endTime > ?)
                 OR (si.startTime > ?))
-                AND si.state = 'pending'
+                AND (si.state = 'pending'
+                OR si.state = 'in progress')
                 ORDER BY si.startTime
                 `,
                 {
