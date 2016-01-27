@@ -34,8 +34,7 @@ function createPatient (request, reply) {
         const currentTrial = tempTrial;
 
         pin = currentTrial.id * trialOffset + currentTrial.patientPinCounter;
-        currentTrial.patientPinCounter += 1;
-        return currentTrial.save({transaction});
+        return currentTrial.increment({patientPinCounter: 1}, {transaction});
     })
     // Create the new Patient
     .then(() => {
