@@ -58,27 +58,17 @@ module.exports.stage = [
     },
     {
         id: 3,
-        name: 'ortho post op weekly',
+        name: 'ortho post op weekly and daily',
         trialId: 3
     },
     {
         id: 4,
-        name: 'ortho post op daily',
-        trialId: 3
-    },
-    {
-        id: 5,
         name: 'ortho post op pain reporting weekly',
         trialId: 3
     },
     {
-        id: 6,
+        id: 5,
         name: 'pain post op weekly',
-        trialId: 4
-    },
-    {
-        id: 7,
-        name: 'pain post op daily',
         trialId: 4
     }
 ];
@@ -1577,21 +1567,21 @@ module.exports.joinStagesAndSurveys = [
     {
         rule: 'daily',
         surveyTemplateId: '3',
+        stageId: '3'
+    },
+    {
+        rule: 'weekly',
+        surveyTemplateId: '3',
         stageId: '4'
     },
     {
         rule: 'weekly',
-        surveyTemplateId: '3',
-        stageId: '5'
-    },
-    {
-        rule: 'weekly',
         surveyTemplateId: '2',
-        stageId: '6'
+        stageId: '5'
     },
     {
         rule: 'daily',
         surveyTemplateId: '3',
-        stageId: '7'
+        stageId: '5'
     }
 ];
