@@ -35,6 +35,18 @@
                             {{/each}}
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="patient-start">
+                            Start Date
+                        </label>
+                        <input id="patient-start" class="form-control" name="patStartDate" type="date" min="{{ today }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-end">
+                            End Date
+                        </label>
+                        <input id="patient-end" class="form-control" name="patEndDate" type="date" min="{{ today }}" required>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
