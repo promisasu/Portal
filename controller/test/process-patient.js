@@ -6,19 +6,13 @@ const processPatient = require('../helper/process-patient');
 
 test.cb('patient data has correct format', (t) => {
     const example = {
-        dataValues: {
-            pin: 1
-        }
+        pin: 1,
+        stage: 'test'
     };
     const output = processPatient(example);
     const schema = joi.object().keys({
         pin: joi.number().integer(),
-        status: joi.string(),
-        statusType: joi.string(),
-        stage: joi.number().integer(),
-        lastTaken: joi.date(),
-        totalMissed: joi.number().integer(),
-        consecutiveMissed: joi.number().integer()
+        stage: joi.string()
     });
 
     joi.validate(output, schema, (err) => {
