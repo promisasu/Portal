@@ -6,6 +6,7 @@
 
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
+const processSurveyToEvent = require('../helper/process-survey-to-event');
 
 /**
  * A dashboard with an overview of a specific patient.
@@ -73,6 +74,7 @@ function patientView (request, reply) {
             patient: processPatient(currentPatient),
             trial: currentTrial,
             surveys: surveyInstances,
+            eventsJson: JSON.stringify(surveyInstances.map(processSurveyToEvent)),
             // TODO get real survey data
             surveysJson: JSON.stringify([])
         });
