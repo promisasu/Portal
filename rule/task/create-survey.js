@@ -20,29 +20,49 @@ function createSurveyInstance (patientPin, surveyTemplateId, open, duration, uni
     const patient = database.sequelize.model('patient');
     const surveyTemplate = database.sequelize.model('survey_template');
     const surveyInstance = database.sequelize.model('survey_instance');
+    let transaction = null;
 
+    // start transaction
+    database.sequelize.transaction()
     // Get Patient and SurveyTemplate to link to
     // Create new SurveyInstance
-    return Promise.all([
-        patient.findOne({
-            where: {
-                pin: patientPin
-            }
-        }),
-        surveyTemplate.findById(surveyTemplateId),
-        surveyInstance.create({
-            startTime: moment().add(open, unit),
-            endTime: moment().add(open + duration, unit)
-        })
-    ])
+    .then((newTransaction) => {
+        transaction = newTransaction;
+
+        return Promise.all([
+            patient.findOne(
+                {
+                    where: {
+                        pin: patientPin
+                    }
+                },
+                {transaction}
+            ),
+            surveyTemplate.findById(surveyTemplateId, {transaction}),
+            surveyInstance.create(
+                {
+                    startTime: moment().add(open, unit),
+                    endTime: moment().add(open + duration, unit)
+                },
+                {transaction}
+            )
+        ]);
+    })
     // Link SurveyInstance to Patient and SurveyTemplate
     .then((data) => {
         const currentPatient = data[0];
         const currentSurveyTemplate = data[1];
         const newSurveyInstance = data[2];
 
-        currentSurveyTemplate.addSurveyInstance(newSurveyInstance);
-        currentPatient.addSurveyInstance(newSurveyInstance);
+        currentSurveyTemplate.addSurveyInstance(newSurveyInstance, {transaction});
+        currentPatient.addSurveyInstance(newSurveyInstance, {transaction});
+    })
+    .then(() => {
+        transaction.commit();
+    })
+    .catch((err) => {
+        transaction.rollback();
+        return Promise.reject(err);
     });
 }
 
