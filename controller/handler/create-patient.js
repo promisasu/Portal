@@ -38,13 +38,10 @@ function createPatient (request, reply) {
     })
     // Create the new Patient
     .then(() => {
-        return patient.create(
-            {
-                pin,
-                dateStarted: request.payload.patStartDate,
-                dateCompleted: request.payload.patEndDate
-            },
-            {transaction});
+        const dateStarted = request.payload.startDate;
+        const dateCompleted = request.payload.endDate;
+
+        return patient.create({pin, dateStarted, dateCompleted}, {transaction});
     })
     // Get stage that patient belongs to
     .then((tempPatient) => {
