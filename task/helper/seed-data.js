@@ -32,15 +32,15 @@ module.exports.trial = [
 
 module.exports.surveyTemplate = [
     {
-        id: '1',
+        id: 1,
         name: 'Sickle Cell Survey'
     },
     {
-        id: '2',
+        id: 2,
         name: 'Post Op Survey'
     },
     {
-        id: '3',
+        id: 3,
         name: 'Post Op Pain Reporting Survey'
     }
 ];
@@ -1292,296 +1292,296 @@ module.exports.questionOption = [
 
 module.exports.joinSurveysAndQuestions = [
     {
-        questionOrder: '1',
-        questionTemplateId: '31',
-        surveyTemplateId: '1'
+        questionOrder: 1,
+        questionTemplateId: 31,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '2',
-        questionTemplateId: '1',
-        surveyTemplateId: '1'
+        questionOrder: 2,
+        questionTemplateId: 1,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '3',
-        questionTemplateId: '2',
-        surveyTemplateId: '1'
+        questionOrder: 3,
+        questionTemplateId: 2,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '4',
-        questionTemplateId: '3',
-        surveyTemplateId: '1'
+        questionOrder: 4,
+        questionTemplateId: 3,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '5',
-        questionTemplateId: '4',
-        surveyTemplateId: '1'
+        questionOrder: 5,
+        questionTemplateId: 4,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '6',
-        questionTemplateId: '5',
-        surveyTemplateId: '1'
+        questionOrder: 6,
+        questionTemplateId: 5,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '7',
-        questionTemplateId: '6',
-        surveyTemplateId: '1'
+        questionOrder: 7,
+        questionTemplateId: 6,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '8',
-        questionTemplateId: '8',
-        surveyTemplateId: '1'
+        questionOrder: 8,
+        questionTemplateId: 8,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '9',
-        questionTemplateId: '9',
-        surveyTemplateId: '1'
+        questionOrder: 9,
+        questionTemplateId: 9,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '10',
-        questionTemplateId: '10',
-        surveyTemplateId: '1'
+        questionOrder: 10,
+        questionTemplateId: 10,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '11',
-        questionTemplateId: '12',
-        surveyTemplateId: '1'
+        questionOrder: 11,
+        questionTemplateId: 12,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '12',
-        questionTemplateId: '14',
-        surveyTemplateId: '1'
+        questionOrder: 12,
+        questionTemplateId: 14,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '13',
-        questionTemplateId: '15',
-        surveyTemplateId: '1'
+        questionOrder: 13,
+        questionTemplateId: 15,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '14',
-        questionTemplateId: '16',
-        surveyTemplateId: '1'
+        questionOrder: 14,
+        questionTemplateId: 16,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '15',
-        questionTemplateId: '19',
-        surveyTemplateId: '1'
+        questionOrder: 15,
+        questionTemplateId: 19,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '16',
-        questionTemplateId: '20',
-        surveyTemplateId: '1'
+        questionOrder: 16,
+        questionTemplateId: 20,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '17',
-        questionTemplateId: '21',
-        surveyTemplateId: '1'
+        questionOrder: 17,
+        questionTemplateId: 21,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '18',
-        questionTemplateId: '22',
-        surveyTemplateId: '1'
+        questionOrder: 18,
+        questionTemplateId: 22,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '19',
-        questionTemplateId: '23',
-        surveyTemplateId: '1'
+        questionOrder: 19,
+        questionTemplateId: 23,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '20',
-        questionTemplateId: '25',
-        surveyTemplateId: '1'
+        questionOrder: 20,
+        questionTemplateId: 25,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '21',
-        questionTemplateId: '26',
-        surveyTemplateId: '1'
+        questionOrder: 21,
+        questionTemplateId: 26,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '22',
-        questionTemplateId: '27',
-        surveyTemplateId: '1'
+        questionOrder: 22,
+        questionTemplateId: 27,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '23',
-        questionTemplateId: '28',
-        surveyTemplateId: '1'
+        questionOrder: 23,
+        questionTemplateId: 28,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '24',
-        questionTemplateId: '29',
-        surveyTemplateId: '1'
+        questionOrder: 24,
+        questionTemplateId: 29,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '25',
-        questionTemplateId: '30',
-        surveyTemplateId: '1'
+        questionOrder: 25,
+        questionTemplateId: 30,
+        surveyTemplateId: 1
     },
     {
-        questionOrder: '1',
-        questionTemplateId: '31',
-        surveyTemplateId: '2'
+        questionOrder: 1,
+        questionTemplateId: 31,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '2',
-        questionTemplateId: '1',
-        surveyTemplateId: '2'
+        questionOrder: 2,
+        questionTemplateId: 1,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '3',
-        questionTemplateId: '2',
-        surveyTemplateId: '2'
+        questionOrder: 3,
+        questionTemplateId: 2,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '4',
-        questionTemplateId: '3',
-        surveyTemplateId: '2'
+        questionOrder: 4,
+        questionTemplateId: 3,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '5',
-        questionTemplateId: '4',
-        surveyTemplateId: '2'
+        questionOrder: 5,
+        questionTemplateId: 4,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '6',
-        questionTemplateId: '5',
-        surveyTemplateId: '2'
+        questionOrder: 6,
+        questionTemplateId: 5,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '7',
-        questionTemplateId: '6',
-        surveyTemplateId: '2'
+        questionOrder: 7,
+        questionTemplateId: 6,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '8',
-        questionTemplateId: '8',
-        surveyTemplateId: '2'
+        questionOrder: 8,
+        questionTemplateId: 8,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '9',
-        questionTemplateId: '9',
-        surveyTemplateId: '2'
+        questionOrder: 9,
+        questionTemplateId: 9,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '10',
-        questionTemplateId: '10',
-        surveyTemplateId: '2'
+        questionOrder: 10,
+        questionTemplateId: 10,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '11',
-        questionTemplateId: '12',
-        surveyTemplateId: '2'
+        questionOrder: 11,
+        questionTemplateId: 12,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '12',
-        questionTemplateId: '14',
-        surveyTemplateId: '2'
+        questionOrder: 12,
+        questionTemplateId: 14,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '13',
-        questionTemplateId: '15',
-        surveyTemplateId: '2'
+        questionOrder: 13,
+        questionTemplateId: 15,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '14',
-        questionTemplateId: '16',
-        surveyTemplateId: '2'
+        questionOrder: 14,
+        questionTemplateId: 16,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '15',
-        questionTemplateId: '19',
-        surveyTemplateId: '2'
+        questionOrder: 15,
+        questionTemplateId: 19,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '16',
-        questionTemplateId: '20',
-        surveyTemplateId: '2'
+        questionOrder: 16,
+        questionTemplateId: 20,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '17',
-        questionTemplateId: '21',
-        surveyTemplateId: '2'
+        questionOrder: 17,
+        questionTemplateId: 21,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '18',
-        questionTemplateId: '22',
-        surveyTemplateId: '2'
+        questionOrder: 18,
+        questionTemplateId: 22,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '19',
-        questionTemplateId: '23',
-        surveyTemplateId: '2'
+        questionOrder: 19,
+        questionTemplateId: 23,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '20',
-        questionTemplateId: '25',
-        surveyTemplateId: '2'
+        questionOrder: 20,
+        questionTemplateId: 25,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '21',
-        questionTemplateId: '26',
-        surveyTemplateId: '2'
+        questionOrder: 21,
+        questionTemplateId: 26,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '22',
-        questionTemplateId: '27',
-        surveyTemplateId: '2'
+        questionOrder: 22,
+        questionTemplateId: 27,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '23',
-        questionTemplateId: '28',
-        surveyTemplateId: '2'
+        questionOrder: 23,
+        questionTemplateId: 28,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '24',
-        questionTemplateId: '29',
-        surveyTemplateId: '2'
+        questionOrder: 24,
+        questionTemplateId: 29,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '25',
-        questionTemplateId: '30',
-        surveyTemplateId: '2'
+        questionOrder: 25,
+        questionTemplateId: 30,
+        surveyTemplateId: 2
     },
     {
-        questionOrder: '1',
-        questionTemplateId: '31',
-        surveyTemplateId: '3'
+        questionOrder: 1,
+        questionTemplateId: 31,
+        surveyTemplateId: 3
     }
 ];
 
 module.exports.joinStagesAndSurveys = [
     {
         rule: 'weekly',
-        surveyTemplateId: '1',
-        stageId: '1'
+        surveyTemplateId: 1,
+        stageId: 1
     },
     {
         rule: 'once',
-        surveyTemplateId: '2',
-        stageId: '2'
+        surveyTemplateId: 2,
+        stageId: 2
     },
     {
         rule: 'weekly',
-        surveyTemplateId: '2',
-        stageId: '3'
+        surveyTemplateId: 2,
+        stageId: 3
     },
     {
         rule: 'daily',
-        surveyTemplateId: '3',
-        stageId: '3'
+        surveyTemplateId: 3,
+        stageId: 3
     },
     {
         rule: 'weekly',
-        surveyTemplateId: '3',
-        stageId: '4'
+        surveyTemplateId: 3,
+        stageId: 4
     },
     {
         rule: 'weekly',
-        surveyTemplateId: '2',
-        stageId: '5'
+        surveyTemplateId: 2,
+        stageId: 5
     },
     {
         rule: 'daily',
-        surveyTemplateId: '3',
-        stageId: '5'
+        surveyTemplateId: 3,
+        stageId: 5
     }
 ];
