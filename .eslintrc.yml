@@ -207,6 +207,7 @@ rules:
     one-var:
         - 2
         - never
+    one-var-declaration-per-line: 0 # one-var
     operator-assignment: 2
     operator-linebreak:
         - 2
