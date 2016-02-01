@@ -59,13 +59,15 @@ Tasks can be run by calling `npm run <task>`
 * `log` view server log
 * `outdated` view outdated server and browser packages
 * `seed` fill database with sample data
-* `start` start production dashboard and api
+* `start` start production api, dashboard, and scheduler
 * `start-api` start production api
 * `start-dashboard` start production dashboard
+* `start-scheduler` start production scheduler
 * `status` check production server status
-* `stop` stop production dashboard and api
+* `stop` stop production api, dashboard, and scheduler
 * `stop-api` stop production api
 * `stop-dashboard` stop production dashboard
+* `stop-scheduler` stop production scheduler
 * `sync` synchronize database schema
 * `test` run the test suite
 * `user` create a new user
