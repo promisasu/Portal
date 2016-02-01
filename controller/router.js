@@ -84,8 +84,8 @@ module.exports = [
                 payload: {
                     stageId: Joi.number().integer(),
                     trialId: Joi.number().integer(),
-                    patStartDate: Joi.date().min(moment().format('YYYY-MM-DD')),
-                    patEndDate: Joi.date().min(moment().format('YYYY-MM-DD'))
+                    startDate: Joi.date().min(moment().format('YYYY-MM-DD')),
+                    endDate: Joi.date().min(moment().format('YYYY-MM-DD'))
                 }
             }
         }
