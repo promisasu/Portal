@@ -6,6 +6,7 @@
   "scripts": {
     "describe-api": "pm2 describe prp-api",
     "describe-dashboard": "pm2 describe prp-dashboard",
+    "describe-scheduler": "pm2 describe prp-scheduler",
     "documentation": "jsdoc --recurse api controller model rule task --destination documentation",
     "init": "node task/init",
     "postinstall": "bower install",
