@@ -16,7 +16,9 @@ const database = require('../../model');
 function dashboardView (request, reply) {
     const trial = database.sequelize.model('trial');
 
-    trial.findAll().then((trials) => {
+    trial
+    .findAll()
+    .then((trials) => {
         // Process data into format expected in view
         const trialData = trials.map(processTrial);
 
@@ -44,6 +46,12 @@ function dashboardView (request, reply) {
                 // TODO real data
                 datasets: []
             })
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        reply.view('404', {
+            title: 'Not Found'
         });
     });
 }

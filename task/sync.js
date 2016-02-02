@@ -8,7 +8,9 @@
 const database = require('../model');
 
 database.setup(require('../config.json').database);
-database.sequelize.sync({force: true})
+database
+.sequelize
+.sync({force: true})
 .then(() => {
     database.sequelize.close();
 })

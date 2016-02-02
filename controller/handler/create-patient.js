@@ -26,7 +26,9 @@ function createPatient (request, reply) {
     let newPatient = null;
     let pin = null;
 
-    database.sequelize.transaction()
+    database
+    .sequelize
+    .transaction()
     .then((newTransaction) => {
         transaction = newTransaction;
         // Get Trial the patient will be added to
