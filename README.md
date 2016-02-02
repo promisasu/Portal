@@ -20,7 +20,7 @@
 1. if you do not already have a database user, create one
 2. create a new empty database `CREATE SCHEMA prp_development;`
 3. run `npm run init`
-4. run `npm run sync`
+4. run `npm run seed`
 5. run `npm run user`
 
 ## Start the Portal
