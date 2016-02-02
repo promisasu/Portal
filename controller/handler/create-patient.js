@@ -22,6 +22,7 @@ function createPatient (request, reply) {
     const joinStageSurveys = database.sequelize.model('join_stages_and_surveys');
     const opensIn = 0;
     const openFor = 7;
+    const openUnit = 'day';
     let transaction = null;
     let newPatient = null;
     let pin = null;
@@ -56,33 +57,39 @@ function createPatient (request, reply) {
     .then((currentStage) => {
         return currentStage.addPatient(newPatient, {transaction});
     })
-    // Get records from join_stages_and_surveys for cuurent stageId
-    .then(() => {
-        return joinStageSurveys.find({
-            where: {
-                stageId: request.payload.stageId
-            }
-        }, {transaction});
-    })
-    // Create first survey_instance record for the patient
-    .then((stageSurveyData) => {
-        return createSurvey(
-            pin,
-            stageSurveyData.surveyTemplateId,
-            opensIn,
-            openFor,
-            'day'
-        );
-    })
-    // Show the new Patient
+    // Commit the transaction
     .then(() => {
         transaction.commit();
-        reply.redirect(`/patient/${newPatient.pin}`);
     })
     .catch((err) => {
         transaction.rollback();
         console.error(err);
         reply(boom.badRequest('Trial or Stage does not exist'));
+    })
+    // Collect the surveyTemplateId for the stage associated to the patient
+    .then(() => {
+        return joinStageSurveys.findOne({
+            where: {
+                stageId: request.payload.stageId
+            }
+        });
+    })
+    // Create first survey instance as per the surveyTemplateId for the patient
+    .then((data) => {
+        return createSurvey(
+            pin,
+            data.surveyTemplateId,
+            opensIn,
+            openFor,
+            openUnit
+        );
+    })
+    .then(() => {
+        reply.redirect(`/patient/${newPatient.pin}`);
+    })
+    .catch((err) => {
+        console.error(err);
+        reply(boom.badRequest('Survey Instance could not be generated'));
     });
 }
 
