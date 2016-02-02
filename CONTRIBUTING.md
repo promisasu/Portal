@@ -22,7 +22,8 @@
 3. Get a code review
 
    * Reviewers are listed in `MAINTAINERS`
-   * A reviewer can approve a PR by commenting `LGTM` or `:shipit:`
+   * A reviewer can approve a PR by writing a comment starting with `:+1:`, `LGTM`, or `:shipit:`
+   * A review can reject a PR by writing a comment starting with `:-1:`
 
 4. Merge
 
