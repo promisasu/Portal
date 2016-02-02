@@ -22,7 +22,6 @@ function createPatient (request, reply) {
     const joinStageSurveys = database.sequelize.model('join_stages_and_surveys');
     const opensIn = 0;
     const openFor = 7;
-    const openUnit = 'day';
     let transaction = null;
     let newPatient = null;
     let pin = null;
@@ -81,7 +80,7 @@ function createPatient (request, reply) {
             data.surveyTemplateId,
             opensIn,
             openFor,
-            openUnit
+            'day'
         );
     })
     .then(() => {
