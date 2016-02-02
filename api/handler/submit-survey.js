@@ -24,7 +24,9 @@ function submitSurvey (request, reply) {
     let currentSurveyInstance = null;
     let transaction = null;
 
-    database.sequelize.transaction()
+    database
+    .sequelize
+    .transaction()
     .then((newTransaction) => {
         transaction = newTransaction;
         return surveyInstance.find(
@@ -38,18 +40,16 @@ function submitSurvey (request, reply) {
         );
     })
     .then((survey) => {
-        return new Promise((resolve, reject) => {
-            if (survey) {
-                if (moment() > survey.endTime) {
-                    reject('Error - Survey has expired');
-                } else {
-                    currentSurveyInstance = survey;
-                    resolve();
-                }
+        if (survey) {
+            if (moment() > survey.endTime) {
+                throw new Error('Error - Survey has expired');
             } else {
-                reject('Either survey_instance does not exist or its already completed');
+                currentSurveyInstance = survey;
+                return null;
             }
-        });
+        } else {
+            throw new Error('Either survey_instance does not exist or its already completed');
+        }
     })
     .then(() => {
         for (let index = 0; index < request.payload.surveyResults.length; index += 1) {
@@ -120,7 +120,9 @@ function submitSurvey (request, reply) {
         return currentSurveyInstance.save({transaction});
     })
     .then(() => {
-        transaction.commit();
+        return transaction.commit();
+    })
+    .then(() => {
         reply({
             statusCode: 500,
             message: 'Success'
