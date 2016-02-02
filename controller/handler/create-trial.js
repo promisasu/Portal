@@ -15,9 +15,33 @@ const database = require('../../model');
  */
 function createTrial (request, reply) {
     const trial = database.sequelize.model('trial');
+    const stage = database.sequelize.model('stage');
+    let newTrial = null;
 
-    trial.create(request.payload)
-    .then((newTrial) => {
+    trial.create({
+        name: request.payload.name,
+        description: request.payload.description,
+        IRBID: request.payload.IRBID,
+        IRBStart: request.payload.IRBStart,
+        IRBEnd: request.payload.IRBEnd,
+        targetCount: request.payload.targetCount
+    })
+    .then((nTrial) => {
+        newTrial = nTrial;
+        const stagePromises = [];
+
+        for (let index = 0; index < request.payload.stagecount; index += 1) {
+            stagePromises.push(
+                stage.create({name: request.payload.stageschedule})
+            );
+        }
+
+        return Promise.all(stagePromises);
+    })
+    .then((newStages) => {
+        return newTrial.addStages(newStages);
+    })
+    .then(() => {
         reply.redirect(`/trial/${newTrial.id}`);
     })
     .catch((err) => {

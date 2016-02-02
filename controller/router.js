@@ -12,6 +12,7 @@ const surveyPresenter = require('./handler/survey');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
 const mimimumTargetCount = 0;
+const minimumStageCount = 0;
 
 module.exports = [
     {
@@ -58,7 +59,9 @@ module.exports = [
                     IRBID: Joi.string().min(minimumIrbLength),
                     IRBStart: Joi.date().min(moment().format('YYYY-MM-DD')),
                     IRBEnd: Joi.date().min(moment().format('YYYY-MM-DD')),
-                    targetCount: Joi.number().integer().min(mimimumTargetCount)
+                    targetCount: Joi.number().integer().min(mimimumTargetCount),
+                    stagecount: Joi.number().integer().min(minimumStageCount),
+                    stageschedule: Joi.string()
                 }
             }
         }
