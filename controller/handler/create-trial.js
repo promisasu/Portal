@@ -16,7 +16,8 @@ const database = require('../../model');
 function createTrial (request, reply) {
     const trial = database.sequelize.model('trial');
 
-    trial.create(request.payload)
+    trial
+    .create(request.payload)
     .then((newTrial) => {
         reply.redirect(`/trial/${newTrial.id}`);
     })

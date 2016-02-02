@@ -12,7 +12,9 @@ const database = require('../../model');
  * @returns {Promise} resolves raw score
  */
 function calculateRawScore (surveyInstanceId) {
-    return database.sequelize.query(
+    return database
+    .sequelize
+    .query(
         `
         SELECT SUM(qo.order), COUNT(qr.id)
         FROM survey_instance si

@@ -23,7 +23,9 @@ function createSurveyInstance (patientPin, surveyTemplateId, open, duration, uni
     let transaction = null;
 
     // start transaction
-    return database.sequelize.transaction()
+    return database
+    .sequelize
+    .transaction()
     // Get Patient and SurveyTemplate to link to
     // Create new SurveyInstance
     .then((newTransaction) => {

@@ -20,56 +20,54 @@ function checkSurveys (request, reply) {
     const currentDate = new Date();
     let currentPatient = null;
 
-    patient.find({
+    patient
+    .find({
         where: {
             pin: request.query.userPIN
         }
-    }).then((resultPatient) => {
-        return new Promise((resolve, reject) => {
-            if (resultPatient) {
-                if (moment() > resultPatient.dateStarted && moment() < resultPatient.dateCompleted) {
-                    currentPatient = resultPatient;
-                    resolve();
-                } else {
-                    reject('Your PIN is not active');
-                }
-            } else {
-                reject('The PIN is invalid');
+    })
+    .then((resultPatient) => {
+        if (resultPatient) {
+            if (moment() > resultPatient.dateStarted && moment() < resultPatient.dateCompleted) {
+                currentPatient = resultPatient;
+                return null;
             }
-        })
-        .then(() => {
-            database.sequelize.query(
-                `
-                SELECT *, si.id
-                FROM survey_instance AS si
-                JOIN patient AS pa
-                ON si.patientId = pa.id
-                JOIN survey_template AS st
-                ON si.surveyTemplateId = st.id
-                WHERE pa.pin = ?
-                AND ((si.startTime <= ?
-                AND si.endTime > ?)
-                OR (si.startTime > ?))
-                AND (si.state = 'pending'
-                OR si.state = 'in progress')
-                ORDER BY si.startTime
-                `,
-                {
-                    type: database.sequelize.QueryTypes.SELECT,
-                    replacements: [
-                        currentPatient.pin,
-                        currentDate.toISOString(),
-                        currentDate.toISOString(),
-                        currentDate.toISOString()
-                    ]
-                }
-            )
-            .then((surveys) => {
-                reply({
-                    message: 'Success',
-                    surveys: surveys.map(processSurveys)
-                });
-            });
+            throw new Error('Your PIN is not active');
+        }
+        throw new Error('The PIN is invalid');
+    })
+    .then(() => {
+        return database.sequelize.query(
+            `
+            SELECT *, si.id
+            FROM survey_instance AS si
+            JOIN patient AS pa
+            ON si.patientId = pa.id
+            JOIN survey_template AS st
+            ON si.surveyTemplateId = st.id
+            WHERE pa.pin = ?
+            AND ((si.startTime <= ?
+            AND si.endTime > ?)
+            OR (si.startTime > ?))
+            AND (si.state = 'pending'
+            OR si.state = 'in progress')
+            ORDER BY si.startTime
+            `,
+            {
+                type: database.sequelize.QueryTypes.SELECT,
+                replacements: [
+                    currentPatient.pin,
+                    currentDate.toISOString(),
+                    currentDate.toISOString(),
+                    currentDate.toISOString()
+                ]
+            }
+        );
+    })
+    .then((surveys) => {
+        reply({
+            message: 'Success',
+            surveys: surveys.map(processSurveys)
         });
     })
     .catch((err) => {

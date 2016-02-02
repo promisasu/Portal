@@ -58,7 +58,10 @@ module.exports = [
                     IRBID: Joi.string().min(minimumIrbLength),
                     IRBStart: Joi.date().min(moment().format('YYYY-MM-DD')),
                     IRBEnd: Joi.date().min(moment().format('YYYY-MM-DD')),
-                    targetCount: Joi.number().integer().min(mimimumTargetCount)
+                    targetCount: Joi
+                        .number()
+                        .integer()
+                        .min(mimimumTargetCount)
                 }
             }
         }

@@ -17,7 +17,12 @@
         table.draw();
     });
 
-    $.fn.dataTable.ext.search.push(
+    $
+    .fn
+    .dataTable
+    .ext
+    .search
+    .push(
         function testRow (settings, rowContent) {
             var date = new Date();
             var startDate = moment(rowContent[4], 'MM-DD-YYYY');
