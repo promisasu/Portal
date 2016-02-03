@@ -17,11 +17,12 @@
 
    * Test results are reported to [PR status](https://github.com/blog/1935-see-results-from-all-pull-request-status-checks)
    * Tests can be run locally using `npm run lint` and `npm run test`
+   * Some lint errors can automatically resolved by running `npm run lint-fix`
    * Disabling tests is not fixing them
 
 3. Get a code review
 
-   * Reviewers are listed in `MAINTAINERS`
+   * Reviewers are listed in `.pullapprove.yml`
    * A reviewer can approve a PR by writing a comment starting with `:+1:`, `LGTM`, or `:shipit:`
    * A review can reject a PR by writing a comment starting with `:-1:`
 
