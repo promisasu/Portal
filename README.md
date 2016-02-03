@@ -46,6 +46,11 @@
 2. open the `documentation` folder in a file explorer
 3. open `index.html` in a browser
 
+## Additional Guides
+
+* [Contributing](CONTRIBUTING.md)
+* [Design](DESIGN.md)
+
 ## Tasks
 
 Tasks can be run by calling `npm run <task>`
@@ -56,6 +61,7 @@ Tasks can be run by calling `npm run <task>`
 * `documentation` generate code documentation
 * `init` create a server configuration file
 * `lint` lint check project files
+* `lint-fix` auto fixes some lint errors
 * `log` view server log
 * `outdated` view outdated server and browser packages
 * `seed` fill database with sample data
