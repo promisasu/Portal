@@ -39,7 +39,7 @@ function createTrial (request, reply) {
         const stagePromises = [];
         const stageNames = request
             .payload
-            .stageschedule
+            .stageName
             .split(',');
 
         if (stageNames.length !== request.payload.stagecount) {

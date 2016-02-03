@@ -67,7 +67,9 @@ module.exports = [
                         .number()
                         .integer()
                         .min(minimumStageCount),
-                    stageschedule: Joi.string()
+                    stageName: Joi
+                        .string()
+                        .regex(/^[\w ]+(,[\w ]+)*$/, 'comma separated list')
                 }
             }
         }

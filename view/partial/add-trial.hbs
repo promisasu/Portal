@@ -59,10 +59,10 @@
                         <input id="stage-count" class="form-control" type="number" min="0" name="stagecount" required>
                     </div>
                     <div class="form-group">
-                        <label for="stage-schedule">
-                            Schedule for Stages
+                        <label for="stage-name">
+                            Stage Name (Comma Separated List)
                         </label>
-                        <input id="stage-schedule" class="form-control" type="text" min="0" name="stageschedule" required>
+                        <input id="stage-name" class="form-control" pattern="^[\w ]+(,[\w ]+)*$" type="text" min="0" name="stageName" required>
                     </div>
                 </form>
             </div>
