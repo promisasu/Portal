@@ -3,7 +3,7 @@
 
     var config = {
         type: 'line',
-        data: {},
+        data: window.dates,
         options: {
             scales: {
                 xAxes: [

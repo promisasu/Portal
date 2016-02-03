@@ -7,6 +7,7 @@
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
 const processSurveyToEvent = require('../helper/process-survey-to-event');
+const processSurveyInstances = require('../helper/process-survey-instances');
 
 /**
  * A dashboard with an overview of a specific patient.
@@ -15,8 +16,7 @@ const processSurveyToEvent = require('../helper/process-survey-to-event');
  * @returns {View} Rendered page
  */
 function patientView (request, reply) {
-    return Promise
-    .all([
+    return Promise.all([
         database.sequelize.query(
             `
             SELECT *, st.name as stage
@@ -75,6 +75,7 @@ function patientView (request, reply) {
             patient: processPatient(currentPatient),
             trial: currentTrial,
             surveys: surveyInstances,
+            datesJson: JSON.stringify(processSurveyInstances(surveyInstances)),
             eventsJson: JSON.stringify(surveyInstances.map(processSurveyToEvent)),
             // TODO get real survey data
             surveysJson: JSON.stringify([])
