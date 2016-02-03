@@ -47,7 +47,10 @@ module.exports = [
                         Joi.object().keys({
                             quesID: Joi.number().integer(),
                             selectedOptions: Joi.array().items(
-                                Joi.number().integer().empty('')
+                                Joi
+                                    .number()
+                                    .integer()
+                                    .empty('')
                             ),
                             bodyPain: Joi.array().items(
                                 Joi.object().keys({

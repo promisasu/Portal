@@ -20,7 +20,7 @@
 1. if you do not already have a database user, create one
 2. create a new empty database `CREATE SCHEMA prp_development;`
 3. run `npm run init`
-4. run `npm run sync`
+4. run `npm run seed`
 5. run `npm run user`
 
 ## Start the Portal
@@ -31,8 +31,7 @@
 
 * run `npm run status` to view status of all servers
 * run `npm run log` to view server logs
-* run `npm run describe-api` to view details of running api
-* run `npm run desribe-dashboard` to view details of running dashboard
+* run `npm run describe-<system>` to view details of running of running a system, [tasks](#tasks) for more info
 
 ## Test the Portal
 
@@ -47,25 +46,34 @@
 2. open the `documentation` folder in a file explorer
 3. open `index.html` in a browser
 
+## Additional Guides
+
+* [Contributing](CONTRIBUTING.md)
+* [Design](DESIGN.md)
+
 ## Tasks
 
 Tasks can be run by calling `npm run <task>`
 
 * `describe-api` view details of running api
 * `describe-dashboard` view details of running dashboard
+* `describe-scheduler` view details of running scheduler
 * `documentation` generate code documentation
 * `init` create a server configuration file
 * `lint` lint check project files
+* `lint-fix` auto fixes some lint errors
 * `log` view server log
 * `outdated` view outdated server and browser packages
 * `seed` fill database with sample data
-* `start` start production dashboard and api
+* `start` start production api, dashboard, and scheduler
 * `start-api` start production api
 * `start-dashboard` start production dashboard
+* `start-scheduler` start production scheduler
 * `status` check production server status
-* `stop` stop production dashboard and api
+* `stop` stop production api, dashboard, and scheduler
 * `stop-api` stop production api
 * `stop-dashboard` stop production dashboard
+* `stop-scheduler` stop production scheduler
 * `sync` synchronize database schema
 * `test` run the test suite
 * `user` create a new user

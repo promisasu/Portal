@@ -59,8 +59,14 @@ module.exports = [
                     IRBID: Joi.string().min(minimumIrbLength),
                     IRBStart: Joi.date().min(moment().format('YYYY-MM-DD')),
                     IRBEnd: Joi.date().min(moment().format('YYYY-MM-DD')),
-                    targetCount: Joi.number().integer().min(mimimumTargetCount),
-                    stagecount: Joi.number().integer().min(minimumStageCount),
+                    targetCount: Joi
+                        .number()
+                        .integer()
+                        .min(mimimumTargetCount),
+                    stagecount: Joi
+                        .number()
+                        .integer()
+                        .min(minimumStageCount),
                     stageschedule: Joi.string()
                 }
             }

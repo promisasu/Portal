@@ -20,63 +20,62 @@ function getSurvey (request, reply) {
     const surveyInstance = database.sequelize.model('survey_instance');
     let currentSurveyInstance = null;
 
-    surveyInstance.find({
+    surveyInstance
+    .find({
         where: {
             id: request.query.surveyInstanceID
         }
-    }).then((resultSurveyInstance) => {
-        return new Promise((resolve, reject) => {
-            if (resultSurveyInstance) {
-                if (moment() < resultSurveyInstance.startTime) {
-                    reject('Survey instance is not active');
-                } else if (moment() > resultSurveyInstance.endTime) {
-                    reject('Survey instance has expired');
-                } else if (resultSurveyInstance.surveyInstanceCompleted) {
-                    reject('Survey instance has been completed');
-                } else {
-                    currentSurveyInstance = resultSurveyInstance;
-                    currentSurveyInstance.state = 'in progress';
-                    currentSurveyInstance.save();
-                    resolve();
-                }
+    })
+    .then((resultSurveyInstance) => {
+        if (resultSurveyInstance) {
+            if (moment() < resultSurveyInstance.startTime) {
+                throw new Error('Survey instance is not active');
+            } else if (moment() > resultSurveyInstance.endTime) {
+                throw new Error('Survey instance has expired');
+            } else if (resultSurveyInstance.surveyInstanceCompleted) {
+                throw new Error('Survey instance has been completed');
             } else {
-                reject('Invalid survey instance ID');
+                currentSurveyInstance = resultSurveyInstance;
+                currentSurveyInstance.state = 'in progress';
+                return currentSurveyInstance.save();
             }
-        })
-        .then(() => {
-            database.sequelize.query(
-                `
-                SELECT * , qo.id AS qoid, si.id AS sid
-                FROM survey_instance AS si
-                JOIN survey_template AS st
-                ON st.id = si.surveyTemplateId
-                JOIN join_surveys_and_questions AS jsq
-                ON jsq.surveyTemplateId = st.id
-                JOIN question_template AS qt
-                ON qt.id = jsq.questionTemplateId
-                JOIN question_option AS qo
-                ON qo.questionTemplateId = qt.id
-                WHERE si.id = ?
-                ORDER BY jsq.questionOrder, qo.order
-                `,
-                {
-                    type: database.sequelize.QueryTypes.SELECT,
-                    replacements: [
-                        currentSurveyInstance.id
-                    ]
-                }
-            )
-            .then((data) => {
-                const final = {
-                    surveyInstanceID: data[0].sid,
-                    surveyName: data[0].name,
-                    message: 'SUCCESS',
-                    questions: groupBy(data, 'questionOrder').map(processSurveyInstance)
-                };
+        } else {
+            throw new Error('Invalid survey instance ID');
+        }
+    })
+    .then(() => {
+        return database.sequelize.query(
+            `
+            SELECT * , qo.id AS qoid, si.id AS sid
+            FROM survey_instance AS si
+            JOIN survey_template AS st
+            ON st.id = si.surveyTemplateId
+            JOIN join_surveys_and_questions AS jsq
+            ON jsq.surveyTemplateId = st.id
+            JOIN question_template AS qt
+            ON qt.id = jsq.questionTemplateId
+            JOIN question_option AS qo
+            ON qo.questionTemplateId = qt.id
+            WHERE si.id = ?
+            ORDER BY jsq.questionOrder, qo.order
+            `,
+            {
+                type: database.sequelize.QueryTypes.SELECT,
+                replacements: [
+                    currentSurveyInstance.id
+                ]
+            }
+        );
+    })
+    .then((data) => {
+        const final = {
+            surveyInstanceID: data[0].sid,
+            surveyName: data[0].name,
+            message: 'SUCCESS',
+            questions: groupBy(data, 'questionOrder').map(processSurveyInstance)
+        };
 
-                reply(final);
-            });
-        });
+        reply(final);
     })
     .catch((err) => {
         console.error(err);

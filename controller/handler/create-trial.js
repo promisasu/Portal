@@ -19,7 +19,9 @@ function createTrial (request, reply) {
     let newTrial = null;
     let transaction = null;
 
-    database.sequelize.transaction()
+    database
+    .sequelize
+    .transaction()
     .then((newTransaction) => {
         transaction = newTransaction;
         return trial.create({
@@ -35,7 +37,10 @@ function createTrial (request, reply) {
         console.error('next thing');
         newTrial = nTrial;
         const stagePromises = [];
-        const stageNames = request.payload.stageschedule.split(',');
+        const stageNames = request
+            .payload
+            .stageschedule
+            .split(',');
 
         if (stageNames.length !== request.payload.stagecount) {
             throw new Error('No of Stages not matched with Stage Schedule information given');

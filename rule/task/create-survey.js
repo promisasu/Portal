@@ -23,7 +23,9 @@ function createSurveyInstance (patientPin, surveyTemplateId, open, duration, uni
     let transaction = null;
 
     // start transaction
-    database.sequelize.transaction()
+    return database
+    .sequelize
+    .transaction()
     // Get Patient and SurveyTemplate to link to
     // Create new SurveyInstance
     .then((newTransaction) => {
@@ -54,15 +56,17 @@ function createSurveyInstance (patientPin, surveyTemplateId, open, duration, uni
         const currentSurveyTemplate = data[1];
         const newSurveyInstance = data[2];
 
-        currentSurveyTemplate.addSurveyInstance(newSurveyInstance, {transaction});
-        currentPatient.addSurveyInstance(newSurveyInstance, {transaction});
+        return Promise.all([
+            currentSurveyTemplate.addSurvey_instance(newSurveyInstance, {transaction}),
+            currentPatient.addSurvey_instance(newSurveyInstance, {transaction})
+        ]);
     })
     .then(() => {
-        transaction.commit();
+        return transaction.commit();
     })
     .catch((err) => {
         transaction.rollback();
-        return Promise.reject(err);
+        return err;
     });
 }
 
