@@ -66,6 +66,7 @@ function createSurveyInstance (patientPin, surveyTemplateId, startDate, openForD
     })
     .catch((err) => {
         transaction.rollback();
+        console.error(err);
         return err;
     });
 }

@@ -1,7 +1,6 @@
 'use strict';
 
 const Joi = require('joi');
-const moment = require('moment');
 
 const createTrial = require('./handler/create-trial');
 const createPatient = require('./handler/create-patient');
@@ -57,8 +56,8 @@ module.exports = [
                     name: Joi.string().min(minimumNameLength),
                     description: Joi.string(),
                     IRBID: Joi.string().min(minimumIrbLength),
-                    IRBStart: Joi.date().min(moment().format('YYYY-MM-DD')),
-                    IRBEnd: Joi.date().min(moment().format('YYYY-MM-DD')),
+                    IRBStart: Joi.date().format('YYYY-MM-DD'),
+                    IRBEnd: Joi.date().min(Joi.ref('IRBStart')),
                     targetCount: Joi
                         .number()
                         .integer()
@@ -95,8 +94,8 @@ module.exports = [
                 payload: {
                     stageId: Joi.number().integer(),
                     trialId: Joi.number().integer(),
-                    startDate: Joi.date().min(moment().format('YYYY-MM-DD')),
-                    endDate: Joi.date().min(moment().format('YYYY-MM-DD'))
+                    startDate: Joi.date().format('YYYY-MM-DD'),
+                    endDate: Joi.date().min(Joi.ref('startDate'))
                 }
             }
         }
