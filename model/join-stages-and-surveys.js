@@ -26,6 +26,13 @@ function register (sequelize) {
                 validate: {
                     notEmpty: true
                 }
+            },
+            stagePriority: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
             }
         },
         {
