@@ -11,12 +11,12 @@ const database = require('../../model');
  * Creates a survey instance for a patient to complete
  * @param {Number} patientPin - Identifier for patient who needs a survey
  * @param {Number} surveyTemplateId - Identifier for Survey Template that contains questions to be answered
- * @param {Number} open - How long until Survey opens
- * @param {Number} duration - How long patient has to complete the survey (after it starts)
- * @param {String} unit - Unit of time for open and duration (hours, days, weeks)
+ * @param {Date} startDate - Datetime that survey will become availible
+ * @param {Number} openForDuration - How long patient has to complete the survey
+ * @param {String} openForUnit - Unit of time for openForDuration (hours, days, weeks)
  * @returns {Null} Returns when completed
  */
-function createSurveyInstance (patientPin, surveyTemplateId, open, duration, unit) {
+function createSurveyInstance (patientPin, surveyTemplateId, startDate, openForDuration, openForUnit) {
     const patient = database.sequelize.model('patient');
     const surveyTemplate = database.sequelize.model('survey_template');
     const surveyInstance = database.sequelize.model('survey_instance');
@@ -43,8 +43,8 @@ function createSurveyInstance (patientPin, surveyTemplateId, open, duration, uni
             surveyTemplate.findById(surveyTemplateId, {transaction}),
             surveyInstance.create(
                 {
-                    startTime: moment().add(open, unit),
-                    endTime: moment().add(open + duration, unit)
+                    startTime: startDate,
+                    endTime: moment(startDate).add(openForDuration, openForUnit)
                 },
                 {transaction}
             )
