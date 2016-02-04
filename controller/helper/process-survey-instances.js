@@ -36,6 +36,7 @@ function formatDate(date) {
 function calculateTimeLeft(surveys) {
   var percentages = [];
   percentages.length = surveys.length;
+  
 /*
   for (var i = 0; i < surveys.length; i++) {
     var startTimeStamp = (Date.parse(surveys[i].startTime))/3600000;
