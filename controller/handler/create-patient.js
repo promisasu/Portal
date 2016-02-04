@@ -8,6 +8,7 @@ const boom = require('boom');
 const database = require('../../model');
 const trialOffset = 1000;
 const createSurvey = require('../../rule/task/create-survey');
+const moment = require('moment');
 
 /**
  * Creates a new Patient
@@ -20,8 +21,6 @@ function createPatient (request, reply) {
     const trial = database.sequelize.model('trial');
     const stage = database.sequelize.model('stage');
     const joinStageSurveys = database.sequelize.model('join_stages_and_surveys');
-    const opensIn = 0;
-    const openFor = 7;
     let transaction = null;
     let newPatient = null;
     let pin = null;
@@ -77,12 +76,23 @@ function createPatient (request, reply) {
     })
     // Create first survey instance as per the surveyTemplateId for the patient
     .then((data) => {
+        const day = 1;
+        const opensIn = Math.abs(moment().diff(request.payload.startDate, 'days')) + day;
+        const openUnit = 'day';
+        let openFor = null;
+
+        if (data.rule === 'daily') {
+            openFor = 1;
+        } else {
+            openFor = 7;
+        }
+
         return createSurvey(
             pin,
             data.surveyTemplateId,
             opensIn,
             openFor,
-            'day'
+            openUnit
         );
     })
     .then(() => {
