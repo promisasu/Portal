@@ -15,13 +15,54 @@ const database = require('../../model');
  */
 function createTrial (request, reply) {
     const trial = database.sequelize.model('trial');
+    const stage = database.sequelize.model('stage');
+    let newTrial = null;
+    let transaction = null;
 
-    trial
-    .create(request.payload)
-    .then((newTrial) => {
+    database
+    .sequelize
+    .transaction()
+    .then((newTransaction) => {
+        transaction = newTransaction;
+        return trial.create({
+            name: request.payload.name,
+            description: request.payload.description,
+            IRBID: request.payload.IRBID,
+            IRBStart: request.payload.IRBStart,
+            IRBEnd: request.payload.IRBEnd,
+            targetCount: request.payload.targetCount
+        }, {transaction});
+    })
+    .then((nTrial) => {
+        console.error('next thing');
+        newTrial = nTrial;
+        const stagePromises = [];
+        const stageNames = request
+            .payload
+            .stageName
+            .split(',');
+
+        if (stageNames.length !== request.payload.stagecount) {
+            throw new Error('No of Stages not matched with Stage Schedule information given');
+        }
+        for (const stageName of stageNames) {
+            stagePromises.push(
+                stage.create({name: stageName}, {transaction})
+            );
+        }
+        return Promise.all(stagePromises);
+    })
+    .then((newStages) => {
+        return newTrial.addStages(newStages, {transaction});
+    })
+    .then(() => {
+        return transaction.commit();
+    })
+    .then(() => {
         reply.redirect(`/trial/${newTrial.id}`);
     })
     .catch((err) => {
+        transaction.rollback();
         console.error(err);
         reply(boom.badRequest('Invalid Trial'));
     });

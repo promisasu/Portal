@@ -12,6 +12,7 @@ const surveyPresenter = require('./handler/survey');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
 const mimimumTargetCount = 0;
+const minimumStageCount = 0;
 
 module.exports = [
     {
@@ -61,7 +62,14 @@ module.exports = [
                     targetCount: Joi
                         .number()
                         .integer()
-                        .min(mimimumTargetCount)
+                        .min(mimimumTargetCount),
+                    stagecount: Joi
+                        .number()
+                        .integer()
+                        .min(minimumStageCount),
+                    stageName: Joi
+                        .string()
+                        .regex(/^[\w ]+(,[\w ]+)*$/, 'comma separated list')
                 }
             }
         }
