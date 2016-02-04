@@ -8,7 +8,6 @@ const boom = require('boom');
 const database = require('../../model');
 const trialOffset = 1000;
 const createSurvey = require('../../rule/task/create-survey');
-const moment = require('moment');
 
 /**
  * Creates a new Patient
@@ -70,14 +69,14 @@ function createPatient (request, reply) {
     .then(() => {
         return joinStageSurveys.findOne({
             where: {
-                stageId: request.payload.stageId
+                stageId: request.payload.stageId,
+                stagePriority: 0
             }
         });
     })
     // Create first survey instance as per the surveyTemplateId for the patient
     .then((data) => {
-        const day = 1;
-        const opensIn = Math.abs(moment().diff(request.payload.startDate, 'days')) + day;
+        const opensIn = request.payload.startDate;
         const openUnit = 'day';
         let openFor = null;
 

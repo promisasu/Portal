@@ -34,7 +34,6 @@ function createTrial (request, reply) {
         }, {transaction});
     })
     .then((nTrial) => {
-        console.error('next thing');
         newTrial = nTrial;
         const stagePromises = [];
         const stageNames = request
