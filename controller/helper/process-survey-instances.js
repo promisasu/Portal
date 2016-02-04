@@ -35,23 +35,21 @@ function formatDate(date) {
 
 function calculateTimeLeft(surveys) {
   var percentages = [];
-  percentages.length = surveys.length;  
-/*
+
   for (var i = 0; i < surveys.length; i++) {
     var startTimeStamp = (Date.parse(surveys[i].startTime))/3600000;
     var endTimeStamp = (Date.parse(surveys[i].endTime))/3600000;
-    var actualTimeStamp = (Date.parse(surveys[i].actualSubmissionTime)/3600000;
+    var actualTimeStamp = (Date.parse(surveys[i].actualSubmissionTime))/3600000;
     var timeToCompleteSurvey = endTimeStamp - startTimeStamp;
     var timeTaken = endTimeStamp - actualTimeStamp;
-    if (timeTaken = +integer) {
-      percentages[i] = (timeTaken/timeToCompleteSurvey)*100;
+    if (timeTaken > 0) {
+      percentages[i] = Math.round((timeTaken/timeToCompleteSurvey)*100);
     }
     else {
       percentages[i] = 0;
     }
   }
-  console.log(percentages);
-  */
+
   var calData = [{label:'% Time left until daily survey expired',
                   data: percentages}];
   return calData;
