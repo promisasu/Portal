@@ -17,31 +17,43 @@ function processSurveyInstances (surveys) {
 }
 
 function pickupSubmissionTime(surveys) {
-
- var dates = new Array();
- dates[0]= '01/01/2015 20:00';
- dates[1]= '01/02/2015 21:00';
- dates[2]= '01/03/2015 22:00';
- dates[3]= '01/04/2015 23:00';
- dates[4]= '01/05/2015 03:00';
- dates[5]= '01/06/2015 10:00';
- dates[6]= '01/07/2015 04:00';
+  var dates = [];
+  dates.length = surveys.length;
+  for (var i = 0; i < surveys.length; i++) {
+    dates[i] = formatDate(surveys[i].startTime);
+  }
   return dates;
 }
 
+function formatDate(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes;
+  return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+}
+
 function calculateTimeLeft(surveys) {
-
-  var fakeData = Array();
-  fakeData[0]= 100;
-  fakeData[1]= 70;
-  fakeData[2]= 75;
-  fakeData[3]= 0;
-  fakeData[4]= 40;
-  fakeData[5]= 50;
-  fakeData[6]= 0;
-
+  var percentages = [];
+  percentages.length = surveys.length;
+/*
+  for (var i = 0; i < surveys.length; i++) {
+    var startTimeStamp = (Date.parse(surveys[i].startTime))/3600000;
+    var endTimeStamp = (Date.parse(surveys[i].endTime))/3600000;
+    var actualTimeStamp = (Date.parse(surveys[i].actualSubmissionTime)/3600000;
+    var timeToCompleteSurvey = endTimeStamp - startTimeStamp;
+    var timeTaken = endTimeStamp - actualTimeStamp;
+    if (timeTaken = +integer) {
+      percentages[i] = (timeTaken/timeToCompleteSurvey)*100;
+    }
+    else {
+      percentages[i] = 0;
+    }
+  }
+  console.log(percentages);
+  */
   var calData = [{label:'% Time left until daily survey expired',
-                  data: fakeData}];
+                  data: percentages}];
   return calData;
 
 }
