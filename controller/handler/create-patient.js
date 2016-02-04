@@ -78,8 +78,14 @@ function createPatient (request, reply) {
     .then((data) => {
         const day = 1;
         const opensIn = Math.abs(moment().diff(request.payload.startDate, 'days')) + day;
-        const openFor = 7;
         const openUnit = 'day';
+        let openFor = null;
+
+        if (data.rule === 'daily') {
+            openFor = 1;
+        } else {
+            openFor = 7;
+        }
 
         return createSurvey(
             pin,
