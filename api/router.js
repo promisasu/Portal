@@ -5,6 +5,7 @@ const Joi = require('joi');
 const checkSurveys = require('./handler/check-surveys');
 const getSurvey = require('./handler/get-survey');
 const submitSurvey = require('./handler/submit-survey');
+const maxBodyPainIntensity = 10;
 
 module.exports = [
     {
@@ -15,7 +16,10 @@ module.exports = [
             cors: true,
             validate: {
                 query: {
-                    userPIN: Joi.number().integer()
+                    userPIN: Joi
+                        .number()
+                        .integer()
+                        .positive()
                 }
             }
         }
@@ -28,7 +32,10 @@ module.exports = [
             cors: true,
             validate: {
                 query: {
-                    surveyInstanceID: Joi.number().integer()
+                    surveyInstanceID: Joi
+                        .number()
+                        .integer()
+                        .positive()
                 }
             }
         }
@@ -41,11 +48,18 @@ module.exports = [
             cors: true,
             validate: {
                 payload: {
-                    surveyInstanceID: Joi.number().integer(),
-                    timeStamp: Joi.date(),
+                    surveyInstanceID: Joi
+                        .number()
+                        .integer()
+                        .positive(),
+                    timeStamp: Joi
+                        .date()
+                        .format('YYYY-MM-DD HH:mm:ss'),
                     surveyResults: Joi.array().items(
                         Joi.object().keys({
-                            quesID: Joi.number().integer(),
+                            quesID: Joi
+                                .number()
+                                .integer(),
                             selectedOptions: Joi.array().items(
                                 Joi
                                     .number()
@@ -54,8 +68,14 @@ module.exports = [
                             ),
                             bodyPain: Joi.array().items(
                                 Joi.object().keys({
-                                    location: Joi.string(),
-                                    intensity: Joi.number().integer()
+                                    location: Joi
+                                        .string()
+                                        .lowercase(),
+                                    intensity: Joi
+                                        .number()
+                                        .integer()
+                                        .positive()
+                                        .max(maxBodyPainIntensity)
                                 })
                             )
                         })
