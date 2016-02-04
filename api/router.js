@@ -59,11 +59,13 @@ module.exports = [
                         Joi.object().keys({
                             quesID: Joi
                                 .number()
-                                .integer(),
+                                .integer()
+                                .positive(),
                             selectedOptions: Joi.array().items(
                                 Joi
                                     .number()
                                     .integer()
+                                    .positive()
                                     .empty('')
                             ),
                             bodyPain: Joi.array().items(
