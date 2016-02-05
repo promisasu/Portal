@@ -18,7 +18,7 @@ database
 .sequelize
 .query(
     `
-    SELECT *, pa.id AS patientID, st.id AS stageID
+    SELECT *, pa.id AS patientId
     FROM patient AS pa
     JOIN stage AS st
     ON st.id = pa.stageId
@@ -31,13 +31,18 @@ database
     }
 )
 .then((data) => {
-    console.log('Before filtering');
     const surveyInstances = data.filter(filterRules).map(createSurveys);
 
     return database
            .sequelize
            .model('survey_instance')
            .bulkCreate(surveyInstances);
+})
+.then(() => {
+    console.log('survey instances created on:', new Date());
+})
+.catch((err) => {
+    console.error(err);
 });
 
 /**
@@ -48,7 +53,6 @@ database
  * @returns {Boolean} true to keep record, false to remove
  */
 function filterRules (item, index, array) {
-    console.log('Inside filtering rules');
     if (item.rule === 'weekly' && moment(item.dateStarted).day() === moment().day()) {
         console.log('First check passed');
         return true;
@@ -62,7 +66,6 @@ function filterRules (item, index, array) {
         && array[index - one].rule === 'weekly'
         && moment(array[index - one].dateStarted).day() !== moment().day()
     ) {
-        console.log('Third check passed');
         return true;
     }
     return false;
@@ -74,6 +77,7 @@ function filterRules (item, index, array) {
  * @returns {Object} a template for survey_instance creation.
  */
 function createSurveys (row) {
+    console.log(row);
     let unit = null;
 
     if (row.rule === 'daily') {
