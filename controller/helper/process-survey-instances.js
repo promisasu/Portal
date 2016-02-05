@@ -1,5 +1,5 @@
 'use strict';
-
+const moment = require('moment');
 /**
  * @module controller/helper/process-survey-instances
  */
@@ -12,7 +12,7 @@
 function processSurveyInstances (surveys) {
     return {
         labels: pickupSubmissionTime(surveys),
-        datasets: calculateTimeLeft(surveys)
+        datasets: pickTimeLeft(surveys)
     };
 }
 
@@ -25,22 +25,10 @@ function pickupSubmissionTime (surveys) {
     const dates = [];
 
     for (let index = 0; index < surveys.length; index += 1) {
-      dates[index] = formatDate(surveys[index].startTime);
+        // dates[index] = formatDate(surveys[index].startTime);
+        dates[index] = moment(surveys[index].startTime).format('MM/DD/YYYY HH:mm');
     }
     return dates;
-}
-
-/**
- * Takes in a date as per DB format and process it to complience chart format
- * @param {Object} date - DB formatted Date
- * @returns {Object} formatted date
- */
-function formatDate (date) {
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    minutes = minutes < 10 ? '0'+minutes : minutes;
-    let strTime = hours + ':' + minutes;
-    return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
 }
 
 /**
@@ -48,26 +36,38 @@ function formatDate (date) {
  * @param {Object} surveys - list of survey instances
  * @returns {Object} processed list of % time left data
  */
-function calculateTimeLeft (surveys) {
+function pickTimeLeft (surveys) {
     const percentages = [];
 
     for (let index = 0; index < surveys.length; index += 1) {
-      let startTimeStamp = (Date.parse(surveys[index].startTime))/3600000;
-      let endTimeStamp = (Date.parse(surveys[index].endTime))/3600000;
-      let actualTimeStamp = (Date.parse(surveys[index].actualSubmissionTime))/3600000;
-      let timeToCompleteSurvey = endTimeStamp - startTimeStamp;
-      let timeTaken = endTimeStamp - actualTimeStamp;
-      if (timeTaken > 0) {
-        percentages[index] = Math.round((timeTaken/timeToCompleteSurvey)*100);
-      }
-      else {
-        percentages[index] = 0;
-      }
+        percentages[index] = calculateTimeLeft(moment(surveys[index].startTime),
+                                                moment(surveys[index].endTime),
+                                                moment(surveys[index].actualSubmissionTime));
     }
-
-    const calData = [{label:'% Time left until daily survey expired',
+    const calData = [{label: '% Time left until daily survey expired',
                     data: percentages}];
-    return calData;
 
+    return calData;
+}
+
+/**
+* Takes in a Survey Instances and get the % time left to be shown on complience chart
+* @param {Object} startTime - start time of survey instance
+* @param {Object} endTime - end time of survey instance
+* @param {Object} actualTime - actual time of survey instance
+* @returns {Object} percent time left after completing survey instance
+*/
+function calculateTimeLeft (startTime, endTime, actualTime) {
+    let percentTimeLeft = 0;
+    const percent = 100;
+    const minTime = 0;
+    const timeToCompleteSurvey = endTime.diff(startTime, 'hours');
+    const timeTaken = endTime.diff(actualTime, 'hours');
+
+    if (timeTaken > minTime) {
+        percentTimeLeft = timeTaken / timeToCompleteSurvey;
+    }
+    console.log(percentTimeLeft);
+    return Math.round(percentTimeLeft * percent);
 }
 module.exports = processSurveyInstances;
