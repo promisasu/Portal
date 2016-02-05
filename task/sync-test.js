@@ -10,7 +10,9 @@ const config = require('../config.json');
 
 config.database.name = 'prp_test';
 database.setup(config.database);
-database.sequelize.sync({force: true})
+database
+.sequelize
+.sync({force: true})
 .then(() => {
     database.sequelize.close();
 })

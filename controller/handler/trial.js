@@ -20,7 +20,8 @@ function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
     const stage = database.sequelize.model('stage');
 
-    Promise.all([
+    Promise
+    .all([
         trial.findById(request.params.id),
         stage.findAll({
             where: {
@@ -45,7 +46,6 @@ function trialView (request, reply) {
             }
         )
     ])
-
     .then((data) => {
         const currentTrial = data[0];
         const stages = data[1];

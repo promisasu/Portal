@@ -20,7 +20,8 @@ function validate (request, username, password, callback) {
     let selectedUser = null;
 
     // search for selected user
-    user.find({
+    user
+    .find({
         where: {
             username
         }

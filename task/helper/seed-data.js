@@ -1552,36 +1552,43 @@ module.exports.joinStagesAndSurveys = [
     {
         rule: 'weekly',
         surveyTemplateId: 1,
-        stageId: 1
+        stageId: 1,
+        stagePriority: 0
     },
     {
         rule: 'once',
         surveyTemplateId: 2,
-        stageId: 2
+        stageId: 2,
+        stagePriority: 0
     },
     {
         rule: 'weekly',
         surveyTemplateId: 2,
-        stageId: 3
+        stageId: 3,
+        stagePriority: 0
     },
     {
         rule: 'daily',
         surveyTemplateId: 3,
-        stageId: 3
+        stageId: 3,
+        stagePriority: 1
     },
     {
         rule: 'weekly',
         surveyTemplateId: 3,
-        stageId: 4
+        stageId: 4,
+        stagePriority: 0
     },
     {
         rule: 'weekly',
         surveyTemplateId: 2,
-        stageId: 5
+        stageId: 5,
+        stagePriority: 0
     },
     {
         rule: 'daily',
         surveyTemplateId: 3,
-        stageId: 5
+        stageId: 5,
+        stagePriority: 1
     }
 ];

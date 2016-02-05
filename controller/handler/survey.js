@@ -14,7 +14,8 @@ const processSurvey = require('../helper/process-survey');
  * @returns {View} Rendered page
  */
 function surveyView (request, reply) {
-    Promise.all([
+    Promise
+    .all([
         database.sequelize.query(
             `
             SELECT *

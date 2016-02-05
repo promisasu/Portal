@@ -23,11 +23,11 @@ test.before('create a patient', () => {
 test('create can create a survey instance', () => {
     const patientPin = 2001;
     const surveyTemplate = 1;
-    const opensIn = 0;
+    const startDate = new Date();
     const openFor = 7;
     const openUnit = 'day';
 
-    return createSurvey(patientPin, surveyTemplate, opensIn, openFor, openUnit);
+    return createSurvey(patientPin, surveyTemplate, startDate, openFor, openUnit);
 });
 
 test.after('delete temporary patient', () => {

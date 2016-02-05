@@ -16,7 +16,7 @@
     "font-awesome": "4.5.0",
     "fullcalendar": "2.6.0",
     "jquery": "2.2.0",
-    "moment": "2.11.1",
+    "moment": "2.11.2",
     "tether": "1.1.1"
   }
 }

@@ -20,7 +20,7 @@
 1. if you do not already have a database user, create one
 2. create a new empty database `CREATE SCHEMA prp_development;`
 3. run `npm run init`
-4. run `npm run sync`
+4. run `npm run seed`
 5. run `npm run user`
 
 ## Start the Portal
@@ -46,6 +46,11 @@
 2. open the `documentation` folder in a file explorer
 3. open `index.html` in a browser
 
+## Additional Guides
+
+* [Contributing](CONTRIBUTING.md)
+* [Design](DESIGN.md)
+
 ## Tasks
 
 Tasks can be run by calling `npm run <task>`
@@ -56,6 +61,7 @@ Tasks can be run by calling `npm run <task>`
 * `documentation` generate code documentation
 * `init` create a server configuration file
 * `lint` lint check project files
+* `lint-fix` auto fixes some lint errors
 * `log` view server log
 * `outdated` view outdated server and browser packages
 * `seed` fill database with sample data

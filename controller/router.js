@@ -11,7 +11,6 @@ const patientPresenter = require('./handler/patient');
 const surveyPresenter = require('./handler/survey');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
-const mimimumTargetCount = 0;
 
 module.exports = [
     {
@@ -53,12 +52,33 @@ module.exports = [
         config: {
             validate: {
                 payload: {
-                    name: Joi.string().min(minimumNameLength),
-                    description: Joi.string(),
-                    IRBID: Joi.string().min(minimumIrbLength),
-                    IRBStart: Joi.date().min(moment().format('YYYY-MM-DD')),
-                    IRBEnd: Joi.date().min(moment().format('YYYY-MM-DD')),
-                    targetCount: Joi.number().integer().min(mimimumTargetCount)
+                    name: Joi
+                        .string()
+                        .min(minimumNameLength),
+                    description: Joi
+                        .string(),
+                    IRBID: Joi
+                        .string()
+                        .min(minimumIrbLength),
+                    IRBStart: Joi
+                        .date()
+                        .format('YYYY-MM-DD')
+                        .min(moment().startOf('day').toDate()),
+                    IRBEnd: Joi
+                        .date()
+                        .format('YYYY-MM-DD')
+                        .min(Joi.ref('IRBStart')),
+                    targetCount: Joi
+                        .number()
+                        .integer()
+                        .positive(),
+                    stagecount: Joi
+                        .number()
+                        .integer()
+                        .positive(),
+                    stageName: Joi
+                        .string()
+                        .regex(/^[\w ]+(,[\w ]+)*$/, 'comma separated list')
                 }
             }
         }
@@ -70,7 +90,10 @@ module.exports = [
         config: {
             validate: {
                 params: {
-                    id: Joi.number().integer()
+                    id: Joi
+                        .number()
+                        .integer()
+                        .positive()
                 }
             }
         }
@@ -82,10 +105,22 @@ module.exports = [
         config: {
             validate: {
                 payload: {
-                    stageId: Joi.number().integer(),
-                    trialId: Joi.number().integer(),
-                    startDate: Joi.date().min(moment().format('YYYY-MM-DD')),
-                    endDate: Joi.date().min(moment().format('YYYY-MM-DD'))
+                    stageId: Joi
+                        .number()
+                        .integer()
+                        .positive(),
+                    trialId: Joi
+                        .number()
+                        .integer()
+                        .positive(),
+                    startDate: Joi
+                        .date()
+                        .format('YYYY-MM-DD')
+                        .min(moment().startOf('day').toDate()),
+                    endDate: Joi
+                        .date()
+                        .format('YYYY-MM-DD')
+                        .min(Joi.ref('startDate'))
                 }
             }
         }
@@ -97,7 +132,10 @@ module.exports = [
         config: {
             validate: {
                 params: {
-                    pin: Joi.number().integer()
+                    pin: Joi
+                        .number()
+                        .integer()
+                        .positive()
                 }
             }
         }
@@ -109,7 +147,10 @@ module.exports = [
         config: {
             validate: {
                 params: {
-                    id: Joi.number().integer()
+                    id: Joi
+                        .number()
+                        .integer()
+                        .positive()
                 }
             }
         }

@@ -15,7 +15,8 @@ const processSurveyToEvent = require('../helper/process-survey-to-event');
  * @returns {View} Rendered page
  */
 function patientView (request, reply) {
-    return Promise.all([
+    return Promise
+    .all([
         database.sequelize.query(
             `
             SELECT *, st.name as stage
