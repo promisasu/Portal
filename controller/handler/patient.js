@@ -17,6 +17,7 @@ const processSurveyInstances = require('../helper/process-survey-instances');
  */
 function patientView (request, reply) {
     return Promise.all([
+
         database.sequelize.query(
             `
             SELECT *, st.name as stage
