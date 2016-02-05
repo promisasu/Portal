@@ -63,9 +63,9 @@ function createPatient (request, reply) {
                 where: {
                     stageId: request.payload.stageId,
                     stagePriority: 0
-                }
-            },
-            {transaction}
+                },
+                transaction
+            }
         );
     })
     // Create first survey instance as per the surveyTemplateId for the patient
