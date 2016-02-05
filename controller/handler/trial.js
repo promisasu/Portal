@@ -7,6 +7,7 @@
 const database = require('../../model');
 const processPatient = require('../helper/process-patient');
 const processTrial = require('../helper/process-trial');
+const getComplianceCount = require('../helper/process-compliance-count');
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -49,8 +50,9 @@ function trialView (request, reply) {
         const currentTrial = data[0];
         const stages = data[1];
         const patients = data[2];
+	getComplianceCount(currentTrial, stages, patients, reply);
 
-        reply.view('trial', {
+        /*reply.view('trial', {
             title: 'Pain Reporting Portal',
             trial: processTrial(currentTrial),
             stages,
@@ -64,10 +66,11 @@ function trialView (request, reply) {
                     'Noncompliant'
                 ]
             })
-        });
+        });*/
     })
     .catch((err) => {
         console.error(err);
+	console.log("prabhanjan found error in controller/handler/trial.js");
         reply.view('404', {
             title: 'Not Found'
         });
