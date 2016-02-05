@@ -1,6 +1,7 @@
 'use strict';
 
 const Joi = require('joi');
+const moment = require('moment');
 
 const createTrial = require('./handler/create-trial');
 const createPatient = require('./handler/create-patient');
@@ -61,7 +62,8 @@ module.exports = [
                         .min(minimumIrbLength),
                     IRBStart: Joi
                         .date()
-                        .format('YYYY-MM-DD'),
+                        .format('YYYY-MM-DD')
+                        .min(moment().startOf('day').toDate()),
                     IRBEnd: Joi
                         .date()
                         .format('YYYY-MM-DD')
@@ -113,7 +115,8 @@ module.exports = [
                         .positive(),
                     startDate: Joi
                         .date()
-                        .format('YYYY-MM-DD'),
+                        .format('YYYY-MM-DD')
+                        .min(moment().startOf('day').toDate()),
                     endDate: Joi
                         .date()
                         .format('YYYY-MM-DD')
