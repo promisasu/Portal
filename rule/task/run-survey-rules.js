@@ -66,7 +66,7 @@ function activeRules (current, index, rules) {
 }
 
 /**
- * Deterimes is a schedule rule should be active today
+ * Determines is a schedule rule should be active today
  * @param {Object} rule - rule to check
  * @returns {Boolean} true for active, false for inactive
  */
@@ -75,7 +75,7 @@ function isActive (rule) {
 }
 
 /**
- * Deterimes if two rules belong to same patient
+ * Determines if two rules belong to same patient
  * @param {Object} first - first rule
  * @param {Object} second - second rule
  * @returns {Boolean} true for same, false for different
