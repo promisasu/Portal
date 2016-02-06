@@ -28,10 +28,10 @@ function getCount (row) {
         firstrow = item;
     }
 
-    for (let index = 0; index < firstrow.length; index += 1) {
-        if (firstrow[index].expiredCount > redThreshold) {
+    for (item of firstrow) {
+        if (item.expiredCount > redThreshold) {
             redCount += 1;
-        } else if ((firstrow[index].expiredCount > yellowThresholdBegin) && (firstrow[index].expiredCount <= redThreshold)) {
+        } else if ((item.expiredCount > yellowThresholdBegin) && (item.expiredCount <= redThreshold)) {
             yellowCount += 1;
         } else {
             greenCount += 1;
