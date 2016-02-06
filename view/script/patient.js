@@ -12,6 +12,7 @@
                         display: true,
                         time: {
                             format: 'MMDDYYYY HHmm',
+                            unit: 'day',
                             round: 'day'
                         },
                         scaleLabel: {
@@ -52,20 +53,19 @@
     perWeekDatesConfig = datesByWeek(allDatesConfig);
     config.data = perWeekDatesConfig;
 
-    $('.fc-prev-button').click(function() {
+    $('.fc-prev-button').click(function prevButtonClick () {
         perWeekDatesConfig = datesByWeek(allDatesConfig);
         config.data = perWeekDatesConfig;
         new Chart(ctx, config);
     });
 
-    $('.fc-next-button').click(function() {
+    $('.fc-next-button').click(function nextButtonClick () {
         perWeekDatesConfig = datesByWeek(allDatesConfig);
         config.data = perWeekDatesConfig;
         new Chart(ctx, config);
     });
 
-    function datesByWeek(configData) {
-
+    function datesByWeek (configData) {
         var datesConfig = jQuery.extend(true, {}, configData);
         var view = $('#calendar').fullCalendar('getView');
         var datesPerView = [];
