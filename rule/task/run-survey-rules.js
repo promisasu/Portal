@@ -55,10 +55,8 @@ module.exports = runSurveyRules;
 */
 function filterRules (item, index, array) {
     if (item.rule === 'weekly' && moment(item.dateStarted).day() === moment().day()) {
-        console.log('First check passed');
         return true;
     } else if (item.rule === 'daily' && index > zero && item.patientId !== array[index - one].patientId) {
-        console.log('Second check passed');
         return true;
     } else if (
         item.rule === 'daily'
@@ -78,7 +76,6 @@ function filterRules (item, index, array) {
 * @returns {Object} a template for survey_instance creation.
 */
 function createSurveys (row) {
-    console.log(row);
     let unit = null;
 
     if (row.rule === 'daily') {
@@ -90,7 +87,12 @@ function createSurveys (row) {
         patientId: row.patientId,
         surveyTemplateId: row.surveyTemplateId,
         state: 'pending',
-        startTime: moment().startOf('day').toDate(),
-        endTime: moment().startOf('day').add(one, unit)
+        startTime: moment()
+            .startOf('day')
+            .toDate(),
+        endTime: moment()
+            .startOf('day')
+            .add(one, unit)
+            .toDate()
     };
 }
