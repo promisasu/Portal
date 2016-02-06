@@ -26,7 +26,7 @@ function pickupSubmissionTime (surveys) {
 
     for (let index = 0; index < surveys.length; index += 1) {
         // dates[index] = formatDate(surveys[index].startTime);
-        dates[index] = moment(surveys[index].startTime).format('MM/DD/YYYY HH:mm');
+        dates[index] = moment(surveys[index].startTime).utc().format('MM/DD/YYYY HH:mm');
     }
     return dates;
 }
@@ -40,9 +40,9 @@ function pickTimeLeft (surveys) {
     const percentages = [];
 
     for (let index = 0; index < surveys.length; index += 1) {
-        percentages[index] = calculateTimeLeft(moment(surveys[index].startTime),
-                                                moment(surveys[index].endTime),
-                                                moment(surveys[index].actualSubmissionTime));
+        percentages[index] = calculateTimeLeft(moment(surveys[index].startTime).utc(),
+                                                moment(surveys[index].endTime).utc(),
+                                                moment(surveys[index].actualSubmissionTime).utc());
     }
     const calData = [{label: '% Time left until daily survey expired',
                     data: percentages}];
@@ -67,7 +67,6 @@ function calculateTimeLeft (startTime, endTime, actualTime) {
     if (timeTaken > minTime) {
         percentTimeLeft = timeTaken / timeToCompleteSurvey;
     }
-    console.log(percentTimeLeft);
     return Math.round(percentTimeLeft * percent);
 }
 module.exports = processSurveyInstances;
