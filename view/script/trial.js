@@ -34,7 +34,7 @@ for(i = 0; i<3; i++)
     'use strict';
 
     var ctx = document.getElementById('trialChart').getContext('2d');
-	PlotDoughNut(window.data);
+	PlotDoughNut(window.data.datasets);
     /*new Chart(ctx, {
         type: 'doughnut',
         data: window.data

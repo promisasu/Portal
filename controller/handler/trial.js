@@ -50,6 +50,7 @@ function trialView (request, reply) {
         const currentTrial = data[0];
         const stages = data[1];
         const patients = data[2];
+
 	getComplianceCount(currentTrial, stages, patients, reply);
 
         /*reply.view('trial', {

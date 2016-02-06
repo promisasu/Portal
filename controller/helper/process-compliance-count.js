@@ -9,6 +9,43 @@ const processPatient = require('../helper/process-patient');
 const processTrial = require('../helper/process-trial');
 const moment = require('moment');
 
+function getCount(row)
+{
+    var redCount = 0;
+    var yellowCount = 0;
+    var greenCount = 0;
+
+    console.log("prabhanjan");
+    //console.log(len(row));
+    var firstrow = null;
+    for (let item of row)
+    {
+        console.log("here");
+        firstrow = item;
+    }
+
+    for(var i=0; i < firstrow.length; i++)
+    {
+        if(firstrow[i].expiredCount > 2)
+        {
+            redCount += 1;
+        }
+        else if( (firstrow[i].expiredCount > 0) && (firstrow[i].expiredCount <= 2)) {
+            yellowCount += 1;
+        }
+        else {
+            greenCount += 1;
+        }
+    }
+    console.log(String(greenCount));
+    console.log(String(yellowCount));
+    console.log(String(redCount));
+    var myArray = [greenCount, yellowCount, redCount];
+    console.log(myArray);
+
+    return myArray;
+}
+
 /**
  * A dashboard with an overview of a specific trial.
  * @function trial
@@ -18,7 +55,7 @@ const moment = require('moment');
  */
 function getComplianceCount(currentTrial, stages, patients, reply)
 {
-    var startDate = moment().subtract(moment().weekday(), 'days');
+    var startDate = moment().startOf('Week');
     Promise.all([
         database.sequelize.query(
             `
@@ -31,7 +68,7 @@ function getComplianceCount(currentTrial, stages, patients, reply)
             {
                 type: database.sequelize.QueryTypes.SELECT,
                 replacements: [
-                    startDate
+                    startDate.toISOString()
                 ]
             }
         )
@@ -44,7 +81,7 @@ function getComplianceCount(currentTrial, stages, patients, reply)
             patients: patients.map(processPatient),
             graphData: JSON.stringify({
                 // TODO add real data
-                datasets: [19, 29, 40],
+                datasets: getCount(data),
                 labels: [
                     'Compliant',
                     'Semicompliant',
