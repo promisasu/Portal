@@ -36,8 +36,8 @@ function runSurveyRules (configuration) {
         {
             type: database.sequelize.QueryTypes.SELECT,
             replacements: [
-                currentDate.toISOString(),
-                currentDate.toISOString()
+                currentDate,
+                currentDate
             ]
         }
     )
