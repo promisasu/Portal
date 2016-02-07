@@ -34,9 +34,9 @@ function submitSurvey (request, reply) {
                 where: {
                     id: request.payload.surveyInstanceID,
                     state: 'in progress'
-                }
-            },
-            {transaction}
+                },
+                transaction
+            }
         );
     })
     .then((survey) => {
@@ -66,9 +66,9 @@ function submitSurvey (request, reply) {
                         {
                             where: {
                                 optionText: currentQuestion.bodyPain[0].location
-                            }
-                        },
-                        {transaction}
+                            },
+                            transaction
+                        }
                     )
                     .then((data) => {
                         return questionResult.create(
@@ -85,9 +85,9 @@ function submitSurvey (request, reply) {
                         {
                             where: {
                                 optionText: currentQuestion.bodyPain[0].intensity
-                            }
-                        },
-                        {transaction}
+                            },
+                            transaction
+                        }
                     )
                     .then((data) => {
                         return questionResult.create(

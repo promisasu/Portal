@@ -18,20 +18,20 @@ Promise
         .bulkCreate(seedData.trial),
     database
         .sequelize
-        .model('question_option')
-        .bulkCreate(seedData.questionOption),
-    database
-        .sequelize
-        .model('question_template')
-        .bulkCreate(seedData.questionTemplate),
-    database
-        .sequelize
         .model('survey_template')
         .bulkCreate(seedData.surveyTemplate),
     database
         .sequelize
         .model('stage')
         .bulkCreate(seedData.stage),
+    database
+        .sequelize
+        .model('question_template')
+        .bulkCreate(seedData.questionTemplate),
+    database
+        .sequelize
+        .model('question_option')
+        .bulkCreate(seedData.questionOption),
     database
         .sequelize
         .model('join_stages_and_surveys')

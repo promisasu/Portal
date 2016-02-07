@@ -20,8 +20,6 @@ function createPatient (request, reply) {
     const trial = database.sequelize.model('trial');
     const stage = database.sequelize.model('stage');
     const joinStageSurveys = database.sequelize.model('join_stages_and_surveys');
-    const opensIn = 0;
-    const openFor = 7;
     let transaction = null;
     let newPatient = null;
     let pin = null;
@@ -58,39 +56,50 @@ function createPatient (request, reply) {
     .then((currentStage) => {
         return currentStage.addPatient(newPatient, {transaction});
     })
-    // Commit the transaction
-    .then(() => {
-        transaction.commit();
-    })
-    .catch((err) => {
-        transaction.rollback();
-        console.error(err);
-        reply(boom.badRequest('Trial or Stage does not exist'));
-    })
     // Collect the surveyTemplateId for the stage associated to the patient
     .then(() => {
-        return joinStageSurveys.findOne({
-            where: {
-                stageId: request.payload.stageId
+        return joinStageSurveys.findOne(
+            {
+                where: {
+                    stageId: request.payload.stageId,
+                    stagePriority: 0
+                },
+                transaction
             }
-        });
+        );
     })
     // Create first survey instance as per the surveyTemplateId for the patient
     .then((data) => {
+        const startDate = request.payload.startDate;
+        const openUnit = 'day';
+        let openFor = null;
+
+        if (data.rule === 'daily') {
+            openFor = 1;
+        } else {
+            openFor = 7;
+        }
+
         return createSurvey(
             pin,
             data.surveyTemplateId,
-            opensIn,
+            startDate,
             openFor,
-            'day'
+            openUnit,
+            transaction
         );
+    })
+    // Commit the transaction
+    .then(() => {
+        return transaction.commit();
     })
     .then(() => {
         reply.redirect(`/patient/${newPatient.pin}`);
     })
     .catch((err) => {
+        transaction.rollback();
         console.error(err);
-        reply(boom.badRequest('Survey Instance could not be generated'));
+        reply(boom.badRequest('Patient could not be created'));
     });
 }
 

@@ -52,6 +52,18 @@
                         </label>
                         <input id="trial-count" class="form-control" type="number" min="0" name="targetCount" required>
                     </div>
+                    <div class="form-group">
+                        <label for="stage-count">
+                            No of Stages
+                        </label>
+                        <input id="stage-count" class="form-control" type="number" min="0" name="stagecount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="stage-name">
+                            Stage Name (Comma Separated List)
+                        </label>
+                        <input id="stage-name" class="form-control" pattern="^[\w ]+(,[\w ]+)*$" type="text" min="0" name="stageName" required>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

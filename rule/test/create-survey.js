@@ -20,14 +20,38 @@ test.before('create a patient', () => {
     });
 });
 
-test('create can create a survey instance', () => {
+test('create a survey instance', () => {
     const patientPin = 2001;
     const surveyTemplate = 1;
-    const opensIn = 0;
+    const startDate = new Date();
     const openFor = 7;
     const openUnit = 'day';
 
-    return createSurvey(patientPin, surveyTemplate, opensIn, openFor, openUnit);
+    return createSurvey(patientPin, surveyTemplate, startDate, openFor, openUnit);
+});
+
+test('create a survey instance in an existing transaction', () => {
+    const patientPin = 2001;
+    const surveyTemplate = 1;
+    const startDate = new Date();
+    const openFor = 7;
+    const openUnit = 'day';
+    let transaction = null;
+
+    return database
+        .sequelize
+        .transaction()
+        .then((newTransaction) => {
+            transaction = newTransaction;
+            return createSurvey(patientPin, surveyTemplate, startDate, openFor, openUnit, newTransaction);
+        })
+        .then(() => {
+            return transaction.commit();
+        })
+        .catch((err) => {
+            transaction.rollback();
+            throw err;
+        });
 });
 
 test.after('delete temporary patient', () => {
