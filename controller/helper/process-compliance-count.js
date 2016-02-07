@@ -4,11 +4,6 @@
  * @module controller/handler/trial
  */
 
-const database = require('../../model');
-const processPatient = require('../helper/process-patient');
-const processTrial = require('../helper/process-trial');
-const moment = require('moment');
-
 /**
  * A dashboard with an overview of a specific trial.
  * @function getCount

@@ -1,23 +1,21 @@
-'use strict';
-
-function PlotDoughNut(dataSet) {
+function PlotDoughNut (dataSet) {
     var data = {
         labels: [
-            "Non-compliant",
-            "Partially-Compliant",
-            "Compliant"
+            'Non-compliant',
+            'Partially-Compliant',
+            'Compliant'
         ],
         datasets: [{
             data: dataSet,
             backgroundColor: [
-                "#FF0000",
-                "#FF6900",
-                "#409909"
+                '#FF0000',
+                '#FF6900',
+                '#409909'
             ],
             hoverBackgroundColor: [
-                "#FF5A5E",
-                "#FF9C56",
-                "#80C853"
+                '#FF5A5E',
+                '#FF9C56',
+                '#80C853'
             ]
         }]
     };
@@ -32,6 +30,7 @@ function PlotDoughNut(dataSet) {
     });
 }
 
-(function trial() {
+(function trial () {
+    'use strict';
     PlotDoughNut(window.data.datasets);
 }());
