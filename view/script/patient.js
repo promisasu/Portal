@@ -53,6 +53,12 @@
     perWeekDatesConfig = datesByWeek(allDatesConfig);
     config.data = perWeekDatesConfig;
 
+    $('.fc-today-button').click(function todayButtonClick () {
+        perWeekDatesConfig = datesByWeek(allDatesConfig);
+        config.data = perWeekDatesConfig;
+        new Chart(ctx, config);
+    });
+
     $('.fc-prev-button').click(function prevButtonClick () {
         perWeekDatesConfig = datesByWeek(allDatesConfig);
         config.data = perWeekDatesConfig;
@@ -78,10 +84,11 @@
         var dateDatasetData = '';
 
         for (index = 0; index < datesConfig.labels.length; index += 1) {
-            dateLabel = new Date(datesConfig.labels[index]).getTime();
+            dateLabel = new Date(datesConfig.labels[index]);
             dateDatasetData = datesConfig.datasets[0].data[index];
-            if (dateLabel >= weekStartDate && dateLabel <= weekEndDate) {
-                datesPerView.push(dateLabel);
+
+            if (dateLabel.getTime() >= weekStartDate && dateLabel.getTime() <= weekEndDate) {
+                datesPerView.push(moment(dateLabel).utc().format('MM/DD/YYYY HH:mm'));
                 timeLeftData.push(dateDatasetData);
             }
         }

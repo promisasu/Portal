@@ -1,5 +1,4 @@
 'use strict';
-const moment = require('moment');
 
 /**
  * @module controller/handler/patient
