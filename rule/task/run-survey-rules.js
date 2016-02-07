@@ -6,6 +6,7 @@
 
 const database = require('../../model');
 const moment = require('moment');
+const currentDate = new Date();
 const zero = 0;
 const one = 1;
 
@@ -28,10 +29,16 @@ function runSurveyRules (configuration) {
        ON st.id = pa.stageId
        JOIN join_stages_and_surveys AS jss
        ON jss.stageId = st.id
+       WHERE pa.dateStarted < ?
+       AND pa.dateCompleted > ?
        ORDER BY pa.id, jss.stagePriority
        `,
         {
-            type: database.sequelize.QueryTypes.SELECT
+            type: database.sequelize.QueryTypes.SELECT,
+            replacements: [
+                currentDate.toISOString(),
+                currentDate.toISOString()
+            ]
         }
     )
     .then((data) => {
