@@ -77,9 +77,7 @@ function patientView (request, reply) {
                 trial: currentTrial,
                 surveys: surveyInstances,
                 datesJson: JSON.stringify(processSurveyInstances(surveyInstances)),
-                eventsJson: JSON.stringify(surveyInstances.map(processSurveyToEvent)),
-                // TODO get real survey data
-                surveysJson: JSON.stringify([])
+                eventsJson: JSON.stringify(surveyInstances.map(processSurveyToEvent))
             });
         })
         .catch((err) => {

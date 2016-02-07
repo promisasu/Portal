@@ -38,10 +38,11 @@
             }
         }
     };
-
+    // Making deep copy of window.dates {chart config.data} and use it to process compliance chart
     var allDatesConfig = jQuery.extend(true, {}, window.dates);
     var ctx = document.getElementById('complianceChart').getContext('2d');
     var perWeekDatesConfig = [];
+    var mychart = '';
 
     $('#calendar').fullCalendar({
         defaultView: 'basicWeek',
@@ -52,26 +53,33 @@
 
     perWeekDatesConfig = datesByWeek(allDatesConfig);
     config.data = perWeekDatesConfig;
+    mychart = new Chart(ctx, config);
 
     $('.fc-today-button').click(function todayButtonClick () {
         perWeekDatesConfig = datesByWeek(allDatesConfig);
-        config.data = perWeekDatesConfig;
-        new Chart(ctx, config);
+        mychart.config.data = perWeekDatesConfig;
+        mychart.update();
     });
 
     $('.fc-prev-button').click(function prevButtonClick () {
         perWeekDatesConfig = datesByWeek(allDatesConfig);
-        config.data = perWeekDatesConfig;
-        new Chart(ctx, config);
+        mychart.config.data = perWeekDatesConfig;
+        mychart.update();
     });
 
     $('.fc-next-button').click(function nextButtonClick () {
         perWeekDatesConfig = datesByWeek(allDatesConfig);
-        config.data = perWeekDatesConfig;
-        new Chart(ctx, config);
+        mychart.config.data = perWeekDatesConfig;
+        mychart.update();
     });
 
+    /**
+     * Takes in a patient's all chart config and returns weekly config
+     * @param {Object} configData - Object of chart config data
+     * @returns {Object} processed Object of chart config data
+     */
     function datesByWeek (configData) {
+        // Making deep copy of configData {chart config.data} and use it to process per weekly view
         var datesConfig = jQuery.extend(true, {}, configData);
         var view = $('#calendar').fullCalendar('getView');
         var datesPerView = [];
@@ -97,6 +105,4 @@
         datesConfig.datasets[0].data = timeLeftData;
         return datesConfig;
     }
-
-    new Chart(ctx, config);
 }());
