@@ -88,7 +88,7 @@
             dateDatasetData = datesConfig.datasets[0].data[index];
 
             if (dateLabel.getTime() >= weekStartDate && dateLabel.getTime() <= weekEndDate) {
-                datesPerView.push(moment(dateLabel).utc().format('MM/DD/YYYY HH:mm'));
+                datesPerView.push(moment(dateLabel).format('MM/DD/YYYY HH:mm'));
                 timeLeftData.push(dateDatasetData);
             }
         }
