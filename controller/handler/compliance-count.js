@@ -26,7 +26,6 @@ function getComplianceCount (currentTrial, stages, patients, trialId, reply) {
     database
     .sequelize
     .query(
-
         `
         SELECT pa.id,
         SUM(si.state = 'expired') AS expiredCount
