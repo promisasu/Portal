@@ -1,15 +1,8 @@
 (function dashboard () {
     'use strict';
 
-    var ctx = document.getElementById('radarChart').getContext('2d');
     var table = $('#trials').DataTable();
     var selectedChoice = null;
-
-    new Chart(ctx, {
-        type: 'radar',
-        data: window.data,
-        options: {}
-    });
 
     $('.dropdown-menu').on('click', 'div', function selectItem () {
         selectedChoice = $(this).text().trim();
