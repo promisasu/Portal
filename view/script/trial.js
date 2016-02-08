@@ -1,4 +1,6 @@
-function PlotDoughNut (dataSet) {
+(function trial () {
+    'use strict';
+
     var data = {
         labels: [
             'Non-compliant',
@@ -6,7 +8,7 @@ function PlotDoughNut (dataSet) {
             'Compliant'
         ],
         datasets: [{
-            data: dataSet,
+            data: window.data.datasets,
             backgroundColor: [
                 '#FF0000',
                 '#FF6900',
@@ -28,9 +30,4 @@ function PlotDoughNut (dataSet) {
             animateScale: true
         }
     });
-}
-
-(function trial () {
-    'use strict';
-    PlotDoughNut(window.data.datasets);
 }());

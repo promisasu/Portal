@@ -39,8 +39,8 @@ function trialView (request, reply) {
                 {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
-                      request.params.id
-                  ]
+                        request.params.id
+                    ]
                 }
             )
         ])
@@ -49,7 +49,7 @@ function trialView (request, reply) {
             const stages = data[1];
             const patients = data[2];
 
-            getComplianceCount(currentTrial, stages, patients, reply);
+            getComplianceCount(currentTrial, stages, patients, request.params.id, reply);
         })
         .catch((err) => {
             console.error(err);

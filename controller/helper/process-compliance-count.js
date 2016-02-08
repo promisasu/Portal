@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * @module controller/handler/trial
  */
@@ -16,17 +15,12 @@ function getCount (row) {
     let greenCount = 0;
     const redThreshold = 2;
     const yellowThresholdBegin = 0;
-    let firstrow = null;
     let item = null;
 
     for (item of row) {
-        firstrow = item;
-    }
-
-    for (item of firstrow) {
         if (item.expiredCount > redThreshold) {
             redCount += 1;
-        } else if ((item.expiredCount > yellowThresholdBegin) && (item.expiredCount <= redThreshold)) {
+        } else if (item.expiredCount > yellowThresholdBegin && item.expiredCount <= redThreshold) {
             yellowCount += 1;
         } else {
             greenCount += 1;

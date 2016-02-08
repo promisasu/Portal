@@ -16,30 +16,37 @@ const getCount = require('../helper/process-compliance-count');
  * @param {row} currentTrial - Row
  * @param {row} stages - Row
  * @param {row} patients - Row
+ * @param {int} trialId - int
  * @param {View} reply - Row
  * @returns {View} Rendered page
  */
-function getComplianceCount (currentTrial, stages, patients, reply) {
+function getComplianceCount (currentTrial, stages, patients, trialId, reply) {
     const startDate = moment().startOf('Week');
 
-    Promise
-        .all([
-            database.sequelize.query(
-                `
-        select patientId,
-        sum(case when state = 'expired' then 1 else 0 end) as expiredCount
-        from survey_instance
-        where survey_instance.endTime > ?
-        group by patientId
+    database
+    .sequelize
+    .query(
+
+        `
+        SELECT pa.id,
+        SUM(si.state = 'expired') AS expiredCount
+        FROM survey_instance AS si
+        JOIN patient AS pa
+        ON pa.id = si.patientId
+        JOIN stage AS st
+        ON st.id = pa.stageId
+        WHERE st.trialId = ?
+        AND si.endTime > ?
+        GROUP BY pa.id
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
             replacements: [
-            startDate.toISOString()
+                trialId,
+                startDate.toISOString()
             ]
         }
         )
-        ])
         .then((data) => {
             reply.view('trial', {
                 title: 'Pain Reporting Portal',
@@ -55,7 +62,8 @@ function getComplianceCount (currentTrial, stages, patients, reply) {
                     ]
                 })
             });
-        }).catch((err) => {
+        })
+        .catch((err) => {
             console.error(err);
             reply.view('404', {
                 title: 'Not Found'
