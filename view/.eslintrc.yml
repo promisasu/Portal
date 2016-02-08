@@ -31,6 +31,9 @@ rules:
     # Stylistic Issues
     require-jsdoc: 0
     spaced-comment: 0
+    max-statements:
+        - 2
+        - 20
 
     # ECMAScript 6
     arrow-body-style: 0

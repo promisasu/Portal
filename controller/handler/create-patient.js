@@ -56,27 +56,21 @@ function createPatient (request, reply) {
     .then((currentStage) => {
         return currentStage.addPatient(newPatient, {transaction});
     })
-    // Commit the transaction
-    .then(() => {
-        transaction.commit();
-    })
-    .catch((err) => {
-        transaction.rollback();
-        console.error(err);
-        reply(boom.badRequest('Trial or Stage does not exist'));
-    })
     // Collect the surveyTemplateId for the stage associated to the patient
     .then(() => {
-        return joinStageSurveys.findOne({
-            where: {
-                stageId: request.payload.stageId,
-                stagePriority: 0
+        return joinStageSurveys.findOne(
+            {
+                where: {
+                    stageId: request.payload.stageId,
+                    stagePriority: 0
+                },
+                transaction
             }
-        });
+        );
     })
     // Create first survey instance as per the surveyTemplateId for the patient
     .then((data) => {
-        const opensIn = request.payload.startDate;
+        const startDate = request.payload.startDate;
         const openUnit = 'day';
         let openFor = null;
 
@@ -89,17 +83,23 @@ function createPatient (request, reply) {
         return createSurvey(
             pin,
             data.surveyTemplateId,
-            opensIn,
+            startDate,
             openFor,
-            openUnit
+            openUnit,
+            transaction
         );
+    })
+    // Commit the transaction
+    .then(() => {
+        return transaction.commit();
     })
     .then(() => {
         reply.redirect(`/patient/${newPatient.pin}`);
     })
     .catch((err) => {
+        transaction.rollback();
         console.error(err);
-        reply(boom.badRequest('Survey Instance could not be generated'));
+        reply(boom.badRequest('Patient could not be created'));
     });
 }
 

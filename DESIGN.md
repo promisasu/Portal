@@ -65,4 +65,10 @@ Coming Soon!
 
 ## Schedule Job
 
-Coming Soon!
+The Scheduler uses [PM2](http://pm2.keymetrics.io/) `cron restart` to run the rules on a timer.
+
+**Relevant File**
+
+``` sh
+task/start-scheduler.json
+```
