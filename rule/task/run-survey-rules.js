@@ -12,7 +12,7 @@ const one = 1;
 
 /**
  * Runs rules for all patients in all trials for all stages.
- * Currently handles daily and weekly rules
+ * Rules will generate Survey Instances that open the same day the rule engine is run.
  * @param {Object} configuration - database configuration
  * @returns {Promise} resolves when completed
  */
@@ -41,8 +41,8 @@ function runSurveyRules (configuration) {
             ]
         }
     )
-    .then((data) => {
-        const surveyInstances = data.filter(activeRules).map(toSurveyInstanceData);
+    .then((rules) => {
+        const surveyInstances = rules.filter(activeRules).map(toSurveyInstanceData);
 
         return database
               .sequelize
@@ -55,6 +55,7 @@ module.exports = runSurveyRules;
 
 /**
  * Determines which rules should be used to create Survey Instances.
+ * Supports up to two rules per stage, where one rule is active at a time.
  * @param {Object} current - a single rule record from the array.
  * @param {Number} index - location of the record in list.
  * @param {Array<Object>} rules - list all of the rule records
@@ -65,15 +66,17 @@ function activeRules (current, index, rules) {
         const previous = rules[index - one];
 
         return isActive(current) && (
-            !isSamePatient(current, previous)
-            || isSamePatient(current, previous) && !isActive(previous)
+            !isSamePatient(previous, current)
+            || isSamePatient(previous, current) && !isActive(previous)
         );
     }
     return isActive(current);
 }
 
 /**
- * Determines is a schedule rule should be active today
+ * Determines is a schedule rule should be active today.
+ * Currently supports only daily and weekly rules, other rules are ignored.
+ * Weekly rules are based off the day of the week the patient started in the trial.
  * @param {Object} rule - rule to check
  * @returns {Boolean} true for active, false for inactive
  */
