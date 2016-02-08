@@ -61,7 +61,24 @@ task
 
 ## Rules Engine
 
-Coming Soon!
+**Current**
+
+Rules are a description of a schedule.
+Surveys can be generated on a daily or weekly basis.
+Rules can be given priority in order to resolve conflicts on days that satisfy multiple rules.
+
+**Future**
+
+Rules will implement an [expert system](https://en.wikipedia.org/wiki/Expert_system) to determine when surveys should be
+generated.
+The expert system will combine schedule information, the scores from past surveys, and answers to individual questions
+from past surveys to make its decisions.
+
+**Relevant File**
+
+``` sh
+rule/task/run-survey-rules.js
+```
 
 ## Schedule Job
 
