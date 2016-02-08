@@ -5,7 +5,10 @@
  */
 
 const database = require('../../model');
-const getComplianceCount = require('../handler/compliance-count');
+const processPatient = require('../helper/process-patient');
+const processTrial = require('../helper/process-trial');
+const moment = require('moment');
+const getCount = require('../helper/process-compliance-count');
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -17,6 +20,7 @@ const getComplianceCount = require('../handler/compliance-count');
 function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
     const stage = database.sequelize.model('stage');
+    const startDate = moment().startOf('Week');
 
     Promise
         .all([
@@ -42,14 +46,50 @@ function trialView (request, reply) {
                         request.params.id
                     ]
                 }
+            ),
+            database.sequelize.query(
+              `
+              SELECT pa.id,
+              SUM(si.state = 'expired') AS expiredCount,
+              SUM(si.state = 'completed') AS completedCount
+              FROM survey_instance AS si
+              JOIN patient AS pa
+              ON pa.id = si.patientId
+              JOIN stage AS st
+              ON st.id = pa.stageId
+              WHERE st.trialId = ?
+              AND si.endTime > ?
+              GROUP BY pa.id
+                `,
+                {
+                    type: database.sequelize.QueryTypes.SELECT,
+                    replacements: [
+                        request.params.id,
+                        startDate.toISOString()
+                    ]
+                }
             )
         ])
         .then((data) => {
             const currentTrial = data[0];
             const stages = data[1];
             const patients = data[2];
+            const compliance = data[3];
 
-            getComplianceCount(currentTrial, stages, patients, request.params.id, reply);
+            reply.view('trial', {
+                title: 'Pain Reporting Portal',
+                trial: processTrial(currentTrial),
+                stages,
+                patients: patients.map(processPatient),
+                graphData: JSON.stringify({
+                    datasets: getCount(compliance),
+                    labels: [
+                        'Compliant',
+                        'Semicompliant',
+                        'Noncompliant'
+                    ]
+                })
+            });
         })
         .catch((err) => {
             console.error(err);

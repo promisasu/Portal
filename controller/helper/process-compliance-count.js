@@ -18,9 +18,11 @@ function getCount (row) {
     let item = null;
 
     for (item of row) {
-        if (item.expiredCount > redThreshold) {
+        const sum = item.expiredCount + item.completedCount;
+
+        if (sum > redThreshold) {
             redCount += 1;
-        } else if (item.expiredCount > yellowThresholdBegin && item.expiredCount <= redThreshold) {
+        } else if (sum > yellowThresholdBegin && sum <= redThreshold) {
             yellowCount += 1;
         } else {
             greenCount += 1;
