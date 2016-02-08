@@ -5,24 +5,20 @@
 
 /**
  * A dashboard with an overview of a specific trial.
- * @function getCount
- * @param {row} row - Hapi request
- * @returns {Array} count of redCount, yellowCount and greenCount
+ * @param {Array<Object>} rows - aggregated survey information
+ * @returns {Array<Number>} count of redCount, yellowCount and greenCount
  */
-function getCount (row) {
+function getCount (rows) {
+    const redThreshold = 2;
+    const yellowThresholdBegin = 0;
     let redCount = 0;
     let yellowCount = 0;
     let greenCount = 0;
-    const redThreshold = 2;
-    const yellowThresholdBegin = 0;
-    let item = null;
 
-    for (item of row) {
-        const sum = item.expiredCount + item.completedCount;
-
-        if (sum > redThreshold) {
+    for (const row of rows) {
+        if (row.expiredCount > redThreshold) {
             redCount += 1;
-        } else if (sum > yellowThresholdBegin && sum <= redThreshold) {
+        } else if (row.expiredCount > yellowThresholdBegin && row.expiredCount <= redThreshold) {
             yellowCount += 1;
         } else {
             greenCount += 1;
