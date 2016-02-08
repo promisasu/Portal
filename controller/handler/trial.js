@@ -8,7 +8,7 @@ const database = require('../../model');
 const processPatient = require('../helper/process-patient');
 const processTrial = require('../helper/process-trial');
 const moment = require('moment');
-const getCount = require('../helper/process-compliance-count');
+const processComplianceCount = require('../helper/process-compliance-count');
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -82,7 +82,7 @@ function trialView (request, reply) {
                 stages,
                 patients: patients.map(processPatient),
                 graphData: JSON.stringify({
-                    datasets: getCount(compliance),
+                    datasets: processComplianceCount(compliance),
                     labels: [
                         'Compliant',
                         'Semicompliant',

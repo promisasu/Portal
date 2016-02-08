@@ -8,7 +8,7 @@
  * @param {Array<Object>} rows - aggregated survey information
  * @returns {Array<Number>} count of redCount, yellowCount and greenCount
  */
-function getCount (rows) {
+function processComplianceCount (rows) {
     const redThreshold = 2;
     const yellowThresholdBegin = 0;
     let redCount = 0;
@@ -26,4 +26,4 @@ function getCount (rows) {
     }
     return [redCount, yellowCount, greenCount];
 }
-module.exports = getCount;
+module.exports = processComplianceCount;
