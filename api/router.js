@@ -6,6 +6,7 @@ const checkSurveys = require('./handler/check-surveys');
 const getSurvey = require('./handler/get-survey');
 const submitSurvey = require('./handler/submit-survey');
 const maxBodyPainIntensity = 10;
+const minBodyPainIntensity = 0;
 
 module.exports = [
     {
@@ -54,7 +55,7 @@ module.exports = [
                         .positive(),
                     timeStamp: Joi
                         .date()
-                        .format('YYYY-MM-DD HH:mm:ss'),
+                        .format('x'),
                     surveyResults: Joi.array().items(
                         Joi.object().keys({
                             quesID: Joi
@@ -76,7 +77,7 @@ module.exports = [
                                     intensity: Joi
                                         .number()
                                         .integer()
-                                        .positive()
+                                        .min(minBodyPainIntensity)
                                         .max(maxBodyPainIntensity)
                                 })
                             )
