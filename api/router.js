@@ -54,7 +54,7 @@ module.exports = [
                         .positive(),
                     timeStamp: Joi
                         .date()
-                        .format('YYYY-MM-DD HH:mm:ss'),
+                        .format('x'),
                     surveyResults: Joi.array().items(
                         Joi.object().keys({
                             quesID: Joi
@@ -76,7 +76,6 @@ module.exports = [
                                     intensity: Joi
                                         .number()
                                         .integer()
-                                        .positive()
                                         .max(maxBodyPainIntensity)
                                 })
                             )
