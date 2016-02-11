@@ -6,6 +6,7 @@ const checkSurveys = require('./handler/check-surveys');
 const getSurvey = require('./handler/get-survey');
 const submitSurvey = require('./handler/submit-survey');
 const maxBodyPainIntensity = 10;
+const minBodyPainIntensity = 0;
 
 module.exports = [
     {
@@ -76,6 +77,7 @@ module.exports = [
                                     intensity: Joi
                                         .number()
                                         .integer()
+                                        .min(minBodyPainIntensity)
                                         .max(maxBodyPainIntensity)
                                 })
                             )
