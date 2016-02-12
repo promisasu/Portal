@@ -5,7 +5,6 @@
  */
 
 const database = require('../../model');
-const processSurvey = require('../helper/process-survey');
 
 /**
  * A dashboard with an overview of a specific survey.
@@ -20,14 +19,12 @@ function surveyView (request, reply) {
             `
             SELECT *
             FROM survey_instance AS si
-            JOIN survey_template AS st
-            ON st.id = si.surveyTemplateId
             JOIN question_result AS qr
             ON qr.surveyInstanceId = si.id
-            JOIN question_template AS qt
-            ON qt.id = qr.questionTemplateId
             JOIN question_option AS qo
             ON qo.id = qr.questionOptionId
+            JOIN question_template AS qt
+            ON qt.id = qo.questionTemplateId
             WHERE si.id = ?
             `,
             {
@@ -39,12 +36,14 @@ function surveyView (request, reply) {
         ),
         database.sequelize.query(
             `
-            SELECT p.pin, t.id, t.name
+            SELECT pa.pin, tr.id, tr.name
             FROM survey_instance AS si
             JOIN patient AS pa
             ON pa.id = si.patientId
+            JOIN stage as st
+            ON st.id = pa.stageId
             JOIN trial AS tr
-            ON tr.id = p.trialId
+            ON tr.id = st.trialId
             WHERE si.id = ?
             `,
             {
@@ -56,8 +55,10 @@ function surveyView (request, reply) {
         )
     ])
     .then((data) => {
-        const currentSurvey = data[0];
+        const surveyResponses = data[0];
         const patientAndTrial = data[1][0];
+
+        console.log(surveyResponses, patientAndTrial);
 
         reply.view('survey', {
             title: 'Pain Reporting Portal',
@@ -68,7 +69,7 @@ function surveyView (request, reply) {
                 id: patientAndTrial.id,
                 name: patientAndTrial.name
             },
-            survey: processSurvey(currentSurvey)
+            survey: surveyResponses
         });
     })
     .catch((err) => {
