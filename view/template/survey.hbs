@@ -44,9 +44,9 @@
                             </div>
                             <ul class="list-group list-group-flush">
                                 {{#each this}}
-                                    <li class="list-group-item">
+                                    <li class="list-group-item {{#if selected}}list-group-item-info{{/if}}">
                                         {{#if selected}}
-                                            <span class="label label-default label-pill pull-xs-right">
+                                            <span class="label label-default pull-xs-right">
                                                 patient answer
                                             </span>
                                         {{/if}}
