@@ -17,14 +17,33 @@ function surveyView (request, reply) {
     .all([
         database.sequelize.query(
             `
-            SELECT *
+            SELECT qr.id
             FROM survey_instance AS si
             JOIN question_result AS qr
             ON qr.surveyInstanceId = si.id
             JOIN question_option AS qo
             ON qo.id = qr.questionOptionId
+            WHERE si.id = ?
+            `,
+            {
+                type: database.sequelize.QueryTypes.SELECT,
+                replacements: [
+                    request.params.id
+                ]
+            }
+        ),
+        database.sequelize.query(
+            `
+            SELECT *, si.id AS surveyId, qo.id AS optionId
+            FROM survey_instance AS si
+            JOIN survey_template AS st
+            ON st.id = si.surveyTemplateId
+            JOIN join_surveys_and_questions AS jsq
+            ON jsq.surveyTemplateId = st.id
             JOIN question_template AS qt
-            ON qt.id = qo.questionTemplateId
+            ON qt.id = jsq.questionTemplateId
+            JOIN question_option AS qo
+            ON qo.questionTemplateId = qt.id
             WHERE si.id = ?
             `,
             {
@@ -48,6 +67,7 @@ function surveyView (request, reply) {
             `,
             {
                 type: database.sequelize.QueryTypes.SELECT,
+                plain: true,
                 replacements: [
                     request.params.id
                 ]
@@ -56,9 +76,17 @@ function surveyView (request, reply) {
     ])
     .then((data) => {
         const surveyResponses = data[0];
-        const patientAndTrial = data[1][0];
+        const surveyInstanceAndQuestions = data[1];
+        const patientAndTrial = data[2];
+        const negative = -1;
 
-        console.log(surveyResponses, patientAndTrial);
+        const questionsWithResponses = surveyInstanceAndQuestions.map((item) => {
+            if (surveyResponses.indexOf(item.optionId) > negative) {
+                item.selected = true;
+                return item;
+            }
+            return item;
+        });
 
         reply.view('survey', {
             title: 'Pain Reporting Portal',
@@ -69,7 +97,8 @@ function surveyView (request, reply) {
                 id: patientAndTrial.id,
                 name: patientAndTrial.name
             },
-            survey: surveyResponses
+            survey: surveyInstanceAndQuestions[0],
+            questions: questionsWithResponses
         });
     })
     .catch((err) => {
