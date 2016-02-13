@@ -55,6 +55,7 @@
 
 Tasks can be run by calling `npm run <task>`
 
+* `check-dependencies` view outdated and insecure packages
 * `describe-api` view details of running api
 * `describe-dashboard` view details of running dashboard
 * `describe-scheduler` view details of running scheduler
@@ -63,7 +64,6 @@ Tasks can be run by calling `npm run <task>`
 * `lint` lint check project files
 * `lint-fix` auto fixes some lint errors
 * `log` view server log
-* `outdated` view outdated server and browser packages
 * `seed` fill database with sample data
 * `start` start production api, dashboard, and scheduler
 * `start-api` start production api

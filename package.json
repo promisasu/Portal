@@ -4,6 +4,7 @@
   "description": "Pain Reporting Portal",
   "main": "index.js",
   "scripts": {
+    "check-dependencies": "npm outdated && nsp check && bower list",
     "describe-api": "pm2 describe prp-api",
     "describe-dashboard": "pm2 describe prp-dashboard",
     "describe-scheduler": "pm2 describe prp-scheduler",
@@ -13,7 +14,6 @@
     "lint": "eslint . view/**/*.hbs --inline-config=false && remark *.md && stylelint view/stylesheet/*.css",
     "lint-fix": "eslint . --fix --inline-config=false",
     "log": "pm2 logs",
-    "outdated": "npm outdated && bower list",
     "preseed": "node task/sync",
     "seed": "node task/seed",
     "start": "pm2 start task/start-api.json && pm2 start task/start-dashboard.json && pm2 start task/start-scheduler.json",
@@ -67,6 +67,7 @@
     "eslint": "^2.0.0",
     "eslint-plugin-html": "^1.3.0",
     "jsdoc": "^3.4.0",
+    "nsp": "^2.2.0",
     "pm2": "^1.0.1",
     "read": "^1.0.7",
     "remark": "^3.2.3",
