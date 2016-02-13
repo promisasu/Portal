@@ -55,7 +55,7 @@
 
 Tasks can be run by calling `npm run <task>`
 
-* `check-dependencies` view outdated and insecure packages
+* `check-dependencies` detect outdated and insecure packages
 * `describe-api` view details of running api
 * `describe-dashboard` view details of running dashboard
 * `describe-scheduler` view details of running scheduler
