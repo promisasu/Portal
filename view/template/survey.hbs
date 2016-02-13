@@ -32,40 +32,30 @@
                         <br>
                         Taken: {{#if survey.userSubmissionTime}}{{ survey.userSubmissionTime }}{{else}}survey has not been taken{{/if}}.
                     </p>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Question
-                                    </th>
-                                    <th>
-                                        Options
-                                    </th>
-                                    <th>
-                                        Answer
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each questions}}
-                                    <tr>
-                                        <td>
-                                            {{ questionText }}
-                                        </td>
-                                        <td>
-                                            {{ optionText }}
-                                        </td>
-                                        <td>
-                                            {{#if selected}}
+                    {{#each questions}}
+                        <div class="card">
+                            <div class="card-block">
+                                <h4 class="card-title">
+                                    Question #{{ this.0.questionOrder }}
+                                </h4>
+                                <p class="card-text">
+                                    {{ this.0.questionText }}
+                                </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                {{#each this}}
+                                    <li class="list-group-item">
+                                        {{#if selected}}
+                                            <span class="label label-default label-pill pull-xs-right">
                                                 patient answer
-                                            {{/if}}
-                                        </td>
-                                    </tr>
+                                            </span>
+                                        {{/if}}
+                                        {{ optionText }}
+                                    </li>
                                 {{/each}}
-                            </tbody>
-                        </table>
-                    </div>
+                            </ul>
+                        </div>
+                    {{/each}}
                 </div>
             </div>
         </div>

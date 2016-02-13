@@ -4,6 +4,7 @@
  * @module controller/handler/survey
  */
 
+const groupBy = require('lodash.groupby');
 const database = require('../../model');
 
 /**
@@ -34,7 +35,7 @@ function surveyView (request, reply) {
         ),
         database.sequelize.query(
             `
-            SELECT *, si.id AS surveyId, qo.id AS optionId
+            SELECT *, si.id AS surveyId, qt.id AS questionId, qo.id AS optionId
             FROM survey_instance AS si
             JOIN survey_template AS st
             ON st.id = si.surveyTemplateId
@@ -80,13 +81,15 @@ function surveyView (request, reply) {
         const patientAndTrial = data[2];
         const negative = -1;
 
-        const questionsWithResponses = surveyInstanceAndQuestions.map((item) => {
+        let questionsWithResponses = surveyInstanceAndQuestions.map((item) => {
             if (surveyResponses.indexOf(item.optionId) > negative) {
                 item.selected = true;
                 return item;
             }
             return item;
         });
+
+        questionsWithResponses = groupBy(questionsWithResponses, 'questionId');
 
         reply.view('survey', {
             title: 'Pain Reporting Portal',
