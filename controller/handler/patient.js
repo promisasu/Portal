@@ -20,7 +20,7 @@ function patientView (request, reply) {
         .all([
             database.sequelize.query(
                 `
-                SELECT *, st.name as stage
+                SELECT *, st.name AS stage
                 FROM patient AS pa
                 JOIN stage AS st
                 ON st.id = pa.stageId

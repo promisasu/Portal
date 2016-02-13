@@ -17,7 +17,7 @@
             </a>
         </li>
         <li class="active">
-            Survey: {{ survey.id }}
+            Survey: {{ survey.surveyId }}
         </li>
     </ol>
     <div class="row">
@@ -28,46 +28,34 @@
                         {{ survey.name }}
                     </h4>
                     <p class="card-text">
-                        Available {{ survey.startTime }} to {{ survey.endTime}}.
+                        Available: from {{ survey.startTime }} to {{ survey.endTime }}.
                         <br>
-                        Taken {{ survey.userSubmissionTime }}.
+                        Taken: {{#if survey.userSubmissionTime}}{{ survey.userSubmissionTime }}{{else}}survey has not been taken{{/if}}.
                     </p>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Question
-                                    </th>
-                                    <th>
-                                        Options
-                                    </th>
-                                    <th>
-                                        Answer
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each survey.questions}}
-                                    <tr>
-                                        <td style="width:50%">
-                                            {{ questionText }}
-                                        </td>
-                                        <td>
-                                            {{#each options}}
-                                                <li>
-                                                    {{this}}
-                                                </li>
-                                            {{/each}}
-                                        </td>
-                                        <td>
-                                            {{ optionText }}
-                                        </td>
-                                    </tr>
+                    {{#each questions}}
+                        <div class="card">
+                            <div class="card-block">
+                                <h4 class="card-title">
+                                    Question #{{ this.0.questionOrder }}
+                                </h4>
+                                <p class="card-text">
+                                    {{ this.0.questionText }}
+                                </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                {{#each this}}
+                                    <li class="list-group-item {{#if selected}}list-group-item-info{{/if}}">
+                                        {{#if selected}}
+                                            <span class="label label-default pull-xs-right">
+                                                patient answer
+                                            </span>
+                                        {{/if}}
+                                        {{ optionText }}
+                                    </li>
                                 {{/each}}
-                            </tbody>
-                        </table>
-                    </div>
+                            </ul>
+                        </div>
+                    {{/each}}
                 </div>
             </div>
         </div>
