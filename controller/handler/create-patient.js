@@ -77,7 +77,7 @@ function createPatient (request, reply) {
         if (data.rule === 'daily') {
             openFor = 1;
         } else {
-            openFor = 7;
+            openFor = 2;
         }
 
         return createSurvey(
