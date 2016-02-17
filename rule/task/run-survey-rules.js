@@ -100,12 +100,12 @@ function isSamePatient (first, second) {
  * @returns {Object} a template for survey_instance creation.
  */
 function toSurveyInstanceData (row) {
-    let unit = null;
+    let amount = null;
 
     if (row.rule === 'daily') {
-        unit = 'day';
+        amount = 1;
     } else {
-        unit = 'week';
+        amount = 2;
     }
 
     return {
@@ -117,7 +117,7 @@ function toSurveyInstanceData (row) {
             .toDate(),
         endTime: moment()
             .startOf('day')
-            .add(one, unit)
+            .add(amount, 'day')
             .toDate()
     };
 }
