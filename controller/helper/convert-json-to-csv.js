@@ -27,13 +27,13 @@ function convertJsonToCsv (data, configuration) {
     .map((row) => {
         return configuration
         .map((column) => {
-            // check if there is a value for current column exists
-            // if there is return it
-            // otherwise use default value
+            // check if there is a value for current column
+            // if there is: return value wrapped in double quotes
+            // otherwise: use default value
             if (row[column.key]) {
-                return row[column.key];
+                return '"'.concat(row[column.key], '"');
             }
-            return column.default;
+            return '"'.concat(column.default, '"');
         })
         .join(',');
     })

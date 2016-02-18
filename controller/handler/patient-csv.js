@@ -16,8 +16,24 @@ const configuration = [
     },
     {
         label: 'survey name',
-        key: 'name',
-        default: 'DNE'
+        key: 'name'
+    },
+    {
+        label: 'unique survey id',
+        key: 'id'
+    },
+    {
+        label: 'question',
+        key: 'questionText'
+    },
+    {
+        label: 'question option',
+        key: 'optionText'
+    },
+    {
+        label: 'selected answer',
+        key: 'answered',
+        default: 'false'
     }
 ];
 
@@ -54,7 +70,7 @@ function patientCSV (request, reply) {
         // both answered and unanswered
         database.sequelize.query(
             `
-            SELECT *, si.id AS surveyId, qt.id AS questionId, qo.id AS optionId
+            SELECT *, si.id, qt.id AS questionId, qo.id AS optionId
             FROM patient AS pa
             JOIN survey_instance AS si
             ON si.patientId = pa.id
@@ -77,7 +93,21 @@ function patientCSV (request, reply) {
         )
     ])
     .then((data) => {
-        return convertJsonToCsv(data[1], configuration);
+        const allOptionsWithAnswers = data[1].map((questionOption) => {
+            // check if question has been answered
+            const answered = data[0].find((questionAnswered) => {
+                return questionOption.id === questionAnswered.surveyId
+                    && questionOption.optionId === questionAnswered.optionId;
+            });
+
+            // add answered attribute to data
+            questionOption.answered = Boolean(answered);
+
+            // send back updated data
+            return questionOption;
+        });
+
+        return convertJsonToCsv(allOptionsWithAnswers, configuration);
     })
     .then((csv) => {
         reply(csv).type('text/csv');
