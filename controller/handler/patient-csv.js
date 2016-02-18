@@ -5,7 +5,21 @@
  */
 
 const database = require('../../model');
+const convertJsonToCsv = require('../helper/convert-json-to-csv');
 const boom = require('boom');
+
+const configuration = [
+    {
+        label: 'patient pin',
+        key: 'pin',
+        default: 'DNE'
+    },
+    {
+        label: 'survey name',
+        key: 'name',
+        default: 'DNE'
+    }
+];
 
 /**
  * Create a Comma Seperate Value export of a single patient's data.
@@ -63,7 +77,10 @@ function patientCSV (request, reply) {
         )
     ])
     .then((data) => {
-        reply(data);
+        return convertJsonToCsv(data[1], configuration);
+    })
+    .then((csv) => {
+        reply(csv).type('text/csv');
     })
     .catch((err) => {
         console.error(err);
