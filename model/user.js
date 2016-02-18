@@ -39,9 +39,7 @@ function register (sequelize, salt) {
                 unique: true,
                 allowNull: false,
                 validate: {
-                    // Username is only Latin letters
-                    // and is 5-25 characters in length
-                    isAlpha: true,
+                    // TODO re add alphanumeric validation once sequelize is patched
                     len: [minimumNameLength, maximumNameLength]
                 }
             },
