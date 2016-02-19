@@ -8,6 +8,7 @@ const createPatient = require('./handler/create-patient');
 const dashboardPresenter = require('./handler/dashboard');
 const trialPresenter = require('./handler/trial');
 const patientPresenter = require('./handler/patient');
+const patientCSV = require('./handler/patient-csv');
 const surveyPresenter = require('./handler/survey');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
@@ -129,6 +130,21 @@ module.exports = [
         method: 'GET',
         path: '/patient/{pin}',
         handler: patientPresenter,
+        config: {
+            validate: {
+                params: {
+                    pin: Joi
+                        .number()
+                        .integer()
+                        .positive()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/patient/{pin}.csv',
+        handler: patientCSV,
         config: {
             validate: {
                 params: {

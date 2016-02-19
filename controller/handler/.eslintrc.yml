@@ -3,7 +3,9 @@ rules:
     max-params:
         - 2
         - 6
-
+    max-nested-callbacks:
+        - 2
+        - 3
     max-statements:
         - 2
         - 20
