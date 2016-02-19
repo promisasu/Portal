@@ -5,22 +5,22 @@
 
 /**
  * A function to assign compliance status to each patient record from a Trial.
- * @param {Array<Object>} rows - all patient records in a Trial
- * @returns {Array<Object>} rows - updated rows object with compliance status set for each record
+ * @param {Array<Object>} row - single patient record in a Trial
+ * @returns {Array<Object>} row - updated patient record with compliance status set
  */
-function processPatientStatus (rows) {
+function processPatientStatus (row) {
     const redThreshold = 2;
     const yellowThresholdBegin = 0;
 
-    if (rows.expiredCount > redThreshold) {
-        rows.status = 'Non-Compliant';
-    } else if (rows.expiredCount > yellowThresholdBegin && rows.expiredCount <= redThreshold) {
-        rows.status = 'Semi-compliant';
+    if (row.expiredCount > redThreshold) {
+        row.status = 'Non-Compliant';
+    } else if (row.expiredCount > yellowThresholdBegin && row.expiredCount <= redThreshold) {
+        row.status = 'Semi-compliant';
     } else {
-        rows.status = 'Compliant';
+        row.status = 'Compliant';
     }
 
-    return rows;
+    return row;
 }
 
 module.exports = processPatientStatus;
