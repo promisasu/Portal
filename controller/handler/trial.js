@@ -71,14 +71,14 @@ function trialView (request, reply) {
                 }
             ),
             database.sequelize.query(
-             `
-             SELECT jcns.rule
-             FROM trial AS tr
-    	     JOIN stage AS st
-             ON tr.id = st.trialId
-             JOIN join_current_and_next_stages AS jcns
-             ON st.id = jcns.stageId
-             WHERE tr.id = ?
+              `
+              SELECT jcns.rule
+              FROM trial AS tr
+    	      JOIN stage AS st
+              ON tr.id = st.trialId
+              JOIN join_current_and_next_stages AS jcns
+              ON st.id = jcns.stageId
+              WHERE tr.id = ?
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -94,6 +94,10 @@ function trialView (request, reply) {
             const patients = data[2];
             const compliance = data[3];
             const rules = data[4];
+            const ruleValues = rules.map((ruleData) => {
+                return parseInt(ruleData.rule, 10);
+            });
+            const initRule = 0;
 
             reply.view('trial', {
                 title: 'Pain Reporting Portal',
@@ -108,7 +112,9 @@ function trialView (request, reply) {
                         'Noncompliant'
                     ]
                 }),
-                endDate: processRule(rules)
+                endDate: processRule(ruleValues.reduce((preVal, postVal) => {
+                    return preVal + postVal;
+                }, initRule))
             });
         })
         .catch((err) => {
