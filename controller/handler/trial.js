@@ -77,7 +77,7 @@ function trialView (request, reply) {
             const compliance = data[3];
             const complianceCount = processComplianceCount(compliance);
             const patientCount = patients.length;
-            const patientStatuses = processPatientStatus(compliance);
+            const patientStatuses = compliance.map(processPatientStatus);
 
             const patientArray = patients.map((patient) => {
                   // check for patient's status

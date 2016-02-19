@@ -1,6 +1,6 @@
 'use strict';
 /**
- * @module controller/handler/trial
+ * @module controller/handler/process-patient-status
  */
 
 /**
@@ -12,14 +12,12 @@ function processPatientStatus (rows) {
     const redThreshold = 2;
     const yellowThresholdBegin = 0;
 
-    for (const index in rows) {
-        if (rows[index].expiredCount > redThreshold) {
-            rows[index].status = 'Non-Compliant';
-        } else if (rows[index].expiredCount > yellowThresholdBegin && rows[index].expiredCount <= redThreshold) {
-            rows[index].status = 'Semi-compliant';
-        } else {
-            rows[index].status = 'Compliant';
-        }
+    if (rows.expiredCount > redThreshold) {
+        rows.status = 'Non-Compliant';
+    } else if (rows.expiredCount > yellowThresholdBegin && rows.expiredCount <= redThreshold) {
+        rows.status = 'Semi-compliant';
+    } else {
+        rows.status = 'Compliant';
     }
 
     return rows;
