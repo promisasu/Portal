@@ -42,7 +42,7 @@
                                         Survey ID
                                     </th>
                                     <th>
-                                        Completed
+                                        Status
                                     </th>
                                     <th>
                                         Stage
@@ -57,7 +57,7 @@
                                         End Time
                                     </th>
                                     <th>
-                                        User Submission Time
+                                        Submission Time
                                     </th>
                                 </tr>
                             </thead>
@@ -71,13 +71,13 @@
                                             </a>
                                         </th>
                                         <td>
-                                            {{ completed }}
+                                            {{ state }}
                                         </td>
                                         <td>
-                                            {{ stageId }}
+                                            {{ stageName }}
                                         </td>
                                         <td>
-                                            {{ name }}
+                                            {{ surveyTemplateName }}
                                         </td>
                                         <td>
                                             {{ startTime }}
