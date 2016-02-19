@@ -16,9 +16,10 @@ const database = require('../../model');
 function surveyView (request, reply) {
     Promise
     .all([
+        // all of the responses for the survey
         database.sequelize.query(
             `
-            SELECT qr.id
+            SELECT qo.id
             FROM survey_instance AS si
             JOIN question_result AS qr
             ON qr.surveyInstanceId = si.id
@@ -33,6 +34,8 @@ function surveyView (request, reply) {
                 ]
             }
         ),
+        // all the questions and optional
+        // includes both answered and unanswered
         database.sequelize.query(
             `
             SELECT *, si.id AS surveyId, qt.id AS questionId, qo.id AS optionId
