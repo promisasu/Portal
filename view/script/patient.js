@@ -1,6 +1,7 @@
 (function patient () {
     'use strict';
-
+    // Making deep copy of window.dates {chart config.data} and use it to process compliance chart
+    var allDatesConfig = jQuery.extend(true, {}, window.dates);
     var config = {
         type: 'line',
         data: '',
@@ -23,6 +24,11 @@
                 ],
                 yAxes: [
                     {
+                        type: 'linear',
+                        ticks: {
+                            max: 100,
+                            min: 0
+                        },
                         display: true,
                         scaleLabel: {
                             show: true,
@@ -38,10 +44,9 @@
             }
         }
     };
-    // Making deep copy of window.dates {chart config.data} and use it to process compliance chart
-    var allDatesConfig = jQuery.extend(true, {}, window.dates);
+
     var ctx = document.getElementById('complianceChart').getContext('2d');
-    var perWeekDatesConfig = [];
+    // var perWeekDatesConfig = [];
     var mychart = '';
 
     $('#calendar').fullCalendar({
@@ -51,10 +56,10 @@
         events: window.events
     });
 
-    perWeekDatesConfig = datesByWeek(allDatesConfig);
-    config.data = perWeekDatesConfig;
+    // perWeekDatesConfig = datesByWeek(allDatesConfig);
+    config.data = allDatesConfig;
     mychart = new Chart(ctx, config);
-
+/*
     $('.fc-today-button').click(function todayButtonClick () {
         perWeekDatesConfig = datesByWeek(allDatesConfig);
         mychart.config.data = perWeekDatesConfig;
@@ -72,12 +77,12 @@
         mychart.config.data = perWeekDatesConfig;
         mychart.update();
     });
-
+*/
     /**
      * Takes in a patient's all chart config and returns weekly config
      * @param {Object} configData - Object of chart config data
      * @returns {Object} processed Object of chart config data
-     */
+
     function datesByWeek (configData) {
         // Making deep copy of configData {chart config.data} and use it to process per weekly view
         var datesConfig = jQuery.extend(true, {}, configData);
@@ -105,4 +110,5 @@
         datesConfig.datasets[0].data = timeLeftData;
         return datesConfig;
     }
+         */
 }());

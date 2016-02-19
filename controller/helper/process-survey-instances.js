@@ -12,11 +12,28 @@ const moment = require('moment');
 function processSurveyInstances (surveys) {
     return {
         // Using UTC as the date gets modified to the local time (GMT in this case) when UTC not used.
-        labels: surveys.map((survey) => {
-            return moment(survey.startTime).utc().format('MM/DD/YYYY HH:mm');
-        }),
+        labels: pickDates(surveys),
         datasets: pickTimeLeft(surveys)
     };
+}
+
+/**
+ * Takes in a Survey Instances and get the % time left to be shown on complience chart
+ * @param {Object} surveys - list of survey instances
+ * @returns {Object} processed list of datetimes
+ */
+function pickDates (surveys) {
+    const dates = surveys.map((survey) => {
+        return moment(survey.startTime).utc().format('MM/DD/YYYY HH:mm');
+    });
+
+    const lastDate = moment(surveys[0].dateCompleted).utc().format('MM/DD/YYYY HH:mm');
+    const missingValue = -1;
+
+    if (dates.indexOf(lastDate) <= missingValue) {
+        dates.push(lastDate);
+    }
+    return dates;
 }
 
 /**
