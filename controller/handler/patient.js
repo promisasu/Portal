@@ -8,6 +8,7 @@ const database = require('../../model');
 const processPatient = require('../helper/process-patient');
 const processSurveyToEvent = require('../helper/process-survey-to-event');
 const processSurveyInstances = require('../helper/process-survey-instances');
+const moment = require('moment');
 
 /**
  * A dashboard with an overview of a specific patient.
@@ -35,10 +36,14 @@ function patientView (request, reply) {
             ),
             database.sequelize.query(
                 `
-                SELECT *, si.id
+                SELECT *, si.id, st.name AS stageName, srt.name AS surveyTemplateName
                 FROM patient AS pa
                 JOIN survey_instance AS si
                 ON si.patientId = pa.id
+                JOIN stage AS st
+                ON st.id = pa.stageId
+                JOIN survey_template AS srt
+                ON srt.id = si.surveyTemplateId
                 WHERE pa.pin = ?
                 `,
                 {
@@ -75,7 +80,15 @@ function patientView (request, reply) {
                 title: 'Pain Reporting Portal',
                 patient: processPatient(currentPatient),
                 trial: currentTrial,
-                surveys: surveyInstances,
+                surveys: surveyInstances.map((surveyInstance) => {
+                    surveyInstance.startTime = moment(surveyInstance.startTime).format('MM-DD-YYYY');
+                    surveyInstance.endTime = moment(surveyInstance.endTime).format('MM-DD-YYYY');
+                    if (surveyInstance.userSubmissionTime) {
+                        surveyInstance.userSubmissionTime = moment(surveyInstance.userSubmissionTime)
+                        .format('MM-DD-YYYY');
+                    }
+                    return surveyInstance;
+                }),
                 datesJson: JSON.stringify(processSurveyInstances(surveyInstances)),
                 eventsJson: JSON.stringify(surveyInstances.map(processSurveyToEvent))
             });
