@@ -75,14 +75,18 @@ function trialView (request, reply) {
             const stages = data[1];
             const patients = data[2];
             const compliance = data[3];
+            const complianceCount = processComplianceCount(compliance);
+            const patientCount = complianceCount[0] + complianceCount[1] + complianceCount[2];
 
             reply.view('trial', {
                 title: 'Pain Reporting Portal',
                 trial: processTrial(currentTrial),
                 stages,
                 patients: patients.map(processPatient),
+                complianceCount,
+                patientCount,
                 graphData: JSON.stringify({
-                    datasets: processComplianceCount(compliance),
+                    datasets: complianceCount,
                     labels: [
                         'Compliant',
                         'Semicompliant',
