@@ -5,8 +5,8 @@
 
 /**
  * A function to assign compliance status to each patient record from a Trial.
- * @param {Array<Object>} row - single patient record in a Trial
- * @returns {Array<Object>} row - updated patient record with compliance status set
+ * @param {Object} row - single patient record in a Trial
+ * @returns {Object} row - updated patient record with compliance status set
  */
 function processPatientStatus (row) {
     const redThreshold = 2;
