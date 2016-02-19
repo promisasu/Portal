@@ -4,8 +4,8 @@
  */
 
 /**
- * A dashboard with an overview of a specific trial.
- * @param {Array<Object>} rows - aggregated survey information
+ * A function to assign compliance status to each patient record from a Trial.
+ * @param {Array<Object>} rows - all patient records in a Trial
  * @returns {Array<Object>} rows - updated rows object with compliance status set for each record
  */
 function processPatientStatus (rows) {
