@@ -7,7 +7,7 @@ const moment = require('moment');
 
 /**
  * A rule processing for calculating end date of patient in trial.
- * @param {Object} ruleValue - aggregated rule values
+ * @param {Object} ruleTotal - aggregated rule values
  * @returns {Date} End Date
  */
 function processRule (ruleTotal) {
