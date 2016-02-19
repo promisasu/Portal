@@ -9,6 +9,7 @@ const processPatient = require('../helper/process-patient');
 const processTrial = require('../helper/process-trial');
 const moment = require('moment');
 const processComplianceCount = require('../helper/process-compliance-count');
+const processRule = require('../helper/process-rule');
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -68,6 +69,23 @@ function trialView (request, reply) {
                         startDate.toISOString()
                     ]
                 }
+            ),
+            database.sequelize.query(
+             `
+             SELECT jcns.rule
+             FROM trial AS tr
+    	     JOIN stage AS st
+             ON tr.id = st.trialId
+             JOIN join_current_and_next_stages AS jcns
+             ON st.id = jcns.stageId
+             WHERE tr.id = ?
+                `,
+                {
+                    type: database.sequelize.QueryTypes.SELECT,
+                    replacements: [
+                        request.params.id
+                    ]
+                }
             )
         ])
         .then((data) => {
@@ -75,6 +93,7 @@ function trialView (request, reply) {
             const stages = data[1];
             const patients = data[2];
             const compliance = data[3];
+            const rules = data[4];
 
             reply.view('trial', {
                 title: 'Pain Reporting Portal',
@@ -88,7 +107,8 @@ function trialView (request, reply) {
                         'Semicompliant',
                         'Noncompliant'
                     ]
-                })
+                }),
+                endDate: processRule(rules)
             });
         })
         .catch((err) => {
