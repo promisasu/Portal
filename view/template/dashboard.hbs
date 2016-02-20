@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
     <br>
     <ol class="breadcrumb">
@@ -11,38 +12,7 @@
                 <div class="card-block">
                     <h4 class="card-title">
                         Welcome, {{ user.username }}!
-                    </h4>
-                    <p class="card-text">
-                        Global Stats
-                    </p>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th scope="row">
-                                    In Progress Trials:
-                                </th>
-                                <td>
-                                    {{ overall.inProgress }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    Average Percent Recruited:
-                                </th>
-                                <td>
-                                    {{ overall.percentRecruited }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    Average Percent Compliant:
-                                </th>
-                                <td>
-                                    {{ overall.averageCompliance }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    </h4> 
                 </div>
             </div>
         </div>
@@ -62,11 +32,6 @@
                         </div>
                         <div class="col-sm-9">
                             <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
-                                <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal">
-                                        GENERATE REPORT
-                                    </button>
-                                </div>
                                 <div class="btn-group" role="group">
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTrial">
                                         ADD NEW

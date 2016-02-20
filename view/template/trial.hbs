@@ -51,7 +51,7 @@
                                     Patient Count
                                 </th>
                                 <td>
-                                    {{ trial.activeCount }}
+                                    {{ patientCount }}
                                 </td>
                             </tr>
                             <tr>
@@ -59,7 +59,7 @@
                                     Noncompliant Count
                                 </th>
                                 <td>
-                                    {{ trial.noncompliantCount }}
+                                    {{ complianceCount.[0] }}
                                 </td>
                             </tr>
                         </tbody>
@@ -93,11 +93,6 @@
                                     ENROLL NEW PATIENT
                                 </button>
                               </div>
-                              <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#notifyModal">
-                                    NOTIFY ALL NONCOMPLIANT
-                                </button>
-                              </div>
                             </div>
                         </div>
                     </div><br>
@@ -109,19 +104,13 @@
                                         Patient Pin
                                     </th>
                                     <th>
-                                        Status
+                                        Compliance Status
                                     </th>
                                     <th>
                                         Stage
                                     </th>
                                     <th>
-                                        Last Taken
-                                    </th>
-                                    <th>
-                                        Consecutive Missed
-                                    </th>
-                                    <th>
-                                        Total Missed
+                                        Total Missed Past Week
                                     </th>
                                 </tr>
                             </thead>
@@ -153,12 +142,6 @@
                                         </td>
                                         <td>
                                             {{ stage }}
-                                        </td>
-                                        <td>
-                                            {{ lastTaken }}
-                                        </td>
-                                        <td>
-                                            {{ consecutiveMissed }}
                                         </td>
                                         <td>
                                             {{ totalMissed }}

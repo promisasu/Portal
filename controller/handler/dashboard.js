@@ -1,3 +1,4 @@
+
 'use strict';
 
 /**
@@ -26,11 +27,6 @@ function dashboardView (request, reply) {
         reply.view('dashboard', {
             title: 'Pain Reporting Portal',
             user: request.auth.credentials,
-            overall: {
-                inProgress: null,
-                percentRecruited: null,
-                averageCompliance: null
-            },
             status: {
                 patientCount: null,
                 riskCount: null,

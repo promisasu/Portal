@@ -27,9 +27,11 @@ function processSurveyInstances (surveys) {
 function pickTimeLeft (surveys) {
     // Using UTC as the date gets modified to the local time (GMT in this case) when UTC not used.
     const percentages = surveys.map((suvey) => {
-        return calculateTimeLeft(moment(suvey.startTime).utc(),
-                                moment(suvey.endTime).utc(),
-                                moment(suvey.actualSubmissionTime).utc());
+        return calculateTimeLeft(
+            moment(suvey.startTime).utc(),
+            moment(suvey.endTime).utc(),
+            moment(suvey.actualSubmissionTime).utc()
+        );
     });
 
     return [{

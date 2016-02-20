@@ -19,17 +19,20 @@
         <div class="col-sm-12">
             <div id="calendar"></div>
         </div>
-        <div class="col-sm-12">
+        <!--div class="col-sm-12">
             <div class="card">
               <br>
               <canvas id="complianceChart" width="400" height="100px"></canvas>
             </div>
-        </div>
+        </div-->
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-block">
                     <h4 class="card-title">
                         Patients' Surveys
+                        <a href="/patient/{{ patient.pin }}.csv" class="btn btn-primary btn-sm pull-right">
+                            Export Patient Data
+                        </a>
                     </h4>
                     <div class="table-responsive">
                         <table class="table table-striped">
@@ -39,7 +42,7 @@
                                         Survey ID
                                     </th>
                                     <th>
-                                        Completed
+                                        Status
                                     </th>
                                     <th>
                                         Stage
@@ -54,7 +57,7 @@
                                         End Time
                                     </th>
                                     <th>
-                                        User Submission Time
+                                        Submission Time
                                     </th>
                                 </tr>
                             </thead>
@@ -68,13 +71,13 @@
                                             </a>
                                         </th>
                                         <td>
-                                            {{ completed }}
+                                            {{ state }}
                                         </td>
                                         <td>
-                                            {{ stageId }}
+                                            {{ stageName }}
                                         </td>
                                         <td>
-                                            {{ name }}
+                                            {{ surveyTemplateName }}
                                         </td>
                                         <td>
                                             {{ startTime }}

@@ -5,11 +5,11 @@
  */
 
 const database = require('../../model');
-const processPatient = require('../helper/process-patient');
 const processTrial = require('../helper/process-trial');
 const moment = require('moment');
 const processComplianceCount = require('../helper/process-compliance-count');
 const processRule = require('../helper/process-rule');
+const processPatientStatus = require('../helper/process-patient-status');
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -50,7 +50,7 @@ function trialView (request, reply) {
             ),
             database.sequelize.query(
               `
-              SELECT pa.id,
+              SELECT pa.id, pa.pin,
               SUM(si.state = 'expired') AS expiredCount,
               SUM(si.state = 'completed') AS completedCount
               FROM survey_instance AS si
@@ -98,14 +98,32 @@ function trialView (request, reply) {
                 return parseInt(ruleData.rule, 10);
             });
             const initRule = 0;
+            const complianceCount = processComplianceCount(compliance);
+            const patientCount = patients.length;
+            const patientStatuses = compliance.map(processPatientStatus);
+
+            const patientArray = patients.map((patient) => {
+                  // check for patient's status
+                const patientStatus = patientStatuses.find((status) => {
+                    return status.pin === patient.pin;
+                });
+
+                // collect the compliance status as well as expiredCount
+                patient.status = patientStatus.status;
+                patient.totalMissed = patientStatus.expiredCount;
+
+                return patient;
+            });
 
             reply.view('trial', {
                 title: 'Pain Reporting Portal',
                 trial: processTrial(currentTrial),
                 stages,
-                patients: patients.map(processPatient),
+                patients: patientArray,
+                complianceCount,
+                patientCount,
                 graphData: JSON.stringify({
-                    datasets: processComplianceCount(compliance),
+                    datasets: complianceCount,
                     labels: [
                         'Compliant',
                         'Semicompliant',

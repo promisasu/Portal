@@ -5,8 +5,6 @@
  */
 
 const Sequelize = require('sequelize');
-const minimumNameLength = 5;
-const maximumNameLength = 25;
 
 let bcrypt = null;
 
@@ -39,10 +37,7 @@ function register (sequelize, salt) {
                 unique: true,
                 allowNull: false,
                 validate: {
-                    // Username is only Latin letters
-                    // and is 5-25 characters in length
-                    isAlpha: true,
-                    len: [minimumNameLength, maximumNameLength]
+                    is: /^[a-z]{5,25}$/i
                 }
             },
             role: {
