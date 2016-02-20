@@ -48,8 +48,8 @@
     var ctx = '';
     // var perWeekDatesConfig = [];
     var mychart = '';
-    var sickelCellType = 1;
-    var painPostOpType = 3;
+    var sickelCellType = '1';
+    var painPostOpType = '3';
     var weeklyCompliance = [sickelCellType, painPostOpType];
     var missingValue = -1;
 
