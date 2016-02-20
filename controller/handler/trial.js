@@ -32,15 +32,15 @@ function trialView (request, reply) {
                 }
             }),
             database.sequelize.query(
-              `
-              SELECT *, st.name as stage
-              FROM trial AS tr
-              JOIN stage AS st
-              ON st.trialId = tr.id
-              JOIN patient AS pa
-              ON pa.stageId = st.id
-              WHERE tr.id = ?
-              `,
+                `
+                SELECT *, st.name as stage
+                FROM trial AS tr
+                JOIN stage AS st
+                ON st.trialId = tr.id
+                JOIN patient AS pa
+                ON pa.stageId = st.id
+                WHERE tr.id = ?
+                `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
@@ -49,19 +49,19 @@ function trialView (request, reply) {
                 }
             ),
             database.sequelize.query(
-              `
-              SELECT pa.id, pa.pin,
-              SUM(si.state = 'expired') AS expiredCount,
-              SUM(si.state = 'completed') AS completedCount
-              FROM survey_instance AS si
-              JOIN patient AS pa
-              ON pa.id = si.patientId
-              JOIN stage AS st
-              ON st.id = pa.stageId
-              WHERE st.trialId = ?
-              AND si.endTime > ?
-              GROUP BY pa.id
-              `,
+                `
+                SELECT pa.id, pa.pin,
+                SUM(si.state = 'expired') AS expiredCount,
+                SUM(si.state = 'completed') AS completedCount
+                FROM survey_instance AS si
+                JOIN patient AS pa
+                ON pa.id = si.patientId
+                JOIN stage AS st
+                ON st.id = pa.stageId
+                WHERE st.trialId = ?
+                AND si.endTime > ?
+                GROUP BY pa.id
+                `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
@@ -71,15 +71,15 @@ function trialView (request, reply) {
                 }
             ),
             database.sequelize.query(
-              `
-              SELECT jcns.rule
-              FROM trial AS tr
-    	      JOIN stage AS st
-              ON tr.id = st.trialId
-              JOIN join_current_and_next_stages AS jcns
-              ON st.id = jcns.stageId
-              WHERE tr.id = ?
-              `,
+                `
+                SELECT jcns.rule
+                FROM trial AS tr
+                JOIN stage AS st
+                ON tr.id = st.trialId
+                JOIN join_current_and_next_stages AS jcns
+                ON st.id = jcns.stageId
+                WHERE tr.id = ?
+                `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
