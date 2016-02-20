@@ -33,7 +33,7 @@ function trialView (request, reply) {
             }),
             database.sequelize.query(
                 `
-                SELECT *, st.name as stage
+                SELECT *, st.name AS stage
                 FROM trial AS tr
                 JOIN stage AS st
                 ON st.trialId = tr.id
