@@ -52,9 +52,7 @@ function submitSurvey (request, reply) {
         }
     })
     .then(() => {
-        for (let index = 0; index < request.payload.surveyResults.length; index += 1) {
-            const currentQuestion = request.payload.surveyResults[index];
-
+        for (const currentQuestion of request.payload.surveyResults) {
             if (
                 currentQuestion
                 && currentQuestion.bodyPain

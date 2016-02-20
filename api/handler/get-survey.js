@@ -8,7 +8,6 @@ const database = require('../../model');
 const processSurveyInstance = require('../helper/process-survey-instance');
 const groupBy = require('../helper/group-by');
 const boom = require('boom');
-const moment = require('moment');
 
 /**
  * Gets all of the QuestionTemplates and QuestionOptions for a SurveyTemplate
@@ -20,19 +19,25 @@ function getSurvey (request, reply) {
     const surveyInstance = database.sequelize.model('survey_instance');
     let currentSurveyInstance = null;
 
+    // find survey instance
     surveyInstance
     .find({
         where: {
             id: request.query.surveyInstanceID
         }
     })
+    // check that survey instance is active and is not yet expired or completed
     .then((resultSurveyInstance) => {
+        const now = new Date();
+
+        // TODO does this need to check if survey is active, expired or completed?
+        // 'check-surveys' already does filtering before this is called
         if (resultSurveyInstance) {
-            if (moment() < resultSurveyInstance.startTime) {
+            if (now < resultSurveyInstance.startTime) {
                 throw new Error('Survey instance is not active');
-            } else if (moment() > resultSurveyInstance.endTime) {
+            } else if (now > resultSurveyInstance.endTime) {
                 throw new Error('Survey instance has expired');
-            } else if (resultSurveyInstance.surveyInstanceCompleted) {
+            } else if (resultSurveyInstance.state === 'completed') {
                 throw new Error('Survey instance has been completed');
             } else {
                 currentSurveyInstance = resultSurveyInstance;
@@ -43,6 +48,7 @@ function getSurvey (request, reply) {
             throw new Error('Invalid survey instance ID');
         }
     })
+    // Gather all the questions and question options for the survey
     .then(() => {
         return database.sequelize.query(
             `
@@ -68,14 +74,12 @@ function getSurvey (request, reply) {
         );
     })
     .then((data) => {
-        const final = {
+        reply({
             surveyInstanceID: data[0].sid,
             surveyName: data[0].name,
             message: 'SUCCESS',
             questions: groupBy(data, 'questionOrder').map(processSurveyInstance)
-        };
-
-        reply(final);
+        });
     })
     .catch((err) => {
         console.error(err);

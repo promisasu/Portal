@@ -7,7 +7,6 @@
 const database = require('../../model');
 const processSurveys = require('../helper/process-surveys');
 const boom = require('boom');
-const moment = require('moment');
 
 /**
  * Checks for availible Surveys for a Patient to take
@@ -20,15 +19,17 @@ function checkSurveys (request, reply) {
     const currentDate = new Date();
     let currentPatient = null;
 
+    // find patient
     patient
     .find({
         where: {
             pin: request.query.userPIN
         }
     })
+    // check that patient is valid and is currently active
     .then((resultPatient) => {
         if (resultPatient) {
-            if (moment() > resultPatient.dateStarted && moment() < resultPatient.dateCompleted) {
+            if (currentDate > resultPatient.dateStarted && currentDate < resultPatient.dateCompleted) {
                 currentPatient = resultPatient;
                 return null;
             }
@@ -36,6 +37,7 @@ function checkSurveys (request, reply) {
         }
         throw new Error('The PIN is invalid');
     })
+    // gather all pending and in progress surveys for a patient
     .then(() => {
         return database.sequelize.query(
             `
