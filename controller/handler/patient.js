@@ -81,14 +81,17 @@ function patientView (request, reply) {
                 patient: processPatient(currentPatient),
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
-                    surveyInstance.startTime = moment(surveyInstance.startTime).format('MM-DD-YYYY');
-                    surveyInstance.endTime = moment(surveyInstance.endTime).format('MM-DD-YYYY');
+                    surveyInstance.startTime = moment(new Date(surveyInstance.startTime)
+                            .toISOString()).utc().format('MM-DD-YYYY');
+                    surveyInstance.endTime = moment(new Date(surveyInstance.endTime)
+                            .toISOString()).utc().format('MM-DD-YYYY');
                     if (surveyInstance.userSubmissionTime) {
-                        surveyInstance.userSubmissionTime = moment(surveyInstance.userSubmissionTime)
-                        .format('MM-DD-YYYY');
+                        surveyInstance.userSubmissionTime = moment(new Date(surveyInstance.userSubmissionTime)
+                            .toISOString()).utc().format('MM-DD-YYYY');
                     }
                     return surveyInstance;
                 }),
+                complianceType: surveyInstances[0].surveyTemplateId,
                 datesJson: JSON.stringify(processSurveyInstances(surveyInstances)),
                 eventsJson: JSON.stringify(surveyInstances.map(processSurveyToEvent))
             });

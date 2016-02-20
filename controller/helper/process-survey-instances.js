@@ -24,10 +24,12 @@ function processSurveyInstances (surveys) {
  */
 function pickDates (surveys) {
     const dates = surveys.map((survey) => {
-        return moment(survey.startTime).utc().format('MM/DD/YYYY HH:mm');
+        return moment(new Date(survey.startTime).toISOString()).utc().format('MM/DD/YYYY HH:mm');
     });
 
-    const lastDate = moment(surveys[0].dateCompleted).utc().format('MM/DD/YYYY HH:mm');
+    const lastDate = moment(new Date(surveys[0]
+        .dateCompleted)
+        .toISOString()).utc().format('MM/DD/YYYY HH:mm');
     const missingValue = -1;
 
     if (dates.indexOf(lastDate) <= missingValue) {
@@ -45,9 +47,9 @@ function pickTimeLeft (surveys) {
     // Using UTC as the date gets modified to the local time (GMT in this case) when UTC not used.
     const percentages = surveys.map((suvey) => {
         return calculateTimeLeft(
-            moment(suvey.startTime).utc(),
-            moment(suvey.endTime).utc(),
-            moment(suvey.actualSubmissionTime).utc()
+            moment(new Date(suvey.startTime).toISOString()).utc(),
+            moment(new Date(suvey.endTime).toISOString()).utc(),
+            moment(new Date(suvey.actualSubmissionTime).toISOString()).utc()
         );
     });
 

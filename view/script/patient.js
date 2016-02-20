@@ -13,7 +13,7 @@
                         display: true,
                         time: {
                             format: 'MMDDYYYY HHmm',
-                            unit: 'day',
+                            unit: 'week',
                             round: 'day'
                         },
                         scaleLabel: {
@@ -45,9 +45,13 @@
         }
     };
 
-    var ctx = document.getElementById('complianceChart').getContext('2d');
+    var ctx = '';
     // var perWeekDatesConfig = [];
     var mychart = '';
+    var sickelCellType = 1;
+    var painPostOpType = 3;
+    var weeklyCompliance = [sickelCellType, painPostOpType];
+    var missingValue = -1;
 
     $('#calendar').fullCalendar({
         defaultView: 'basicWeek',
@@ -56,16 +60,28 @@
         events: window.events
     });
 
-    // perWeekDatesConfig = datesByWeek(allDatesConfig);
-    config.data = allDatesConfig;
-    mychart = new Chart(ctx, config);
-/*
-    $('.fc-today-button').click(function todayButtonClick () {
-        perWeekDatesConfig = datesByWeek(allDatesConfig);
-        mychart.config.data = perWeekDatesConfig;
-        mychart.update();
-    });
+    if (weeklyCompliance.indexOf(window.complianceType) > missingValue) {
+        document
+        .getElementById('chartCanvasDiv')
+        .style
+        .display = '';
+        ctx = document.getElementById('complianceChart').getContext('2d');
+        // perWeekDatesConfig = datesByWeek(allDatesConfig);
+        config.data = allDatesConfig;
+        mychart = new Chart(ctx, config);
 
+        $('.fc-today-button').click(function todayButtonClick () {
+            // perWeekDatesConfig = datesByWeek(allDatesConfig);
+            mychart.config.data = allDatesConfig;
+            mychart.update();
+        });
+    } else {
+        document
+        .getElementById('chartCanvasDiv')
+        .style
+        .display = 'none';
+    }
+/*
     $('.fc-prev-button').click(function prevButtonClick () {
         perWeekDatesConfig = datesByWeek(allDatesConfig);
         mychart.config.data = perWeekDatesConfig;
