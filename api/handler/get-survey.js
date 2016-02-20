@@ -30,8 +30,6 @@ function getSurvey (request, reply) {
     .then((resultSurveyInstance) => {
         const now = new Date();
 
-        // TODO does this need to check if survey is active, expired or completed?
-        // 'check-surveys' already does filtering before this is called
         if (resultSurveyInstance) {
             if (now < resultSurveyInstance.startTime) {
                 throw new Error('Survey instance is not active');
