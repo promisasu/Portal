@@ -70,6 +70,10 @@ module.exports.stage = [
         id: 5,
         name: 'pain post op weekly',
         trialId: 4
+    },
+    {
+        id: 6,
+        name: 'exit stage'
     }
 ];
 
@@ -1590,5 +1594,18 @@ module.exports.joinStagesAndSurveys = [
         surveyTemplateId: 3,
         stageId: 5,
         stagePriority: 1
+    }
+];
+
+module.exports.joinCurrentAndNextStage = [
+    {
+        rule: 35,
+        stageId: 1,
+        nextStageId: 6
+    },
+    {
+        rule: 35,
+        stageId: 5,
+        nextStageId: 6
     }
 ];

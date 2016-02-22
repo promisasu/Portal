@@ -41,7 +41,11 @@ Promise
     database
         .sequelize
         .model('join_surveys_and_questions')
-        .bulkCreate(seedData.joinSurveysAndQuestions)
+        .bulkCreate(seedData.joinSurveysAndQuestions),
+    database
+        .sequelize
+        .model('join_current_and_next_stages')
+        .bulkCreate(seedData.joinCurrentAndNextStage)
 ])
 .then(() => {
     database.sequelize.close();
