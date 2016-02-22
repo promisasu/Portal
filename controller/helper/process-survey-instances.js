@@ -1,12 +1,14 @@
 'use strict';
-const moment = require('moment');
+
 /**
  * @module controller/helper/process-survey-instances
  */
 
+const moment = require('moment');
+
 /**
  * Takes in a Survey Instances and processes it to get Complience chart details
- * @param {Object} surveys - list of survey instances
+ * @param {Array<Object>} surveys - list of survey instances
  * @returns {Object} Complience chart data
  */
 function processSurveyInstances (surveys) {
@@ -21,7 +23,7 @@ function processSurveyInstances (surveys) {
 
 /**
  * Takes in a Survey Instances and get the % time left to be shown on complience chart
- * @param {Object} surveys - list of survey instances
+ * @param {Array<Object>} surveys - list of survey instances
  * @returns {Object} processed list of % time left data
  */
 function pickTimeLeft (surveys) {
@@ -42,21 +44,25 @@ function pickTimeLeft (surveys) {
 
 /**
  * Takes in a Survey Instances and get the % time left to be shown on complience chart
- * @param {Object} startTime - start time of survey instance
- * @param {Object} endTime - end time of survey instance
- * @param {Object} actualTime - actual time of survey instance
- * @returns {Object} percent time left after completing survey instance
+ * @param {Moment} openTime - When survey instance became availible
+ * @param {Moment} endTime - When the survey instance is no longer availible to be taken
+ * @param {Moment} completedTime - When the survey instance was actually completed
+ * @returns {Number} percent time left after completing survey instance
  */
-function calculateTimeLeft (startTime, endTime, actualTime) {
-    let percentTimeLeft = 0;
+function calculateTimeLeft (openTime, endTime, completedTime) {
     const percent = 100;
     const minTime = 0;
-    const timeToCompleteSurvey = endTime.diff(startTime, 'hours');
-    const timeTaken = endTime.diff(actualTime, 'hours');
 
-    if (timeTaken > minTime) {
-        percentTimeLeft = timeTaken / timeToCompleteSurvey;
-    }
-    return Math.round(percentTimeLeft * percent);
+    // calculate the time in hours until end time
+    const totalAvailibleTime = openTime.diff(endTime, 'hours');
+    const timeTaken = completedTime.diff(endTime, 'hours');
+
+    // caculate percent of time taken out of total time availible to take the survey
+    const percentTimeLeft = Math.round(timeTaken / totalAvailibleTime * percent);
+
+    // either take the amount of time left
+    // or if the survey instance expired (negative percent) show zero time left
+    return Math.max(percentTimeLeft, minTime);
 }
+
 module.exports = processSurveyInstances;

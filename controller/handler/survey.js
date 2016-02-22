@@ -4,7 +4,7 @@
  * @module controller/handler/survey
  */
 
-const groupBy = require('lodash.groupby');
+const groupBy = require('../helper/group-by.js');
 const database = require('../../model');
 
 /**
