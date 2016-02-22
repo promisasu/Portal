@@ -10,8 +10,8 @@
 
 /**
  * Converts JSON data into Comma Seperated Values
- * @param {Object[]} data - JSON data to convert
- * @param {ConversionOption[]} configuration - options to configure output
+ * @param {Array<Object>} data - JSON data to convert
+ * @param {Array<ConversionOption>} configuration - options to configure output
  * @returns {String} results of transform
  */
 function convertJsonToCsv (data, configuration) {

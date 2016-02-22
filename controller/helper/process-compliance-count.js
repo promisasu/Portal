@@ -9,21 +9,23 @@
  * @returns {Array<Number>} count of redCount, yellowCount and greenCount
  */
 function processComplianceCount (rows) {
+    const zero = 0;
     const redThreshold = 2;
     const yellowThresholdBegin = 0;
-    let redCount = 0;
-    let yellowCount = 0;
-    let greenCount = 0;
+    const redIndex = 0;
+    const yellowIndex = 1;
+    const greenIndex = 2;
+    const compliance = [zero, zero, zero];
 
     for (const row of rows) {
         if (row.expiredCount > redThreshold) {
-            redCount += 1;
+            compliance[redIndex] += 1;
         } else if (row.expiredCount > yellowThresholdBegin && row.expiredCount <= redThreshold) {
-            yellowCount += 1;
+            compliance[yellowIndex] += 1;
         } else {
-            greenCount += 1;
+            compliance[greenIndex] += 1;
         }
     }
-    return [redCount, yellowCount, greenCount];
+    return compliance;
 }
 module.exports = processComplianceCount;
