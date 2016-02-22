@@ -3,8 +3,9 @@ approve_regex: '^(LGTM|:shipit:|:+1:)'
 reject_regex: '^:-1:'
 author_approval: ignored
 reviewers:
-    required: 1
+    required: 2
     members:
         - ChristianMurphy
+        - iamaureen
         - kgary
         - poojaRal
