@@ -10,14 +10,9 @@
         datasets: [{
             data: window.data.datasets,
             backgroundColor: [
-                '#FF0000',
-                '#FF6900',
-                '#409909'
-            ],
-            hoverBackgroundColor: [
-                '#FF5A5E',
-                '#FF9C56',
-                '#80C853'
+                '#FF4136',
+                '#FFDC00',
+                '#2ECC40'
             ]
         }]
     };
