@@ -5,7 +5,6 @@
  */
 
 const database = require('../../model');
-const processPatient = require('../helper/process-patient');
 const processSurveyToEvent = require('../helper/process-survey-to-event');
 const processSurveyInstances = require('../helper/process-survey-instances');
 const moment = require('moment');
@@ -78,7 +77,7 @@ function patientView (request, reply) {
 
             reply.view('patient', {
                 title: 'Pain Reporting Portal',
-                patient: processPatient(currentPatient),
+                patient: currentPatient,
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
                     surveyInstance.startTime = moment(new Date(surveyInstance.startTime)

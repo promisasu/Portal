@@ -39,13 +39,13 @@
                         <label for="patient-start">
                             Patient Start Date
                         </label>
-                        <input id="patient-start" class="form-control" name="startDate" type="date" min="{{ today }}" required>
+                        <input id="patient-start" class="form-control" name="startDate" type="date" min="{{ today }}" value="{{ today }}" required>
                     </div>
                     <div class="form-group">
                         <label for="patient-end">
                             Patient End Date
                         </label>
-                        <input id="patient-end" class="form-control" name="endDate" type="date" min="{{ today }}" required>
+                        <input id="patient-end" class="form-control" name="endDate" type="date" min="{{ today }}" value = "{{ endDate }}" required>
                     </div>
                 </form>
             </div>

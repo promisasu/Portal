@@ -8,7 +8,7 @@ const moment = require('moment');
 
 /**
  * Takes in a survey_instance model and processes it into a format recognized by app.
- * @param {SurveyInstance} surveys - list of objects of survey_instance
+ * @param {Object} surveys - list of objects of survey_instance
  * @returns {Object} processed list of surveys in an array
  */
 function processSurveys (surveys) {
