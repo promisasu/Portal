@@ -49,6 +49,7 @@ function surveyView (request, reply) {
             JOIN question_option AS qo
             ON qo.questionTemplateId = qt.id
             WHERE si.id = ?
+            ORDER BY jsq.questionOrder, qo.order
             `,
             {
                 type: database.sequelize.QueryTypes.SELECT,
@@ -79,7 +80,9 @@ function surveyView (request, reply) {
         )
     ])
     .then((data) => {
-        const surveyResponses = data[0];
+        const surveyResponses = data[0].map((item) => {
+            return item.id;
+        });
         const surveyInstanceAndQuestions = data[1];
         const patientAndTrial = data[2];
         const negative = -1;
