@@ -16,18 +16,10 @@ function processSurveyInstances (surveys) {
         return survey.state === 'completed';
     });
 
-    const surveyInstanceLength = 0;
-
-    if (filterSurveyByState !== 'undefined' && filterSurveyByState.length > surveyInstanceLength) {
-        return {
-            // Using UTC as the date gets modified to the local time (GMT in this case) when UTC not used.
-            labels: pickDates(filterSurveyByState),
-            datasets: pickTimeLeft(filterSurveyByState)
-        };
-    }
     return {
-        labels: '',
-        datasets: ''
+        // Using UTC as the date gets modified to the local time (GMT in this case) when UTC not used.
+        labels: pickDates(filterSurveyByState),
+        datasets: pickTimeLeft(filterSurveyByState)
     };
 }
 
@@ -41,9 +33,10 @@ function pickDates (surveys) {
         return moment(new Date(survey.startTime).toISOString()).utc().format('MM/DD/YYYY HH:mm');
     });
 
-    const lastDate = moment(new Date(surveys[0]
-        .dateCompleted)
-        .toISOString()).utc().format('MM/DD/YYYY HH:mm');
+    const lastDate = surveys.map((survey) => {
+        return moment(new Date(survey.dateCompleted).toISOString()).utc().format('MM/DD/YYYY HH:mm');
+    });
+
     const missingValue = -1;
 
     if (dates.indexOf(lastDate) <= missingValue) {
