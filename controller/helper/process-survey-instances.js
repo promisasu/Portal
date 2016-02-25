@@ -6,6 +6,9 @@
 
 const moment = require('moment');
 
+const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
+const viewDateFormat = 'MM-DD-YYYY HH:mm';
+
 /**
  * Takes in a Survey Instances and processes it to get Complience chart details
  * @param {Array<Object>} surveys - list of survey instances
@@ -30,11 +33,11 @@ function processSurveyInstances (surveys) {
  */
 function pickDates (surveys) {
     const dates = surveys.map((survey) => {
-        return moment(new Date(survey.startTime).toISOString()).utc().format('MM/DD/YYYY HH:mm');
+        return moment(survey.startTime, sqlDateFormat).utc().format(viewDateFormat);
     });
 
     const lastDate = surveys.map((survey) => {
-        return moment(new Date(survey.dateCompleted).toISOString()).utc().format('MM/DD/YYYY HH:mm');
+        return moment(survey.dateCompleted, sqlDateFormat).utc().format(viewDateFormat);
     });
 
     const missingValue = -1;
@@ -52,11 +55,11 @@ function pickDates (surveys) {
  */
 function pickTimeLeft (surveys) {
     // Using UTC as the date gets modified to the local time (GMT in this case) when UTC not used.
-    const percentages = surveys.map((suvey) => {
+    const percentages = surveys.map((survey) => {
         return calculateTimeLeft(
-            moment(new Date(suvey.startTime).toISOString()).utc(),
-            moment(new Date(suvey.endTime).toISOString()).utc(),
-            moment(new Date(suvey.actualSubmissionTime).toISOString()).utc()
+            moment(survey.startTime, sqlDateFormat).utc().format(viewDateFormat),
+            moment(survey.endTime, sqlDateFormat).utc().format(viewDateFormat),
+            moment(survey.actualSubmissionTime, sqlDateFormat).utc().format(viewDateFormat)
         );
     });
 
@@ -78,8 +81,8 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
     const minTime = 0;
 
     // calculate the time in hours until end time
-    const totalAvailibleTime = openTime.diff(endTime, 'hours');
-    const timeTaken = completedTime.diff(endTime, 'hours');
+    const totalAvailibleTime = moment(openTime, viewDateFormat).diff(moment(endTime, viewDateFormat), 'hours');
+    const timeTaken = moment(completedTime, viewDateFormat).diff(moment(endTime, viewDateFormat), 'hours');
 
     // caculate percent of time taken out of total time availible to take the survey
     const percentTimeLeft = Math.round(timeTaken / totalAvailibleTime * percent);

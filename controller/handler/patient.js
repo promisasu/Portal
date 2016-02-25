@@ -8,6 +8,7 @@ const database = require('../../model');
 const processSurveyToEvent = require('../helper/process-survey-to-event');
 const processSurveyInstances = require('../helper/process-survey-instances');
 const moment = require('moment');
+const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
 
 /**
  * A dashboard with an overview of a specific patient.
@@ -80,15 +81,18 @@ function patientView (request, reply) {
                 patient: currentPatient,
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
-                    surveyInstance.startTime = moment(new Date(surveyInstance.startTime)
-                            .toISOString()).utc().format('MM-DD-YYYY');
-                    surveyInstance.endTime = moment(new Date(surveyInstance.endTime)
-                            .toISOString()).utc().format('MM-DD-YYYY');
-                    if (surveyInstance.userSubmissionTime) {
-                        surveyInstance.userSubmissionTime = moment(new Date(surveyInstance.userSubmissionTime)
-                            .toISOString()).utc().format('MM-DD-YYYY');
+                    const surveyInstanceCopy = Object.create(surveyInstance);
+
+                    surveyInstanceCopy.startTime = moment(surveyInstanceCopy.startTime, sqlDateFormat)
+                    .utc().format('MM-DD-YYYY');
+                    surveyInstanceCopy.endTime = moment(surveyInstanceCopy.endTime, sqlDateFormat)
+                    .utc().format('MM-DD-YYYY');
+                    if (surveyInstanceCopy.userSubmissionTime) {
+                        surveyInstanceCopy.userSubmissionTime
+                        = moment(surveyInstanceCopy.userSubmissionTime, sqlDateFormat)
+                        .utc().format('MM-DD-YYYY');
                     }
-                    return surveyInstance;
+                    return surveyInstanceCopy;
                 }),
                 complianceType: surveyInstances[0].surveyTemplateId,
                 datesJson: JSON.stringify(processSurveyInstances(surveyInstances)),
