@@ -1,4 +1,5 @@
 rules:
+    camelcase: 1
     max-len:
         - 2
         - 150
