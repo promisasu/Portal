@@ -62,7 +62,7 @@ function patientCSV (request, reply) {
             {
                 type: database.sequelize.QueryTypes.SELECT,
                 replacements: [
-                    request.params.id
+                    request.params.pin
                 ]
             }
         ),
@@ -83,6 +83,7 @@ function patientCSV (request, reply) {
             JOIN question_option AS qo
             ON qo.questionTemplateId = qt.id
             WHERE pa.pin = ?
+            ORDER BY si.id, jsq.questionOrder, qo.order
             `,
             {
                 type: database.sequelize.QueryTypes.SELECT,
