@@ -12,10 +12,22 @@ const moment = require('moment');
  * @returns {Object} Complience chart data
  */
 function processSurveyInstances (surveys) {
+    const filterSurveyByState = surveys.filter((survey) => {
+        return survey.state === 'completed';
+    });
+
+    const surveyInstanceLength = 0;
+
+    if (filterSurveyByState !== 'undefined' && filterSurveyByState.length > surveyInstanceLength) {
+        return {
+            // Using UTC as the date gets modified to the local time (GMT in this case) when UTC not used.
+            labels: pickDates(filterSurveyByState),
+            datasets: pickTimeLeft(filterSurveyByState)
+        };
+    }
     return {
-        // Using UTC as the date gets modified to the local time (GMT in this case) when UTC not used.
-        labels: pickDates(surveys),
-        datasets: pickTimeLeft(surveys)
+        labels: '',
+        datasets: ''
     };
 }
 
