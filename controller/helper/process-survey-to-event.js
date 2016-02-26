@@ -8,7 +8,7 @@
 function processSurveyToEvent (surveyInstance) {
     return {
         title: surveyInstance.name,
-        className: statusToColor(surveyInstance.status),
+        backgroundColor: statusToColor(surveyInstance.status),
         start: surveyInstance.startTime,
         end: surveyInstance.endTime
     };
@@ -22,12 +22,12 @@ function processSurveyToEvent (surveyInstance) {
 function statusToColor (status) {
     switch (status) {
         case 'completed':
-            return 'green';
+            return '#2ECC40';
         case 'in progress':
         case 'pending':
             return '';
         default:
-            return 'red';
+            return '#FF4136';
     }
 }
 
