@@ -36,15 +36,8 @@ function pickDates (surveys) {
         return moment(survey.startTime, sqlDateFormat).utc().format(viewDateFormat);
     });
 
-    let lastDate = '';
-    const missingValue = -1;
-
     if (surveys[0]) {
-        lastDate = moment(surveys[0].dateCompleted, sqlDateFormat).utc().format(viewDateFormat);
-    }
-
-    if (lastDate !== '' && dates.indexOf(lastDate) <= missingValue) {
-        dates.push(lastDate);
+        dates.push(moment(surveys[0].dateCompleted, sqlDateFormat).utc().format(viewDateFormat));
     }
 
     return dates;
