@@ -19,12 +19,12 @@
         <div class="col-sm-12">
             <div id="calendar"></div>
         </div>
-        <!--div class="col-sm-12">
-            <div class="card">
+        <div class="col-sm-12">
+            <div id="chartCanvasDiv" class="card">
               <br>
               <canvas id="complianceChart" width="400" height="100px"></canvas>
             </div>
-        </div-->
+        </div>
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-block">
@@ -102,5 +102,6 @@
 <script>
     window.events = JSON.parse('{{{ eventsJson }}}');
     window.dates = JSON.parse('{{{ datesJson }}}');
+    window.complianceType = '{{{ complianceType }}}';
 </script>
 <script src="/static/script/patient.js" defer></script>
