@@ -8,7 +8,8 @@
 function processSurveyToEvent (surveyInstance) {
     return {
         title: surveyInstance.name,
-        backgroundColor: statusToColor(surveyInstance.status),
+        backgroundColor: statusToColor(surveyInstance.state),
+        url: `/survey/${surveyInstance.id}`,
         start: surveyInstance.startTime,
         end: surveyInstance.endTime
     };
