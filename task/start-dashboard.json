@@ -1,4 +1,0 @@
-{
-    "name": "prp-dashboard",
-    "script": "task/helper/start-dashboard.js"
-}

@@ -1,5 +1,0 @@
-{
-    "name": "prp-scheduler",
-    "script": "task/helper/start-scheduler.js",
-    "cron_restart": "0 0 * * *"
-}

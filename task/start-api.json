@@ -1,4 +1,0 @@
-{
-    "name": "prp-api",
-    "script": "task/helper/start-api.js"
-}
