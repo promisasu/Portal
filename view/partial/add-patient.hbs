@@ -41,11 +41,17 @@
                         </label>
                         <input id="patient-start" class="form-control" name="startDate" type="date" min="{{ today }}" value="{{ today }}" required>
                     </div>
-                    <div class="form-group">
+                    <div id="patient-end-group" class="form-group">
                         <label for="patient-end">
                             Patient End Date
                         </label>
-                        <input id="patient-end" class="form-control" name="endDate" type="date" min="{{ today }}" value = "{{ endDate }}" required>
+                        <input id="patient-end" class="form-control form-control-warning" name="endDate" type="date" min="{{ today }}" value = "{{ endDate }}" data-recommended-end="{{ endDate }}" data-irb-end="{{ trial.end }}" required>
+                        <p id="patient-end-default-warning" class="hidden-xl-down">
+                            End date has been changed away from recommended default
+                        </p>
+                        <p id="patient-end-irb-warning" class="hidden-xl-down">
+                            Patient end date is past the IRB end
+                        </p>
                     </div>
                 </form>
             </div>
@@ -58,3 +64,5 @@
         </div>
     </div>
 </div>
+
+<script src="/static/script/add-patient.js" defer></script>
