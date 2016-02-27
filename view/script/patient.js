@@ -1,7 +1,7 @@
 (function patient () {
     'use strict';
-    // Making deep copy of window.dates {chart config.data} and use it to process compliance chart
-    var allDatesConfig = jQuery.extend(true, {}, window.dates);
+    // Makes a copy of window.dates
+    var allDatesConfig = Object.create(window.dates);
     var config = {
         type: 'line',
         data: '',
