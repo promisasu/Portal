@@ -23,7 +23,7 @@ function stateToStatus (state, options) {
     }
 
     // a custom css class name prefix has been set
-    if (options.hash.prefix) {
+    if (options.hash.prefix && status !== '') {
         return `${options.hash.prefix}${status}`;
     }
 
