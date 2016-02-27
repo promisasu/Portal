@@ -7,7 +7,7 @@
 const database = require('../../model');
 const convertJsonToCsv = require('../helper/convert-json-to-csv');
 const boom = require('boom');
-
+const deduplicate = require('../helper/deduplicate');
 const configuration = [
     {
         label: 'patient pin',
@@ -23,6 +23,10 @@ const configuration = [
         key: 'id'
     },
     {
+        label: 'unique question id',
+        key: 'questionId'
+    },
+    {
         label: 'question',
         key: 'questionText'
     },
@@ -34,6 +38,10 @@ const configuration = [
         label: 'selected answer',
         key: 'answered',
         default: 'false'
+    },
+    {
+        label: 'survey_instance_state',
+        key: 'state'
     }
 ];
 
@@ -83,6 +91,7 @@ function patientCSV (request, reply) {
             JOIN question_option AS qo
             ON qo.questionTemplateId = qt.id
             WHERE pa.pin = ?
+            and si.state = 'completed'
             ORDER BY si.id, jsq.questionOrder, qo.order
             `,
             {
@@ -107,8 +116,12 @@ function patientCSV (request, reply) {
             // send back updated data
             return questionOption;
         });
+        const property = ['id', 'questionText'];
+        const rowsm = deduplicate(allOptionsWithAnswers, property);
 
-        return convertJsonToCsv(allOptionsWithAnswers, configuration);
+        console.log(rowsm);
+
+        return convertJsonToCsv(rowsm, configuration);
     })
     .then((csv) => {
         reply(csv).type('text/csv');
