@@ -13,7 +13,6 @@ const processPatientStatus = require('../helper/process-patient-status');
 
 /**
  * A dashboard with an overview of a specific trial.
- * @function trial
  * @param {Request} request - Hapi request
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
@@ -108,9 +107,11 @@ function trialView (request, reply) {
                     return status.pin === patient.pin;
                 });
 
-                // collect the compliance status as well as expiredCount
-                patient.status = patientStatus.status;
-                patient.totalMissed = patientStatus.expiredCount;
+                if (patientStatus) {
+                    // collect the compliance status as well as expiredCount
+                    patient.status = patientStatus.status;
+                    patient.totalMissed = patientStatus.expiredCount;
+                }
 
                 return patient;
             });
