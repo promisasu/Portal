@@ -2,7 +2,8 @@
   "plugins": {
     "lint": {
       "list-item-indent": "space",
-      "maximum-line-length": 120
+      "maximum-line-length": 120,
+      "no-file-name-irregular-characters": false
     },
     "validate-links": {
       "repository": "promisasu/Portal"
