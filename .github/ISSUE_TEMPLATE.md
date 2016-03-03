@@ -1,7 +1,6 @@
 <!--
-INSTRUCTIONS
-This template is for reporting an issue, please fill in the requested information.
-For a feature request clear this template and describe the desired feature.
+If this is a Bug Report, fill out the requested information.
+If this is a Feature Request, clear this template and describe the desired feature.
 -->
 **What did you do?**
 
