@@ -7,7 +7,7 @@ Taiga User Story: {Number}
 Taiga Task(s): {Number(s)}
 
 **Changes**
-{Describe what fixes this code brings or what features this code adds}
+{Describe the fixes or features this code brings}
 
 **Validation**
 {Describe how this code can be tested}
