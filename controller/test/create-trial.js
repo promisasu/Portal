@@ -5,7 +5,7 @@ const moment = require('moment');
 const config = require('../../config.json');
 
 config.database.name = 'prp_test';
-config.server.auth = false;
+config.dashboard.authentication = false;
 
 const server = require('../server')(config);
 const httpBadRequest = 400;

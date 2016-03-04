@@ -32,7 +32,6 @@
 
 * run `npm run status` to view status of all servers
 * run `npm run log` to view server logs
-* run `npm run describe-<system>` to view details of running of running a system, [tasks](#tasks) for more info
 
 ## Test the Portal
 
@@ -59,9 +58,6 @@
 Tasks can be run by calling `npm run <task>`
 
 * `check-dependencies` detect outdated and insecure packages
-* `describe-api` view details of running api
-* `describe-dashboard` view details of running dashboard
-* `describe-scheduler` view details of running scheduler
 * `documentation` generate code documentation
 * `init` create a server configuration file
 * `lint` lint check project files

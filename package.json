@@ -5,9 +5,6 @@
   "main": "index.js",
   "scripts": {
     "check-dependencies": "npm outdated && nsp check && bower list",
-    "describe-api": "pm2 describe prp-api",
-    "describe-dashboard": "pm2 describe prp-dashboard",
-    "describe-scheduler": "pm2 describe prp-scheduler",
     "documentation": "jsdoc --recurse api controller model rule task --destination documentation",
     "init": "node task/init",
     "postinstall": "bower install",
@@ -23,6 +20,7 @@
     "start-scheduler": "node task/start-scheduler.js",
     "status": "pm2 ls",
     "stop": "pm2 delete prp-api && pm2 delete prp-dashboard && pm2 delete prp-scheduler",
+    "poststop": "pm2 ls",
     "stop-api": "pm2 delete prp-api",
     "stop-dashboard": "pm2 delete prp-dashboard",
     "stop-scheduler": "pm2 delete prp-scheduler",
