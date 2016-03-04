@@ -49,8 +49,10 @@
 
 ## Additional Guides
 
-* [Contributing](CONTRIBUTING.md)
+* [Contributing](.github/CONTRIBUTING.md)
 * [Design](DESIGN.md)
+* [Issue Template](.github/ISSUE_TEMPLATE.md)
+* [Pull Request Template](.github/PULL_REQUEST_TEMPLATE.md)
 
 ## Tasks
 
