@@ -4,6 +4,7 @@
 [![Dependency Status](https://david-dm.org/promisasu/Portal.svg)](https://david-dm.org/promisasu/Portal)
 [![devDependency Status](https://david-dm.org/promisasu/Portal/dev-status.svg)](https://david-dm.org/promisasu/Portal#info=devDependencies)
 [![optionalDependency Status](https://david-dm.org/promisasu/Portal/optional-status.svg)](https://david-dm.org/promisasu/Portal#info=optionalDependencies)
+[![Taiga Board](https://img.shields.io/badge/managed_with-taiga-brightgreen.svg)](https://tree.taiga.io/project/promisasu-prp-manhattan-project/)
 
 ## Installation Instructions
 
