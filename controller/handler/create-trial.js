@@ -24,6 +24,7 @@ function createTrial (request, reply) {
     .transaction()
     .then((newTransaction) => {
         transaction = newTransaction;
+
         return trial.create({
             name: request.payload.name,
             description: request.payload.description,
@@ -49,6 +50,7 @@ function createTrial (request, reply) {
                 stage.create({name: stageName}, {transaction})
             );
         }
+
         return Promise.all(stagePromises);
     })
     .then((newStages) => {

@@ -1,9 +1,9 @@
 rules:
-    global-require: 1
+    global-require: warn
     max-params:
-        - 2
+        - error
         - 6
 
     max-statements:
-        - 2
+        - error
         - 20

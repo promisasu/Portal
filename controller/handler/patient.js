@@ -91,6 +91,7 @@ function patientView (request, reply) {
                         surveyInstanceCopy.userSubmissionTime
                             = moment(surveyInstanceCopy.userSubmissionTime, sqlDateFormat).utc().format('MM-DD-YYYY');
                     }
+
                     return surveyInstanceCopy;
                 }),
                 complianceType: surveyInstances[0].surveyTemplateId,

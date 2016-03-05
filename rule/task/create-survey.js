@@ -71,6 +71,7 @@ function createSurveyInstance (patientPin, surveyTemplateId, startDate, openForD
         if (transaction) {
             return null;
         }
+
         return internalTransaction.commit();
     })
     .catch((err) => {
@@ -78,6 +79,7 @@ function createSurveyInstance (patientPin, surveyTemplateId, startDate, openForD
             throw err;
         } else {
             console.error(err);
+
             return internalTransaction.rollback();
         }
     });
