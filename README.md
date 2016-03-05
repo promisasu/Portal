@@ -76,3 +76,4 @@ Tasks can be run by calling `npm run <task>`
 * `sync` synchronize database schema
 * `test` run the test suite
 * `user` create a new user
+* `validate-configuration` detect invalid server configuration

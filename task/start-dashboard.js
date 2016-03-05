@@ -1,4 +1,10 @@
 'use strict';
+
+/**
+ * @module task/start-dashboard
+ * Starts dashboard server.
+ */
+
 const processManager = require('pm2');
 const path = require('path');
 const configuration = require('../config.json');

@@ -27,7 +27,8 @@
     "sync": "node task/sync",
     "pretest": "node task/sync-test && node task/seed-test",
     "test": "ava */test/*.js",
-    "user": "node task/user"
+    "user": "node task/user",
+    "validate-configuration": "node task/validate-configuration"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,10 @@
 'use strict';
+
+/**
+ * @module task/stop-api
+ * Stops api server.
+ */
+
 const processManager = require('pm2');
 const configuration = require('../config.json');
 
