@@ -39,16 +39,6 @@ rules:
         - 20
 
     # ECMAScript 6
-    arrow-body-style: off
-    arrow-parens: off
-    arrow-spacing: off
-    constructor-super: off
-    generator-star-spacing: off
-    no-arrow-condition: off # soon no-confusing-arrow
-    no-class-assign: off
-    no-const-assign: off
-    no-dupe-class-members: off
-    no-this-before-super: off
     no-var: off
     object-shorthand: off
     prefer-arrow-callback: off
@@ -57,5 +47,3 @@ rules:
     prefer-rest-params: off
     prefer-spread: off
     prefer-template: off
-    require-yield: off
-    yield-star-spacing: off
