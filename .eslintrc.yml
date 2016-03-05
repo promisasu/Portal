@@ -125,6 +125,7 @@ rules:
     no-catch-shadow: error
     no-delete-var: error
     no-label-var: off # no-labels
+    no-restricted-globals: off # none
     no-shadow-restricted-names: error
     no-shadow: error
     no-undef-init: off # no-undefined
@@ -188,6 +189,7 @@ rules:
     new-cap: error
     new-parens: error
     newline-after-var: error
+    newline-before-return: error
     newline-per-chained-call:
         - error
         - ignoreChainWithDepth: 3

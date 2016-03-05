@@ -28,16 +28,19 @@
                     if (startDate > date) {
                         return true;
                     }
+
                     return false;
                 case 'In Progress':
                     if (date > startDate && date < endDate) {
                         return true;
                     }
+
                     return false;
                 case 'Completed':
                     if (endDate < date) {
                         return true;
                     }
+
                     return false;
                 default:
                     return true;

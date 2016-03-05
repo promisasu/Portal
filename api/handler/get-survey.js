@@ -40,6 +40,7 @@ function getSurvey (request, reply) {
             } else {
                 currentSurveyInstance = resultSurveyInstance;
                 currentSurveyInstance.state = 'in progress';
+
                 return currentSurveyInstance.save();
             }
         } else {

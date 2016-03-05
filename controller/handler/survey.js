@@ -90,8 +90,10 @@ function surveyView (request, reply) {
         let questionsWithResponses = surveyInstanceAndQuestions.map((item) => {
             if (surveyResponses.indexOf(item.optionId) > negative) {
                 item.selected = true;
+
                 return item;
             }
+
             return item;
         });
 

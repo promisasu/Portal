@@ -31,6 +31,7 @@ function checkSurveys (request, reply) {
         if (resultPatient) {
             if (currentDate > resultPatient.dateStarted && currentDate < resultPatient.dateCompleted) {
                 currentPatient = resultPatient;
+
                 return null;
             }
             throw new Error('Your PIN is not active');

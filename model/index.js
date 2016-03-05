@@ -121,6 +121,7 @@ function setup (configuration) {
 
     // export configured sequelize to allow for access to database models
     module.exports.sequelize = sequelize;
+
     return sequelize;
 }
 

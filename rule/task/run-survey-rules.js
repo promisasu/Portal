@@ -67,6 +67,7 @@ function activeRules (current, index, rules) {
             || isSamePatient(previous, current) && !isActive(previous)
         );
     }
+
     return isActive(current);
 }
 
