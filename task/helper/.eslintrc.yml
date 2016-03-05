@@ -1,2 +1,2 @@
 rules:
-    global-require: 1
+    global-require: warn
