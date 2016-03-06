@@ -33,6 +33,7 @@ function convertJsonToCsv (data, configuration) {
             if (row[column.key]) {
                 return '"'.concat(row[column.key], '"');
             }
+
             return '"'.concat(column.default, '"');
         })
         .join(',');

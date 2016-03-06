@@ -27,8 +27,8 @@ function dashboardServer (configuration) {
 
     // configure server connection
     server.connection({
-        port: configuration.server.port,
-        host: configuration.server.hostname
+        port: configuration.dashboard.port,
+        host: configuration.dashboard.hostname
     });
 
     // register hapi plugins
@@ -58,7 +58,7 @@ function dashboardServer (configuration) {
                 );
 
                 // allow authentication to be disabled for test
-                if (configuration.server.auth !== false) {
+                if (configuration.dashboard.authentication !== false) {
                     server.auth.default('simple');
                 }
             }
