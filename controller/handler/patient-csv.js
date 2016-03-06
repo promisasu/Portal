@@ -40,7 +40,7 @@ const configuration = [
         default: 'false'
     },
     {
-        label: 'survey_instance_state',
+        label: 'survey instance state',
         key: 'state'
     }
 ];
