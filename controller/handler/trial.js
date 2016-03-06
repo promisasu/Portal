@@ -19,11 +19,17 @@ const processPatientStatus = require('../helper/process-patient-status');
  */
 function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
+    const stage = database.sequelize.model('stage');
     const startDate = moment().startOf('Week');
 
     Promise
         .all([
             trial.findById(request.params.id),
+            stage.findAll({
+                where: {
+                    trialId: request.params.id
+                }
+            }),
             database.sequelize.query(
                 `
                 SELECT *, st.name AS stage
@@ -83,9 +89,10 @@ function trialView (request, reply) {
         ])
         .then((data) => {
             const currentTrial = data[0];
-            const patients = data[1];
-            const compliance = data[2];
-            const rules = data[3];
+            const stages = data[1];
+            const patients = data[2];
+            const compliance = data[3];
+            const rules = data[4];
             const ruleValues = rules.map((ruleData) => {
                 return parseInt(ruleData.rule, 10);
             });
@@ -112,6 +119,7 @@ function trialView (request, reply) {
             reply.view('trial', {
                 title: 'Pain Reporting Portal',
                 trial: processTrial(currentTrial),
+                stages,
                 patients: patientArray,
                 complianceCount,
                 patientCount,
