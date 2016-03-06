@@ -63,7 +63,14 @@ function surveyView (request, reply) {
         )
     ])
     .then((data) => {
-        const questionsWithResponses = groupBy(data[0], 'questionId');
+        const questionsWithResponses = data[0].map((row) => {
+            const rowCopy = Object.create(row);
+
+            rowCopy.answered = typeof rowCopy.questionOptionId === 'number';
+
+            return rowCopy;
+        });
+        const groupedQuestions = groupBy(questionsWithResponses, 'questionId');
         const patientAndTrial = data[1];
 
         reply.view('survey', {
@@ -75,8 +82,8 @@ function surveyView (request, reply) {
                 id: patientAndTrial.id,
                 name: patientAndTrial.name
             },
-            survey: questionsWithResponses[0],
-            questions: questionsWithResponses
+            survey: groupedQuestions[0],
+            questions: groupedQuestions
         });
     })
     .catch((err) => {
