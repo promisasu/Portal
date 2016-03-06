@@ -16,51 +16,46 @@ const database = require('../../model');
 function dashboardView (request, reply) {
     const currentDate = new Date();
 
-    return Promise
-        .all([
-            database.sequelize.query(
-                `
-                SELECT *
-                FROM trial AS tr
-                LEFT JOIN (
-                	SELECT st.trialId, COUNT(pa.id) AS recruitedCount
-                	FROM stage AS st
-                	JOIN patient AS pa
-                	ON pa.stageId = st.id
-                	GROUP BY st.trialId
-                ) AS recruited
-                ON tr.id = recruited.trialId
-                LEFT JOIN (
-                	SELECT st.trialId, COUNT(pa.id) AS completedCount
-                	FROM stage AS st
-                	JOIN patient AS pa
-                	ON pa.stageId = st.id
-                	WHERE pa.dateCompleted > ?
-                	GROUP BY st.trialId
-                ) AS completed
-                ON tr.id = completed.trialId
-                LEFT JOIN (
-                	SELECT st.trialId, COUNT(pa.id) AS activeCount
-                	FROM stage AS st
-                	JOIN patient AS pa
-                	ON pa.stageId = st.id
-                	WHERE ? BETWEEN pa.dateStarted AND pa.dateCompleted
-                	GROUP BY st.trialId
-                ) AS active
-                ON tr.id = active.trialId;
-                `,
-                {
-                    type: database.sequelize.QueryTypes.SELECT,
-                    replacements: [
-                        currentDate.toISOString(),
-                        currentDate.toISOString()
-                    ]
-                }
-            )
-        ])
-        .then((data) => {
-            const trials = data[0];
-
+    database.sequelize.query(
+        `
+        SELECT *
+        FROM trial AS tr
+        LEFT JOIN (
+        	SELECT st.trialId, COUNT(pa.id) AS recruitedCount
+        	FROM stage AS st
+        	JOIN patient AS pa
+        	ON pa.stageId = st.id
+        	GROUP BY st.trialId
+        ) AS recruited
+        ON tr.id = recruited.trialId
+        LEFT JOIN (
+        	SELECT st.trialId, COUNT(pa.id) AS completedCount
+        	FROM stage AS st
+        	JOIN patient AS pa
+        	ON pa.stageId = st.id
+        	WHERE pa.dateCompleted > ?
+        	GROUP BY st.trialId
+        ) AS completed
+        ON tr.id = completed.trialId
+        LEFT JOIN (
+        	SELECT st.trialId, COUNT(pa.id) AS activeCount
+        	FROM stage AS st
+        	JOIN patient AS pa
+        	ON pa.stageId = st.id
+        	WHERE ? BETWEEN pa.dateStarted AND pa.dateCompleted
+        	GROUP BY st.trialId
+        ) AS active
+        ON tr.id = active.trialId;
+        `,
+        {
+            type: database.sequelize.QueryTypes.SELECT,
+            replacements: [
+                currentDate.toISOString(),
+                currentDate.toISOString()
+            ]
+        }
+        )
+        .then((trials) => {
             // Process data into format expected in view
             const trialData = trials.map(processTrial);
 
@@ -68,21 +63,7 @@ function dashboardView (request, reply) {
             reply.view('dashboard', {
                 title: 'Pain Reporting Portal',
                 user: request.auth.credentials,
-                status: {
-                    patientCount: null,
-                    riskCount: null,
-                    noncompliantCount: null
-                },
-                trials: trialData,
-                graphData: JSON.stringify({
-                    labels: [
-                        'Compliant',
-                        'Semicompliant',
-                        'Noncompliant'
-                    ],
-                    // TODO real data
-                    datasets: []
-                })
+                trials: trialData
             });
         })
         .catch((err) => {
