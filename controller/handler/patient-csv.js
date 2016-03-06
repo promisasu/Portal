@@ -127,7 +127,6 @@ function patientCSV (request, reply) {
         reply(csv).type('text/csv');
     })
     .catch((err) => {
-        console.error(err);
         reply(boom.notFound('patient data not found'));
     });
 }
