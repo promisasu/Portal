@@ -12,7 +12,7 @@
                 <div class="card-block">
                     <h4 class="card-title">
                         Welcome, {{ user.username }}!
-                    </h4> 
+                    </h4>
                 </div>
             </div>
         </div>
@@ -78,9 +78,9 @@
                                     <th>
                                         Recruited
                                     </th>
-                                    <th>
+                                    {{!-- <th>
                                         Active
-                                    </th>
+                                    </th> --}}
                                     <th>
                                         IRB Approval Date
                                     </th>
@@ -143,7 +143,7 @@
                                             <br>
                                             {{ completedPercent }}% Completed
                                         </td>
-                                        <td data-search="{{ activeCount }}" data-order="{{ activeCount }}">
+                                        {{!-- <td data-search="{{ activeCount }}" data-order="{{ activeCount }}">
                                             {{ activeCount }} Patients
                                             <hr>
                                             <progress class="progress progress-good-and-bad" value="{{ compliantPercent }}" max="100">
@@ -156,7 +156,7 @@
                                             {{ compliantPercent }}% Compliant
                                             <br>
                                             {{ noncompliantPercent }}% Noncompliant
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             {{ start }}
                                         </td>
