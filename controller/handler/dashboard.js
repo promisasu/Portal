@@ -5,7 +5,6 @@
  * @module controller/handler/dashboard
  */
 const processTrial = require('../helper/process-trial');
-const moment = require('moment');
 const database = require('../../model');
 
 /**
@@ -15,7 +14,7 @@ const database = require('../../model');
  * @returns {View} Rendered page
  */
 function dashboardView (request, reply) {
-    const todayDate = moment();
+    const currentDate = new Date();
 
     return Promise
         .all([
@@ -53,8 +52,8 @@ function dashboardView (request, reply) {
                 {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
-                        todayDate.toISOString(),
-                        todayDate.toISOString()
+                        currentDate.toISOString(),
+                        currentDate.toISOString()
                     ]
                 }
             )
