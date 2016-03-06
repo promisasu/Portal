@@ -119,8 +119,6 @@ function patientCSV (request, reply) {
         const property = ['id', 'questionText'];
         const rowsm = deduplicate(allOptionsWithAnswers, property);
 
-        console.log(rowsm);
-
         return convertJsonToCsv(rowsm, configuration);
     })
     .then((csv) => {
