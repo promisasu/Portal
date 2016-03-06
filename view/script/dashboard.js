@@ -1,7 +1,7 @@
 (function dashboard () {
     'use strict';
 
-    const nameColumn = 0;
+    var nameColumn = 0;
     var table = $('#trials').DataTable({order: [nameColumn, 'desc']});
     var selectedChoice = null;
 
