@@ -17,7 +17,7 @@ const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
  * @returns {View} Rendered page
  */
 function patientView (request, reply) {
-    return Promise
+    Promise
         .all([
             database.sequelize.query(
                 `
