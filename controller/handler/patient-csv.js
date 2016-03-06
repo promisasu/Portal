@@ -44,68 +44,40 @@ const configuration = [
  * @returns {View} Rendered page
  */
 function patientCSV (request, reply) {
-    Promise
-    .all([
-        // All of the responses for the patient's surveys
-        database.sequelize.query(
-            `
-            SELECT si.id AS surveyId, qo.id AS optionId
-            FROM patient AS pa
-            JOIN survey_instance AS si
-            ON si.patientId = pa.id
-            JOIN question_result AS qr
-            ON qr.surveyInstanceId = si.id
-            JOIN question_option AS qo
-            ON qo.id = qr.questionOptionId
-            WHERE pa.pin = ?
-            `,
-            {
-                type: database.sequelize.QueryTypes.SELECT,
-                replacements: [
-                    request.params.pin
-                ]
-            }
-        ),
-        // All patient data, survey data and question data
-        // both answered and unanswered
-        database.sequelize.query(
-            `
-            SELECT *, si.id, qt.id AS questionId, qo.id AS optionId
-            FROM patient AS pa
-            JOIN survey_instance AS si
-            ON si.patientId = pa.id
-            JOIN survey_template AS st
-            ON st.id = si.surveyTemplateId
-            JOIN join_surveys_and_questions AS jsq
-            ON jsq.surveyTemplateId = st.id
-            JOIN question_template AS qt
-            ON qt.id = jsq.questionTemplateId
-            JOIN question_option AS qo
-            ON qo.questionTemplateId = qt.id
-            WHERE pa.pin = ?
-            ORDER BY si.id, jsq.questionOrder, qo.order
-            `,
-            {
-                type: database.sequelize.QueryTypes.SELECT,
-                replacements: [
-                    request.params.pin
-                ]
-            }
-        )
-    ])
+    database.sequelize.query(
+        `
+        SELECT *, si.id, qt.id AS questionId, qo.id AS optionId
+        FROM patient AS pa
+        JOIN survey_instance AS si
+        ON si.patientId = pa.id
+        JOIN survey_template AS st
+        ON st.id = si.surveyTemplateId
+        JOIN join_surveys_and_questions AS jsq
+        ON jsq.surveyTemplateId = st.id
+        JOIN question_template AS qt
+        ON qt.id = jsq.questionTemplateId
+        JOIN question_option AS qo
+        ON qo.questionTemplateId = qt.id
+        LEFT JOIN question_result AS qr
+        ON qr.surveyInstanceId = si.id
+        AND qr.questionOptionId = qo.id
+        WHERE pa.pin = ?
+        ORDER BY si.id, jsq.questionOrder, qo.order
+        `,
+        {
+            type: database.sequelize.QueryTypes.SELECT,
+            replacements: [
+                request.params.pin
+            ]
+        }
+    )
     .then((data) => {
-        const allOptionsWithAnswers = data[1].map((questionOption) => {
-            // check if question has been answered
-            const answered = data[0].find((questionAnswered) => {
-                return questionOption.id === questionAnswered.surveyId
-                    && questionOption.optionId === questionAnswered.optionId;
-            });
+        const allOptionsWithAnswers = data.map((row) => {
+            const rowCopy = Object.create(row);
 
-            // add answered attribute to data
-            questionOption.answered = Boolean(answered);
+            rowCopy.answered = typeof rowCopy.questionOptionId === 'number';
 
-            // send back updated data
-            return questionOption;
+            return rowCopy;
         });
 
         return convertJsonToCsv(allOptionsWithAnswers, configuration);
