@@ -33,7 +33,7 @@ function dashboardView (request, reply) {
         	FROM stage AS st
         	JOIN patient AS pa
         	ON pa.stageId = st.id
-        	WHERE pa.dateCompleted > ?
+        	WHERE pa.dateCompleted < ?
         	GROUP BY st.trialId
         ) AS completed
         ON tr.id = completed.trialId
