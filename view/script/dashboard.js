@@ -1,7 +1,7 @@
 (function dashboard () {
     'use strict';
 
-    var table = $('#trials').DataTable();
+    var table = $('#trials').DataTable({"order": [0, 'desc']});
     var selectedChoice = null;
 
     $('.dropdown-menu').on('click', 'div', function selectItem () {
