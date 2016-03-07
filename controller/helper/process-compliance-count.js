@@ -6,27 +6,29 @@
 /**
  * A dashboard with an overview of a specific trial.
  * @param {Array<Object>} rows - aggregated survey information
- * @returns {Array<Number>} count of redCount, yellowCount and greenCount
+ * @returns {Array<Number>} number of non-compliant, semi-compliant and compliant patients
  */
 function processComplianceCount (rows) {
-    const zero = 0;
-    const redThreshold = 2;
-    const yellowThresholdBegin = 0;
-    const redIndex = 0;
-    const yellowIndex = 1;
-    const greenIndex = 2;
-    const compliance = [zero, zero, zero];
+    const nonCompliantThreshold = 2;
+    const semiCompliantThreshold = 0;
+    const compliance = {
+        compliant: 0,
+        semiCompliant: 0,
+        nonCompliant: 0
+    };
 
     for (const row of rows) {
-        if (row.expiredCount > redThreshold) {
-            compliance[redIndex] += 1;
-        } else if (row.expiredCount > yellowThresholdBegin && row.expiredCount <= redThreshold) {
-            compliance[yellowIndex] += 1;
+        console.log(row);
+        if (row.expiredCount > nonCompliantThreshold) {
+            compliance.nonCompliant += 1;
+        } else if (row.expiredCount > semiCompliantThreshold) {
+            compliance.semiCompliant += 1;
         } else {
-            compliance[greenIndex] += 1;
+            compliance.compliant += 1;
         }
     }
 
-    return compliance;
+    return [compliance.nonCompliant, compliance.semiCompliant, compliance.compliant];
 }
+
 module.exports = processComplianceCount;
