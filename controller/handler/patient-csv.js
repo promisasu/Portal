@@ -73,7 +73,7 @@ function patientCSV (request, reply) {
     )
     .then((data) => {
         const allOptionsWithAnswers = data.map((row) => {
-            const rowCopy = Object.create(row);
+            const rowCopy = Object.assign({}, row);
 
             rowCopy.answered = typeof rowCopy.questionOptionId === 'number';
 

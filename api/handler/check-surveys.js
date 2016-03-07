@@ -49,8 +49,7 @@ function checkSurveys (request, reply) {
             JOIN survey_template AS st
             ON si.surveyTemplateId = st.id
             WHERE pa.pin = ?
-            AND si.startTime < ?
-            AND si.endTime > ?
+            AND ? BETWEEN si.startTime AND si.endTime
             AND (
                 si.state = 'pending'
                 OR si.state = 'in progress'
@@ -61,7 +60,6 @@ function checkSurveys (request, reply) {
                 type: database.sequelize.QueryTypes.SELECT,
                 replacements: [
                     currentPatient.pin,
-                    currentDate.toISOString(),
                     currentDate.toISOString()
                 ]
             }

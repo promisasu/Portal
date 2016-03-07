@@ -64,7 +64,7 @@ function surveyView (request, reply) {
     ])
     .then((data) => {
         const questionsWithResponses = data[0].map((row) => {
-            const rowCopy = Object.create(row);
+            const rowCopy = Object.assign({}, row);
 
             rowCopy.answered = typeof rowCopy.questionOptionId === 'number';
 
@@ -82,7 +82,7 @@ function surveyView (request, reply) {
                 id: patientAndTrial.id,
                 name: patientAndTrial.name
             },
-            survey: groupedQuestions[0],
+            survey: groupedQuestions[0][0],
             questions: groupedQuestions
         });
     })

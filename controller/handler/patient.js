@@ -17,7 +17,7 @@ const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
  * @returns {View} Rendered page
  */
 function patientView (request, reply) {
-    return Promise
+    Promise
         .all([
             database.sequelize.query(
                 `
@@ -81,7 +81,7 @@ function patientView (request, reply) {
                 patient: currentPatient,
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
-                    const surveyInstanceCopy = Object.create(surveyInstance);
+                    const surveyInstanceCopy = Object.assign({}, surveyInstance);
 
                     surveyInstanceCopy.startTime = moment(surveyInstanceCopy.startTime, sqlDateFormat)
                         .utc().format('MM-DD-YYYY');
