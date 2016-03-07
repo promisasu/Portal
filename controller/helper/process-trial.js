@@ -14,11 +14,12 @@ const moment = require('moment');
 function processTrial (trial) {
     const startDate = moment(trial.IRBStart);
     const endDate = moment(trial.IRBEnd);
+    const allPercent = processPercent(trial);
 
     return {
         targetCount: null,
-        recruitedCount: null,
-        activeCount: null,
+        recruitedCount: trial.recruitedCount,
+        activeCount: trial.activeCount,
         compliantCount: null,
         status: null,
         id: trial.id,
@@ -27,13 +28,39 @@ function processTrial (trial) {
         IRBID: trial.IRBID,
         start: startDate.format('L'),
         end: endDate.format('L'),
-        recruitedPercent: null,
-        unrecruitedPercent: null,
-        activePercent: null,
-        completedPercent: null,
+        recruitedPercent: allPercent.recruitedPercent,
+        unrecruitedPercent: allPercent.unrecruitedPercent,
+        activePercent: allPercent.activePercent,
+        completedPercent: allPercent.completedPercent,
         compliantPercent: null,
         noncompliantPercent: null,
         noncompliantCount: null
+    };
+}
+
+/**
+ * Takes in a Trial model and processes to provide percent calculation
+ * @param {Trial} trial - a single Trial object
+ * @returns {Object} calculated Percent
+ */
+function processPercent (trial) {
+    const percent = 100;
+    const zeroPercent = 0;
+
+    if (trial.recruitedCount > zeroPercent) {
+        return {
+            recruitedPercent: Math.round(trial.recruitedCount / trial.targetCount * percent),
+            unrecruitedPercent: Math.round((trial.targetCount - trial.recruitedCount) / trial.targetCount * percent),
+            completedPercent: Math.round(trial.completedCount / trial.recruitedCount * percent),
+            activePercent: Math.round(trial.activeCount / trial.recruitedCount * percent)
+        };
+    }
+
+    return {
+        recruitedPercent: Math.round(trial.recruitedCount / trial.targetCount * percent),
+        unrecruitedPercent: Math.round((trial.targetCount - trial.recruitedCount) / trial.targetCount * percent),
+        completedPercent: zeroPercent,
+        activePercent: zeroPercent
     };
 }
 

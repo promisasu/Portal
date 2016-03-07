@@ -1,7 +1,8 @@
 (function dashboard () {
     'use strict';
 
-    var table = $('#trials').DataTable();
+    var nameColumn = 0;
+    var table = $('#trials').DataTable({order: [nameColumn, 'desc']});
     var selectedChoice = null;
 
     $('.dropdown-menu').on('click', 'div', function selectItem () {
@@ -28,16 +29,19 @@
                     if (startDate > date) {
                         return true;
                     }
+
                     return false;
                 case 'In Progress':
                     if (date > startDate && date < endDate) {
                         return true;
                     }
+
                     return false;
                 case 'Completed':
                     if (endDate < date) {
                         return true;
                     }
+
                     return false;
                 default:
                     return true;

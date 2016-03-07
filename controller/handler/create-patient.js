@@ -29,6 +29,7 @@ function createPatient (request, reply) {
     .transaction()
     .then((newTransaction) => {
         transaction = newTransaction;
+
         // Get Trial the patient will be added to
         return trial.findById(request.payload.trialId, {transaction});
     })
@@ -38,6 +39,7 @@ function createPatient (request, reply) {
         const currentTrial = tempTrial;
 
         pin = currentTrial.id * trialOffset + currentTrial.patientPinCounter;
+
         return currentTrial.increment({patientPinCounter: 1}, {transaction});
     })
     // Create the new Patient
@@ -50,6 +52,7 @@ function createPatient (request, reply) {
     // Get stage that patient belongs to
     .then((tempPatient) => {
         newPatient = tempPatient;
+
         return stage.findById(request.payload.stageId, {transaction});
     })
     // Add patient to stage

@@ -17,7 +17,7 @@ const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
  * @returns {View} Rendered page
  */
 function patientView (request, reply) {
-    return Promise
+    Promise
         .all([
             database.sequelize.query(
                 `
@@ -45,6 +45,7 @@ function patientView (request, reply) {
                 JOIN survey_template AS srt
                 ON srt.id = si.surveyTemplateId
                 WHERE pa.pin = ?
+                ORDER BY si.startTime
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -81,7 +82,7 @@ function patientView (request, reply) {
                 patient: currentPatient,
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
-                    const surveyInstanceCopy = Object.create(surveyInstance);
+                    const surveyInstanceCopy = Object.assign({}, surveyInstance);
 
                     surveyInstanceCopy.startTime = moment(surveyInstanceCopy.startTime, sqlDateFormat)
                         .utc().format('MM-DD-YYYY');
@@ -91,6 +92,7 @@ function patientView (request, reply) {
                         surveyInstanceCopy.userSubmissionTime
                             = moment(surveyInstanceCopy.userSubmissionTime, sqlDateFormat).utc().format('MM-DD-YYYY');
                     }
+
                     return surveyInstanceCopy;
                 }),
                 complianceType: surveyInstances[0].surveyTemplateId,

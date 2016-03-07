@@ -4,7 +4,7 @@ const test = require('ava');
 const config = require('../../config.json');
 
 config.database.name = 'prp_test';
-config.server.auth = false;
+config.dashboard.authentication = false;
 
 const server = require('../server')(config);
 const database = require('../../model');
