@@ -10,8 +10,9 @@
  */
 function deduplicate (rows, properties) {
     const current = {};
+    const copyOfRows = Object.assign([], rows);
 
-    return rows.map((row) => {
+    return copyOfRows.map((row) => {
         for (const property of properties) {
             if (row[property] === current[property]) {
                 row[property] = ' ';

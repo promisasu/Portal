@@ -119,16 +119,13 @@ function patientCSV (request, reply) {
         const property = ['id', 'questionText'];
         const rowsm = deduplicate(allOptionsWithAnswers, property);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 26b4c57280465382507a840b5a7c1b472e7caad1
         return convertJsonToCsv(rowsm, configuration);
     })
     .then((csv) => {
         reply(csv).type('text/csv');
     })
     .catch((err) => {
+        console.error(err);
         reply(boom.notFound('patient data not found'));
     });
 }
