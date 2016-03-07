@@ -16,26 +16,6 @@ const database = require('../../model');
 function surveyView (request, reply) {
     Promise
     .all([
-        // all of the responses for the survey
-        database.sequelize.query(
-            `
-            SELECT qo.id
-            FROM survey_instance AS si
-            JOIN question_result AS qr
-            ON qr.surveyInstanceId = si.id
-            JOIN question_option AS qo
-            ON qo.id = qr.questionOptionId
-            WHERE si.id = ?
-            `,
-            {
-                type: database.sequelize.QueryTypes.SELECT,
-                replacements: [
-                    request.params.id
-                ]
-            }
-        ),
-        // all the questions and optional
-        // includes both answered and unanswered
         database.sequelize.query(
             `
             SELECT *, si.id AS surveyId, qt.id AS questionId, qo.id AS optionId
@@ -48,6 +28,9 @@ function surveyView (request, reply) {
             ON qt.id = jsq.questionTemplateId
             JOIN question_option AS qo
             ON qo.questionTemplateId = qt.id
+            LEFT JOIN question_result AS qr
+            ON qr.surveyInstanceId = si.id
+            AND qr.questionOptionId = qo.id
             WHERE si.id = ?
             ORDER BY jsq.questionOrder, qo.order
             `,
@@ -80,22 +63,15 @@ function surveyView (request, reply) {
         )
     ])
     .then((data) => {
-        const surveyResponses = data[0].map((item) => {
-            return item.id;
-        });
-        const surveyInstanceAndQuestions = data[1];
-        const patientAndTrial = data[2];
-        const negative = -1;
+        const questionsWithResponses = data[0].map((row) => {
+            const rowCopy = Object.assign({}, row);
 
-        let questionsWithResponses = surveyInstanceAndQuestions.map((item) => {
-            if (surveyResponses.indexOf(item.optionId) > negative) {
-                item.selected = true;
-                return item;
-            }
-            return item;
-        });
+            rowCopy.answered = typeof rowCopy.questionOptionId === 'number';
 
-        questionsWithResponses = groupBy(questionsWithResponses, 'questionId');
+            return rowCopy;
+        });
+        const groupedQuestions = groupBy(questionsWithResponses, 'questionId');
+        const patientAndTrial = data[1];
 
         reply.view('survey', {
             title: 'Pain Reporting Portal',
@@ -106,8 +82,8 @@ function surveyView (request, reply) {
                 id: patientAndTrial.id,
                 name: patientAndTrial.name
             },
-            survey: surveyInstanceAndQuestions[0],
-            questions: questionsWithResponses
+            survey: groupedQuestions[0][0],
+            questions: groupedQuestions
         });
     })
     .catch((err) => {

@@ -1,14 +1,21 @@
 'use strict';
+
+/**
+ * @module task/start-api
+ * Starts api server.
+ */
+
 const processManager = require('pm2');
 const path = require('path');
+const configuration = require('../config.json');
 
 processManager.connect(() => {
     processManager.start(
         {
-            name: 'prp-api',
+            name: `prp-${configuration.environment}-api`,
             script: path.resolve('task', 'helper', 'start-api.js'),
-            error_file: path.resolve('logs', `${Date.now()}-prp-api-error.log`),
-            out_file: path.resolve('logs', `${Date.now()}-prp-api-out.log`)
+            error_file: path.resolve('logs', `${Date.now()}-prp-${configuration.environment}-api-error.log`),
+            out_file: path.resolve('logs', `${Date.now()}-prp-${configuration.environment}-api-out.log`)
         },
         (err) => {
             if (err) {

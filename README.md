@@ -4,6 +4,7 @@
 [![Dependency Status](https://david-dm.org/promisasu/Portal.svg)](https://david-dm.org/promisasu/Portal)
 [![devDependency Status](https://david-dm.org/promisasu/Portal/dev-status.svg)](https://david-dm.org/promisasu/Portal#info=devDependencies)
 [![optionalDependency Status](https://david-dm.org/promisasu/Portal/optional-status.svg)](https://david-dm.org/promisasu/Portal#info=optionalDependencies)
+[![Taiga Board](https://img.shields.io/badge/managed_with-taiga-brightgreen.svg)](https://tree.taiga.io/project/promisasu-prp-manhattan-project/)
 
 ## Installation Instructions
 
@@ -31,7 +32,6 @@
 
 * run `npm run status` to view status of all servers
 * run `npm run log` to view server logs
-* run `npm run describe-<system>` to view details of running of running a system, [tasks](#tasks) for more info
 
 ## Test the Portal
 
@@ -48,17 +48,16 @@
 
 ## Additional Guides
 
-* [Contributing](CONTRIBUTING.md)
+* [Contributing](.github/CONTRIBUTING.md)
 * [Design](DESIGN.md)
+* [Issue Template](.github/ISSUE_TEMPLATE.md)
+* [Pull Request Template](.github/PULL_REQUEST_TEMPLATE.md)
 
 ## Tasks
 
 Tasks can be run by calling `npm run <task>`
 
 * `check-dependencies` detect outdated and insecure packages
-* `describe-api` view details of running api
-* `describe-dashboard` view details of running dashboard
-* `describe-scheduler` view details of running scheduler
 * `documentation` generate code documentation
 * `init` create a server configuration file
 * `lint` lint check project files
@@ -77,3 +76,4 @@ Tasks can be run by calling `npm run <task>`
 * `sync` synchronize database schema
 * `test` run the test suite
 * `user` create a new user
+* `validate-configuration` detect invalid server configuration
