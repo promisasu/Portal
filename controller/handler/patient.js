@@ -81,7 +81,7 @@ function patientView (request, reply) {
                 patient: currentPatient,
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
-                    const surveyInstanceCopy = Object.create(surveyInstance);
+                    const surveyInstanceCopy = Object.assign({}, surveyInstance);
 
                     surveyInstanceCopy.startTime = moment(surveyInstanceCopy.startTime, sqlDateFormat)
                         .utc().format('MM-DD-YYYY');
