@@ -45,6 +45,7 @@ function patientView (request, reply) {
                 JOIN survey_template AS srt
                 ON srt.id = si.surveyTemplateId
                 WHERE pa.pin = ?
+                ORDER BY si.startTime
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
