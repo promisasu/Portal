@@ -26,6 +26,7 @@ function processComplianceCount (rows) {
             compliance[greenIndex] += 1;
         }
     }
+
     return compliance;
 }
 module.exports = processComplianceCount;

@@ -13,12 +13,9 @@ const one = 1;
 /**
  * Runs rules for all patients in all trials for all stages.
  * Rules will generate Survey Instances that open the same day the rule engine is run.
- * @param {Object} configuration - database configuration
  * @returns {Promise} resolves when completed
  */
-function runSurveyRules (configuration) {
-    database.setup(configuration);
-
+function runSurveyRules () {
     return database
     .sequelize
     .query(
@@ -70,6 +67,7 @@ function activeRules (current, index, rules) {
             || isSamePatient(previous, current) && !isActive(previous)
         );
     }
+
     return isActive(current);
 }
 

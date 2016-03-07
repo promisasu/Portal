@@ -29,6 +29,7 @@ function submitSurvey (request, reply) {
     .transaction()
     .then((newTransaction) => {
         transaction = newTransaction;
+
         return surveyInstance.find(
             {
                 where: {
@@ -45,6 +46,7 @@ function submitSurvey (request, reply) {
                 throw new Error('Error - Survey has expired');
             } else {
                 currentSurveyInstance = survey;
+
                 return null;
             }
         } else {
@@ -109,12 +111,14 @@ function submitSurvey (request, reply) {
                 );
             }
         }
+
         return Promise.all(questionInstArr);
     })
     .then(() => {
         currentSurveyInstance.userSubmissionTime = request.payload.timeStamp;
         currentSurveyInstance.actualSubmissionTime = moment();
         currentSurveyInstance.state = 'completed';
+
         return currentSurveyInstance.save({transaction});
     })
     .then(() => {

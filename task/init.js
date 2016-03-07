@@ -17,16 +17,28 @@ const config = {};
 console.log('This utility will walk you through creating a config.json file.');
 console.log('It only covers the most common items, and tries to guess sensible defaults.');
 console.log('');
-console.log('setup for pain reporting portal server');
+console.log('general setup for project');
 console.log('');
 
 read({
-    prompt: 'hostname:',
-    default: 'localhost'
+    prompt: 'environment name:',
+    default: 'development'
+})
+.then((environment) => {
+    config.environment = environment;
+
+    console.log('');
+    console.log('setup for pain reporting portal server');
+    console.log('');
+
+    return read({
+        prompt: 'hostname:',
+        default: 'localhost'
+    });
 })
 .then((serverHostname) => {
-    config.server = {};
-    config.server.hostname = serverHostname;
+    config.dashboard = {};
+    config.dashboard.hostname = serverHostname;
 
     return read({
         prompt: 'port number:',
@@ -34,7 +46,7 @@ read({
     });
 })
 .then((port) => {
-    config.server.port = port;
+    config.dashboard.port = port;
 
     console.log('');
     console.log('setup for pain reporting portal api');

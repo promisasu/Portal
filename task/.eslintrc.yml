@@ -1,5 +1,5 @@
 rules:
-    camelcase: 1
+    camelcase: warn
     max-len:
-        - 2
+        - error
         - 150

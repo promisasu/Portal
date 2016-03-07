@@ -63,7 +63,7 @@
                             </thead>
                             <tbody>
                                 {{#each surveys}}
-                                    <tr class="table-{{#if completed}}success{{else}}danger{{/if}}">
+                                    <tr class="{{ state-to-status state prefix='table-' }}">
                                         <th scope="row">
                                             <a href="/survey/{{ id }}">
                                                 {{ id }}

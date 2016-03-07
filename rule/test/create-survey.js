@@ -43,6 +43,7 @@ test('create a survey instance in an existing transaction', () => {
         .transaction()
         .then((newTransaction) => {
             transaction = newTransaction;
+
             return createSurvey(patientPin, surveyTemplate, startDate, openFor, openUnit, newTransaction);
         })
         .then(() => {

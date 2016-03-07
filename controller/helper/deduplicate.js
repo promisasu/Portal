@@ -20,6 +20,7 @@ function deduplicate (rows, properties) {
                 current[property] = row[property];
             }
         }
+
         return row;
     });
 }

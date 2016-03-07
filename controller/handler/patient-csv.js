@@ -90,6 +90,9 @@ function patientCSV (request, reply) {
             ON qt.id = jsq.questionTemplateId
             JOIN question_option AS qo
             ON qo.questionTemplateId = qt.id
+            LEFT JOIN question_result AS qr
+            ON qr.surveyInstanceId = si.id
+            AND qr.questionOptionId = qo.id
             WHERE pa.pin = ?
             and si.state = 'completed'
             ORDER BY si.id, jsq.questionOrder, qo.order
@@ -116,7 +119,7 @@ function patientCSV (request, reply) {
             // send back updated data
             return questionOption;
         });
-        const property = ['id', 'questionText'];
+        const property = ['id', 'questionText', 'questionId'];
         const rowsm = deduplicate(allOptionsWithAnswers, property);
 
         return convertJsonToCsv(rowsm, configuration);
