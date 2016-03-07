@@ -107,10 +107,13 @@ function trialView (request, reply) {
                     return status.pin === patient.pin;
                 });
 
+                // collect the compliance status as well as expiredCount
                 if (patientStatus) {
-                    // collect the compliance status as well as expiredCount
                     patient.status = patientStatus.status;
                     patient.totalMissed = patientStatus.expiredCount;
+                } else {
+                    patient.status = 'Unknown';
+                    patient.totalMissed = 0;
                 }
 
                 return patient;
