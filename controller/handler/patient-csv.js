@@ -7,7 +7,7 @@
 const database = require('../../model');
 const convertJsonToCsv = require('../helper/convert-json-to-csv');
 const boom = require('boom');
-
+const deduplicate = require('../helper/deduplicate');
 const configuration = [
     {
         label: 'patient pin',
@@ -23,17 +23,16 @@ const configuration = [
         key: 'id'
     },
     {
+        label: 'unique question id',
+        key: 'questionId'
+    },
+    {
         label: 'question',
         key: 'questionText'
     },
     {
         label: 'question option',
         key: 'optionText'
-    },
-    {
-        label: 'selected answer',
-        key: 'answered',
-        default: 'false'
     }
 ];
 
@@ -58,10 +57,11 @@ function patientCSV (request, reply) {
         ON qt.id = jsq.questionTemplateId
         JOIN question_option AS qo
         ON qo.questionTemplateId = qt.id
-        LEFT JOIN question_result AS qr
+        JOIN question_result AS qr
         ON qr.surveyInstanceId = si.id
         AND qr.questionOptionId = qo.id
         WHERE pa.pin = ?
+        and si.state = 'completed'
         ORDER BY si.id, jsq.questionOrder, qo.order
         `,
         {
@@ -71,16 +71,11 @@ function patientCSV (request, reply) {
             ]
         }
     )
-    .then((data) => {
-        const allOptionsWithAnswers = data.map((row) => {
-            const rowCopy = Object.assign({}, row);
+    .then((optionsWithAnswers) => {
+        const property = ['pin', 'name', 'id', 'questionText', 'questionId'];
+        const rowsm = deduplicate(optionsWithAnswers, property);
 
-            rowCopy.answered = typeof rowCopy.questionOptionId === 'number';
-
-            return rowCopy;
-        });
-
-        return convertJsonToCsv(allOptionsWithAnswers, configuration);
+        return convertJsonToCsv(rowsm, configuration);
     })
     .then((csv) => {
         reply(csv).type('text/csv');
