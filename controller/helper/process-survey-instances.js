@@ -59,7 +59,7 @@ function pickTimeLeft (surveys) {
     });
 
     return [{
-        label: '% Time left until daily survey expired',
+        label: '% Time left until survey expired',
         data: percentages
     }];
 }
