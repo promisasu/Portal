@@ -5,7 +5,6 @@
  */
 
 const database = require('../../model');
-const processSurveyToEvent = require('../helper/process-survey-to-event');
 const processSurveyInstances = require('../helper/process-survey-instances');
 const moment = require('moment');
 const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
@@ -97,8 +96,7 @@ function patientView (request, reply) {
                     return surveyInstanceCopy;
                 }),
                 complianceType: surveyInstances[0].surveyTemplateId,
-                datesJson: JSON.stringify(processSurveyInstances(surveyInstances)),
-                eventsJson: JSON.stringify(surveyInstances.map(processSurveyToEvent))
+                datesJson: JSON.stringify(processSurveyInstances(surveyInstances))
             });
         })
         .catch((err) => {
