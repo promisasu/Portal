@@ -45,22 +45,8 @@
         }
     };
 
-    var ctx = '';
-    var mychart = '';
+    var ctx = document.getElementById('complianceChart').getContext('2d');
 
-    $('#calendar').fullCalendar({
-        defaultView: 'basicWeek',
-        allDayDefault: true,
-        contentHeight: 'auto',
-        events: window.events
-    });
-
-    ctx = document.getElementById('complianceChart').getContext('2d');
     config.data = allDatesConfig;
-    mychart = new Chart(ctx, config);
-
-    $('.fc-today-button').click(function todayButtonClick () {
-        mychart.config.data = allDatesConfig;
-        mychart.update();
-    });
+    new Chart(ctx, config);
 }());
