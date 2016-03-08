@@ -1,27 +1,28 @@
 rules:
-    # String
-    string-quotes: single
     # Color
     color-hex-case: lower
     color-hex-length: long
+    color-named: always-where-possible
     color-no-hex: null
     color-no-invalid-hex: true
-    color-no-named: null
     # Font Family
     font-family-name-quotes: single-where-recommended
     # Font Weight
-    font-weight-notation: named
+    font-weight-notation: named-where-possible
     # Number
     number-leading-zero: always
     number-max-precision: 2
     number-no-trailing-zeros: true
     number-zero-length-no-unit: true
+    # String
+    string-no-newline: true
+    string-quotes: single
+    # Time
+    time-no-imperceptible: true
     # Unit
     unit-whitelist:
         - px
         - "%"
-    # Time
-    time-no-imperceptible: true
     # Declaration
     declaration-bang-space-after: never
     declaration-bang-space-before: always
@@ -30,18 +31,22 @@ rules:
     declaration-colon-space-before: never
     declaration-no-important: null
     # Declaration Block
-    declaration-block-no-single-line: true
+    declaration-block-no-duplicate-properties: true
+    declaration-block-no-shorthand-property-overrides: true
+    declaration-block-properties-order: alphabetical
     declaration-block-semicolon-newline-after: always
     declaration-block-semicolon-newline-before: null
     declaration-block-semicolon-space-after: null
     declaration-block-semicolon-space-before: null
     declaration-block-single-line-max-declarations: null
+    declaration-block-trailing-semicolon: always
     # Block
     block-closing-brace-newline-after: always
     block-closing-brace-newline-before: always
     block-closing-brace-space-after: null
     block-closing-brace-space-before: null
     block-no-empty: true
+    block-no-single-line: true
     block-opening-brace-newline-after: always
     block-opening-brace-newline-before: null
     block-opening-brace-space-after: null
@@ -51,6 +56,7 @@ rules:
     selector-combinator-space-after: always
     selector-combinator-space-before: always
     selector-id-pattern: null
+    selector-max-specificity: null
     selector-no-attribute: null
     selector-no-combinator: null
     selector-no-id: null
@@ -65,11 +71,8 @@ rules:
     selector-list-comma-space-after: null
     selector-list-comma-space-before: null
     # Rule
-    rule-nested-empty-line-before: null
-    rule-no-duplicate-properties: true
-    rule-no-shorthand-property-overrides: true
-    rule-properties-order: null
-    rule-trailing-semicolon: always
+    rule-nested-empty-line-before: never
+    rule-non-nested-empty-line-before: null
     # At Rule
     at-rule-empty-line-before: always
     at-rule-no-vendor-prefix: true
@@ -78,10 +81,15 @@ rules:
     comment-whitespace-inside: always
     # General
     indentation: 4
-    max-line-length: 120
-    no-duplicate-selectors: true
     max-empty-lines: 1
+    max-line-length: 120
+    max-nesting-depth: 2
+    no-browser-hacks: true
+    no-descending-specificity: true
+    no-duplicate-selectors: true
     no-eol-whitespace: true
+    no-indistinguishable-colors: true
     no-invalid-double-slash-comments: true
     no-missing-eof-newline: true
     no-unknown-animations: true
+    no-unsupported-browser-features: true
