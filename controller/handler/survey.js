@@ -14,8 +14,11 @@ const database = require('../../model');
  * @returns {View} Rendered page
  */
 function surveyView (request, reply) {
+    const surveyInstance = database.sequelize.model('survey_instance');
+
     Promise
     .all([
+        surveyInstance.findById(request.params.id),
         database.sequelize.query(
             `
             SELECT *, si.id AS surveyId, qt.id AS questionId, qo.id AS optionId
@@ -28,7 +31,7 @@ function surveyView (request, reply) {
             ON qt.id = jsq.questionTemplateId
             JOIN question_option AS qo
             ON qo.questionTemplateId = qt.id
-            LEFT JOIN question_result AS qr
+            JOIN question_result AS qr
             ON qr.surveyInstanceId = si.id
             AND qr.questionOptionId = qo.id
             WHERE si.id = ?
@@ -63,18 +66,13 @@ function surveyView (request, reply) {
         )
     ])
     .then((data) => {
-        const questionsWithResponses = data[0].map((row) => {
-            const rowCopy = Object.assign({}, row);
-
-            rowCopy.answered = typeof rowCopy.questionOptionId === 'number';
-
-            return rowCopy;
-        });
-        const groupedQuestions = groupBy(questionsWithResponses, 'questionId');
-        const patientAndTrial = data[1];
+        const survey = data[0];
+        const groupedQuestions = groupBy(data[1], 'questionId');
+        const patientAndTrial = data[2];
 
         reply.view('survey', {
             title: 'Pain Reporting Portal',
+            survey,
             patient: {
                 pin: patientAndTrial.pin
             },
@@ -82,7 +80,6 @@ function surveyView (request, reply) {
                 id: patientAndTrial.id,
                 name: patientAndTrial.name
             },
-            survey: groupedQuestions[0][0],
             questions: groupedQuestions
         });
     })

@@ -39,21 +39,17 @@
                                     Question #{{ this.0.questionOrder }}
                                 </h4>
                                 <p class="card-text">
+                                    <strong>
+                                        Prompt:
+                                    </strong>
                                     {{ this.0.questionText }}
+                                    <br>
+                                    <strong>
+                                        Answer:
+                                    </strong>
+                                    {{#each this}}{{ optionText }} {{/each}}
                                 </p>
                             </div>
-                            <ul class="list-group list-group-flush">
-                                {{#each this}}
-                                    <li class="list-group-item {{#if answered}}list-group-item-info{{/if}}">
-                                        {{#if answered}}
-                                            <span class="label label-default pull-xs-right">
-                                                patient answer
-                                            </span>
-                                        {{/if}}
-                                        {{ optionText }}
-                                    </li>
-                                {{/each}}
-                            </ul>
                         </div>
                     {{/each}}
                 </div>
