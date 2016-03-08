@@ -112,7 +112,7 @@ function trialView (request, reply) {
                     patient.status = patientStatus.status;
                     patient.totalMissed = patientStatus.expiredCount;
                 } else {
-                    patient.status = 'Unknown';
+                    patient.status = 'Pending';
                     patient.totalMissed = 0;
                 }
 
