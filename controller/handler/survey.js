@@ -21,7 +21,7 @@ function surveyView (request, reply) {
         surveyInstance.findById(request.params.id),
         database.sequelize.query(
             `
-            SELECT *, si.id AS surveyId, qt.id AS questionId, qo.id AS optionId
+            SELECT *, qt.id AS questionId, qo.id AS optionId
             FROM survey_instance AS si
             JOIN survey_template AS st
             ON st.id = si.surveyTemplateId
