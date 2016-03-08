@@ -90,7 +90,8 @@ function patientView (request, reply) {
                         .utc().format('MM-DD-YYYY');
                     if (surveyInstanceCopy.userSubmissionTime) {
                         surveyInstanceCopy.userSubmissionTime
-                            = moment(surveyInstanceCopy.userSubmissionTime, sqlDateFormat).utc().format('MM-DD-YYYY');
+                            = moment(surveyInstanceCopy.userSubmissionTime, sqlDateFormat)
+                                .utc().format('MM-DD-YYYY h:mma');
                     }
 
                     return surveyInstanceCopy;
