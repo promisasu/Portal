@@ -33,11 +33,11 @@ module.exports.trial = [
 module.exports.surveyTemplate = [
     {
         id: 1,
-        name: 'Sickle Cell Survey'
+        name: 'Sickle Cell Weekly Survey'
     },
     {
         id: 2,
-        name: 'Post Op Survey'
+        name: 'Post Op Weekly Survey'
     },
     {
         id: 3,
