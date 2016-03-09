@@ -2,9 +2,9 @@
 1. Ensure Pull Request is targeting the `development` branch
 2. Provide the requested information
 -->
-**Taiga User Story:** {Number}
+**Taiga User Story**
 
-**Taiga Task(s):** {Number(s)}
+**Taiga Task(s)**
 
 **What did you change?**
 
