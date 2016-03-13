@@ -16,6 +16,7 @@ const addSurveyInstanceModel = require('./survey-instance');
 const addQuestionTemplateModel = require('./question-template');
 const addQuestionResultModel = require('./question-result');
 const addQuestionOptionModel = require('./question-option');
+const addSurveyResponseLoggerModel = require('./survey-response-logger');
 
 // Database Join Tables
 const addJoinUsersAndTrials = require('./join-users-and-trials');
@@ -72,6 +73,7 @@ function setup (configuration) {
     addQuestionTemplateModel(sequelize);
     addQuestionResultModel(sequelize);
     addQuestionOptionModel(sequelize);
+    addSurveyResponseLoggerModel(sequelize);
 
     // add the many to many join tables
     addJoinUsersAndTrials(sequelize);
@@ -89,6 +91,7 @@ function setup (configuration) {
     const questionTemplate = sequelize.model('question_template');
     const surveyInstance = sequelize.model('survey_instance');
     const surveyTemplate = sequelize.model('survey_template');
+    const surveyResponseLogger = sequelize.model('survey_response_logger');
 
     // Get the join tables
     const joinUsersAndTrials = sequelize.model('join_users_and_trials');
@@ -106,6 +109,8 @@ function setup (configuration) {
     surveyInstance.hasMany(questionResult);
     questionTemplate.hasMany(questionOption);
     questionOption.hasMany(questionResult);
+    surveyInstance.hasMany(surveyResponseLogger);
+    questionTemplate.hasMany(surveyResponseLogger);
 
     /* ===== MANY TO MANY ===== */
     stage.belongsToMany(surveyTemplate, {through: joinStagesAndSurveys});
