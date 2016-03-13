@@ -6,7 +6,6 @@
 
 const database = require('../../model');
 const boom = require('boom');
-const moment = require('moment');
 
 /**
  * Fills in answered QuestionInstances for a submitted SurveyInstance
@@ -14,13 +13,12 @@ const moment = require('moment');
  * @param {Reply} reply - Hapi Reply
  * @returns {Null} responds with JSON data structure
  */
-function responseLogger (request, reply) {
-    const surveyResponseLogger = database.sequelize.model('survey-response-logger');
+function surveyLogger (request, reply) {
+    const surveyResponseLogger = database.sequelize.model('survey_response_logger');
     const surveyInstance = database.sequelize.model('survey_instance');
     const surveyInstanceId = request.payload.surveyInstanceID;
     const loggerArr = [];
 
-    let currentSurveyInstance = null;
     let transaction = null;
 
     database
@@ -32,7 +30,7 @@ function responseLogger (request, reply) {
         return surveyInstance.find(
             {
                 where: {
-                    id: request.payload.surveyInstanceID,
+                    id: request.payload.surveyInstanceID
                 },
                 transaction
             }
@@ -40,11 +38,9 @@ function responseLogger (request, reply) {
     })
     .then((survey) => {
         if (survey) {
-            currentSurveyInstance = survey;
             return null;
-        } else {
-            throw new Error('Survey instance does not exist in the system');
         }
+        throw new Error('Survey instance does not exist in the system');
     })
     .then(() => {
         for (const currentQuestion of request.payload.surveyResponseLog) {
@@ -58,9 +54,9 @@ function responseLogger (request, reply) {
                         nextTimeStamp: currentQuestion.nextTimeStamp
                     },
                     {transaction}
-                );
-            )
+                ));
         }
+
         return Promise.all(loggerArr);
     })
     .then(() => {
@@ -79,4 +75,4 @@ function responseLogger (request, reply) {
     });
 }
 
-module.exports = responseLogger;
+module.exports = surveyLogger;

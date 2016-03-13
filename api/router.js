@@ -5,7 +5,7 @@ const Joi = require('joi');
 const checkSurveys = require('./handler/check-surveys');
 const getSurvey = require('./handler/get-survey');
 const submitSurvey = require('./handler/submit-survey');
-const responseLogger = require('./handler/survey-response-logger');
+const surveyLogger = require('./handler/survey-logger');
 const maxBodyPainIntensity = 10;
 const minBodyPainIntensity = 0;
 
@@ -91,7 +91,7 @@ module.exports = [
     {
         method: 'POST',
         path: '/survey_logger',
-        handler: responseLogger,
+        handler: surveyLogger,
         config: {
             cors: true,
             validate: {
@@ -114,10 +114,10 @@ module.exports = [
                                 .format('x'),
                             prevTimeStamp: Joi
                                 .date()
-                                .format('x'),
+                                .timestamp('unix'),
                             nextTimeStamp: Joi
                                 .date()
-                                .format('x')
+                                .timestamp('unix')
                         })
                     )
                 }

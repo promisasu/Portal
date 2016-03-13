@@ -4,6 +4,8 @@
  * @module model/survey-response-logger
  */
 
+const Sequelize = require('sequelize');
+
 /**
  * Registers model with Sequelize
  * @param {Sequelize} sequelize - database instance
