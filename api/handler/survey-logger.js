@@ -1,14 +1,14 @@
 'use strict';
 
 /**
- * @module api/handler/submit-survey
+ * @module api/handler/survey-logger
  */
 
 const database = require('../../model');
 const boom = require('boom');
 
 /**
- * Fills in answered QuestionInstances for a submitted SurveyInstance
+ * Fills in in-app activity timestamps for a valid survey instance.
  * @param {Request} request - Hapi request
  * @param {Reply} reply - Hapi Reply
  * @returns {Null} responds with JSON data structure
