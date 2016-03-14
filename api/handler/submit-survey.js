@@ -20,7 +20,7 @@ function submitSurvey (request, reply) {
     const questionOption = database.sequelize.model('question_option');
     const surveyInstanceId = request.payload.surveyInstanceID;
     const questionInstArr = [];
-    const requestSuccess = 500;
+    const requestSuccess = 200;
 
     let currentSurveyInstance = null;
     let transaction = null;

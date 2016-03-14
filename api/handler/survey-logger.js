@@ -18,7 +18,7 @@ function surveyLogger (request, reply) {
     const surveyInstance = database.sequelize.model('survey_instance');
     const surveyInstanceId = request.payload.surveyInstanceID;
     const loggerArr = [];
-    const requestSuccess = 500;
+    const requestSuccess = 200;
 
     let transaction = null;
 
