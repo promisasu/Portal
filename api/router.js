@@ -114,10 +114,10 @@ module.exports = [
                                 .format('x'),
                             prevTimeStamp: Joi
                                 .date()
-                                .timestamp('unix'),
+                                .format('x'),
                             nextTimeStamp: Joi
                                 .date()
-                                .timestamp('unix')
+                                .format('x')
                         })
                     )
                 }
