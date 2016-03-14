@@ -5,6 +5,7 @@ const Joi = require('joi');
 const checkSurveys = require('./handler/check-surveys');
 const getSurvey = require('./handler/get-survey');
 const submitSurvey = require('./handler/submit-survey');
+const surveyLogger = require('./handler/survey-logger');
 const maxBodyPainIntensity = 10;
 const minBodyPainIntensity = 0;
 
@@ -81,6 +82,42 @@ module.exports = [
                                         .max(maxBodyPainIntensity)
                                 })
                             )
+                        })
+                    )
+                }
+            }
+        }
+    },
+    {
+        method: 'POST',
+        path: '/survey_logger',
+        handler: surveyLogger,
+        config: {
+            cors: true,
+            validate: {
+                payload: {
+                    surveyInstanceID: Joi
+                        .number()
+                        .integer()
+                        .positive(),
+                    timeStamp: Joi
+                        .date()
+                        .format('x'),
+                    surveyResponseLog: Joi.array().items(
+                        Joi.object().keys({
+                            quesID: Joi
+                                .number()
+                                .integer()
+                                .positive(),
+                            ansTimestamp: Joi
+                                .date()
+                                .format('x'),
+                            prevTimeStamp: Joi
+                                .date()
+                                .format('x'),
+                            nextTimeStamp: Joi
+                                .date()
+                                .format('x')
                         })
                     )
                 }
