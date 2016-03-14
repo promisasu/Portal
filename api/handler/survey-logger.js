@@ -49,9 +49,9 @@ function surveyLogger (request, reply) {
                     {
                         surveyInstanceId,
                         questionTemplateId: currentQuestion.quesID,
-                        ansTimestamp: currentQuestion.ansTimestamp,
-                        prevTimeStamp: currentQuestion.prevTimeStamp,
-                        nextTimeStamp: currentQuestion.nextTimeStamp
+                        answered: currentQuestion.ansTimestamp,
+                        previous: currentQuestion.prevTimeStamp,
+                        next: currentQuestion.nextTimeStamp
                     },
                     {transaction}
                 ));
