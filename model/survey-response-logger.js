@@ -9,9 +9,9 @@ const Sequelize = require('sequelize');
 /**
  * Registers model with Sequelize
  * @param {Sequelize} sequelize - database instance
- * @typedef {Date} ansTimestamp - Timestamp collected when the lastest question option was selected in the app
- * @typedef {Date} prevTimeStamp - Most recent timestamp collected when the previous button was clicked for the question
- * @typedef {Date} nextTimeStamp - Most recent timestamp collected when the next button was clicked for the question
+ * @typedef {Date} answered - Timestamp collected when the lastest question option was selected in the app
+ * @typedef {Date} previous - Most recent timestamp collected when the previous button was clicked for the question
+ * @typedef {Date} next - Most recent timestamp collected when the next button was clicked for the question
  * @returns {Null} nothing
  */
 function register (sequelize) {
@@ -24,13 +24,13 @@ function register (sequelize) {
     sequelize.define(
         'survey_response_logger',
         {
-            ansTimestamp: {
+            answered: {
                 type: Sequelize.DATE
             },
-            prevTimeStamp: {
+            previous: {
                 type: Sequelize.DATE
             },
-            nextTimeStamp: {
+            next: {
                 type: Sequelize.DATE
             }
         },
