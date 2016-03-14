@@ -125,10 +125,7 @@ function submitSurvey (request, reply) {
         return transaction.commit();
     })
     .then(() => {
-        reply({
-            statusCode: 500,
-            message: 'Success'
-        });
+        reply({message: 'Success'}).code(500);
     })
     .catch((err) => {
         transaction.rollback();
