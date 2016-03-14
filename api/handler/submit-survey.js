@@ -20,7 +20,6 @@ function submitSurvey (request, reply) {
     const questionOption = database.sequelize.model('question_option');
     const surveyInstanceId = request.payload.surveyInstanceID;
     const questionInstArr = [];
-    const requestSuccess = 200;
 
     let currentSurveyInstance = null;
     let transaction = null;
@@ -126,7 +125,7 @@ function submitSurvey (request, reply) {
         return transaction.commit();
     })
     .then(() => {
-        reply({message: 'Success'}).code(requestSuccess);
+        reply({message: 'Success'});
     })
     .catch((err) => {
         transaction.rollback();

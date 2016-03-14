@@ -18,7 +18,6 @@ function surveyLogger (request, reply) {
     const surveyInstance = database.sequelize.model('survey_instance');
     const surveyInstanceId = request.payload.surveyInstanceID;
     const loggerArr = [];
-    const requestSuccess = 200;
 
     let transaction = null;
 
@@ -64,7 +63,7 @@ function surveyLogger (request, reply) {
         return transaction.commit();
     })
     .then(() => {
-        reply({message: 'Success'}).code(requestSuccess);
+        reply({message: 'Success'});
     })
     .catch((err) => {
         transaction.rollback();
