@@ -124,7 +124,7 @@ module.exports = [
                                     .alternatives()
                                     .try(Joi.number(), Joi.object())
                             }),
-                            start: Joi
+                            startTime: Joi
                                 .date()
                                 .format('x')
                         })

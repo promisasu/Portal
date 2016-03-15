@@ -1,22 +1,38 @@
 'use strict';
 
 /**
- * @module api/handler/submit-survey
+ * @module api/handler/survey-results-logger
  */
 
-// const database = require('../../model');
-// const boom = require('boom');
+const database = require('../../model');
+const boom = require('boom');
+const processLoggerResults = require('../helper/process-logger-results');
 
 /**
- * Fills in answered QuestionInstances for a submitted SurveyInstance
+ * Fills in all the in-app events along with metaData and timestamps.
  * @param {Request} request - Hapi request
  * @param {Reply} reply - Hapi Reply
  * @returns {Null} responds with JSON data structure
  */
 function surveyResultsLogger (request, reply) {
-    // const surveyLogger = database.sequelize.model('survey_logger');
     console.log('Inside Survey Logger API');
-    reply();
+
+    const loggerResults = request.payload.loggerResults;
+    const logs = loggerResults.map(processLoggerResults);
+
+    database
+    .sequelize
+    .model('survey_logger')
+    .bulkCreate(logs)
+    .then(() => {
+        reply({
+            message: 'Success'
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        reply(boom.badRequest(err));
+    });
 }
 
 module.exports = surveyResultsLogger;
