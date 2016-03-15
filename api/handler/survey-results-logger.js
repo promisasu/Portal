@@ -15,8 +15,6 @@ const processLoggerResults = require('../helper/process-logger-results');
  * @returns {Null} responds with JSON data structure
  */
 function surveyResultsLogger (request, reply) {
-    console.log('Inside Survey Logger API');
-
     const loggerResults = request.payload.loggerResults;
     const logs = loggerResults.map(processLoggerResults);
 

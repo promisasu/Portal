@@ -96,13 +96,6 @@ module.exports = [
             cors: true,
             validate: {
                 payload: {
-                    surveyInstanceID: Joi
-                        .number()
-                        .integer()
-                        .positive(),
-                    timeStamp: Joi
-                        .date()
-                        .format('x'),
                     loggerResults: Joi.array().items(
                         Joi.object().keys({
                             eventName: Joi
