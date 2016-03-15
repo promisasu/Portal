@@ -121,7 +121,8 @@ module.exports = [
                                     .integer()
                                     .positive(),
                                 aid: Joi
-                                    .alternatives().try((Joi.number(), Joi.object()))
+                                    .alternatives()
+                                    .try(Joi.number(), Joi.object())
                             }),
                             start: Joi
                                 .date()
