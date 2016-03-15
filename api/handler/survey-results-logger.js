@@ -13,10 +13,10 @@
  * @param {Reply} reply - Hapi Reply
  * @returns {Null} responds with JSON data structure
  */
-function submitSurvey (request, reply) {
+function surveyResultsLogger (request, reply) {
     // const surveyLogger = database.sequelize.model('survey_logger');
     console.log('Inside Survey Logger API');
     reply();
 }
 
-module.exports = submitSurvey;
+module.exports = surveyResultsLogger;
