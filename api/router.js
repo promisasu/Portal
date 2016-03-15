@@ -5,6 +5,7 @@ const Joi = require('joi');
 const checkSurveys = require('./handler/check-surveys');
 const getSurvey = require('./handler/get-survey');
 const submitSurvey = require('./handler/submit-survey');
+const surveyResultsLogger = require('./handler/survey-results-logger');
 const maxBodyPainIntensity = 10;
 const minBodyPainIntensity = 0;
 
@@ -81,6 +82,53 @@ module.exports = [
                                         .max(maxBodyPainIntensity)
                                 })
                             )
+                        })
+                    )
+                }
+            }
+        }
+    },
+    {
+        method: 'POST',
+        path: '/survey_logger',
+        handler: surveyResultsLogger,
+        config: {
+            cors: true,
+            validate: {
+                payload: {
+                    surveyInstanceID: Joi
+                        .number()
+                        .integer()
+                        .positive(),
+                    timeStamp: Joi
+                        .date()
+                        .format('x'),
+                    loggerResults: Joi.array().items(
+                        Joi.object().keys({
+                            eventName: Joi
+                                .string(),
+                            metaData: Joi.object().keys({
+                                pin: Joi
+                                    .number()
+                                    .integer()
+                                    .positive(),
+                                sid: Joi
+                                    .number()
+                                    .integer()
+                                    .positive(),
+                                qid: Joi
+                                    .number()
+                                    .integer()
+                                    .positive(),
+                                aid: Joi
+                                    .alternatives()
+                                    .try((
+                                        Joi.number(), Joi.object()
+                                    ))
+                            }),
+                            start: Joi
+                                .date()
+                                .format('x')
                         })
                     )
                 }
