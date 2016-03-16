@@ -16,6 +16,7 @@ const addSurveyInstanceModel = require('./survey-instance');
 const addQuestionTemplateModel = require('./question-template');
 const addQuestionResultModel = require('./question-result');
 const addQuestionOptionModel = require('./question-option');
+const addSurveyLoggerModel = require('./survey-logger');
 
 // Database Join Tables
 const addJoinUsersAndTrials = require('./join-users-and-trials');
@@ -72,6 +73,7 @@ function setup (configuration) {
     addQuestionTemplateModel(sequelize);
     addQuestionResultModel(sequelize);
     addQuestionOptionModel(sequelize);
+    addSurveyLoggerModel(sequelize);
 
     // add the many to many join tables
     addJoinUsersAndTrials(sequelize);
