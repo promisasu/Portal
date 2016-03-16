@@ -60,7 +60,7 @@ rules:
     selector-no-attribute: null
     selector-no-combinator: null
     selector-no-id: null
-    selector-no-type: true
+    selector-no-type: null
     selector-no-universal: true
     selector-no-vendor-prefix: null
     selector-pseudo-element-colon-notation: double
