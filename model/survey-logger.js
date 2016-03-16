@@ -9,9 +9,6 @@ const Sequelize = require('sequelize');
 /**
  * Registers model with Sequelize
  * @param {Sequelize} sequelize - database instance
- * @typedef {String} eventName - The event captured from the app
- * @typedef {String} metaData - The metadata - PIN, SurveyInstanceID, Question ID, Answer ID related to the event
- * @typedef {Date} startTime - The timestamp captured when this event occurred in the app.
  * @returns {Null} nothing
  */
 function register (sequelize) {
@@ -19,6 +16,9 @@ function register (sequelize) {
      * Each QuestionResult will be associated with a SurveyInstance and a QuestionOption
      * This represents a single response to a Survey QuestionTemplate
      * @typedef {Object} SurveyLogger
+     * @property {String} eventName - The event captured from the app
+     * @property {String} metaData - The metadata - PIN, SurveyInstanceID, Question ID, Answer ID related to the event
+     * @property {Date} start - The timestamp captured when this event occurred in the app.
      */
     sequelize.define(
         'survey_logger',
@@ -29,7 +29,7 @@ function register (sequelize) {
             metaData: {
                 type: Sequelize.STRING
             },
-            startTime: {
+            start: {
                 type: Sequelize.DATE
             }
         },

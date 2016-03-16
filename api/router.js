@@ -115,7 +115,22 @@ module.exports = [
                                     .positive(),
                                 aid: Joi
                                     .alternatives()
-                                    .try(Joi.number(), Joi.object())
+                                    .try(
+                                        Joi
+                                        .number()
+                                        .integer()
+                                        .positive(),
+                                        Joi.object().keys({
+                                            location: Joi
+                                                .string()
+                                                .lowercase(),
+                                            intensity: Joi
+                                                .number()
+                                                .integer()
+                                                .min(minBodyPainIntensity)
+                                                .max(maxBodyPainIntensity)
+                                        })
+                                    )
                             }),
                             startTime: Joi
                                 .date()

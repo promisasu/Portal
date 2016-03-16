@@ -13,7 +13,7 @@ function processLoggerResults (logs) {
     return {
         eventName: logs.eventName,
         metaData: JSON.stringify(logs.metaData),
-        startTime: logs.startTime
+        start: logs.startTime
     };
 }
 
