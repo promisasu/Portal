@@ -47,10 +47,10 @@
                         </label>
                         <input id="patient-end" class="form-control form-control-warning" name="endDate" type="date" min="{{ today }}" value = "{{ endDate }}" data-recommended-end="{{ endDate }}" data-irb-end="{{ trial.end }}" required>
                         <p id="patient-end-default-warning" class="hidden-xl-down">
-                            End date has been changed away from recommended default
+                            End date has been changed from the recommended default
                         </p>
                         <p id="patient-end-irb-warning" class="hidden-xl-down">
-                            Patient end date is past the IRB end
+                            Patient end date has passed the IRB end date
                         </p>
                     </div>
                 </form>
