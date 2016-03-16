@@ -20,20 +20,18 @@ function runSurveyRules () {
     .sequelize
     .query(
        `
-       SELECT *, pa.id AS patientId
+       SELECT pa.id, pa.dateStarted, jss.surveyTemplateId, jss.rule
        FROM patient AS pa
        JOIN stage AS st
        ON st.id = pa.stageId
        JOIN join_stages_and_surveys AS jss
        ON jss.stageId = st.id
-       WHERE pa.dateStarted < ?
-       AND pa.dateCompleted > ?
+       WHERE ? BETWEEN pa.dateStarted AND pa.dateCompleted
        ORDER BY pa.id, jss.stagePriority
        `,
         {
             type: database.sequelize.QueryTypes.SELECT,
             replacements: [
-                currentDate,
                 currentDate
             ]
         }
@@ -89,7 +87,7 @@ function isActive (rule) {
  * @returns {Boolean} true for same, false for different
  */
 function isSamePatient (first, second) {
-    return first.patientId === second.patientId;
+    return first.id === second.id;
 }
 
 /**
@@ -107,7 +105,7 @@ function toSurveyInstanceData (row) {
     }
 
     return {
-        patientId: row.patientId,
+        patientId: row.id,
         surveyTemplateId: row.surveyTemplateId,
         state: 'pending',
         startTime: moment()
