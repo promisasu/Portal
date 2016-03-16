@@ -45,7 +45,7 @@ const configuration = [
 function patientCSV (request, reply) {
     database.sequelize.query(
         `
-        SELECT *, si.id, qt.id AS questionId, qo.id AS optionId
+        SELECT pa.pin, st.name, si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
         FROM patient AS pa
         JOIN survey_instance AS si
         ON si.patientId = pa.id
@@ -73,9 +73,9 @@ function patientCSV (request, reply) {
     )
     .then((optionsWithAnswers) => {
         const property = ['pin', 'name', 'id', 'questionText', 'questionId'];
-        const rowsm = deduplicate(optionsWithAnswers, property);
+        const uniqueAnswers = deduplicate(optionsWithAnswers, property);
 
-        return convertJsonToCsv(rowsm, configuration);
+        return convertJsonToCsv(uniqueAnswers, configuration);
     })
     .then((csv) => {
         reply(csv).type('text/csv');
