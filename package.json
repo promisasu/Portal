@@ -49,11 +49,11 @@
     "boom": "^3.1.2",
     "bower": "^1.7.6",
     "handlebars": "^4.0.5",
-    "hapi": "^13.0.0",
+    "hapi": "^13.2.1",
     "hapi-auth-basic": "^4.1.0",
     "inert": "^3.2.0",
     "joi": "^8.0.4",
-    "moment": "^2.11.2",
+    "moment": "^2.12.0",
     "mysql": "^2.10.2",
     "sequelize": "^3.19.3",
     "vision": "^4.0.1"
@@ -62,17 +62,17 @@
     "bcrypt": "^0.8.5"
   },
   "devDependencies": {
-    "ava": "^0.12.0",
-    "eslint": "^2.3.0",
+    "ava": "^0.13.0",
+    "eslint": "^2.4.0",
     "eslint-plugin-html": "^1.4.0",
     "jsdoc": "^3.4.0",
-    "nsp": "^2.2.0",
+    "nsp": "^2.2.1",
     "pm2": "^1.0.2",
     "read": "^1.0.7",
-    "remark": "^4.1.1",
+    "remark": "^4.1.2",
     "remark-lint": "^3.0.0",
     "remark-validate-links": "^3.0.0",
-    "stylelint": "^4.4.0"
+    "stylelint": "^5.0.1"
   },
   "engines": {
     "node": ">=4.0.0",
