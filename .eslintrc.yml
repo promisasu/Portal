@@ -146,7 +146,7 @@ rules:
     no-process-exit: error
     no-restricted-imports: off # none
     no-restricted-modules: off # none
-    no-sync: error
+    no-sync: warn
 
     # Stylistic Issues
     array-bracket-spacing: error
@@ -185,7 +185,9 @@ rules:
         - error
         - 2
     max-params: error
-    max-statements: error
+    max-statements:
+        - error
+        - 20
     new-cap: error
     new-parens: error
     newline-after-var: error

@@ -1,4 +1,3 @@
 rules:
     global-require: warn
-    max-statements: off
-    no-sync: off
+    max-statements: warn

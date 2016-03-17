@@ -3,7 +3,3 @@ rules:
     max-params:
         - error
         - 6
-
-    max-statements:
-        - error
-        - 20

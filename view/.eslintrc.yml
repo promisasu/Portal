@@ -34,9 +34,6 @@ rules:
     # Stylistic Issues
     require-jsdoc: off
     spaced-comment: off
-    max-statements:
-        - error
-        - 20
 
     # ECMAScript 6
     no-var: off
