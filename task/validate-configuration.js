@@ -47,7 +47,18 @@ const schema = Joi
         environment: Joi
             .string()
             .lowercase()
-            .token()
+            .token(),
+        tls: Joi
+            .object({
+                cert: Joi
+                    .string(),
+                key: Joi
+                    .string(),
+                passphrase: Joi
+                    .string()
+                    .optional()
+            })
+            .optional()
     })
     .assert(
         'api.port',
