@@ -5,6 +5,7 @@
  */
 
 // load node modules
+const fs = require('fs');
 const path = require('path');
 const hapi = require('hapi');
 const vision = require('vision');
@@ -24,12 +25,23 @@ const validate = require('./helper/validate');
  */
 function dashboardServer (configuration) {
     const server = new hapi.Server();
-
-    // configure server connection
-    server.connection({
+    const connectionOptions = {
         port: configuration.dashboard.port,
         host: configuration.dashboard.hostname
-    });
+    };
+
+    if (configuration.tls) {
+        connectionOptions.tls = {
+            key: fs.readFileSync(configuration.tls.key),
+            cert: fs.readFileSync(configuration.tls.cert)
+        };
+        if (configuration.tls.passphrase) {
+            connectionOptions.tls.passphrase = configuration.tls.passphrase;
+        }
+    }
+
+    // configure server connection
+    server.connection(connectionOptions);
 
     // register hapi plugins
     server.register(
