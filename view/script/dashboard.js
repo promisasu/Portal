@@ -19,8 +19,8 @@
     .push(
         function testRow (settings, rowContent) {
             var date = new Date();
-            var startDate = moment(rowContent[4], 'MM-DD-YYYY');
-            var endDate = moment(rowContent[5], 'MM-DD-YYYY');
+            var startDate = moment(rowContent[3], 'MM-DD-YYYY');
+            var endDate = moment(rowContent[4], 'MM-DD-YYYY');
 
             switch (selectedChoice) {
                 case 'All Trials':
