@@ -5,6 +5,7 @@
  */
 
 // load node modules
+const fs = require('fs');
 const hapi = require('hapi');
 
 // load router and database
@@ -18,12 +19,23 @@ const database = require('../model');
  */
 function apiServer (configuration) {
     const server = new hapi.Server();
-
-    // configure server connection
-    server.connection({
+    const connectionOptions = {
         port: configuration.api.port,
         host: configuration.api.hostname
-    });
+    };
+
+    if (configuration.tls) {
+        connectionOptions.tls = {
+            key: fs.readFileSync(configuration.tls.key),
+            cert: fs.readFileSync(configuration.tls.cert)
+        };
+        if (configuration.tls.passphrase) {
+            connectionOptions.tls.passphrase = configuration.tls.passphrase;
+        }
+    }
+
+    // configure server connection
+    server.connection(connectionOptions);
 
     // configure database connection
     database.setup(configuration.database);
