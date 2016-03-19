@@ -20,7 +20,6 @@ function processSurveyInstances (surveys) {
     });
 
     return {
-        // Using UTC as the date gets modified to the local time (GMT in this case) when UTC not used.
         labels: pickDates(filterSurveyByState),
         datasets: pickTimeLeft(filterSurveyByState)
     };
@@ -33,11 +32,11 @@ function processSurveyInstances (surveys) {
  */
 function pickDates (surveys) {
     const dates = surveys.map((survey) => {
-        return moment(survey.startTime, sqlDateFormat).utc().format(viewDateFormat);
+        return moment(survey.startTime, sqlDateFormat).format(viewDateFormat);
     });
 
     if (surveys[0]) {
-        dates.push(moment(surveys[0].dateCompleted, sqlDateFormat).utc().format(viewDateFormat));
+        dates.push(moment(surveys[0].dateCompleted, sqlDateFormat).format(viewDateFormat));
     }
 
     return dates;
@@ -49,12 +48,11 @@ function pickDates (surveys) {
  * @returns {Object} processed list of % time left data
  */
 function pickTimeLeft (surveys) {
-    // Using UTC as the date gets modified to the local time (GMT in this case) when UTC not used.
     const percentages = surveys.map((survey) => {
         return calculateTimeLeft(
-            moment(survey.startTime, sqlDateFormat).utc().format(viewDateFormat),
-            moment(survey.endTime, sqlDateFormat).utc().format(viewDateFormat),
-            moment(survey.actualSubmissionTime, sqlDateFormat).utc().format(viewDateFormat)
+            moment(survey.startTime, sqlDateFormat).format(viewDateFormat),
+            moment(survey.endTime, sqlDateFormat).format(viewDateFormat),
+            moment(survey.actualSubmissionTime, sqlDateFormat).format(viewDateFormat)
         );
     });
 
