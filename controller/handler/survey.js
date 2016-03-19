@@ -6,6 +6,7 @@
 
 const groupBy = require('../helper/group-by.js');
 const database = require('../../model');
+const httpNotFound = 404;
 
 /**
  * A dashboard with an overview of a specific survey.
@@ -85,9 +86,12 @@ function surveyView (request, reply) {
     })
     .catch((err) => {
         console.error(err);
-        reply.view('404', {
+
+        reply
+        .view('404', {
             title: 'Not Found'
-        });
+        })
+        .code(httpNotFound);
     });
 }
 

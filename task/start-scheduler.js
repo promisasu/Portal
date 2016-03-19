@@ -16,6 +16,7 @@ processManager.connect(() => {
             script: path.resolve('task', 'helper', 'start-scheduler.js'),
             error_file: path.resolve('logs', `${Date.now()}-prp-${configuration.environment}-scheduler-error.log`),
             out_file: path.resolve('logs', `${Date.now()}-prp-${configuration.environment}-scheduler-out.log`),
+            log_date_format: 'x',
             cron_restart: '0 0 * * *'
         },
         (err) => {

@@ -6,6 +6,8 @@
 
 // load node modules
 const fs = require('fs');
+const good = require('good');
+const goodFile = require('good-file');
 const hapi = require('hapi');
 
 // load router and database
@@ -36,6 +38,30 @@ function apiServer (configuration) {
 
     // configure server connection
     server.connection(connectionOptions);
+
+    server.register(
+        {
+            register: good,
+            options: {
+                reporters: [{
+                    reporter: goodFile,
+                    events: {
+                        error: '*',
+                        log: '*',
+                        ops: '*',
+                        request: '*',
+                        response: '*'
+                    },
+                    config: `./logs/${Date.now()}-prp-${configuration.environment}-api-access.log`
+                }]
+            }
+        },
+        (err) => {
+            if (err) {
+                console.log(err);
+            }
+        }
+    );
 
     // configure database connection
     database.setup(configuration.database);

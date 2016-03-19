@@ -8,6 +8,7 @@ const database = require('../../model');
 const processSurveyInstances = require('../helper/process-survey-instances');
 const moment = require('moment');
 const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
+const httpNotFound = 404;
 
 /**
  * A dashboard with an overview of a specific patient.
@@ -101,9 +102,12 @@ function patientView (request, reply) {
         })
         .catch((err) => {
             console.error(err);
-            reply.view('404', {
+
+            reply
+            .view('404', {
                 title: 'Not Found'
-            });
+            })
+            .code(httpNotFound);
         });
 }
 

@@ -6,6 +6,7 @@
  */
 const processTrial = require('../helper/process-trial');
 const database = require('../../model');
+const httpNotFound = 404;
 
 /**
  * A dashboard view with overview of all trials and patients.
@@ -68,9 +69,12 @@ function dashboardView (request, reply) {
         })
         .catch((err) => {
             console.error(err);
-            reply.view('404', {
+
+            reply
+            .view('404', {
                 title: 'Not Found'
-            });
+            })
+            .code(httpNotFound);
         });
 }
 
