@@ -84,13 +84,13 @@ function patientView (request, reply) {
                     const surveyInstanceCopy = Object.assign({}, surveyInstance);
 
                     surveyInstanceCopy.startTime = moment(surveyInstanceCopy.startTime, sqlDateFormat)
-                        .utc().format('MM-DD-YYYY');
+                        .format('MM-DD-YYYY');
                     surveyInstanceCopy.endTime = moment(surveyInstanceCopy.endTime, sqlDateFormat)
-                        .utc().format('MM-DD-YYYY');
+                        .format('MM-DD-YYYY');
                     if (surveyInstanceCopy.userSubmissionTime) {
                         surveyInstanceCopy.userSubmissionTime
                             = moment(surveyInstanceCopy.userSubmissionTime, sqlDateFormat)
-                                .utc().format('MM-DD-YYYY h:mma');
+                                .format('MM-DD-YYYY h:mma');
                     }
 
                     return surveyInstanceCopy;
