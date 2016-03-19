@@ -10,6 +10,7 @@ const moment = require('moment');
 const processComplianceCount = require('../helper/process-compliance-count');
 const processRule = require('../helper/process-rule');
 const processPatientStatus = require('../helper/process-patient-status');
+const httpNotFound = 404;
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -141,9 +142,12 @@ function trialView (request, reply) {
         })
         .catch((err) => {
             console.error(err);
-            reply.view('404', {
+
+            reply
+            .view('404', {
                 title: 'Not Found'
-            });
+            })
+            .code(httpNotFound);
         });
 }
 

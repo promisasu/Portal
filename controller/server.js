@@ -5,13 +5,15 @@
  */
 
 // load node modules
-const fs = require('fs');
-const path = require('path');
-const hapi = require('hapi');
-const vision = require('vision');
-const inert = require('inert');
 const authBasic = require('hapi-auth-basic');
+const fs = require('fs');
+const good = require('good');
+const goodFile = require('good-file');
 const handlebars = require('handlebars');
+const hapi = require('hapi');
+const inert = require('inert');
+const path = require('path');
+const vision = require('vision');
 
 // load router and database
 const router = require('./router');
@@ -54,6 +56,22 @@ function dashboardServer (configuration) {
             },
             {
                 register: authBasic
+            },
+            {
+                register: good,
+                options: {
+                    reporters: [{
+                        reporter: goodFile,
+                        events: {
+                            error: '*',
+                            log: '*',
+                            ops: '*',
+                            request: '*',
+                            response: '*'
+                        },
+                        config: `./logs/${Date.now()}-prp-${configuration.environment}-dashboard-access.log`
+                    }]
+                }
             }
         ],
         (err) => {
