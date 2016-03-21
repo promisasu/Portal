@@ -65,6 +65,7 @@ rules:
     selector-no-vendor-prefix: null
     selector-pseudo-element-colon-notation: double
     selector-root-no-composition: true
+    selector-type-case: lower
     # Selector List
     selector-list-comma-newline-after: always
     selector-list-comma-newline-before: null

@@ -74,7 +74,7 @@
     "remark": "^4.1.2",
     "remark-lint": "^3.0.0",
     "remark-validate-links": "^3.0.0",
-    "stylelint": "^5.0.1"
+    "stylelint": "^5.1.0"
   },
   "engines": {
     "node": ">=4.0.0",
