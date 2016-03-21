@@ -1,0 +1,96 @@
+{
+    "title": "project configuration schema",
+    "description": "a json schema v3 description of the configuration file",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "api": {
+            "type": "object",
+            "required": true,
+            "properties": {
+                "hostname": {
+                    "type": "hostname",
+                    "required": true
+                },
+                "port": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "required": true
+                }
+            }
+        },
+        "dashboard": {
+            "type": "object",
+            "required": true,
+            "additionalProperties": false,
+            "properties": {
+                "hostname": {
+                    "type": "hostname",
+                    "required": true
+                },
+                "port": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "required": true
+                }
+            }
+        },
+        "database": {
+            "type": "object",
+            "required": true,
+            "additionalProperties": false,
+            "properties": {
+                "dialect": {
+                    "required": true,
+                    "enum": [
+                        "mariadb",
+                        "mysql"
+                    ]
+                },
+                "hostname": {
+                    "type": "hostname",
+                    "required": true
+                },
+                "name": {
+                    "type": "string",
+                    "required": true,
+                    "pattern": "^[a-z_]+$"
+                },
+                "password": {
+                    "type": "string",
+                    "required": true
+                },
+                "salt": {
+                    "type": "string",
+                    "required": true
+                },
+                "username": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "environment": {
+            "type": "string",
+            "required": true,
+            "pattern": "^[a-z]+$"
+        },
+        "tls": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "cert": {
+                    "type": "string",
+                    "required": true
+                },
+                "key": {
+                    "type": "string",
+                    "required": true
+                },
+                "passphrase": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
