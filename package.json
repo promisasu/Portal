@@ -12,7 +12,7 @@
     "lint-fix": "eslint . --fix --inline-config=false",
     "log": "pm2 logs",
     "preseed": "node task/sync",
-    "prestart": "jsonlint config.json --validate config-schema.json",
+    "prestart": "jsonlint config.json --validate config-schema.json --quiet",
     "seed": "node task/seed",
     "start": "node task/start-api && node task/start-dashboard && node task/start-scheduler",
     "poststart": "pm2 ls",
@@ -29,7 +29,7 @@
     "pretest": "node task/sync-test && node task/seed-test",
     "test": "ava */test/*.js",
     "user": "node task/user",
-    "validate": "jsonlint config.json --validate config-schema.json"
+    "validate": "jsonlint config.json --validate config-schema.json --quiet"
   },
   "repository": {
     "type": "git",
