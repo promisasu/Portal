@@ -57,7 +57,7 @@
 
 Tasks can be run by calling `npm run <task>`
 
-* `check-dependencies` detect outdated and insecure packages
+* `check` detect outdated and insecure packages
 * `documentation` generate code documentation
 * `init` create a server configuration file
 * `lint` lint check project files
@@ -76,4 +76,4 @@ Tasks can be run by calling `npm run <task>`
 * `sync` synchronize database schema
 * `test` run the test suite
 * `user` create a new user
-* `validate-configuration` detect invalid server configuration
+* `validate` detect invalid server configuration

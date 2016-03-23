@@ -4,7 +4,7 @@
   "description": "Pain Reporting Portal",
   "main": "index.js",
   "scripts": {
-    "check-dependencies": "npm outdated && nsp check && bower list",
+    "check": "npm outdated && nsp check && bower list",
     "documentation": "jsdoc --recurse api controller model rule task --destination documentation",
     "init": "node task/init",
     "postinstall": "bower install",
@@ -12,6 +12,7 @@
     "lint-fix": "eslint . --fix --inline-config=false",
     "log": "pm2 logs",
     "preseed": "node task/sync",
+    "prestart": "jsonlint config.json --validate config-schema.json --quiet",
     "seed": "node task/seed",
     "start": "node task/start-api && node task/start-dashboard && node task/start-scheduler",
     "poststart": "pm2 ls",
@@ -28,7 +29,7 @@
     "pretest": "node task/sync-test && node task/seed-test",
     "test": "ava */test/*.js",
     "user": "node task/user",
-    "validate-configuration": "node task/validate-configuration"
+    "validate": "jsonlint config.json --validate config-schema.json --quiet"
   },
   "repository": {
     "type": "git",
@@ -57,7 +58,7 @@
     "joi": "^8.0.5",
     "moment": "^2.12.0",
     "mysql": "^2.10.2",
-    "sequelize": "^3.19.3",
+    "sequelize": "^3.20.0",
     "vision": "^4.0.1"
   },
   "optionalDependencies": {
@@ -68,6 +69,7 @@
     "eslint": "^2.4.0",
     "eslint-plugin-html": "^1.4.0",
     "jsdoc": "^3.4.0",
+    "jsonlint": "^1.6.2",
     "nsp": "^2.2.1",
     "pm2": "^1.0.2",
     "read": "^1.0.7",
