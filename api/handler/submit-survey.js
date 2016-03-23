@@ -84,7 +84,7 @@ function submitSurvey (request, reply) {
                     questionOption.find(
                         {
                             where: {
-                                optionText: currentQuestion.bodyPain[0].intensity
+                                optionText: currentQuestion.bodyPain[0].intensity.toString()
                             },
                             transaction
                         }
