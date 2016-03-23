@@ -5,12 +5,15 @@
  */
 
 // load node modules
-const path = require('path');
-const hapi = require('hapi');
-const vision = require('vision');
-const inert = require('inert');
 const authBasic = require('hapi-auth-basic');
+const fs = require('fs');
+const good = require('good');
+const goodFile = require('good-file');
 const handlebars = require('handlebars');
+const hapi = require('hapi');
+const inert = require('inert');
+const path = require('path');
+const vision = require('vision');
 
 // load router and database
 const router = require('./router');
@@ -24,12 +27,23 @@ const validate = require('./helper/validate');
  */
 function dashboardServer (configuration) {
     const server = new hapi.Server();
-
-    // configure server connection
-    server.connection({
+    const connectionOptions = {
         port: configuration.dashboard.port,
         host: configuration.dashboard.hostname
-    });
+    };
+
+    if (configuration.tls) {
+        connectionOptions.tls = {
+            key: fs.readFileSync(configuration.tls.key),
+            cert: fs.readFileSync(configuration.tls.cert)
+        };
+        if (configuration.tls.passphrase) {
+            connectionOptions.tls.passphrase = configuration.tls.passphrase;
+        }
+    }
+
+    // configure server connection
+    server.connection(connectionOptions);
 
     // register hapi plugins
     server.register(
@@ -42,6 +56,22 @@ function dashboardServer (configuration) {
             },
             {
                 register: authBasic
+            },
+            {
+                register: good,
+                options: {
+                    reporters: [{
+                        reporter: goodFile,
+                        events: {
+                            error: '*',
+                            log: '*',
+                            ops: '*',
+                            request: '*',
+                            response: '*'
+                        },
+                        config: `./logs/${Date.now()}-prp-${configuration.environment}-dashboard-access.log`
+                    }]
+                }
             }
         ],
         (err) => {

@@ -1,6 +1,6 @@
 .progress-good-and-bad {
-    color: #d9534f;
     background: #d9534f;
+    color: #d9534f;
 }
 
 .progress-good-and-bad::-webkit-progress-bar {
@@ -17,4 +17,8 @@
 
 .progress-good-and-bad > .progress-bar {
     background-color: #5cb85c;
+}
+
+input[type='date'] {
+    color: #55595c !important;
 }

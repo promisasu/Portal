@@ -36,11 +36,6 @@
                         }
                     }
                 ]
-            },
-            elements: {
-                line: {
-                    tension: 0.3
-                }
             }
         }
     };
