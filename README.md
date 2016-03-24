@@ -6,6 +6,12 @@
 [![optionalDependency Status](https://david-dm.org/promisasu/Portal/optional-status.svg)](https://david-dm.org/promisasu/Portal#info=optionalDependencies)
 [![Taiga Board](https://img.shields.io/badge/managed_with-taiga-brightgreen.svg)](https://tree.taiga.io/project/promisasu-prp-manhattan-project/)
 
+## About
+
+The pain reporting portal is de-identified patient and survey management system.
+It allows clinicians to schedule digital surveys to be delivered to patients.
+As well as allowing clinicians to monitor patient responses to look for possible interventions.
+
 ## Installation Instructions
 
 1. install [Git](https://git-scm.com/downloads)
