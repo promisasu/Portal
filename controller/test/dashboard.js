@@ -1,23 +1,74 @@
 'use strict';
 
 const test = require('ava');
-const config = require('../../config.json');
+const sinon = require('sinon');
+const proxyquire = require('proxyquire');
+const httpNotFound = 404;
+const QueryTypes = {
+    SELECT: 'select'
+};
 
-config.database.name = 'prp_test';
-config.dashboard.authentication = false;
+test.cb('dashboard can be viewed with no trials', (t) => {
+    const query = sinon.stub();
 
-const server = require('../server')(config);
-const httpOk = 200;
+    query.returns(Promise.resolve([]));
 
-test.cb('dashboard loads okay', (t) => {
-    server.inject(
-        {
-            method: 'GET',
-            url: '/'
+    const dashboard = proxyquire('../handler/dashboard', {
+        '../../model': {
+            sequelize: {query, QueryTypes}
+        }
+    });
+
+    const fakeRequest = {
+        auth: {
+            credentials: 'dne'
         },
-        (response) => {
-            t.is(response.statusCode, httpOk);
+        log: sinon.stub()
+    };
+
+    const reply = {
+        view: (template, data) => {
+            t.is(template, 'dashboard');
+            t.is(typeof data, 'object');
+            t.true(data.trials instanceof Array);
             t.end();
         }
-    );
+    };
+
+    dashboard(fakeRequest, reply);
+});
+
+test.cb('dashboard gracefully handles errors', (t) => {
+    const query = sinon.stub();
+
+    query.returns(Promise.reject());
+
+    const dashboard = proxyquire('../handler/dashboard', {
+        '../../model': {
+            sequelize: {query, QueryTypes}
+        }
+    });
+
+    const fakeRequest = {
+        auth: {
+            credentials: 'dne'
+        },
+        log: sinon.stub()
+    };
+
+    const reply = {
+        view: (template, data) => {
+            t.is(template, '404');
+            t.is(typeof data, 'object');
+
+            return {
+                code: (code) => {
+                    t.is(code, httpNotFound);
+                    t.end();
+                }
+            };
+        }
+    };
+
+    dashboard(fakeRequest, reply);
 });
