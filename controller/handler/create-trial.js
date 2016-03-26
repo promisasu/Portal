@@ -45,9 +45,9 @@ function createTrial (request, reply) {
         if (stageNames.length !== request.payload.stagecount) {
             throw new Error('No of Stages not matched with Stage Schedule information given');
         }
-        for (const stageName of stageNames) {
+        for (const name of stageNames) {
             stagePromises.push(
-                stage.create({name: stageName}, {transaction})
+                stage.create({name}, {transaction})
             );
         }
 
@@ -64,7 +64,7 @@ function createTrial (request, reply) {
     })
     .catch((err) => {
         transaction.rollback();
-        console.error(err);
+        request.log('error', err);
         reply(boom.badRequest('Invalid Trial'));
     });
 }
