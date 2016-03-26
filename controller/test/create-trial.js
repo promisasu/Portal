@@ -6,7 +6,7 @@ const proxyquire = require('proxyquire');
 
 /**
  * Mock sequelize
- * @returns {Object} mocked seqelize object
+ * @returns {Object} mocked sequelize object
  */
 function mockSequelize () {
     // stub properties
