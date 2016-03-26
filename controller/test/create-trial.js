@@ -50,7 +50,6 @@ test.cb('when a trial is created, redirect to new patient\'s information', (t) =
     const sequelize = mockSequelize();
 
     const createTrial = proxyquire('../handler/create-trial', {
-        boom: sinon.stub(),
         '../../model': {sequelize}
     });
 
@@ -82,12 +81,8 @@ test.cb('when a trial is created, redirect to new patient\'s information', (t) =
 
 test.cb('when stage number does not match, fail', (t) => {
     const sequelize = mockSequelize();
-    const boom = sinon.stub();
-
-    boom.returns({name: 'Error'});
 
     const createTrial = proxyquire('../handler/create-trial', {
-        boom,
         '../../model': {sequelize}
     });
 

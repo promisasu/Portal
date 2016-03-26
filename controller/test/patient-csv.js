@@ -42,13 +42,10 @@ test.cb('when patient has not data show table headers', (t) => {
 
 test.cb('when patient doesn\'t exist return not found', (t) => {
     const query = sinon.stub();
-    const boom = sinon.stub();
 
     query.returns(Promise.reject([]));
-    boom.returns({name: 'Error'});
 
     const patientCSV = proxyquire('../handler/patient-csv', {
-        boom,
         '../../model': {
             sequelize: {query, QueryTypes}
         }
