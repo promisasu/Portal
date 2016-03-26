@@ -12,8 +12,8 @@
     "lint-fix": "eslint . --fix --inline-config=false",
     "log": "pm2 logs",
     "preseed": "node task/sync",
-    "prestart": "jsonlint config.json --validate config-schema.json --quiet",
     "seed": "node task/seed",
+    "prestart": "jsonlint config.json --validate config-schema.json --quiet",
     "start": "node task/start-api && node task/start-dashboard && node task/start-scheduler",
     "poststart": "pm2 ls",
     "start-api": "node task/start-api",
@@ -52,7 +52,7 @@
     "good": "^6.6.0",
     "good-file": "^5.1.2",
     "handlebars": "^4.0.5",
-    "hapi": "^13.2.1",
+    "hapi": "^13.2.2",
     "hapi-auth-basic": "^4.1.0",
     "inert": "^3.2.0",
     "joi": "^8.0.5",
@@ -66,7 +66,7 @@
   },
   "devDependencies": {
     "ava": "^0.13.0",
-    "eslint": "^2.4.0",
+    "eslint": "^2.5.1",
     "eslint-plugin-html": "^1.4.0",
     "jsdoc": "^3.4.0",
     "jsonlint": "^1.6.2",
@@ -76,7 +76,7 @@
     "remark": "^4.1.2",
     "remark-lint": "^3.0.0",
     "remark-validate-links": "^3.0.0",
-    "stylelint": "^5.1.0"
+    "stylelint": "^5.2.1"
   },
   "engines": {
     "node": ">=4.0.0",
