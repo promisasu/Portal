@@ -8,7 +8,7 @@ const QueryTypes = {
     SELECT: 'select'
 };
 
-test.cb('dashboard can be viewed with no trials', (t) => {
+test.cb('when there are no trials, dashboard can still be viewed', (t) => {
     const query = sinon.stub();
 
     query.returns(Promise.resolve([]));
@@ -19,7 +19,7 @@ test.cb('dashboard can be viewed with no trials', (t) => {
         }
     });
 
-    const fakeRequest = {
+    const request = {
         auth: {
             credentials: 'dne'
         },
@@ -35,10 +35,10 @@ test.cb('dashboard can be viewed with no trials', (t) => {
         }
     };
 
-    dashboard(fakeRequest, reply);
+    dashboard(request, reply);
 });
 
-test.cb('dashboard gracefully handles errors', (t) => {
+test.cb('when there is an error gracefully fail and display error page', (t) => {
     const query = sinon.stub();
 
     query.returns(Promise.reject());
@@ -49,7 +49,7 @@ test.cb('dashboard gracefully handles errors', (t) => {
         }
     });
 
-    const fakeRequest = {
+    const request = {
         auth: {
             credentials: 'dne'
         },
@@ -70,5 +70,5 @@ test.cb('dashboard gracefully handles errors', (t) => {
         }
     };
 
-    dashboard(fakeRequest, reply);
+    dashboard(request, reply);
 });

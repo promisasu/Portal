@@ -46,7 +46,7 @@ function mockSequelize () {
     return {model, transaction};
 }
 
-test.cb('trial can be created', (t) => {
+test.cb('when a trial is created, redirect to new patient\'s information', (t) => {
     const sequelize = mockSequelize();
 
     const createTrial = proxyquire('../handler/create-trial', {
@@ -67,32 +67,31 @@ test.cb('trial can be created', (t) => {
         }
     };
 
-    /**
-     * reply should fail, redirect should pass
-     * @returns {Null} nothing
-     */
-    function failingReply () {
+    const reply = () => {
         t.fail();
         t.end();
-    }
+    };
 
-    failingReply.redirect = (route) => {
+    reply.redirect = (route) => {
         t.is(route, '/trial/1', 'correct redirect');
         t.end();
     };
 
-    createTrial(fakeRequest, failingReply);
+    createTrial(fakeRequest, reply);
 });
 
-test.cb('invalid number of stages should fail', (t) => {
+test.cb('when stage number does not match, fail', (t) => {
     const sequelize = mockSequelize();
+    const boom = sinon.stub();
+
+    boom.returns({name: 'Error'});
 
     const createTrial = proxyquire('../handler/create-trial', {
-        boom: sinon.stub(),
+        boom,
         '../../model': {sequelize}
     });
 
-    const fakeRequest = {
+    const request = {
         log: sinon.stub(),
         payload: {
             name: 'test',
@@ -106,19 +105,16 @@ test.cb('invalid number of stages should fail', (t) => {
         }
     };
 
-    /**
-     * reply should pass, redirect should fail
-     * @returns {Null} nothing
-     */
-    function passingReply () {
-        t.pass();
+    const reply = (data) => {
+        t.is(typeof data, 'object');
+        t.is(data.name, 'Error');
         t.end();
-    }
+    };
 
-    passingReply.redirect = () => {
+    reply.redirect = () => {
         t.fail();
         t.end();
     };
 
-    createTrial(fakeRequest, passingReply);
+    createTrial(request, reply);
 });

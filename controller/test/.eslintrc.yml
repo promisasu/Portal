@@ -1,4 +1,5 @@
 rules:
+    func-style: off
     max-nested-callbacks: off
     id-length:
         - error
