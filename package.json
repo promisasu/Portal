@@ -26,7 +26,6 @@
     "stop-dashboard": "node task/stop-dashboard",
     "stop-scheduler": "node task/stop-scheduler",
     "sync": "node task/sync",
-    "pretest": "node task/sync-test && node task/seed-test",
     "test": "ava */test/*.js",
     "user": "node task/user",
     "validate": "jsonlint config.json --validate config-schema.json --quiet"
@@ -72,6 +71,7 @@
     "jsonlint": "^1.6.2",
     "nsp": "^2.2.1",
     "pm2": "^1.0.2",
+    "proxyquire": "^1.7.4",
     "read": "^1.0.7",
     "remark": "^4.1.2",
     "remark-lint": "^3.0.0",

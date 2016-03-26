@@ -41,8 +41,6 @@ As well as allowing clinicians to monitor patient responses to look for possible
 
 ## Test the Portal
 
-*Ensure that there is a database named `prp_test`*
-
 1. run `npm run lint`
 2. run `npm run test`
 
