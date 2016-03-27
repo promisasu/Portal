@@ -6,9 +6,6 @@ const proxyquire = require('proxyquire');
 const QueryTypes = {
     SELECT: 'select'
 };
-const zero = 0;
-const one = 1;
-const httpNotFound = 404;
 
 test.cb('when patient has one survey', (t) => {
     const query = sinon.stub();
@@ -59,7 +56,7 @@ test.cb('when patient has one survey', (t) => {
         view (template, data) {
             t.is(template, 'patient', 'it should render patient view');
             t.true(data.surveys instanceof Array, 'it should have an array of surveys');
-            t.is(data.surveys.length, one, 'it should have one survey');
+            t.is(data.surveys.length, 1, 'it should have one survey');
             t.end();
         }
     };
@@ -104,7 +101,7 @@ test.cb('when patient has no surveys', (t) => {
     const reply = {
         view (template, data) {
             t.is(template, 'patient', 'it should render patient view');
-            t.is(data.surveys.length, zero, 'it should have no surveys');
+            t.is(data.surveys.length, 0, 'it should have no surveys');
             t.end();
         }
     };
@@ -147,7 +144,7 @@ test.cb('when patient does not exist', (t) => {
 
             return {
                 code (code) {
-                    t.is(code, httpNotFound, 'it should have not found status code');
+                    t.is(code, 404, 'it should have not found status code');
                     t.end();
                 }
             };

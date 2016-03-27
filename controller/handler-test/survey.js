@@ -3,9 +3,6 @@
 const test = require('ava');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
-const zero = 0;
-const one = 1;
-const httpNotFound = 404;
 const QueryTypes = {
     SELECT: 'select'
 };
@@ -56,7 +53,7 @@ test.cb('when the survey has not been completed', (t) => {
     const reply = {
         view (template, data) {
             t.is(template, 'survey', 'it should render survey view');
-            t.is(data.questions.length, zero, 'it should have no questions');
+            t.is(data.questions.length, 0, 'it should have no questions');
             t.end();
         }
     };
@@ -118,7 +115,7 @@ test.cb('when the survey has been completed', (t) => {
     const reply = {
         view (template, data) {
             t.is(template, 'survey', 'it should render survey view');
-            t.is(data.questions.length, one, 'it should have one question');
+            t.is(data.questions.length, 1, 'it should have one question');
             t.end();
         }
     };
@@ -166,7 +163,7 @@ test.cb('when survey does not exist', (t) => {
 
             return {
                 code (code) {
-                    t.is(code, httpNotFound, 'it should have not found status code');
+                    t.is(code, 404, 'it should have not found status code');
                     t.end();
                 }
             };

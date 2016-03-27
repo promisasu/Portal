@@ -3,7 +3,6 @@
 const test = require('ava');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
-const zero = 0;
 const QueryTypes = {
     SELECT: 'select'
 };
@@ -64,10 +63,10 @@ test.cb('when there are no patients', (t) => {
     const reply = {
         view (template, data) {
             t.is(template, 'trial', 'it should render the trial view');
-            t.is(data.patients.length, zero, 'it should have no patients');
-            t.is(data.complianceCount[0], zero, 'it should have no non-compliant patients');
-            t.is(data.complianceCount[1], zero, 'it should have no semi-compliant patients');
-            t.is(data.complianceCount[2], zero, 'it should have no compliant patients');
+            t.is(data.patients.length, 0, 'it should have no patients');
+            t.is(data.complianceCount[0], 0, 'it should have no non-compliant patients');
+            t.is(data.complianceCount[1], 0, 'it should have no semi-compliant patients');
+            t.is(data.complianceCount[2], 0, 'it should have no compliant patients');
             t.end();
         }
     };

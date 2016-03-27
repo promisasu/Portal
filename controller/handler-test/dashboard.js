@@ -3,8 +3,6 @@
 const test = require('ava');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
-const httpNotFound = 404;
-const zero = 0;
 const QueryTypes = {
     SELECT: 'select'
 };
@@ -30,7 +28,7 @@ test.cb('when there are no trials', (t) => {
     const reply = {
         view (template, data) {
             t.is(template, 'dashboard', 'it should render dashboard');
-            t.is(data.trials.length, zero, 'it should have no trials');
+            t.is(data.trials.length, 0, 'it should have no trials');
             t.end();
         }
     };
@@ -63,7 +61,7 @@ test.cb('when there is an error', (t) => {
 
             return {
                 code (code) {
-                    t.is(code, httpNotFound, 'it should return not found status code');
+                    t.is(code, 404, 'it should return not found status code');
                     t.end();
                 }
             };
