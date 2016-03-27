@@ -16,26 +16,14 @@ function processTrial (trial) {
     const endDate = moment(trial.IRBEnd);
     const allPercent = processPercent(trial);
 
-    return {
-        targetCount: null,
-        recruitedCount: trial.recruitedCount,
-        activeCount: trial.activeCount,
-        compliantCount: null,
-        status: null,
-        id: trial.id,
-        name: trial.name,
-        description: trial.description,
-        IRBID: trial.IRBID,
+    return Object.assign(trial, {
         start: startDate.format('L'),
         end: endDate.format('L'),
         recruitedPercent: allPercent.recruitedPercent,
         unrecruitedPercent: allPercent.unrecruitedPercent,
         activePercent: allPercent.activePercent,
-        completedPercent: allPercent.completedPercent,
-        compliantPercent: null,
-        noncompliantPercent: null,
-        noncompliantCount: null
-    };
+        completedPercent: allPercent.completedPercent
+    });
 }
 
 /**

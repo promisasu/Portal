@@ -155,7 +155,7 @@ test.cb('when survey does not exist', (t) => {
     const request = {
         log: sinon.stub(),
         params: {
-            id: 1
+            id: Number.NaN
         }
     };
 
