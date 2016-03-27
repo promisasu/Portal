@@ -126,7 +126,7 @@ test.cb('when the survey has been completed', (t) => {
     survey(request, reply);
 });
 
-test.cb('when the survey has been completed', (t) => {
+test.cb('when survey does not exist', (t) => {
     const model = sinon.stub();
     const query = sinon.stub();
 

@@ -7,7 +7,7 @@ const QueryTypes = {
     SELECT: 'select'
 };
 
-test.cb('when patient has not data', (t) => {
+test.cb('when patient has no surveys', (t) => {
     const query = sinon.stub();
 
     query.returns(Promise.resolve([]));
