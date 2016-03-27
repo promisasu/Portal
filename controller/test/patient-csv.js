@@ -34,7 +34,7 @@ test.cb('when patient has not data', (t) => {
         );
 
         return {
-            type: (type) => {
+            type (type) {
                 t.is(type, 'text/csv', 'it should sent in csv format');
                 t.end();
             }

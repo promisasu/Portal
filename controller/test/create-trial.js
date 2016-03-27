@@ -16,11 +16,13 @@ function mockSequelize () {
     model
     .withArgs('trial')
     .returns({
-        find: Promise.resolve({}),
-        create: () => {
+        find () {
+            return Promise.resolve({});
+        },
+        create () {
             return Promise.resolve({
                 id: 1,
-                addStages: () => {
+                addStages () {
                     return Promise.resolve();
                 }
             });
@@ -28,10 +30,12 @@ function mockSequelize () {
     });
 
     model
-    .withArgs('staging')
+    .withArgs('stage')
     .returns({
-        find: Promise.resolve({}),
-        create: () => {
+        find () {
+            return Promise.resolve({});
+        },
+        create () {
             return Promise.resolve();
         }
     });
@@ -51,7 +55,8 @@ test.cb('when a trial is created', (t) => {
         '../../model': {sequelize}
     });
 
-    const fakeRequest = {
+    const request = {
+        log: sinon.stub(),
         payload: {
             name: 'test',
             description: 'test',
@@ -65,16 +70,16 @@ test.cb('when a trial is created', (t) => {
     };
 
     const reply = {
-        redirect: (route) => {
-            t.is(route, '/trial/1', 'redirect to new trial');
+        redirect (route) {
+            t.is(route, '/trial/1', 'it should redirect to the new trial');
             t.end();
         }
     };
 
-    createTrial(fakeRequest, reply);
+    createTrial(request, reply);
 });
 
-test.cb('when stage number does not match, fail', (t) => {
+test.cb('when stage number does not match', (t) => {
     const sequelize = mockSequelize();
 
     const createTrial = proxyquire('../handler/create-trial', {

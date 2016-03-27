@@ -56,7 +56,7 @@ test.cb('when patient has one survey', (t) => {
     };
 
     const reply = {
-        view: (template, data) => {
+        view (template, data) {
             t.is(template, 'patient', 'it should render patient view');
             t.true(data.surveys instanceof Array, 'it should have an array of surveys');
             t.is(data.surveys.length, one, 'it should have one survey');
@@ -102,10 +102,9 @@ test.cb('when patient has no surveys', (t) => {
     };
 
     const reply = {
-        view: (template, data) => {
+        view (template, data) {
             t.is(template, 'patient', 'it should render patient view');
-            t.true(data.surveys instanceof Array, 'it should have an array of surveys');
-            t.is(data.surveys.length, zero, 'it should have an empty array of surveys');
+            t.is(data.surveys.length, zero, 'it should have no surveys');
             t.end();
         }
     };
@@ -142,12 +141,12 @@ test.cb('when patient does not exist', (t) => {
     };
 
     const reply = {
-        view: (template, data) => {
+        view (template, data) {
             t.is(template, '404', 'it should render not found page');
             t.is(data.title, 'Not Found', 'it should have \'not found\' as the title');
 
             return {
-                code: (code) => {
+                code (code) {
                     t.is(code, httpNotFound, 'it should have not found status code');
                     t.end();
                 }
