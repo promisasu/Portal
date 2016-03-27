@@ -37,8 +37,9 @@ function patientView (request, reply) {
             ),
             database.sequelize.query(
                 `
-                SELECT si.id, si.startTime, si.endTime, si.userSubmissionTime, si.state, si.surveyTemplateId,
-                st.name AS stageName, srt.name AS surveyTemplateName
+                SELECT pa.dateCompleted, si.id, si.startTime, si.endTime, si.userSubmissionTime,
+                si.actualSubmissionTime, si.state, si.surveyTemplateId, st.name AS stageName,
+                srt.name AS surveyTemplateName
                 FROM patient AS pa
                 JOIN survey_instance AS si
                 ON si.patientId = pa.id
@@ -85,16 +86,8 @@ function patientView (request, reply) {
                 throw new Error('patient does not exist');
             }
 
-            let complianceType = null;
-
-            // show compliance only if there is at least one survey
-            if (surveyInstances[0] && surveyInstances[0].surveyTemplateId) {
-                complianceType = surveyInstances[0].surveyTemplateId;
-            }
-
             reply.view('patient', {
                 title: 'Pain Reporting Portal',
-                complianceType,
                 patient: currentPatient,
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
