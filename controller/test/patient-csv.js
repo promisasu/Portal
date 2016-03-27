@@ -7,7 +7,7 @@ const QueryTypes = {
     SELECT: 'select'
 };
 
-test.cb('when patient has not data show table headers', (t) => {
+test.cb('when patient has not data', (t) => {
     const query = sinon.stub();
 
     query.returns(Promise.resolve([]));
@@ -27,11 +27,15 @@ test.cb('when patient has not data show table headers', (t) => {
     };
 
     const reply = (data) => {
-        t.is(data, 'patient pin,survey name,unique survey id,unique question id,question,question option\n');
+        t.is(
+            data,
+            'patient pin,survey name,unique survey id,unique question id,question,question option\n',
+            'it should show the headers with no data'
+        );
 
         return {
             type: (type) => {
-                t.is(type, 'text/csv');
+                t.is(type, 'text/csv', 'it should sent in csv format');
                 t.end();
             }
         };
@@ -40,7 +44,7 @@ test.cb('when patient has not data show table headers', (t) => {
     patientCSV(request, reply);
 });
 
-test.cb('when patient doesn\'t exist return not found', (t) => {
+test.cb('when patient doesn\'t exist', (t) => {
     const query = sinon.stub();
 
     query.returns(Promise.reject([]));
@@ -59,8 +63,7 @@ test.cb('when patient doesn\'t exist return not found', (t) => {
     };
 
     const reply = (data) => {
-        t.is(typeof data, 'object');
-        t.is(data.name, 'Error');
+        t.is(data.name, 'Error', 'it should have error object');
         t.end();
     };
 

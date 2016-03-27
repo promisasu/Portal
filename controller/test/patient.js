@@ -6,6 +6,8 @@ const proxyquire = require('proxyquire');
 const QueryTypes = {
     SELECT: 'select'
 };
+const zero = 0;
+const one = 1;
 const httpNotFound = 404;
 
 test.cb('when patient has one survey', (t) => {
@@ -55,8 +57,9 @@ test.cb('when patient has one survey', (t) => {
 
     const reply = {
         view: (template, data) => {
-            t.is(template, 'patient', 'patient view should be rendered');
-            t.true(data.surveys instanceof Array, 'surveys should be an Array');
+            t.is(template, 'patient', 'it should render patient view');
+            t.true(data.surveys instanceof Array, 'it should have an array of surveys');
+            t.is(data.surveys.length, one, 'it should have one survey');
             t.end();
         }
     };
@@ -100,8 +103,9 @@ test.cb('when patient has no surveys', (t) => {
 
     const reply = {
         view: (template, data) => {
-            t.is(template, 'patient', 'patient view should be rendered');
-            t.true(data.surveys instanceof Array, 'surveys should be an Array');
+            t.is(template, 'patient', 'it should render patient view');
+            t.true(data.surveys instanceof Array, 'it should have an array of surveys');
+            t.is(data.surveys.length, zero, 'it should have an empty array of surveys');
             t.end();
         }
     };
@@ -138,12 +142,13 @@ test.cb('when patient does not exist', (t) => {
     };
 
     const reply = {
-        view: (template) => {
-            t.is(template, '404', 'not found page should be rendered');
+        view: (template, data) => {
+            t.is(template, '404', 'it should render not found page');
+            t.is(data.title, 'Not Found', 'it should have \'not found\' as the title');
 
             return {
                 code: (code) => {
-                    t.is(code, httpNotFound);
+                    t.is(code, httpNotFound, 'it should have not found status code');
                     t.end();
                 }
             };

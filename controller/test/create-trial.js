@@ -46,7 +46,7 @@ function mockSequelize () {
     return {model, transaction};
 }
 
-test.cb('when a trial is created, redirect to new patient\'s information', (t) => {
+test.cb('when a trial is created', (t) => {
     const sequelize = mockSequelize();
 
     const createTrial = proxyquire('../handler/create-trial', {
@@ -66,14 +66,11 @@ test.cb('when a trial is created, redirect to new patient\'s information', (t) =
         }
     };
 
-    const reply = () => {
-        t.fail();
-        t.end();
-    };
-
-    reply.redirect = (route) => {
-        t.is(route, '/trial/1', 'correct redirect');
-        t.end();
+    const reply = {
+        redirect: (route) => {
+            t.is(route, '/trial/1', 'redirect to new trial');
+            t.end();
+        }
     };
 
     createTrial(fakeRequest, reply);
@@ -101,13 +98,7 @@ test.cb('when stage number does not match, fail', (t) => {
     };
 
     const reply = (data) => {
-        t.is(typeof data, 'object');
-        t.is(data.name, 'Error');
-        t.end();
-    };
-
-    reply.redirect = () => {
-        t.fail();
+        t.is(data.name, 'Error', 'it should have an Error object');
         t.end();
     };
 
