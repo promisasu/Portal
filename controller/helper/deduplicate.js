@@ -15,7 +15,7 @@ function deduplicate (rows, properties) {
     return copyOfRows.map((row) => {
         for (const property of properties) {
             if (row[property] === current[property]) {
-                row[property] = ' ';
+                row[property] = '';
             } else {
                 current[property] = row[property];
             }
