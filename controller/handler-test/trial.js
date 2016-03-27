@@ -77,4 +77,4 @@ test.cb('when there are no patients', (t) => {
 
 test.todo('when there is one patient');
 
-test.todo('when trial does not exist')
+test.todo('when trial does not exist');

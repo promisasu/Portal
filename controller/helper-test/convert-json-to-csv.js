@@ -183,13 +183,14 @@ test('when a column is duplicated', (t) => {
 
     const csv = convertJsonToCsv(json, options);
 
-    t.is(csv, 'one,two\n"one","one"\n"two","two"');
+    t.is(csv, 'one,two\n"one","one"\n"two","two"', 'it should duplicate column');
 });
 
-test.todo('when json is empty');
+test('when json is empty', (t) => {
+    const json = [];
+    const options = [];
 
-test.todo('when json is invalid');
+    const csv = convertJsonToCsv(json, options);
 
-test.todo('when label is invalid');
-
-test.todo('when key is invalid');
+    t.is(csv, '\n', 'it should be empty');
+});
