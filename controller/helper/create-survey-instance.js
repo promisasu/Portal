@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @module controller/helper/create-survey
+ * @module controller/helper/create-survey-instance
  */
 
 const moment = require('moment');
