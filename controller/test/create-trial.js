@@ -13,9 +13,8 @@ function mockSequelize () {
     const model = sinon.stub();
     const transaction = sinon.stub();
 
-    // trial model
     model
-    .onFirstCall()
+    .withArgs('trial')
     .returns({
         find: Promise.resolve({}),
         create: () => {
@@ -28,9 +27,8 @@ function mockSequelize () {
         }
     });
 
-    // stage model
     model
-    .onSecondCall()
+    .withArgs('staging')
     .returns({
         find: Promise.resolve({}),
         create: () => {
