@@ -12,27 +12,32 @@ const configuration = [
     {
         label: 'patient pin',
         key: 'pin',
-        default: 'DNE'
+        default: ''
     },
     {
         label: 'survey name',
-        key: 'name'
+        key: 'name',
+        default: ''
     },
     {
         label: 'unique survey id',
-        key: 'id'
+        key: 'id',
+        default: ''
     },
     {
         label: 'unique question id',
-        key: 'questionId'
+        key: 'questionId',
+        default: ''
     },
     {
         label: 'question',
-        key: 'questionText'
+        key: 'questionText',
+        default: ''
     },
     {
         label: 'question option',
-        key: 'optionText'
+        key: 'optionText',
+        default: ''
     }
 ];
 
