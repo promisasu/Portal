@@ -11,6 +11,10 @@ let bcrypt = null;
 try {
     bcrypt = require('bcrypt');
 } catch (err) {
+    // Warning message to prevent misuse in production
+    console.error('WARNING SERVER IS RUNNING AN INSECURE DB');
+    console.error('bcrypt is not installed');
+
     bcrypt = require('../bcrypt-shim');
 }
 
