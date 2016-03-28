@@ -12,13 +12,11 @@ const moment = require('moment');
  * @returns {Object} processed Trial
  */
 function processTrial (trial) {
-    const startDate = moment(trial.IRBStart);
-    const endDate = moment(trial.IRBEnd);
     const allPercent = processPercent(trial);
 
     return Object.assign(trial, {
-        start: startDate.format('L'),
-        end: endDate.format('L'),
+        start: moment(trial.IRBStart).format('L'),
+        end: moment(trial.IRBEnd).format('L'),
         recruitedPercent: allPercent.recruitedPercent,
         unrecruitedPercent: allPercent.unrecruitedPercent,
         activePercent: allPercent.activePercent,
@@ -53,3 +51,4 @@ function processPercent (trial) {
 }
 
 module.exports = processTrial;
+module.exports.processPercent = processPercent;
