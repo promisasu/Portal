@@ -6,6 +6,12 @@
 [![optionalDependency Status](https://david-dm.org/promisasu/Portal/optional-status.svg)](https://david-dm.org/promisasu/Portal#info=optionalDependencies)
 [![Taiga Board](https://img.shields.io/badge/managed_with-taiga-brightgreen.svg)](https://tree.taiga.io/project/promisasu-prp-manhattan-project/)
 
+## About
+
+The pain reporting portal is de-identified patient and survey management system.
+It allows clinicians to schedule digital surveys to be delivered to patients.
+As well as allowing clinicians to monitor patient responses to look for possible interventions.
+
 ## Installation Instructions
 
 1. install [Git](https://git-scm.com/downloads)
@@ -57,22 +63,22 @@
 
 Tasks can be run by calling `npm run <task>`
 
-* `check` detect outdated and insecure packages
+* `check` detect outdated or insecure packages
 * `documentation` generate code documentation
 * `init` create a server configuration file
 * `lint` lint check project files
 * `lint-fix` auto fixes some lint errors
-* `log` view server log
+* `log` view server logs
 * `seed` fill database with sample data
-* `start` start production api, dashboard, and scheduler
-* `start-api` start production api
-* `start-dashboard` start production dashboard
-* `start-scheduler` start production scheduler
-* `status` check production server status
-* `stop` stop production api, dashboard, and scheduler
-* `stop-api` stop production api
-* `stop-dashboard` stop production dashboard
-* `stop-scheduler` stop production scheduler
+* `start` start all services
+* `start-api` start api service
+* `start-dashboard` start dashboard service
+* `start-scheduler` start scheduler service
+* `status` check service statuses
+* `stop` stop all services
+* `stop-api` stop api service
+* `stop-dashboard` stop dashboard service
+* `stop-scheduler` stop scheduler service
 * `sync` synchronize database schema
 * `test` run the test suite
 * `user` create a new user
