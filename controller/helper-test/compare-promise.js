@@ -1,12 +1,22 @@
 'use strict';
 
 const test = require('ava');
-const comparePromise = require('../helper/compare-promise');
+const proxyquire = require('proxyquire');
+const bcrypt = require('../../bcrypt-shim');
+const comparePromise = proxyquire('../helper/compare-promise', {bcrypt});
 
-test('when values are the same', (t) => {
-    t.notThrows(comparePromise('test', 'test'), 'it should resolve');
+test.cb('when values are the same', (t) => {
+    comparePromise('test', 'test')
+    .then((isValid) => {
+        t.true(isValid, 'it should be valid');
+        t.end();
+    });
 });
 
-test('when values are different', (t) => {
-    t.notThrows(comparePromise('test', 'not'), 'it should reject');
+test.cb('when values are different', (t) => {
+    comparePromise('test', 'not')
+    .then((isValid) => {
+        t.false(isValid, 'it should not be valid');
+        t.end();
+    });
 });

@@ -30,13 +30,11 @@ function validate (request, username, password, callback) {
     .then((currentUser) => {
         selectedUser = currentUser;
 
-        return new Promise((resolve, reject) => {
-            if (selectedUser) {
-                resolve();
-            } else {
-                reject();
-            }
-        });
+        if (selectedUser) {
+            return;
+        }
+
+        throw new Error('invalid login');
     })
     // test that the password given matches the password stored
     .then(() => {
@@ -46,8 +44,8 @@ function validate (request, username, password, callback) {
         callback(null, isValid, selectedUser);
     })
     .catch((err) => {
-        console.error(err);
-        callback(err, false, {});
+        request.log(err);
+        callback(err, false, null);
     });
 }
 
