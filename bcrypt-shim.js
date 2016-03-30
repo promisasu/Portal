@@ -6,9 +6,12 @@
  * THIS IS INSECURE DO NOT USE IN PRODUCTION.
  */
 
-// Warning message to prevent misuse in production
-console.error('WARNING SERVER IS RUNNING AN INSECURE DB');
-console.error('bcrypt is not installed');
+// do not warn during tests
+if (!process.env.TEST) {
+    // Warning message to prevent misuse in production
+    console.error('WARNING SERVER IS RUNNING AN INSECURE DB');
+    console.error('bcrypt is not installed');
+}
 
 /**
  * Compares two values

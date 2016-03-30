@@ -7,7 +7,7 @@
 const boom = require('boom');
 const database = require('../../model');
 const trialOffset = 1000;
-const createSurvey = require('../../rule/task/create-survey');
+const createSurvey = require('../helper/create-survey-instance');
 
 /**
  * Creates a new Patient

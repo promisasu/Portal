@@ -21,7 +21,7 @@ function patientView (request, reply) {
         .all([
             database.sequelize.query(
                 `
-                SELECT *, st.name AS stage
+                SELECT pa.pin, st.name AS stage
                 FROM patient AS pa
                 JOIN stage AS st
                 ON st.id = pa.stageId
@@ -31,12 +31,15 @@ function patientView (request, reply) {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         request.params.pin
-                    ]
+                    ],
+                    plain: true
                 }
             ),
             database.sequelize.query(
                 `
-                SELECT *, si.id, st.name AS stageName, srt.name AS surveyTemplateName
+                SELECT pa.dateCompleted, si.id, si.startTime, si.endTime, si.userSubmissionTime,
+                si.actualSubmissionTime, si.state, si.surveyTemplateId, st.name AS stageName,
+                srt.name AS surveyTemplateName
                 FROM patient AS pa
                 JOIN survey_instance AS si
                 ON si.patientId = pa.id
@@ -68,14 +71,20 @@ function patientView (request, reply) {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         request.params.pin
-                    ]
+                    ],
+                    plain: true
                 }
             )
         ])
         .then((data) => {
-            const currentPatient = data[0][0];
+            const currentPatient = data[0];
             const surveyInstances = data[1];
-            const currentTrial = data[2][0];
+            const currentTrial = data[2];
+
+            // patient not found
+            if (!currentPatient) {
+                throw new Error('patient does not exist');
+            }
 
             reply.view('patient', {
                 title: 'Pain Reporting Portal',
@@ -96,12 +105,11 @@ function patientView (request, reply) {
 
                     return surveyInstanceCopy;
                 }),
-                complianceType: surveyInstances[0].surveyTemplateId,
                 datesJson: JSON.stringify(processSurveyInstances(surveyInstances))
             });
         })
         .catch((err) => {
-            console.error(err);
+            request.log('error', err);
 
             reply
             .view('404', {
