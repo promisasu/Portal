@@ -90,6 +90,11 @@ function trialView (request, reply) {
         ])
         .then((data) => {
             const currentTrial = data[0];
+
+            if (!currentTrial) {
+                throw new Error('trial does not exist');
+            }
+
             const stages = data[1];
             const patients = data[2];
             const compliance = data[3];
@@ -140,7 +145,7 @@ function trialView (request, reply) {
             });
         })
         .catch((err) => {
-            console.error(err);
+            request.log('error', err);
 
             reply
             .view('404', {
