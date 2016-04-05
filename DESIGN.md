@@ -1,12 +1,11 @@
 # Design
 
-The Pain Reporting Portal consists of 5 major pieces.
+The Pain Reporting Portal consists of four major pieces.
 
 1. [Dashboard](#dashboard)
 2. [API](#api)
 3. [CLI](#api)
 4. [Rules Engine](#rules-engine)
-5. [Schedule Job](#schedule-job)
 
 ## Dashboard
 
@@ -46,46 +45,37 @@ view
 The CLI is a collection of tools to help administrators and developers manage all the Pain Reporting Portal components.
 
 The CLI leverages [NPM](https://docs.npmjs.com/misc/scripts) for running tasks,
-[ESLint](http://eslint.org/) for lint checking,
-[AVA](https://github.com/sindresorhus/ava) for testing,
 [JSDoc](https://github.com/jsdoc3/jsdoc) for documentation,
 [Bower](http://bower.io/) to manage UI libraries,
 and [PM2](http://pm2.keymetrics.io/) for production server management.
 
-**Relevant File and Folder**
+The CLI also handles testing and code smell detection for the code base. It uses
+[AVA](https://github.com/sindresorhus/ava) for testing,
+[Proxyquire](https://github.com/thlorenz/proxyquire) for mock dependency injection,
+[Sinon](http://sinonjs.org/) for function mocking and stubbing,
+[ESLint](http://eslint.org/) for Javascript lint checking,
+[JSONlint](https://github.com/zaach/jsonlint) for configuration validation,
+[Remark Lint](https://github.com/wooorm/remark-lint) for markdown documentation lint checking,
+and [Stylelint](http://stylelint.io/) for Cascading Style Sheet lint checking.
+
+**Relevant Files and Folder**
 
 ``` sh
 package.json
+.eslintrc.yml
+.remarkrc
+.stylelintrc.yml
 task
 ```
 
 ## Rules Engine
 
-**Current**
+The rules engine responds to events, then looks at patient and trial information and determines when surveys should be
+offered to a patient.
+It implements a small [expert system](https://en.wikipedia.org/wiki/Expert_system) in Javascript.
 
-Rules are a description of a schedule.
-Surveys can be generated on a daily or weekly basis.
-Rules can be given priority in order to resolve conflicts on days that satisfy multiple rules.
-
-**Future**
-
-Rules will implement an [expert system](https://en.wikipedia.org/wiki/Expert_system) to determine when surveys should be
-generated.
-The expert system will combine schedule information, the scores from past surveys, and answers to individual questions
-from past surveys to make its decisions.
-
-**Relevant File**
+**Relevant Folder**
 
 ``` sh
-rule/task/run-survey-rules.js
-```
-
-## Schedule Job
-
-The Scheduler uses [PM2](http://pm2.keymetrics.io/) `cron restart` to run the rules on a timer.
-
-**Relevant File**
-
-``` sh
-task/start-scheduler.json
+rule
 ```
