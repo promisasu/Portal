@@ -30,18 +30,18 @@ function validate (request, username, password, callback) {
     .then((currentUser) => {
         selectedUser = currentUser;
 
-        if (selectedUser) {
-            return;
+        if (!selectedUser) {
+            throw new Error('invalid login');
         }
 
-        throw new Error('invalid login');
+        return;
     })
     // test that the password given matches the password stored
     .then(() => {
         return compare(password, selectedUser.passwordHash);
     })
     .then((isValid) => {
-        callback(null, isValid, selectedUser);
+        return callback(null, isValid, selectedUser);
     })
     .catch((err) => {
         request.log('error', err);

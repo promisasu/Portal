@@ -10,6 +10,8 @@ test.cb('when values are the same', (t) => {
     .then((isValid) => {
         t.true(isValid, 'it should be valid');
         t.end();
+
+        return;
     })
     .catch(() => {
         t.fail();
@@ -22,6 +24,8 @@ test.cb('when values are different', (t) => {
     .then((isValid) => {
         t.false(isValid, 'it should not be valid');
         t.end();
+
+        return;
     })
     .catch(() => {
         t.fail();

@@ -28,15 +28,15 @@ function checkSurveys (request, reply) {
     })
     // check that patient is valid and is currently active
     .then((resultPatient) => {
-        if (resultPatient) {
-            if (currentDate > resultPatient.dateStarted && currentDate < resultPatient.dateCompleted) {
-                currentPatient = resultPatient;
-
-                return null;
-            }
+        if (!resultPatient) {
+            throw new Error('The PIN is invalid');
+        }
+        if (currentDate < resultPatient.dateStarted || currentDate > resultPatient.dateCompleted) {
             throw new Error('Your PIN is not active');
         }
-        throw new Error('The PIN is invalid');
+        currentPatient = resultPatient;
+
+        return null;
     })
     // gather all pending and in progress surveys for a patient
     .then(() => {
@@ -66,7 +66,7 @@ function checkSurveys (request, reply) {
         );
     })
     .then((surveys) => {
-        reply({
+        return reply({
             message: 'Success',
             surveys: surveys.map(processSurveys)
         });

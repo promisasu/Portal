@@ -39,7 +39,7 @@ if (now < afterMidnight || now > beforeMidnight) {
 
     expireSurveyInstances()
     .then((data) => {
-        console.log(data[0], 'survey instances expired');
+        return console.log(data[0], 'survey instances expired');
     })
     .catch((err) => {
         console.error(err);
@@ -47,7 +47,7 @@ if (now < afterMidnight || now > beforeMidnight) {
 
     runSurveyRules()
     .then(() => {
-        console.log('survey instances created on:', new Date());
+        return console.log('survey instances created on:', new Date());
     })
     .catch((err) => {
         console.error(err);
