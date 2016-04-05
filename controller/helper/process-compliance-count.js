@@ -18,7 +18,6 @@ function processComplianceCount (rows) {
     };
 
     for (const row of rows) {
-        console.log(row);
         if (row.expiredCount > nonCompliantThreshold) {
             compliance.nonCompliant += 1;
         } else if (row.expiredCount > semiCompliantThreshold) {

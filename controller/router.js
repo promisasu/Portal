@@ -95,6 +95,14 @@ module.exports = [
                         .number()
                         .integer()
                         .positive()
+                },
+                query: {
+                    fromDate: Joi
+                       .date()
+                       .format('YYYY-MM-DD'),
+                    toDate: Joi
+                       .date()
+                       .format('YYYY-MM-DD')
                 }
             }
         }

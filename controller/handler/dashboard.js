@@ -68,7 +68,7 @@ function dashboardView (request, reply) {
             });
         })
         .catch((err) => {
-            console.error(err);
+            request.log('error', err);
 
             reply
             .view('404', {

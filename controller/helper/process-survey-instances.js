@@ -50,9 +50,9 @@ function pickDates (surveys) {
 function pickTimeLeft (surveys) {
     const percentages = surveys.map((survey) => {
         return calculateTimeLeft(
-            moment(survey.startTime, sqlDateFormat).format(viewDateFormat),
-            moment(survey.endTime, sqlDateFormat).format(viewDateFormat),
-            moment(survey.actualSubmissionTime, sqlDateFormat).format(viewDateFormat)
+            moment(survey.startTime, sqlDateFormat),
+            moment(survey.endTime, sqlDateFormat),
+            moment(survey.actualSubmissionTime, sqlDateFormat)
         );
     });
 
@@ -77,8 +77,8 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
     const minTime = 0;
 
     // calculate the time in hours until end time
-    const totalAvailibleTime = moment(openTime, viewDateFormat).diff(moment(endTime, viewDateFormat), 'hours');
-    const timeTaken = moment(completedTime, viewDateFormat).diff(moment(endTime, viewDateFormat), 'hours');
+    const totalAvailibleTime = openTime.diff(endTime, 'hours');
+    const timeTaken = completedTime.diff(endTime, 'hours');
 
     // caculate percent of time taken out of total time availible to take the survey
     const percentTimeLeft = Math.round(timeTaken / totalAvailibleTime * percent);
@@ -89,3 +89,6 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
 }
 
 module.exports = processSurveyInstances;
+module.exports.pickDates = pickDates;
+module.exports.pickTimeLeft = pickTimeLeft;
+module.exports.calculateTimeLeft = calculateTimeLeft;

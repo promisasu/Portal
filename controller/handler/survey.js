@@ -22,7 +22,7 @@ function surveyView (request, reply) {
         surveyInstance.findById(request.params.id),
         database.sequelize.query(
             `
-            SELECT *, qt.id AS questionId, qo.id AS optionId
+            SELECT jsq.questionOrder, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
             FROM survey_instance AS si
             JOIN survey_template AS st
             ON st.id = si.surveyTemplateId
@@ -85,7 +85,7 @@ function surveyView (request, reply) {
         });
     })
     .catch((err) => {
-        console.error(err);
+        request.log('error', err);
 
         reply
         .view('404', {
