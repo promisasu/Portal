@@ -2,6 +2,9 @@ env:
     node: true
     es6: true
 
+plugins:
+    - promise
+
 rules:
     # Possible Errors
     comma-dangle: error
@@ -283,3 +286,8 @@ rules:
     yield-star-spacing:
         - error
         - both
+
+    # Promise Issues
+    promise/catch-or-return: error
+    promise/always-return: off # TODO enable once throw support is added
+    promise/param-names: error
