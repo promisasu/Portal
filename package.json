@@ -26,7 +26,7 @@
     "stop-dashboard": "node task/stop-dashboard",
     "stop-scheduler": "node task/stop-scheduler",
     "sync": "node task/sync",
-    "test": "env TEST=true ava */*-test/*.js",
+    "test": "env TEST=true nyc ava */*-test/*.js",
     "user": "node task/user",
     "validate": "jsonlint config.json --validate config-schema.json --quiet"
   },
@@ -71,6 +71,7 @@
     "jsdoc": "^3.4.0",
     "jsonlint": "^1.6.2",
     "nsp": "^2.3.0",
+    "nyc": "^6.1.1",
     "pm2": "^1.1.1",
     "proxyquire": "^1.7.4",
     "read": "^1.0.7",
@@ -83,5 +84,13 @@
   "engines": {
     "node": ">=4.0.0",
     "npm": ">=3.0.0"
+  },
+  "nyc": {
+    "exclude": [
+      "bcrypt-shim.js",
+      "model",
+      "controller/handler-test",
+      "controller/helper-test"
+    ]
   }
 }

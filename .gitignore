@@ -7,6 +7,9 @@ config.json
 # JSDoc
 documentation/
 
+# Coverage Report
+.nyc_output/
+
 # Temporary editor files
 *~
 
