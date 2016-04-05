@@ -13,6 +13,7 @@
     "log": "pm2 logs",
     "preseed": "node task/sync",
     "seed": "node task/seed",
+    "postseed": "node task/user",
     "prestart": "jsonlint config.json --validate config-schema.json --quiet",
     "start": "node task/start-api && node task/start-dashboard && node task/start-scheduler",
     "poststart": "pm2 ls",
