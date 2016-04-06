@@ -22,3 +22,10 @@
 input[type='date'] {
     color: #55595c !important;
 }
+
+#faqBackground {
+    background: url('/static/image/bear.svg');
+    background-position: left;
+    background-repeat: no-repeat;
+    height: 300px;
+}

@@ -47,6 +47,15 @@ module.exports = [
         }
     },
     {
+        method: 'GET',
+        path: '/static/image/{param*}',
+        handler: {
+            directory: {
+                path: 'view/image'
+            }
+        }
+    },
+    {
         method: 'POST',
         path: '/trial',
         handler: createTrial,
@@ -169,6 +178,27 @@ module.exports = [
                         .positive()
                 }
             }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/faq',
+        handler: {
+            view: 'faq'
+        }
+    },
+    {
+        method: 'GET',
+        path: '/app-user-guide',
+        handler: {
+            view: 'app-user-guide'
+        }
+    },
+    {
+        method: 'GET',
+        path: '/portal-user-guide',
+        handler: {
+            view: 'portal-user-guide'
         }
     }
 ];
