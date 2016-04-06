@@ -2,7 +2,8 @@
     'use strict';
     document.getElementById('patient-end').addEventListener('change', function showWarnings (event) {
         var isRecommended = event.target.dataset.recommendedEnd === event.target.value;
-        var isWithinIrb = moment(event.target.value).unix() < moment(event.target.dataset.irbEnd).unix();
+        var isWithinIrb = moment(event.target.value, 'YYYY-MM-DD')
+            .isSameOrBefore(event.target.dataset.irbEnd, 'YYYY-MM-DD');
 
         document
         .getElementById('patient-end-group')
