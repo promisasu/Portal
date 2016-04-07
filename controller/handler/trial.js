@@ -23,15 +23,6 @@ function trialView (request, reply) {
     const stage = database.sequelize.model('stage');
     const fromDate = request.query.fromDate;
     const toDate = request.query.toDate;
-    const addSevenDays = 7;
-    let fromDatestr = null;
-    let toDatestr = null;
-
-    if ((typeof fromDate !== 'undefined' || fromDate !== null) && (typeof toDate !== 'undefined'
-   || toDate !== null)) {
-        fromDatestr = fromDate.toISOString();
-        toDatestr = toDate.toISOString();
-    }
 
     Promise
         .all([
@@ -77,8 +68,8 @@ function trialView (request, reply) {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         request.params.id,
-                        fromDatestr,
-                        toDatestr
+                        fromDate.toISOString(),
+                        toDate.toISOString()
                     ]
                 }
             ),
@@ -114,7 +105,6 @@ function trialView (request, reply) {
             const ruleValues = rules.map((ruleData) => {
                 return parseInt(ruleData.rule, 10);
             });
-
             const complianceCount = processComplianceCount(compliance);
             const patientCount = patients.length;
             const patientStatuses = compliance.map(processPatientStatus);
@@ -141,6 +131,8 @@ function trialView (request, reply) {
 
             reply.view('trial', {
                 title: 'Pain Reporting Portal',
+                fromDate: moment(fromDate).format('YYYY-MM-DD'),
+                toDate: moment(toDate).format('YYYY-MM-DD'),
                 trial: processTrial(currentTrial),
                 stages,
                 endDate,
@@ -154,8 +146,7 @@ function trialView (request, reply) {
                         'Semicompliant',
                         'Noncompliant'
                     ]
-                }),
-                toDate: moment(fromDate).add(addSevenDays, 'days').format('YYYY-MM-DD')
+                })
             });
         })
         .catch((err) => {
