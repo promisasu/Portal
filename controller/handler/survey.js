@@ -71,7 +71,7 @@ function surveyView (request, reply) {
         const groupedQuestions = groupBy(data[1], 'questionId');
         const patientAndTrial = data[2];
 
-        reply.view('survey', {
+        return reply.view('survey', {
             title: 'Pain Reporting Portal',
             survey,
             patient: {

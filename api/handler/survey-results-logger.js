@@ -23,7 +23,7 @@ function surveyResultsLogger (request, reply) {
     .model('survey_logger')
     .bulkCreate(logs)
     .then(() => {
-        reply({
+        return reply({
             message: 'Success'
         });
     })
