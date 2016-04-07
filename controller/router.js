@@ -12,9 +12,8 @@ const patientCSV = require('./handler/patient-csv');
 const surveyPresenter = require('./handler/survey');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
-const addSevenDays = 7;
+const addOne = 1;
 
-// const fromDateCopy = moment().startOf('day').toDate();
 module.exports = [
     {
         method: 'GET',
@@ -102,11 +101,13 @@ module.exports = [
                     fromDate: Joi
                        .date()
                        .format('YYYY-MM-DD')
-                       .default(moment().startOf('day').toDate()),
+                       .default(moment().startOf('day').subtract(addOne, 'week')
+                       .toDate()
+                    ),
                     toDate: Joi
                        .date()
                        .format('YYYY-MM-DD')
-                       .default((moment().add(addSevenDays, 'days')).toDate())
+                       .default(moment().toDate())
                 }
             }
         }

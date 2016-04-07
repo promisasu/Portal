@@ -20,12 +20,12 @@
     var differenceValue = 0;
 
     document.getElementById('toDate').setAttribute('min', document.getElementById('fromDate').value);
-    $('#fromDate').on('change', function changetoDateValue () {
+    $('#fromDate').on('change', function changeToDateValue () {
         var fromDateValue = document.getElementById('fromDate').value;
         var newtoDateValue = moment(fromDateValue).add(differenceValue, 'days').format('YYYY-MM-DD');
 
         document.getElementById('toDate').value = newtoDateValue;
-    }).on('focus', function xyz (event) {
+    }).on('focus', function storeDateDiff (event) {
         var oldfromDateValue = event.target.value;
         var oldtoDateValue = document.getElementById('toDate').value;
 
