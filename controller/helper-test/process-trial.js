@@ -70,8 +70,8 @@ test('when trial is processed', (t) => {
         recruitedCount: 0,
         targetCount: 4,
         // new keys
-        start: '01/01/2000',
-        end: '01/01/2001',
+        start: '2000-01-01',
+        end: '2001-01-01',
         recruitedPercent: 0,
         unrecruitedPercent: 100,
         completedPercent: 0,
