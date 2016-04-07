@@ -78,5 +78,9 @@ test('when trial is processed', (t) => {
         activePercent: 0
     };
 
-    t.deepEqual(result, expectedResult, 'it should format dates, add percentages, and pass through other keys unmodified');
+    t.deepEqual(
+        result,
+        expectedResult,
+        'it should format dates, add percentages, and pass through other keys unmodified'
+    );
 });
