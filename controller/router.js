@@ -185,7 +185,7 @@ module.exports = [
         path: '/faq',
         handler: {
             view: {
-                template : 'faq',
+                template: 'faq',
                 context: {
                     title: 'FAQs for PROMIS App'
                 }
