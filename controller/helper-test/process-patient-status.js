@@ -15,7 +15,7 @@ test('when patient has no expired surveys', (t) => {
         status: 'Compliant'
     };
 
-    t.same(result, expectedResult, 'it should return row with compliant status');
+    t.deepEqual(result, expectedResult, 'it should return row with compliant status');
 });
 
 test('when patient has one expired survey', (t) => {
@@ -30,7 +30,7 @@ test('when patient has one expired survey', (t) => {
         status: 'Semi-Compliant'
     };
 
-    t.same(result, expectedResult, 'it should return row with semi-compliant status');
+    t.deepEqual(result, expectedResult, 'it should return row with semi-compliant status');
 });
 
 test('when patient has two expired surveys', (t) => {
@@ -45,7 +45,7 @@ test('when patient has two expired surveys', (t) => {
         status: 'Semi-Compliant'
     };
 
-    t.same(result, expectedResult, 'it should return row with semi-compliant status');
+    t.deepEqual(result, expectedResult, 'it should return row with semi-compliant status');
 });
 
 test('when patient has three expired surveys', (t) => {
@@ -60,5 +60,5 @@ test('when patient has three expired surveys', (t) => {
         status: 'Non-Compliant'
     };
 
-    t.same(result, expectedResult, 'it should return row with non-compliant status');
+    t.deepEqual(result, expectedResult, 'it should return row with non-compliant status');
 });
