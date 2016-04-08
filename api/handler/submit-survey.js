@@ -41,17 +41,15 @@ function submitSurvey (request, reply) {
         );
     })
     .then((survey) => {
-        if (survey) {
-            if (moment() > survey.endTime) {
-                throw new Error('Error - Survey has expired');
-            } else {
-                currentSurveyInstance = survey;
-
-                return null;
-            }
-        } else {
+        if (!survey) {
             throw new Error('Either survey_instance does not exist or its already completed');
         }
+        if (moment() > survey.endTime) {
+            throw new Error('Error - Survey has expired');
+        }
+        currentSurveyInstance = survey;
+
+        return null;
     })
     .then(() => {
         for (const currentQuestion of request.payload.surveyResults) {
@@ -125,7 +123,7 @@ function submitSurvey (request, reply) {
         return transaction.commit();
     })
     .then(() => {
-        reply({
+        return reply({
             statusCode: 500,
             message: 'Success'
         });

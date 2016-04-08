@@ -86,7 +86,7 @@ function patientView (request, reply) {
                 throw new Error('patient does not exist');
             }
 
-            reply.view('patient', {
+            return reply.view('patient', {
                 title: 'Pain Reporting Portal',
                 patient: currentPatient,
                 trial: currentTrial,

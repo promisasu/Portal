@@ -126,7 +126,7 @@ function trialView (request, reply) {
 
             const endDate = processRules(ruleValues, Date.now());
 
-            reply.view('trial', {
+            return reply.view('trial', {
                 title: 'Pain Reporting Portal',
                 trial: processTrial(currentTrial),
                 stages,

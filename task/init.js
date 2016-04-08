@@ -119,7 +119,7 @@ read({
 .then((salt) => {
     config.database.salt = salt;
 
-    writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
+    return writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
 })
 .catch((err) => {
     console.error(err);
