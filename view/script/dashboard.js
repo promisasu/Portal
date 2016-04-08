@@ -3,13 +3,35 @@
 
     var nameColumn = 0;
     var table = $('#trials').DataTable({order: [nameColumn, 'desc']});
-    var selectedChoice = null;
+    var strategy = filterStrategyFactory();
 
-    $('.dropdown-menu').on('click', 'div', function selectItem () {
-        selectedChoice = $(this).text().trim();
+    /**
+     * Strategy factory for generating trial status filters
+     * @param {string} selectedChoice - Text name of filter
+     * @returns {function(date, date)} a function to test if two dates fit a state description
+     */
+    function filterStrategyFactory (selectedChoice) {
+        var today = new Date();
 
-        table.draw();
-    });
+        switch (selectedChoice) {
+            case 'Upcoming':
+                return function selectUpcoming (startDate) {
+                    return startDate > today;
+                };
+            case 'In Progress':
+                return function selectInProgress (startDate, endDate) {
+                    return today > startDate && today < endDate;
+                };
+            case 'Completed':
+                return function selectCompleted (startDate, endDate) {
+                    return endDate < today;
+                };
+            default:
+                return function selectAll () {
+                    return true;
+                };
+        }
+    }
 
     $
     .fn
@@ -18,34 +40,19 @@
     .search
     .push(
         function testRow (settings, rowContent) {
-            var date = new Date();
             var startDate = moment(rowContent[3], 'MM-DD-YYYY');
             var endDate = moment(rowContent[4], 'MM-DD-YYYY');
 
-            switch (selectedChoice) {
-                case 'All Trials':
-                    return true;
-                case 'Upcoming':
-                    if (startDate > date) {
-                        return true;
-                    }
-
-                    return false;
-                case 'In Progress':
-                    if (date > startDate && date < endDate) {
-                        return true;
-                    }
-
-                    return false;
-                case 'Completed':
-                    if (endDate < date) {
-                        return true;
-                    }
-
-                    return false;
-                default:
-                    return true;
-            }
+            // compare today to dates to see if trial should be displayed
+            return strategy(startDate, endDate);
         }
     );
+
+    $('.dropdown-menu').on('click', 'div', function selectItem () {
+        // update strategy
+        strategy = filterStrategyFactory($(this).text().trim());
+
+        // run filter
+        table.draw();
+    });
 }());

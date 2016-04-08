@@ -15,8 +15,8 @@ function processTrial (trial) {
     const allPercent = processPercent(trial);
 
     return Object.assign(trial, {
-        start: moment(trial.IRBStart).format('L'),
-        end: moment(trial.IRBEnd).format('L'),
+        start: moment(trial.IRBStart).format('YYYY-MM-DD'),
+        end: moment(trial.IRBEnd).format('YYYY-MM-DD'),
         recruitedPercent: allPercent.recruitedPercent,
         unrecruitedPercent: allPercent.unrecruitedPercent,
         activePercent: allPercent.activePercent,

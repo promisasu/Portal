@@ -63,13 +63,15 @@ read({
     return userModel.create(newUser);
 })
 .then(() => {
-    database.sequelize.close();
     console.log('');
     console.log('user added');
+
+    return database.sequelize.close();
 })
 .catch((err) => {
-    database.sequelize.close();
     console.error('');
     console.error('/n', 'user could not be created because:');
     console.error(err);
+
+    return database.sequelize.close();
 });

@@ -94,7 +94,7 @@ function createPatient (request, reply) {
         return transaction.commit();
     })
     .then(() => {
-        reply.redirect(`/patient/${newPatient.pin}`);
+        return reply.redirect(`/patient/${newPatient.pin}`);
     })
     .catch((err) => {
         transaction.rollback();

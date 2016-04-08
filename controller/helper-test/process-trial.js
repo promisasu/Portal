@@ -20,7 +20,7 @@ test('when there are recruited patients', (t) => {
         activePercent: 50
     };
 
-    t.same(
+    t.deepEqual(
         result,
         expectedResult,
         'it should have half of the desired patients recruited, and half of the recruited patients completed'
@@ -44,7 +44,7 @@ test('when there are no recruited patients', (t) => {
         activePercent: 0
     };
 
-    t.same(result, expectedResult, 'it should have all unrecruited and nothing else');
+    t.deepEqual(result, expectedResult, 'it should have all unrecruited and nothing else');
 });
 
 test('when trial is processed', (t) => {
@@ -70,13 +70,17 @@ test('when trial is processed', (t) => {
         recruitedCount: 0,
         targetCount: 4,
         // new keys
-        start: '01/01/2000',
-        end: '01/01/2001',
+        start: '2000-01-01',
+        end: '2001-01-01',
         recruitedPercent: 0,
         unrecruitedPercent: 100,
         completedPercent: 0,
         activePercent: 0
     };
 
-    t.same(result, expectedResult, 'it should format dates, add percentages, and pass through other keys unmodified');
+    t.deepEqual(
+        result,
+        expectedResult,
+        'it should format dates, add percentages, and pass through other keys unmodified'
+    );
 });

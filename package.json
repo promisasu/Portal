@@ -27,7 +27,7 @@
     "stop-dashboard": "node task/stop-dashboard",
     "stop-scheduler": "node task/stop-scheduler",
     "sync": "node task/sync",
-    "test": "env TEST=true nyc ava */*-test/*.js",
+    "test": "env TEST=true nyc ava */*-test/*.js --timeout=10s",
     "user": "node task/user",
     "validate": "jsonlint config.json --validate config-schema.json --quiet"
   },
@@ -65,14 +65,15 @@
     "bcrypt": "^0.8.5"
   },
   "devDependencies": {
-    "ava": "^0.13.0",
+    "ava": "^0.14.0",
     "eslint": "^2.6.0",
-    "eslint-plugin-ava": "^1.4.1",
+    "eslint-plugin-ava": "^2.0.1",
     "eslint-plugin-html": "^1.4.0",
+    "eslint-plugin-promise": "^1.1.0",
     "jsdoc": "^3.4.0",
     "jsonlint": "^1.6.2",
     "nsp": "^2.3.0",
-    "nyc": "^6.1.1",
+    "nyc": "^6.2.1",
     "pm2": "^1.1.1",
     "proxyquire": "^1.7.4",
     "read": "^1.0.7",

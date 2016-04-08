@@ -28,7 +28,7 @@ test('when properties are duplicated', (t) => {
         }
     ];
 
-    t.same(result, expectedResult, 'it should have only the first value');
+    t.deepEqual(result, expectedResult, 'it should have only the first value');
 });
 
 test('when all values are unique', (t) => {
@@ -50,7 +50,7 @@ test('when all values are unique', (t) => {
 
     const result = deduplicate(data, properties);
 
-    t.same(data, result, 'it should have all the values');
+    t.deepEqual(data, result, 'it should have all the values');
 });
 
 test('when value is unique in multiple places', (t) => {
@@ -90,7 +90,7 @@ test('when value is unique in multiple places', (t) => {
         }
     ];
 
-    t.same(result, expectedResult, 'it should keep second unique appearance');
+    t.deepEqual(result, expectedResult, 'it should keep second unique appearance');
 });
 
 test('when there missing properties', (t) => {
@@ -114,7 +114,7 @@ test('when there missing properties', (t) => {
         }
     ];
 
-    t.same(result, expectedResult, 'it should enter an empty value');
+    t.deepEqual(result, expectedResult, 'it should enter an empty value');
 });
 
 test('when multiple properties are being deduplicated', (t) => {
@@ -155,7 +155,7 @@ test('when multiple properties are being deduplicated', (t) => {
         }
     ];
 
-    t.same(result, expectedResult, 'it should deduplicate each property independenty');
+    t.deepEqual(result, expectedResult, 'it should deduplicate each property independenty');
 });
 
 test('when multiple types of values are used', (t) => {
@@ -207,5 +207,5 @@ test('when multiple types of values are used', (t) => {
         }
     ];
 
-    t.same(result, expectedResult, 'it should deduplicate any primitive type');
+    t.deepEqual(result, expectedResult, 'it should deduplicate any primitive type');
 });
