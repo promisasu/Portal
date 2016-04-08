@@ -7,7 +7,7 @@
 
     $('.dropdown-menu').on('click', 'div', function selectItem () {
         selectedChoice = $(this).text().trim();
-        $('#statusDropdown').prop('value',selectedChoice);
+        $('#statusDropdown').prop('value', selectedChoice);
         $('#statusDropdown').html(selectedChoice);
         table.draw();
     });
