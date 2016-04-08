@@ -47,6 +47,15 @@ module.exports = [
         }
     },
     {
+        method: 'GET',
+        path: '/static/image/{param*}',
+        handler: {
+            directory: {
+                path: 'view/image'
+            }
+        }
+    },
+    {
         method: 'POST',
         path: '/trial',
         handler: createTrial,
@@ -167,6 +176,42 @@ module.exports = [
                         .number()
                         .integer()
                         .positive()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/faq',
+        handler: {
+            view: {
+                template: 'faq',
+                context: {
+                    title: 'FAQs for PROMIS App'
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/app-user-guide',
+        handler: {
+            view: {
+                template: 'app-user-guide',
+                context: {
+                    title: 'User Guide for PROMIS App'
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/portal-user-guide',
+        handler: {
+            view: {
+                template: 'portal-user-guide',
+                context: {
+                    title: 'User Guide for PROMIS Portal'
                 }
             }
         }
