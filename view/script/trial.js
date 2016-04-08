@@ -32,6 +32,11 @@
         differenceValue = moment(oldtoDateValue).diff(moment(oldfromDateValue), 'days');
     });
 
+    $('#toDate').on('focusout', function submitAction () {
+        document.getElementById('toDate').addEventListener('click', document
+        .getElementById('check-compliance')
+        .submit());
+    });
     new Chart(ctx, {
         type: 'doughnut',
         data: data,

@@ -103,7 +103,7 @@ module.exports = [
                        .format('YYYY-MM-DD')
                        .default(moment().startOf('day').subtract(addOne, 'week')
                        .toDate()
-                    ),
+                       ),
                     toDate: Joi
                        .date()
                        .format('YYYY-MM-DD')
