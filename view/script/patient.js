@@ -1,5 +1,12 @@
 (function patient () {
     'use strict';
+
+    var isNewPatient = window.location.search;
+    var re = /newPatient=true/;
+
+    if(re.test(isNewPatient))
+        $('#remember-patient-dialog').modal('show');
+
     // Makes a copy of window.dates
     var allDatesConfig = Object.create(window.dates);
     var config = {
