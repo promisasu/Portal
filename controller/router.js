@@ -184,21 +184,36 @@ module.exports = [
         method: 'GET',
         path: '/faq',
         handler: {
-            view: 'faq'
+            view: {
+                template : 'faq',
+                context: {
+                    title: 'FAQs for PROMIS App'
+                }
+            }
         }
     },
     {
         method: 'GET',
         path: '/app-user-guide',
         handler: {
-            view: 'app-user-guide'
+            view: {
+                template: 'app-user-guide',
+                context: {
+                    title: 'User Guide for PROMIS App'
+                }
+            }
         }
     },
     {
         method: 'GET',
         path: '/portal-user-guide',
         handler: {
-            view: 'portal-user-guide'
+            view: {
+                template: 'portal-user-guide',
+                context: {
+                    title: 'User Guide for PROMIS Portal'
+                }
+            }
         }
     }
 ];
