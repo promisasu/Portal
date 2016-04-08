@@ -53,7 +53,8 @@ function pickTimeLeft (surveys) {
     const weeklyPercentages = surveys.filter((survey) => {
         return moment(survey.endTime, sqlDateFormat)
         .diff(moment(survey.startTime, sqlDateFormat), 'hours') === weeklyDuration;
-    }).map((survey) => {
+    })
+    .map((survey) => {
         return calculateTimeLeft(
             moment(survey.startTime, sqlDateFormat),
             moment(survey.endTime, sqlDateFormat),
@@ -63,7 +64,8 @@ function pickTimeLeft (surveys) {
     const dailyPercentages = surveys.filter((survey) => {
         return moment(survey.endTime, sqlDateFormat)
         .diff(moment(survey.startTime, sqlDateFormat), 'hours') === dailyDuration;
-    }).map((survey) => {
+    })
+    .map((survey) => {
         return calculateTimeLeft(
             moment(survey.startTime, sqlDateFormat),
             moment(survey.endTime, sqlDateFormat),
