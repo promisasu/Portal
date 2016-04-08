@@ -12,30 +12,16 @@ const moment = require('moment');
  * @returns {Object} processed Trial
  */
 function processTrial (trial) {
-    const startDate = moment(trial.IRBStart);
-    const endDate = moment(trial.IRBEnd);
     const allPercent = processPercent(trial);
 
-    return {
-        targetCount: null,
-        recruitedCount: trial.recruitedCount,
-        activeCount: trial.activeCount,
-        compliantCount: null,
-        status: null,
-        id: trial.id,
-        name: trial.name,
-        description: trial.description,
-        IRBID: trial.IRBID,
-        start: startDate.format('L'),
-        end: endDate.format('L'),
+    return Object.assign(trial, {
+        start: moment(trial.IRBStart).format('L'),
+        end: moment(trial.IRBEnd).format('L'),
         recruitedPercent: allPercent.recruitedPercent,
         unrecruitedPercent: allPercent.unrecruitedPercent,
         activePercent: allPercent.activePercent,
-        completedPercent: allPercent.completedPercent,
-        compliantPercent: null,
-        noncompliantPercent: null,
-        noncompliantCount: null
-    };
+        completedPercent: allPercent.completedPercent
+    });
 }
 
 /**
@@ -65,3 +51,4 @@ function processPercent (trial) {
 }
 
 module.exports = processTrial;
+module.exports.processPercent = processPercent;

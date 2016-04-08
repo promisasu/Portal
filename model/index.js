@@ -41,21 +41,10 @@ const addJoinCurrentAndNextStages = require('./join-current-and-next-stages');
  * @returns {Sequelize} configured sequelize object
  */
 function setup (configuration) {
-    let logger = null;
-
-    // disable query logging for tests
-    if (configuration.name === 'prp_test') {
-        logger = null;
-    } else {
-        logger = console.log;
-    }
-
     // setup database connection
     const sequelize = new Sequelize(configuration.name, configuration.username, configuration.password, {
         host: configuration.hostname,
         dialect: configuration.dialect,
-        logging: logger,
-
         pool: {
             max: 5,
             min: 0,

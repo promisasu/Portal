@@ -7,7 +7,7 @@
 const boom = require('boom');
 const database = require('../../model');
 const trialOffset = 1000;
-const createSurvey = require('../../rule/task/create-survey');
+const createSurvey = require('../helper/create-survey-instance');
 
 /**
  * Creates a new Patient
@@ -33,11 +33,8 @@ function createPatient (request, reply) {
         // Get Trial the patient will be added to
         return trial.findById(request.payload.trialId, {transaction});
     })
-
     // Get next availible Patient Pin
-    .then((tempTrial) => {
-        const currentTrial = tempTrial;
-
+    .then((currentTrial) => {
         pin = currentTrial.id * trialOffset + currentTrial.patientPinCounter;
 
         return currentTrial.increment({patientPinCounter: 1}, {transaction});
@@ -101,7 +98,7 @@ function createPatient (request, reply) {
     })
     .catch((err) => {
         transaction.rollback();
-        console.error(err);
+        request.log('error', err);
         reply(boom.badRequest('Patient could not be created'));
     });
 }

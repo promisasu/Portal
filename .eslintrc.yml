@@ -93,7 +93,7 @@ rules:
     no-octal-escape: error
     no-octal: error
     no-param-reassign: error
-    no-process-env: error
+    no-process-env: warn
     no-proto: error
     no-redeclare: error
     no-return-assign: error
@@ -107,6 +107,7 @@ rules:
     no-unused-labels: off # no-labels
     no-useless-call: error
     no-useless-concat: error
+    no-useless-escape: error
     no-void: error
     no-with: error
     no-warning-comments: warn
@@ -188,6 +189,7 @@ rules:
     max-statements:
         - error
         - 20
+    max-statements-per-line: error
     new-cap: error
     new-parens: error
     newline-after-var: error
@@ -264,6 +266,7 @@ rules:
     no-confusing-arrow: error
     no-const-assign: error
     no-dupe-class-members: error
+    no-duplicate-imports: off # none
     no-new-symbol: error
     no-this-before-super: error
     no-var: error
