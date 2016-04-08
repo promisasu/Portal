@@ -33,9 +33,9 @@
     });
 
     $('#toDate').on('focusout', function submitAction () {
-        document.getElementById('toDate').addEventListener('click', document
+        document
         .getElementById('check-compliance')
-        .submit());
+        .submit();
     });
     new Chart(ctx, {
         type: 'doughnut',
