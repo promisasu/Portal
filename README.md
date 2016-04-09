@@ -28,7 +28,6 @@ As well as allowing clinicians to monitor patient responses to look for possible
 2. create a new empty database `CREATE SCHEMA prp_development;`
 3. run `npm run init`
 4. run `npm run seed`
-5. run `npm run user`
 
 ## Start the Portal
 

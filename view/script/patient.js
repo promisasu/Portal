@@ -28,7 +28,23 @@
                 ],
                 yAxes: [
                     {
+                        id: 'y-axis-0',
                         type: 'linear',
+                        position: 'left',
+                        ticks: {
+                            max: 100,
+                            min: 0
+                        },
+                        display: true,
+                        scaleLabel: {
+                            show: true,
+                            labelString: '% Time Left'
+                        }
+                    },
+                    {
+                        id: 'y-axis-1',
+                        type: 'linear',
+                        position: 'right',
                         ticks: {
                             max: 100,
                             min: 0

@@ -13,6 +13,7 @@
     "log": "pm2 logs",
     "preseed": "node task/sync",
     "seed": "node task/seed",
+    "postseed": "node task/user",
     "prestart": "jsonlint config.json --validate config-schema.json --quiet",
     "start": "node task/start-api && node task/start-dashboard && node task/start-scheduler",
     "poststart": "pm2 ls",
@@ -26,7 +27,7 @@
     "stop-dashboard": "node task/stop-dashboard",
     "stop-scheduler": "node task/stop-scheduler",
     "sync": "node task/sync",
-    "test": "env TEST=true ava */*-test/*.js",
+    "test": "env TEST=true nyc ava */*-test/*.js --timeout=10s",
     "user": "node task/user",
     "validate": "jsonlint config.json --validate config-schema.json --quiet"
   },
@@ -51,31 +52,33 @@
     "good": "^6.6.0",
     "good-file": "^5.1.2",
     "handlebars": "^4.0.5",
-    "hapi": "^13.2.2",
+    "hapi": "^13.3.0",
     "hapi-auth-basic": "^4.1.0",
     "inert": "^3.2.0",
     "joi": "^8.0.5",
     "moment": "^2.12.0",
     "mysql": "^2.10.2",
-    "sequelize": "^3.20.0",
+    "sequelize": "^3.21.0",
     "vision": "^4.0.1"
   },
   "optionalDependencies": {
     "bcrypt": "^0.8.5"
   },
   "devDependencies": {
-    "ava": "^0.13.0",
-    "eslint": "^2.5.3",
-    "eslint-plugin-ava": "^1.4.0",
+    "ava": "^0.14.0",
+    "eslint": "^2.6.0",
+    "eslint-plugin-ava": "^2.0.1",
     "eslint-plugin-html": "^1.4.0",
+    "eslint-plugin-promise": "^1.1.0",
     "jsdoc": "^3.4.0",
     "jsonlint": "^1.6.2",
     "nsp": "^2.3.0",
-    "pm2": "^1.0.2",
+    "nyc": "^6.2.1",
+    "pm2": "^1.1.1",
     "proxyquire": "^1.7.4",
     "read": "^1.0.7",
     "remark": "^4.2.0",
-    "remark-lint": "^3.0.0",
+    "remark-lint": "^3.2.0",
     "remark-validate-links": "^3.0.0",
     "sinon": "^1.17.3",
     "stylelint": "^5.2.1"
@@ -83,5 +86,13 @@
   "engines": {
     "node": ">=4.0.0",
     "npm": ">=3.0.0"
+  },
+  "nyc": {
+    "exclude": [
+      "bcrypt-shim.js",
+      "model",
+      "controller/handler-test",
+      "controller/helper-test"
+    ]
   }
 }
