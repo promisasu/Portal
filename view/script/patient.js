@@ -2,7 +2,7 @@
     'use strict';
 
     var isNewPatient = window.location.search;
-    var re = /newPatient=true/;
+    var isNewPatientRegex = /newPatient=true/;
 
     // Makes a copy of window.dates
     var allDatesConfig = Object.create(window.dates);
@@ -62,7 +62,7 @@
 
     var ctx = document.getElementById('complianceChart').getContext('2d');
 
-    if (re.test(isNewPatient)) {
+    if (isNewPatientRegex.test(isNewPatient)) {
         $('#remember-patient-dialog').modal('show');
     }
 

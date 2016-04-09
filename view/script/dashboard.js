@@ -4,10 +4,10 @@
     var nameColumn = 0;
     var table = $('#trials').DataTable({order: [nameColumn, 'desc']});
     var strategy = filterStrategyFactory();
-    var selectedChoice = null;
 
     $('.dropdown-menu').on('click', 'div', function selectItem () {
-        selectedChoice = $(this).text().trim();
+        var selectedChoice = $(this).text().trim();
+
         $('#statusDropdown').prop('value', selectedChoice);
         $('#statusDropdown').html(selectedChoice);
         table.draw();
