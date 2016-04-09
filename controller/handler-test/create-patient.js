@@ -85,7 +85,7 @@ test.cb('when patient is created', (t) => {
 
     const reply = {
         redirect (path) {
-            t.is(path, '/patient/1001');
+            t.is(path, '/patient/1001?newPatient=true');
             t.end();
         }
     };

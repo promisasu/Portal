@@ -5,6 +5,14 @@
     var table = $('#trials').DataTable({order: [nameColumn, 'desc']});
     var strategy = filterStrategyFactory();
 
+    $('.dropdown-menu').on('click', 'div', function selectItem () {
+        var selectedChoice = $(this).text().trim();
+
+        $('#statusDropdown').prop('value', selectedChoice);
+        $('#statusDropdown').html(selectedChoice);
+        table.draw();
+    });
+
     /**
      * Strategy factory for generating trial status filters
      * @param {string} selectedChoice - Text name of filter

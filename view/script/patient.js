@@ -1,5 +1,9 @@
 (function patient () {
     'use strict';
+
+    var isNewPatient = window.location.search;
+    var isNewPatientRegex = /newPatient=true/;
+
     // Makes a copy of window.dates
     var allDatesConfig = Object.create(window.dates);
     var config = {
@@ -57,6 +61,10 @@
     };
 
     var ctx = document.getElementById('complianceChart').getContext('2d');
+
+    if (isNewPatientRegex.test(isNewPatient)) {
+        $('#remember-patient-dialog').modal('show');
+    }
 
     config.data = allDatesConfig;
     new Chart(ctx, config);
