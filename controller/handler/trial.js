@@ -60,8 +60,8 @@ function trialView (request, reply) {
                 JOIN stage AS st
                 ON st.id = pa.stageId
                 WHERE st.trialId = ?
-                AND si.startTime > ?
-                AND si.endTime < ?
+                AND si.startTime >= ?
+                AND si.endTime <= ?
                 GROUP BY pa.id
                 `,
                 {
