@@ -45,13 +45,13 @@ test('when chart data is generated', (t) => {
     ];
 
     t.true(result instanceof Array, 'it should return an array');
-    t.same(Object.keys(result[0]), expectedKeys, 'it should have keys needed for chart js');
+    t.deepEqual(Object.keys(result[0]), expectedKeys, 'it should have keys needed for chart js');
 });
 
 test('when chart axes are generated with no dates', (t) => {
     const result = processSurveyInstances.pickDates([]);
 
-    t.same(result, [], 'it should have no dates');
+    t.deepEqual(result, [], 'it should have no dates');
 });
 
 test('when chart axes are generated with one date', (t) => {
@@ -92,5 +92,5 @@ test('when it generates the full chart information', (t) => {
         'datasets'
     ];
 
-    t.same(Object.keys(result), expectedKeys, 'it should have the keys needed by chart js');
+    t.deepEqual(Object.keys(result), expectedKeys, 'it should have the keys needed by chart js');
 });

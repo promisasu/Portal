@@ -30,22 +30,21 @@ function getSurvey (request, reply) {
     .then((resultSurveyInstance) => {
         const now = new Date();
 
-        if (resultSurveyInstance) {
-            if (now < resultSurveyInstance.startTime) {
-                throw new Error('Survey instance is not active');
-            } else if (now > resultSurveyInstance.endTime) {
-                throw new Error('Survey instance has expired');
-            } else if (resultSurveyInstance.state === 'completed') {
-                throw new Error('Survey instance has been completed');
-            } else {
-                currentSurveyInstance = resultSurveyInstance;
-                currentSurveyInstance.state = 'in progress';
-
-                return currentSurveyInstance.save();
-            }
-        } else {
+        if (!resultSurveyInstance) {
             throw new Error('Invalid survey instance ID');
         }
+
+        if (now < resultSurveyInstance.startTime) {
+            throw new Error('Survey instance is not active');
+        } else if (now > resultSurveyInstance.endTime) {
+            throw new Error('Survey instance has expired');
+        } else if (resultSurveyInstance.state === 'completed') {
+            throw new Error('Survey instance has been completed');
+        }
+        currentSurveyInstance = resultSurveyInstance;
+        currentSurveyInstance.state = 'in progress';
+
+        return currentSurveyInstance.save();
     })
     // Gather all the questions and question options for the survey
     .then(() => {
@@ -73,7 +72,7 @@ function getSurvey (request, reply) {
         );
     })
     .then((data) => {
-        reply({
+        return reply({
             surveyInstanceID: data[0].sid,
             surveyName: data[0].name,
             message: 'SUCCESS',

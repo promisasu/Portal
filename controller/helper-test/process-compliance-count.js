@@ -14,7 +14,7 @@ test('when patient has no expired surveys', (t) => {
 
     const expectedResult = [0, 0, 1];
 
-    t.same(result, expectedResult, 'it should show patient is compliant');
+    t.deepEqual(result, expectedResult, 'it should show patient is compliant');
 });
 
 test('when patient\'s have one or two expired surveys', (t) => {
@@ -31,7 +31,7 @@ test('when patient\'s have one or two expired surveys', (t) => {
 
     const expectedResult = [0, 2, 0];
 
-    t.same(result, expectedResult, 'it should show patients are semi-compliant');
+    t.deepEqual(result, expectedResult, 'it should show patients are semi-compliant');
 });
 
 test('when a patient has three or more expired surveys', (t) => {
@@ -45,7 +45,7 @@ test('when a patient has three or more expired surveys', (t) => {
 
     const expectedResult = [1, 0, 0];
 
-    t.same(result, expectedResult, 'it should show patient is non-compliant');
+    t.deepEqual(result, expectedResult, 'it should show patient is non-compliant');
 });
 
 test('when there are multiple patients with different compliance', (t) => {
@@ -65,5 +65,5 @@ test('when there are multiple patients with different compliance', (t) => {
 
     const expectedResult = [1, 1, 1];
 
-    t.same(result, expectedResult, 'it should show correct overall compliance counts');
+    t.deepEqual(result, expectedResult, 'it should show correct overall compliance counts');
 });
