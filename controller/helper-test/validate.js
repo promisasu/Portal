@@ -36,7 +36,7 @@ test.cb('when user exists and password is correct', (t) => {
     const callback = (err, isValid, userCopy) => {
         t.ifError(err, 'it should not have an error');
         t.true(isValid, 'it should be a valid login');
-        t.same(user, userCopy, 'it should have user details');
+        t.deepEqual(user, userCopy, 'it should have user details');
         t.end();
     };
 
@@ -75,7 +75,7 @@ test.cb('when user exists and password is incorrect', (t) => {
     const callback = (err, isValid, userCopy) => {
         t.ifError(err, 'it should not have an error');
         t.false(isValid, 'it should be a invalid login');
-        t.same(user, userCopy, 'it should have user details');
+        t.deepEqual(user, userCopy, 'it should have user details');
         t.end();
     };
 

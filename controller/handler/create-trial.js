@@ -60,7 +60,7 @@ function createTrial (request, reply) {
         return transaction.commit();
     })
     .then(() => {
-        reply.redirect(`/trial/${newTrial.id}`);
+        return reply.redirect(`/trial/${newTrial.id}`);
     })
     .catch((err) => {
         transaction.rollback();

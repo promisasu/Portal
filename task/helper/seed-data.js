@@ -1599,7 +1599,7 @@ module.exports.joinStagesAndSurveys = [
 
 module.exports.joinCurrentAndNextStage = [
     {
-        rule: 35,
+        rule: 84,
         stageId: 1,
         nextStageId: 6
     },

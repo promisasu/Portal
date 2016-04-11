@@ -32,6 +32,7 @@ rules:
     declaration-no-important: null
     # Declaration Block
     declaration-block-no-duplicate-properties: true
+    declaration-block-no-ignored-properties: true
     declaration-block-no-shorthand-property-overrides: true
     declaration-block-properties-order: alphabetical
     declaration-block-semicolon-newline-after: always
