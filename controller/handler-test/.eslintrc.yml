@@ -9,6 +9,7 @@ rules:
         - error
         - exceptions:
             - t
+    ava/assertion-message: error
     ava/max-asserts: error
     ava/no-cb-test: off
     ava/no-identical-title: error
