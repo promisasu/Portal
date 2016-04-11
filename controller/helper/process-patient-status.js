@@ -15,7 +15,7 @@ function processPatientStatus (row) {
     if (row.expiredCount > redThreshold) {
         row.status = 'Non-Compliant';
     } else if (row.expiredCount > yellowThresholdBegin && row.expiredCount <= redThreshold) {
-        row.status = 'Semi-compliant';
+        row.status = 'Semi-Compliant';
     } else {
         row.status = 'Compliant';
     }

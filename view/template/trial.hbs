@@ -69,6 +69,16 @@
         </div>
         <div class="col-sm-12 col-md-7 col-lg-6 col-xl-6">
             <div class="card">
+                    <form id = "check-compliance" method= "GET">
+                        <div class = "form-group">
+                            <label>From date:-</label>
+                                <input id="fromDate" class ="form-control" name="fromDate" type="date" data-format = "yyyy-MM-dd" value="{{ fromDate }}" >
+                        </div>
+                        <div class = "form-group">
+                            <label>To date:-</label>
+                            <input id="toDate" class = "form-control" name="toDate" type="date" data-format = "yyyy-MM-dd" value="{{ toDate }}">
+                        </div>
+                    </form>
                 <canvas id="trialChart" height="200%"></canvas>
             </div>
         </div>
@@ -153,7 +163,6 @@
     </div>
 </div>
 
-{{> notify-patient}}
 {{> add-patient}}
 
 <script>

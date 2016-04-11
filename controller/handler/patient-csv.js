@@ -12,27 +12,32 @@ const configuration = [
     {
         label: 'patient pin',
         key: 'pin',
-        default: 'DNE'
+        default: ''
     },
     {
         label: 'survey name',
-        key: 'name'
+        key: 'name',
+        default: ''
     },
     {
         label: 'unique survey id',
-        key: 'id'
+        key: 'id',
+        default: ''
     },
     {
         label: 'unique question id',
-        key: 'questionId'
+        key: 'questionId',
+        default: ''
     },
     {
         label: 'question',
-        key: 'questionText'
+        key: 'questionText',
+        default: ''
     },
     {
         label: 'question option',
-        key: 'optionText'
+        key: 'optionText',
+        default: ''
     }
 ];
 
@@ -78,10 +83,10 @@ function patientCSV (request, reply) {
         return convertJsonToCsv(uniqueAnswers, configuration);
     })
     .then((csv) => {
-        reply(csv).type('text/csv');
+        return reply(csv).type('text/csv');
     })
     .catch((err) => {
-        console.error(err);
+        request.log('error', err);
         reply(boom.notFound('patient data not found'));
     });
 }

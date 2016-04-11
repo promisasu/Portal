@@ -61,14 +61,14 @@ function dashboardView (request, reply) {
             const trialData = trials.map(processTrial);
 
             // Display view
-            reply.view('dashboard', {
+            return reply.view('dashboard', {
                 title: 'Pain Reporting Portal',
                 user: request.auth.credentials,
                 trials: trialData
             });
         })
         .catch((err) => {
-            console.error(err);
+            request.log('error', err);
 
             reply
             .view('404', {

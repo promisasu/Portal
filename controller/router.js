@@ -13,6 +13,7 @@ const trialCSV = require('./handler/trial-csv');
 const surveyPresenter = require('./handler/survey');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
+const addOne = 1;
 
 module.exports = [
     {
@@ -44,6 +45,15 @@ module.exports = [
         handler: {
             directory: {
                 path: 'view/script'
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/static/image/{param*}',
+        handler: {
+            directory: {
+                path: 'view/image'
             }
         }
     },
@@ -96,6 +106,18 @@ module.exports = [
                         .number()
                         .integer()
                         .positive()
+                },
+                query: {
+                    fromDate: Joi
+                       .date()
+                       .format('YYYY-MM-DD')
+                       .default(moment().startOf('day').subtract(addOne, 'week')
+                       .toDate()
+                       ),
+                    toDate: Joi
+                       .date()
+                       .format('YYYY-MM-DD')
+                       .default(moment().toDate())
                 }
             }
         }
@@ -183,6 +205,42 @@ module.exports = [
                         .number()
                         .integer()
                         .positive()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/faq',
+        handler: {
+            view: {
+                template: 'faq',
+                context: {
+                    title: 'FAQs for PROMIS App'
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/app-user-guide',
+        handler: {
+            view: {
+                template: 'app-user-guide',
+                context: {
+                    title: 'User Guide for PROMIS App'
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/portal-user-guide',
+        handler: {
+            view: {
+                template: 'portal-user-guide',
+                context: {
+                    title: 'User Guide for PROMIS Portal'
                 }
             }
         }

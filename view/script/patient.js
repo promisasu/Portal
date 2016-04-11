@@ -1,5 +1,9 @@
 (function patient () {
     'use strict';
+
+    var isNewPatient = window.location.search;
+    var isNewPatientRegex = /newPatient=true/;
+
     // Makes a copy of window.dates
     var allDatesConfig = Object.create(window.dates);
     var config = {
@@ -24,7 +28,23 @@
                 ],
                 yAxes: [
                     {
+                        id: 'y-axis-0',
                         type: 'linear',
+                        position: 'left',
+                        ticks: {
+                            max: 100,
+                            min: 0
+                        },
+                        display: true,
+                        scaleLabel: {
+                            show: true,
+                            labelString: '% Time Left'
+                        }
+                    },
+                    {
+                        id: 'y-axis-1',
+                        type: 'linear',
+                        position: 'right',
                         ticks: {
                             max: 100,
                             min: 0
@@ -41,6 +61,10 @@
     };
 
     var ctx = document.getElementById('complianceChart').getContext('2d');
+
+    if (isNewPatientRegex.test(isNewPatient)) {
+        $('#remember-patient-dialog').modal('show');
+    }
 
     config.data = allDatesConfig;
     new Chart(ctx, config);
