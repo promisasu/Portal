@@ -32,8 +32,8 @@
         differenceValue = moment(oldtoDateValue).diff(moment(oldfromDateValue), 'days');
     });
     /**
-    In above code, old toDate and fromDate values are first stored on focussing into toDate and difference calculated.
-    Later the  difference is added on change of fromDate to toDate value in order to get new toDate.
+    * In above code, old toDate and fromDate values are first stored on focussing into toDate and difference calculated.
+    * Later the  difference is added on change of fromDate to toDate value in order to get new toDate.
     */
 
     $('#toDate').on('focusout', function submitAction () {
