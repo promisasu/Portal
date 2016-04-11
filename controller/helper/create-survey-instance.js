@@ -46,6 +46,14 @@ function createSurveyInstance (patientPin, surveyTemplateId, startDate, openForD
         const currentSurveyTemplate = data[1];
         const newSurveyInstance = data[2];
 
+        if (!currentPatient) {
+            throw new Error('patient does not exist');
+        }
+
+        if (!currentSurveyTemplate) {
+            throw new Error('survey template does not exist');
+        }
+
         return Promise.all([
             currentSurveyTemplate.addSurvey_instance(newSurveyInstance, {transaction}),
             currentPatient.addSurvey_instance(newSurveyInstance, {transaction})
