@@ -3,6 +3,7 @@
 const test = require('ava');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
+const moment = require('moment');
 const QueryTypes = {
     SELECT: 'select'
 };
@@ -57,6 +58,10 @@ test.cb('when there are no patients', (t) => {
         log: sinon.stub(),
         params: {
             id: 1
+        },
+        query: {
+            fromDate: moment(),
+            toDate: moment()
         }
     };
 
