@@ -8,7 +8,7 @@ const database = require('../../model');
 const processTrial = require('../helper/process-trial');
 const moment = require('moment');
 const processComplianceCount = require('../helper/process-compliance-count');
-const processRule = require('../helper/process-rule');
+const processRules = require('../helper/process-rules');
 const processPatientStatus = require('../helper/process-patient-status');
 const httpNotFound = 404;
 
@@ -33,7 +33,7 @@ function trialView (request, reply) {
             }),
             database.sequelize.query(
                 `
-                SELECT *, st.name AS stage
+                SELECT tr.*, pa.pin, st.name AS stage
                 FROM trial AS tr
                 JOIN stage AS st
                 ON st.trialId = tr.id
@@ -90,6 +90,11 @@ function trialView (request, reply) {
         ])
         .then((data) => {
             const currentTrial = data[0];
+
+            if (!currentTrial) {
+                throw new Error('trial does not exist');
+            }
+
             const stages = data[1];
             const patients = data[2];
             const compliance = data[3];
@@ -97,7 +102,6 @@ function trialView (request, reply) {
             const ruleValues = rules.map((ruleData) => {
                 return parseInt(ruleData.rule, 10);
             });
-            const initRule = 0;
             const complianceCount = processComplianceCount(compliance);
             const patientCount = patients.length;
             const patientStatuses = compliance.map(processPatientStatus);
@@ -120,10 +124,13 @@ function trialView (request, reply) {
                 return patient;
             });
 
-            reply.view('trial', {
+            const endDate = processRules(ruleValues, Date.now());
+
+            return reply.view('trial', {
                 title: 'Pain Reporting Portal',
                 trial: processTrial(currentTrial),
                 stages,
+                endDate,
                 patients: patientArray,
                 complianceCount,
                 patientCount,
@@ -134,14 +141,11 @@ function trialView (request, reply) {
                         'Semicompliant',
                         'Noncompliant'
                     ]
-                }),
-                endDate: processRule(ruleValues.reduce((preVal, postVal) => {
-                    return preVal + postVal;
-                }, initRule))
+                })
             });
         })
         .catch((err) => {
-            console.error(err);
+            request.log('error', err);
 
             reply
             .view('404', {

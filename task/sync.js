@@ -12,9 +12,10 @@ database
 .sequelize
 .sync({force: true})
 .then(() => {
-    database.sequelize.close();
+    return database.sequelize.close();
 })
 .catch((err) => {
-    database.sequelize.close();
     console.error(err);
+
+    return database.sequelize.close();
 });
