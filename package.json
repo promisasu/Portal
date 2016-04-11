@@ -27,7 +27,7 @@
     "stop-dashboard": "node task/stop-dashboard",
     "stop-scheduler": "node task/stop-scheduler",
     "sync": "node task/sync",
-    "test": "env TEST=true nyc ava */*-test/*.js --timeout=10s",
+    "test": "env TEST=true nyc ava */*-test/*.js --timeout=15s",
     "user": "node task/user",
     "validate": "jsonlint config.json --validate config-schema.json --quiet"
   },
