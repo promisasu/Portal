@@ -37,7 +37,7 @@ function deactivatePatient (request, reply) {
         return transaction.commit();
     })
     .then(() => {
-        return reply.redirect('/');
+        return reply();
     })
     .catch((err) => {
         request.log('error', err);
