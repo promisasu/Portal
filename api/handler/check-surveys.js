@@ -50,6 +50,7 @@ function checkSurveys (request, reply) {
             ON si.surveyTemplateId = st.id
             WHERE pa.pin = ?
             AND ? BETWEEN si.startTime AND si.endTime
+            AND pa.deletedAt IS NULL
             AND (
                 si.state = 'pending'
                 OR si.state = 'in progress'

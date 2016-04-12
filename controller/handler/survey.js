@@ -56,6 +56,7 @@ function surveyView (request, reply) {
             JOIN trial AS tr
             ON tr.id = st.trialId
             WHERE si.id = ?
+            AND pa.deletedAt IS NULL
             `,
             {
                 type: database.sequelize.QueryTypes.SELECT,

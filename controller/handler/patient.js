@@ -26,6 +26,7 @@ function patientView (request, reply) {
                 JOIN stage AS st
                 ON st.id = pa.stageId
                 WHERE pa.pin = ?
+                AND pa.deletedAt IS NULL
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -48,6 +49,7 @@ function patientView (request, reply) {
                 JOIN survey_template AS srt
                 ON srt.id = si.surveyTemplateId
                 WHERE pa.pin = ?
+                AND pa.deletedAt IS NULL
                 ORDER BY si.startTime
                 `,
                 {
@@ -66,6 +68,7 @@ function patientView (request, reply) {
                 JOIN trial AS tr
                 ON tr.id = st.trialId
                 WHERE pa.pin = ?
+                AND pa.deletedAt IS NULL
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,

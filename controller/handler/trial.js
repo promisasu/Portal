@@ -41,6 +41,7 @@ function trialView (request, reply) {
                 JOIN patient AS pa
                 ON pa.stageId = st.id
                 WHERE tr.id = ?
+                AND pa.deletedAt IS NULL
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -62,6 +63,7 @@ function trialView (request, reply) {
                 WHERE st.trialId = ?
                 AND si.startTime >= ?
                 AND si.endTime <= ?
+                AND pa.deletedAt IS NULL
                 GROUP BY pa.id
                 `,
                 {

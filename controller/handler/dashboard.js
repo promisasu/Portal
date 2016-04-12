@@ -26,6 +26,7 @@ function dashboardView (request, reply) {
         	FROM stage AS st
         	JOIN patient AS pa
         	ON pa.stageId = st.id
+            WHERE pa.deletedAt IS NULL
         	GROUP BY st.trialId
         ) AS recruited
         ON tr.id = recruited.trialId
@@ -35,6 +36,7 @@ function dashboardView (request, reply) {
         	JOIN patient AS pa
         	ON pa.stageId = st.id
         	WHERE pa.dateCompleted < ?
+            AND pa.deletedAt IS NULL
         	GROUP BY st.trialId
         ) AS completed
         ON tr.id = completed.trialId
@@ -44,6 +46,7 @@ function dashboardView (request, reply) {
         	JOIN patient AS pa
         	ON pa.stageId = st.id
         	WHERE ? BETWEEN pa.dateStarted AND pa.dateCompleted
+            AND pa.deletedAt IS NULL
         	GROUP BY st.trialId
         ) AS active
         ON tr.id = active.trialId;

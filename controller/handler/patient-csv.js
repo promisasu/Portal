@@ -66,7 +66,8 @@ function patientCSV (request, reply) {
         ON qr.surveyInstanceId = si.id
         AND qr.questionOptionId = qo.id
         WHERE pa.pin = ?
-        and si.state = 'completed'
+        AND si.state = 'completed'
+        AND pa.deletedAt IS NULL
         ORDER BY si.id, jsq.questionOrder, qo.order
         `,
         {

@@ -27,6 +27,7 @@ function runSurveyRules () {
        JOIN join_stages_and_surveys AS jss
        ON jss.stageId = st.id
        WHERE ? BETWEEN pa.dateStarted AND pa.dateCompleted
+       AND pa.deletedAt IS NULL
        ORDER BY pa.id, jss.stagePriority
        `,
         {
