@@ -82,7 +82,7 @@ function trialCSV (request, reply) {
         return convertJsonToCsv(uniqueAnswers, configuration);
     })
     .then((csv) => {
-        reply(csv).type('text/csv');
+        return reply(csv).type('text/csv');
     })
     .catch((err) => {
         console.error(err);
