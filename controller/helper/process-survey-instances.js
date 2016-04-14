@@ -16,7 +16,7 @@ const viewDateFormat = 'MM-DD-YYYY HH:mm';
  */
 function processSurveyInstances (surveys) {
     const filterSurveyByState = surveys.filter((survey) => {
-        return survey.state === 'completed';
+        return survey.state === 'completed' || survey.state === 'expired';
     });
 
     return {
@@ -102,14 +102,22 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
 
     // calculate the time in hours until end time
     const totalAvailibleTime = endTime.diff(openTime, 'hours');
-    const timeTaken = endTime.diff(completedTime, 'hours');
+    let percentTimeLeft = minTime;
+    let timeTaken = minTime;
 
-    // caculate percent of time taken out of total time availible to take the survey
-    const percentTimeLeft = Math.round(timeTaken / totalAvailibleTime * percent);
+    if (completedTime !== null && !isNaN(completedTime)) {
+        timeTaken = endTime.diff(completedTime, 'hours');
 
-    // either take the amount of time left
-    // or if the survey instance expired (negative percent) show zero time left
-    return Math.max(percentTimeLeft, minTime);
+        // caculate percent of time taken out of total time availible to take the survey
+        percentTimeLeft = Math.round(timeTaken / totalAvailibleTime * percent);
+
+        // either take the amount of time left
+        // or if the survey instance expired (negative percent) show zero time left
+        return Math.max(percentTimeLeft, minTime);
+    }
+
+    // if the survey instance expired (NaN percent) show zero time left
+    return minTime;
 }
 
 module.exports = processSurveyInstances;
