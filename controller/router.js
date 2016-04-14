@@ -215,5 +215,14 @@ module.exports = [
                 }
             }
         }
+    },
+    {
+        method: 'GET',
+        path: '/promis/{param*}',
+        handler: {
+            directory: {
+                path: 'E:\\wamp\\www\\PROMISv2\\web\\dist'
+            }
+        }
     }
 ];
