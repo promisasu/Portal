@@ -12,7 +12,6 @@ const patientCSV = require('./handler/patient-csv');
 const surveyPresenter = require('./handler/survey');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
-const addOne = 1;
 
 module.exports = [
     {
@@ -105,18 +104,6 @@ module.exports = [
                         .number()
                         .integer()
                         .positive()
-                },
-                query: {
-                    fromDate: Joi
-                       .date()
-                       .format('YYYY-MM-DD')
-                       .default(moment().startOf('day').subtract(addOne, 'week')
-                       .toDate()
-                       ),
-                    toDate: Joi
-                       .date()
-                       .format('YYYY-MM-DD')
-                       .default(moment().toDate())
                 }
             }
         }
