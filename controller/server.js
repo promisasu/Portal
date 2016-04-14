@@ -119,6 +119,7 @@ function dashboardServer (configuration) {
     // load application routes
     server.route(router);
     if (configuration.application) {
+        // optionally add survey application routes
         server.route({
             method: 'GET',
             path: '/promis/{param*}',
