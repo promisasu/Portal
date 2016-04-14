@@ -118,6 +118,20 @@ function dashboardServer (configuration) {
 
     // load application routes
     server.route(router);
+    if (configuration.application) {
+        server.route({
+            method: 'GET',
+            path: '/promis/{param*}',
+            handler: {
+                directory: {
+                    path: configuration.application.path
+                }
+            },
+            config: {
+                auth: false
+            }
+        });
+    }
 
     return server;
 }
