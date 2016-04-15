@@ -45,7 +45,7 @@ function validate (request, username, password, callback) {
     })
     .catch((err) => {
         request.log('error', err);
-        callback(err, false, null);
+        callback(null, false, null);
     });
 }
 
