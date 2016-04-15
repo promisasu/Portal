@@ -26,6 +26,9 @@ module.exports = [
             directory: {
                 path: 'bower_components'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -35,6 +38,9 @@ module.exports = [
             directory: {
                 path: 'view/stylesheet'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -44,6 +50,9 @@ module.exports = [
             directory: {
                 path: 'view/script'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -53,6 +62,9 @@ module.exports = [
             directory: {
                 path: 'view/image'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -190,6 +202,9 @@ module.exports = [
                     title: 'FAQs for PROMIS App'
                 }
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -202,6 +217,9 @@ module.exports = [
                     title: 'User Guide for PROMIS App'
                 }
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -214,6 +232,9 @@ module.exports = [
                     title: 'User Guide for PROMIS Portal'
                 }
             }
+        },
+        config: {
+            auth: false
         }
     }
 ];
