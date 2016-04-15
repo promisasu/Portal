@@ -103,21 +103,17 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
     // calculate the time in hours until end time
     const totalAvailibleTime = endTime.diff(openTime, 'hours');
     let percentTimeLeft = minTime;
-    let timeTaken = minTime;
 
     if (completedTime !== null && !isNaN(completedTime)) {
-        timeTaken = endTime.diff(completedTime, 'hours');
+        const timeTaken = endTime.diff(completedTime, 'hours');
 
         // caculate percent of time taken out of total time availible to take the survey
         percentTimeLeft = Math.round(timeTaken / totalAvailibleTime * percent);
-
-        // either take the amount of time left
-        // or if the survey instance expired (negative percent) show zero time left
-        return Math.max(percentTimeLeft, minTime);
     }
 
-    // if the survey instance expired (NaN percent) show zero time left
-    return minTime;
+    // either take the amount of time left
+    // or if the survey instance expired (negative percent) show zero time left
+    return Math.max(percentTimeLeft, minTime);
 }
 
 module.exports = processSurveyInstances;
