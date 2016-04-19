@@ -22,11 +22,10 @@ function patientView (request, reply) {
             database.sequelize.query(
                 `
                 SELECT pa.pin, st.name AS stage
-                FROM patient AS pa
+                FROM active_patients AS pa
                 JOIN stage AS st
                 ON st.id = pa.stageId
                 WHERE pa.pin = ?
-                AND pa.deletedAt IS NULL
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -41,7 +40,7 @@ function patientView (request, reply) {
                 SELECT pa.dateCompleted, si.id, si.startTime, si.endTime, si.userSubmissionTime,
                 si.actualSubmissionTime, si.state, si.surveyTemplateId, st.name AS stageName,
                 srt.name AS surveyTemplateName
-                FROM patient AS pa
+                FROM active_patients AS pa
                 JOIN survey_instance AS si
                 ON si.patientId = pa.id
                 JOIN stage AS st
@@ -49,7 +48,6 @@ function patientView (request, reply) {
                 JOIN survey_template AS srt
                 ON srt.id = si.surveyTemplateId
                 WHERE pa.pin = ?
-                AND pa.deletedAt IS NULL
                 ORDER BY si.startTime
                 `,
                 {
@@ -62,13 +60,12 @@ function patientView (request, reply) {
             database.sequelize.query(
                 `
                 SELECT tr.name, tr.id
-                FROM patient AS pa
+                FROM active_patients AS pa
                 JOIN stage AS st
                 ON st.id = pa.stageId
                 JOIN trial AS tr
                 ON tr.id = st.trialId
                 WHERE pa.pin = ?
-                AND pa.deletedAt IS NULL
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,

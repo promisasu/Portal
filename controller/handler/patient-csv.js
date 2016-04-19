@@ -51,7 +51,7 @@ function patientCSV (request, reply) {
     database.sequelize.query(
         `
         SELECT pa.pin, st.name, si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
-        FROM patient AS pa
+        FROM active_patients AS pa
         JOIN survey_instance AS si
         ON si.patientId = pa.id
         JOIN survey_template AS st
@@ -67,7 +67,6 @@ function patientCSV (request, reply) {
         AND qr.questionOptionId = qo.id
         WHERE pa.pin = ?
         AND si.state = 'completed'
-        AND pa.deletedAt IS NULL
         ORDER BY si.id, jsq.questionOrder, qo.order
         `,
         {

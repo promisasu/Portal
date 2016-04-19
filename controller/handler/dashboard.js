@@ -24,29 +24,26 @@ function dashboardView (request, reply) {
         LEFT JOIN (
         	SELECT st.trialId, COUNT(pa.id) AS recruitedCount
         	FROM stage AS st
-        	JOIN patient AS pa
+        	JOIN active_patients AS pa
         	ON pa.stageId = st.id
-            WHERE pa.deletedAt IS NULL
         	GROUP BY st.trialId
         ) AS recruited
         ON tr.id = recruited.trialId
         LEFT JOIN (
         	SELECT st.trialId, COUNT(pa.id) AS completedCount
         	FROM stage AS st
-        	JOIN patient AS pa
+        	JOIN active_patients AS pa
         	ON pa.stageId = st.id
         	WHERE pa.dateCompleted < ?
-            AND pa.deletedAt IS NULL
         	GROUP BY st.trialId
         ) AS completed
         ON tr.id = completed.trialId
         LEFT JOIN (
         	SELECT st.trialId, COUNT(pa.id) AS activeCount
         	FROM stage AS st
-        	JOIN patient AS pa
+        	JOIN active_patients AS pa
         	ON pa.stageId = st.id
         	WHERE ? BETWEEN pa.dateStarted AND pa.dateCompleted
-            AND pa.deletedAt IS NULL
         	GROUP BY st.trialId
         ) AS active
         ON tr.id = active.trialId;

@@ -49,14 +49,13 @@ function surveyView (request, reply) {
             `
             SELECT pa.pin, tr.id, tr.name
             FROM survey_instance AS si
-            JOIN patient AS pa
+            JOIN active_patients AS pa
             ON pa.id = si.patientId
             JOIN stage as st
             ON st.id = pa.stageId
             JOIN trial AS tr
             ON tr.id = st.trialId
             WHERE si.id = ?
-            AND pa.deletedAt IS NULL
             `,
             {
                 type: database.sequelize.QueryTypes.SELECT,

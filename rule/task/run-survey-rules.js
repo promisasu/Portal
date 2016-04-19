@@ -21,13 +21,12 @@ function runSurveyRules () {
     .query(
        `
        SELECT pa.id, pa.dateStarted, jss.surveyTemplateId, jss.rule
-       FROM patient AS pa
+       FROM active_patients AS pa
        JOIN stage AS st
        ON st.id = pa.stageId
        JOIN join_stages_and_surveys AS jss
        ON jss.stageId = st.id
        WHERE ? BETWEEN pa.dateStarted AND pa.dateCompleted
-       AND pa.deletedAt IS NULL
        ORDER BY pa.id, jss.stagePriority
        `,
         {

@@ -44,13 +44,12 @@ function checkSurveys (request, reply) {
             `
             SELECT *, si.id
             FROM survey_instance AS si
-            JOIN patient AS pa
+            JOIN active_patients AS pa
             ON si.patientId = pa.id
             JOIN survey_template AS st
             ON si.surveyTemplateId = st.id
             WHERE pa.pin = ?
             AND ? BETWEEN si.startTime AND si.endTime
-            AND pa.deletedAt IS NULL
             AND (
                 si.state = 'pending'
                 OR si.state = 'in progress'
