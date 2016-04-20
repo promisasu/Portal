@@ -20,6 +20,7 @@ rules:
     # Time
     time-no-imperceptible: true
     # Unit
+    unit-case: lower
     unit-whitelist:
         - px
         - "%"
@@ -64,6 +65,8 @@ rules:
     selector-no-type: null
     selector-no-universal: true
     selector-no-vendor-prefix: null
+    selector-pseudo-class-case: lower
+    selector-pseudo-element-case: lower
     selector-pseudo-element-colon-notation: double
     selector-root-no-composition: true
     selector-type-case: lower
@@ -77,6 +80,7 @@ rules:
     rule-non-nested-empty-line-before: null
     # At Rule
     at-rule-empty-line-before: always
+    at-rule-name-case: lower
     at-rule-no-vendor-prefix: true
     at-rule-semicolon-newline-after: always
     # Comment
