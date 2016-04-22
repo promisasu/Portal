@@ -70,14 +70,12 @@
         <div class="col-sm-12 col-md-7 col-lg-6 col-xl-6">
             <div class="card">
                     <form id = "check-compliance" method= "GET">
-                        <div class = "form-group">
                             <label>From date:-</label>
-                                <input id="fromDate" class ="form-control" name="fromDate" type="date" data-format = "yyyy-MM-dd" value="{{ fromDate }}" >
-                        </div>
-                        <div class = "form-group">
+                                <input id="fromDate"  name="fromDate" type="date" data-format = "yyyy-MM-dd" value="{{ fromDate }}" >
                             <label>To date:-</label>
-                            <input id="toDate" class = "form-control" name="toDate" type="date" data-format = "yyyy-MM-dd" value="{{ toDate }}">
-                        </div>
+                            <input id="toDate"  name="toDate" type="date" data-format = "yyyy-MM-dd" value="{{ toDate }}">
+                            <br><br>
+                            <input type = "submit" value = "Check"/>
                     </form>
                 <canvas id="trialChart" height="200%"></canvas>
             </div>

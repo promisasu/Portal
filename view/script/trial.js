@@ -17,6 +17,7 @@
         }]
     };
     var ctx = document.getElementById('trialChart').getContext('2d');
+    console.log(ctx);
     var differenceValue = 0;
 
     document.getElementById('toDate').setAttribute('min', document.getElementById('fromDate').value);
@@ -41,6 +42,7 @@
         .getElementById('check-compliance')
         .submit();
     });
+
     new Chart(ctx, {
         type: 'doughnut',
         data: data,
