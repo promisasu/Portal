@@ -11,6 +11,7 @@ const processComplianceCount = require('../helper/process-compliance-count');
 const processRules = require('../helper/process-rules');
 const processPatientStatus = require('../helper/process-patient-status');
 const httpNotFound = 404;
+const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -33,7 +34,7 @@ function trialView (request, reply) {
             }),
             database.sequelize.query(
                 `
-                SELECT tr.*, pa.pin, st.name AS stage
+                SELECT tr.*, pa.pin, pa.dateStarted, pa.dateCompleted, st.name AS stage
                 FROM trial AS tr
                 JOIN stage AS st
                 ON st.trialId = tr.id
@@ -120,6 +121,11 @@ function trialView (request, reply) {
                     patient.status = 'Pending';
                     patient.totalMissed = 0;
                 }
+
+                patient.dateStarted = moment(patient.dateStarted, sqlDateFormat)
+                    .format('MM-DD-YYYY');
+                patient.dateCompleted = moment(patient.dateCompleted, sqlDateFormat)
+                    .format('MM-DD-YYYY');
 
                 return patient;
             });
