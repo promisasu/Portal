@@ -61,7 +61,8 @@ const configuration = [
 function trialCSV (request, reply) {
     database.sequelize.query(
         `
-        SELECT pa.pin, pa.deviceType, pa.deviceVersion, pa.dateStarted, pa.dateCompleted, st.name, si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
+        SELECT pa.pin, pa.deviceType, pa.deviceVersion, pa.dateStarted, pa.dateCompleted, st.name,
+        si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
         FROM trial AS tr
         JOIN stage AS stage
         ON stage.trialId = tr.id
