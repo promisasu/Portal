@@ -11,7 +11,6 @@ const processComplianceCount = require('../helper/process-compliance-count');
 const processRules = require('../helper/process-rules');
 const processPatientStatus = require('../helper/process-patient-status');
 const httpNotFound = 404;
-const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -122,9 +121,9 @@ function trialView (request, reply) {
                     patient.totalMissed = 0;
                 }
 
-                patient.dateStarted = moment(patient.dateStarted, sqlDateFormat)
+                patient.dateStarted = moment(patient.dateStarted)
                     .format('MM-DD-YYYY');
-                patient.dateCompleted = moment(patient.dateCompleted, sqlDateFormat)
+                patient.dateCompleted = moment(patient.dateCompleted)
                     .format('MM-DD-YYYY');
 
                 return patient;
