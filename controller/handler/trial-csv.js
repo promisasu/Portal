@@ -33,6 +33,22 @@ const configuration = [
     {
         label: 'question option',
         key: 'optionText'
+    },
+    {
+        label: 'Device Type',
+        key: 'deviceType'
+    },
+    {
+        label: 'Device Version',
+        key: 'deviceVersion'
+    },
+    {
+        label: 'Date Started',
+        key: 'dateStarted'
+    },
+    {
+        label: 'Date Completed',
+        key: 'dateCompleted'
     }
 ];
 
@@ -45,7 +61,7 @@ const configuration = [
 function trialCSV (request, reply) {
     database.sequelize.query(
         `
-        SELECT pa.pin, st.name, si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
+        SELECT pa.pin, pa.deviceType, pa.deviceVersion, pa.dateStarted, pa.dateCompleted, st.name, si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
         FROM trial AS tr
         JOIN stage AS stage
         ON stage.trialId = tr.id
@@ -65,8 +81,8 @@ function trialCSV (request, reply) {
         ON qr.surveyInstanceId = si.id
         AND qr.questionOptionId = qo.id
         WHERE tr.id = ?
-                and si.state = 'completed'
-                ORDER BY si.id, jsq.questionOrder, qo.order
+        AND si.state = 'completed'
+        ORDER BY si.id, jsq.questionOrder, qo.order
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
