@@ -15,6 +15,10 @@ const configuration = [
         default: 'DNE'
     },
     {
+        label: 'Trial Name',
+        key: 'trialName'
+    },
+    {
         label: 'survey name',
         key: 'name'
     },
@@ -53,7 +57,7 @@ const configuration = [
 ];
 
 /**
- * Create a Comma Seperate Value export of a single patient's data.
+ * Create a Comma Seperate Value export of the data of all the patient's that are enrolled in a trial.
  * @param {Request} request - Hapi request
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
@@ -61,12 +65,12 @@ const configuration = [
 function trialCSV (request, reply) {
     database.sequelize.query(
         `
-        SELECT pa.pin, pa.deviceType, pa.deviceVersion, pa.dateStarted, pa.dateCompleted, st.name,
+        SELECT tr.name AS trialName, pa.pin, pa.deviceType, pa.deviceVersion, pa.dateStarted, pa.dateCompleted, st.name,
         si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
         FROM trial AS tr
         JOIN stage
         ON stage.trialId = tr.id
-        JOIN patient AS pa
+        JOIN active_patients AS pa
         ON pa.stageId = stage.id
         JOIN survey_instance AS si
         ON si.patientId = pa.id
@@ -93,7 +97,7 @@ function trialCSV (request, reply) {
         }
     )
     .then((optionsWithAnswers) => {
-        const property = ['pin', 'name', 'id', 'questionText', 'questionId',
+        const property = ['trialName', 'pin', 'name', 'id', 'questionText', 'questionId',
         'deviceType', 'deviceVersion', 'dateStarted', 'dateCompleted'];
         const uniqueAnswers = deduplicate(optionsWithAnswers, property);
 
