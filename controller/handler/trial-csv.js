@@ -64,7 +64,7 @@ function trialCSV (request, reply) {
         SELECT pa.pin, pa.deviceType, pa.deviceVersion, pa.dateStarted, pa.dateCompleted, st.name,
         si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
         FROM trial AS tr
-        JOIN stage AS stage
+        JOIN stage
         ON stage.trialId = tr.id
         JOIN patient AS pa
         ON pa.stageId = stage.id
@@ -93,7 +93,8 @@ function trialCSV (request, reply) {
         }
     )
     .then((optionsWithAnswers) => {
-        const property = ['pin', 'name', 'id', 'questionText', 'questionId'];
+        const property = ['pin', 'name', 'id', 'questionText', 'questionId',
+        'deviceType', 'deviceVersion', 'dateStarted', 'dateCompleted'];
         const uniqueAnswers = deduplicate(optionsWithAnswers, property);
 
         return convertJsonToCsv(uniqueAnswers, configuration);
