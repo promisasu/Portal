@@ -5,6 +5,7 @@ const moment = require('moment');
 
 const createTrial = require('./handler/create-trial');
 const createPatient = require('./handler/create-patient');
+const deactivatePatient = require('./handler/deactivate-patient');
 const dashboardPresenter = require('./handler/dashboard');
 const trialPresenter = require('./handler/trial');
 const patientPresenter = require('./handler/patient');
@@ -151,6 +152,21 @@ module.exports = [
         method: 'GET',
         path: '/patient/{pin}',
         handler: patientPresenter,
+        config: {
+            validate: {
+                params: {
+                    pin: Joi
+                        .number()
+                        .integer()
+                        .positive()
+                }
+            }
+        }
+    },
+    {
+        method: 'DELETE',
+        path: '/patient/{pin}',
+        handler: deactivatePatient,
         config: {
             validate: {
                 params: {

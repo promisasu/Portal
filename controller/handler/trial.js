@@ -37,7 +37,7 @@ function trialView (request, reply) {
                 FROM trial AS tr
                 JOIN stage AS st
                 ON st.trialId = tr.id
-                JOIN patient AS pa
+                JOIN active_patients AS pa
                 ON pa.stageId = st.id
                 WHERE tr.id = ?
                 `,
@@ -54,7 +54,7 @@ function trialView (request, reply) {
                 SUM(si.state = 'expired') AS expiredCount,
                 SUM(si.state = 'completed') AS completedCount
                 FROM survey_instance AS si
-                JOIN patient AS pa
+                JOIN active_patients AS pa
                 ON pa.id = si.patientId
                 JOIN stage AS st
                 ON st.id = pa.stageId

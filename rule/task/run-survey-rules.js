@@ -21,7 +21,7 @@ function runSurveyRules () {
     .query(
        `
        SELECT pa.id, pa.dateStarted, jss.surveyTemplateId, jss.rule
-       FROM patient AS pa
+       FROM active_patients AS pa
        JOIN stage AS st
        ON st.id = pa.stageId
        JOIN join_stages_and_surveys AS jss
