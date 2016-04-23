@@ -5,6 +5,7 @@ const moment = require('moment');
 
 const createTrial = require('./handler/create-trial');
 const createPatient = require('./handler/create-patient');
+const deactivatePatient = require('./handler/deactivate-patient');
 const dashboardPresenter = require('./handler/dashboard');
 const trialPresenter = require('./handler/trial');
 const patientPresenter = require('./handler/patient');
@@ -13,7 +14,6 @@ const trialCSV = require('./handler/trial-csv');
 const surveyPresenter = require('./handler/survey');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
-const addOne = 1;
 
 module.exports = [
     {
@@ -28,6 +28,9 @@ module.exports = [
             directory: {
                 path: 'bower_components'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -37,6 +40,9 @@ module.exports = [
             directory: {
                 path: 'view/stylesheet'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -46,6 +52,9 @@ module.exports = [
             directory: {
                 path: 'view/script'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -55,6 +64,9 @@ module.exports = [
             directory: {
                 path: 'view/image'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -106,18 +118,6 @@ module.exports = [
                         .number()
                         .integer()
                         .positive()
-                },
-                query: {
-                    fromDate: Joi
-                       .date()
-                       .format('YYYY-MM-DD')
-                       .default(moment().startOf('day').subtract(addOne, 'week')
-                       .toDate()
-                       ),
-                    toDate: Joi
-                       .date()
-                       .format('YYYY-MM-DD')
-                       .default(moment().toDate())
                 }
             }
         }
@@ -153,6 +153,21 @@ module.exports = [
         method: 'GET',
         path: '/patient/{pin}',
         handler: patientPresenter,
+        config: {
+            validate: {
+                params: {
+                    pin: Joi
+                        .number()
+                        .integer()
+                        .positive()
+                }
+            }
+        }
+    },
+    {
+        method: 'DELETE',
+        path: '/patient/{pin}',
+        handler: deactivatePatient,
         config: {
             validate: {
                 params: {
@@ -219,6 +234,9 @@ module.exports = [
                     title: 'FAQs for PROMIS App'
                 }
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -231,6 +249,9 @@ module.exports = [
                     title: 'User Guide for PROMIS App'
                 }
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -243,6 +264,9 @@ module.exports = [
                     title: 'User Guide for PROMIS Portal'
                 }
             }
+        },
+        config: {
+            auth: false
         }
     }
 ];

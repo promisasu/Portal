@@ -24,7 +24,7 @@ function dashboardView (request, reply) {
         LEFT JOIN (
         	SELECT st.trialId, COUNT(pa.id) AS recruitedCount
         	FROM stage AS st
-        	JOIN patient AS pa
+        	JOIN active_patients AS pa
         	ON pa.stageId = st.id
         	GROUP BY st.trialId
         ) AS recruited
@@ -32,7 +32,7 @@ function dashboardView (request, reply) {
         LEFT JOIN (
         	SELECT st.trialId, COUNT(pa.id) AS completedCount
         	FROM stage AS st
-        	JOIN patient AS pa
+        	JOIN active_patients AS pa
         	ON pa.stageId = st.id
         	WHERE pa.dateCompleted < ?
         	GROUP BY st.trialId
@@ -41,7 +41,7 @@ function dashboardView (request, reply) {
         LEFT JOIN (
         	SELECT st.trialId, COUNT(pa.id) AS activeCount
         	FROM stage AS st
-        	JOIN patient AS pa
+        	JOIN active_patients AS pa
         	ON pa.stageId = st.id
         	WHERE ? BETWEEN pa.dateStarted AND pa.dateCompleted
         	GROUP BY st.trialId

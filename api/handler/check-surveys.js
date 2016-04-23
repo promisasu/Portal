@@ -44,7 +44,7 @@ function checkSurveys (request, reply) {
             `
             SELECT *, si.id
             FROM survey_instance AS si
-            JOIN patient AS pa
+            JOIN active_patients AS pa
             ON si.patientId = pa.id
             JOIN survey_template AS st
             ON si.surveyTemplateId = st.id

@@ -49,7 +49,7 @@ function surveyView (request, reply) {
             `
             SELECT pa.pin, tr.id, tr.name
             FROM survey_instance AS si
-            JOIN patient AS pa
+            JOIN active_patients AS pa
             ON pa.id = si.patientId
             JOIN stage as st
             ON st.id = pa.stageId

@@ -21,8 +21,7 @@ const httpNotFound = 404;
 function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
     const stage = database.sequelize.model('stage');
-    const fromDate = request.query.fromDate;
-    const toDate = request.query.toDate;
+    const startDate = moment().startOf('Week');
 
     Promise
         .all([
@@ -34,11 +33,11 @@ function trialView (request, reply) {
             }),
             database.sequelize.query(
                 `
-                SELECT tr.*, pa.pin, st.name AS stage
+                SELECT tr.*, pa.pin, pa.dateStarted, pa.dateCompleted, st.name AS stage
                 FROM trial AS tr
                 JOIN stage AS st
                 ON st.trialId = tr.id
-                JOIN patient AS pa
+                JOIN active_patients AS pa
                 ON pa.stageId = st.id
                 WHERE tr.id = ?
                 `,
@@ -55,21 +54,19 @@ function trialView (request, reply) {
                 SUM(si.state = 'expired') AS expiredCount,
                 SUM(si.state = 'completed') AS completedCount
                 FROM survey_instance AS si
-                JOIN patient AS pa
+                JOIN active_patients AS pa
                 ON pa.id = si.patientId
                 JOIN stage AS st
                 ON st.id = pa.stageId
                 WHERE st.trialId = ?
-                AND si.startTime >= ?
-                AND si.endTime <= ?
+                AND si.endTime > ?
                 GROUP BY pa.id
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         request.params.id,
-                        fromDate.toISOString(),
-                        toDate.toISOString()
+                        startDate.toISOString()
                     ]
                 }
             ),
@@ -124,6 +121,11 @@ function trialView (request, reply) {
                     patient.totalMissed = 0;
                 }
 
+                patient.dateStarted = moment(patient.dateStarted)
+                    .format('MM-DD-YYYY');
+                patient.dateCompleted = moment(patient.dateCompleted)
+                    .format('MM-DD-YYYY');
+
                 return patient;
             });
 
@@ -131,8 +133,6 @@ function trialView (request, reply) {
 
             return reply.view('trial', {
                 title: 'Pain Reporting Portal',
-                fromDate: moment(fromDate).format('YYYY-MM-DD'),
-                toDate: moment(toDate).format('YYYY-MM-DD'),
                 trial: processTrial(currentTrial),
                 stages,
                 endDate,
