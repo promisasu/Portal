@@ -16,43 +16,53 @@ const configuration = [
     },
     {
         label: 'Trial Name',
-        key: 'trialName'
+        key: 'trialName',
+        default: ''
     },
     {
         label: 'survey name',
-        key: 'name'
+        key: 'name',
+        default: ''
     },
     {
         label: 'unique survey id',
-        key: 'id'
-    },
-    {
-        label: 'unique question id',
-        key: 'questionId'
-    },
-    {
-        label: 'question',
-        key: 'questionText'
-    },
-    {
-        label: 'question option',
-        key: 'optionText'
+        key: 'id',
+        default: ''
     },
     {
         label: 'Device Type',
-        key: 'deviceType'
+        key: 'deviceType',
+        default: ''
     },
     {
         label: 'Device Version',
-        key: 'deviceVersion'
+        key: 'deviceVersion',
+        default: ''
     },
     {
         label: 'Date Started',
-        key: 'dateStarted'
+        key: 'dateStarted',
+        default: ''
     },
     {
         label: 'Date Completed',
-        key: 'dateCompleted'
+        key: 'dateCompleted',
+        default: ''
+    },
+    {
+        label: 'unique question id',
+        key: 'questionId',
+        default: ''
+    },
+    {
+        label: 'question',
+        key: 'questionText',
+        default: ''
+    },
+    {
+        label: 'question option',
+        key: 'optionText',
+        default: ''
     }
 ];
 
