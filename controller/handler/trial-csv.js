@@ -12,7 +12,7 @@ const configuration = [
     {
         label: 'patient pin',
         key: 'pin',
-        default: 'DNE'
+        default: ''
     },
     {
         label: 'Trial Name',
