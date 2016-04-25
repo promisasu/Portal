@@ -17,7 +17,6 @@
         }]
     };
     var ctx = document.getElementById('trialChart').getContext('2d');
-    console.log(ctx);
     var differenceValue = 0;
 
     document.getElementById('toDate').setAttribute('min', document.getElementById('fromDate').value);
@@ -32,17 +31,17 @@
 
         differenceValue = moment(oldtoDateValue).diff(moment(oldfromDateValue), 'days');
     });
-    /**
-    * In above code, old toDate and fromDate values are first stored on focussing into toDate and difference calculated.
-    * Later the  difference is added on change of fromDate to toDate value in order to get new toDate.
-    */
 
-    $('#toDate').on('focusout', function submitAction () {
-        document
-        .getElementById('check-compliance')
-        .submit();
+    $('#check-compliance').submit(function submitAction (event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'GET',
+            data: $('#check-compliance').serialize()
+        })
+        .done(function successSubmit () {
+            alert("Updating Chart");
+        });
     });
-
     new Chart(ctx, {
         type: 'doughnut',
         data: data,

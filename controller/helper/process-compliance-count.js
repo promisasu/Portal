@@ -11,6 +11,8 @@
 function processComplianceCount (rows) {
     const nonCompliantThreshold = 2;
     const semiCompliantThreshold = 0;
+    const incrementCount = 1;
+
     const compliance = {
         compliant: 0,
         semiCompliant: 0,
@@ -19,11 +21,11 @@ function processComplianceCount (rows) {
 
     for (const row of rows) {
         if (row.expiredCount > nonCompliantThreshold) {
-            compliance.nonCompliant += 1;
+            compliance.nonCompliant += incrementCount;
         } else if (row.expiredCount > semiCompliantThreshold) {
-            compliance.semiCompliant += 1;
+            compliance.semiCompliant += incrementCount;
         } else {
-            compliance.compliant += 1;
+            compliance.compliant += incrementCount;
         }
     }
 

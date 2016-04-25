@@ -11,6 +11,7 @@ const processComplianceCount = require('../helper/process-compliance-count');
 const processRules = require('../helper/process-rules');
 const processPatientStatus = require('../helper/process-patient-status');
 const httpNotFound = 404;
+// const startDate = moment().startOf('Week');
 
 /**
  * A dashboard with an overview of a specific trial.
@@ -104,6 +105,9 @@ function trialView (request, reply) {
             const stages = data[1];
             const patients = data[2];
             const compliance = data[3];
+
+            console.log('AM here');
+            console.log(data[3]);
             const rules = data[4];
             const ruleValues = rules.map((ruleData) => {
                 return parseInt(ruleData.rule, 10);
