@@ -30,16 +30,6 @@ const configuration = [
         default: ''
     },
     {
-        label: 'Device Type',
-        key: 'deviceType',
-        default: ''
-    },
-    {
-        label: 'Device Version',
-        key: 'deviceVersion',
-        default: ''
-    },
-    {
         label: 'Date Started',
         key: 'dateStarted',
         default: ''
@@ -75,7 +65,7 @@ const configuration = [
 function trialCSV (request, reply) {
     database.sequelize.query(
         `
-        SELECT tr.name AS trialName, pa.pin, pa.deviceType, pa.deviceVersion, pa.dateStarted, pa.dateCompleted, st.name,
+        SELECT tr.name AS trialName, pa.pin, pa.dateStarted, pa.dateCompleted, st.name,
         si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
         FROM trial AS tr
         JOIN stage
@@ -108,7 +98,7 @@ function trialCSV (request, reply) {
     )
     .then((optionsWithAnswers) => {
         const property = ['trialName', 'pin', 'name', 'id', 'questionText', 'questionId',
-        'deviceType', 'deviceVersion', 'dateStarted', 'dateCompleted'];
+        'dateStarted', 'dateCompleted'];
         const uniqueAnswers = deduplicate(optionsWithAnswers, property);
 
         return convertJsonToCsv(uniqueAnswers, configuration);
