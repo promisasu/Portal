@@ -15,6 +15,16 @@ const configuration = [
         default: ''
     },
     {
+        label: 'Date Started',
+        key: 'dateStarted',
+        default: ''
+    },
+    {
+        label: 'Date Completed',
+        key: 'dateCompleted',
+        default: ''
+    },
+    {
         label: 'Trial Name',
         key: 'trialName',
         default: ''
@@ -43,16 +53,6 @@ const configuration = [
         label: 'question option',
         key: 'optionText',
         default: ''
-    },
-    {
-        label: 'Date Started',
-        key: 'dateStarted',
-        default: ''
-    },
-    {
-        label: 'Date Completed',
-        key: 'dateCompleted',
-        default: ''
     }
 ];
 
@@ -63,9 +63,12 @@ const configuration = [
  * @returns {View} Rendered page
  */
 function trialCSV (request, reply) {
+    const formatSpecifier = '%a %b %d %Y %T';
+
     database.sequelize.query(
         `
-        SELECT tr.name AS trialName, pa.pin, pa.dateStarted, pa.dateCompleted, st.name,
+        SELECT tr.name AS trialName, pa.pin, DATE_FORMAT(pa.dateStarted, ?) AS dateStarted,
+        DATE_FORMAT( pa.dateCompleted, ?) AS dateCompleted, st.name,
         si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
         FROM trial AS tr
         JOIN stage
@@ -92,6 +95,8 @@ function trialCSV (request, reply) {
         {
             type: database.sequelize.QueryTypes.SELECT,
             replacements: [
+                formatSpecifier,
+                formatSpecifier,
                 request.params.id
             ]
         }
