@@ -36,7 +36,12 @@ function pickDates (surveys) {
     });
 
     if (surveys[0]) {
-        dates.push(moment(surveys[0].dateCompleted, sqlDateFormat).format(viewDateFormat));
+        // Adding an additional week to include all the dates in compliance chart.
+        // This is done because chart js plots only the first day of the week.
+        const numberOfDays = 7;
+        const endDateforChart = moment(surveys[0].dateCompleted).add(numberOfDays, 'day');
+
+        dates.push(moment(endDateforChart, sqlDateFormat).format(viewDateFormat));
     }
 
     return dates;
