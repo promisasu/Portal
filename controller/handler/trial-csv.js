@@ -30,16 +30,6 @@ const configuration = [
         default: ''
     },
     {
-        label: 'Date Started',
-        key: 'dateStarted',
-        default: ''
-    },
-    {
-        label: 'Date Completed',
-        key: 'dateCompleted',
-        default: ''
-    },
-    {
         label: 'unique question id',
         key: 'questionId',
         default: ''
@@ -52,6 +42,16 @@ const configuration = [
     {
         label: 'question option',
         key: 'optionText',
+        default: ''
+    },
+    {
+        label: 'Date Started',
+        key: 'dateStarted',
+        default: ''
+    },
+    {
+        label: 'Date Completed',
+        key: 'dateCompleted',
         default: ''
     }
 ];
