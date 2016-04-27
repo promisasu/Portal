@@ -10,6 +10,11 @@ const boom = require('boom');
 const deduplicate = require('../helper/deduplicate');
 const configuration = [
     {
+        label: 'Trial Name',
+        key: 'trialName',
+        default: ''
+    },
+    {
         label: 'patient pin',
         key: 'pin',
         default: ''
@@ -22,11 +27,6 @@ const configuration = [
     {
         label: 'Date Completed',
         key: 'dateCompleted',
-        default: ''
-    },
-    {
-        label: 'Trial Name',
-        key: 'trialName',
         default: ''
     },
     {
@@ -90,7 +90,7 @@ function trialCSV (request, reply) {
         AND qr.questionOptionId = qo.id
         WHERE tr.id = ?
         AND si.state = 'completed'
-        ORDER BY si.id, jsq.questionOrder, qo.order
+        ORDER BY pa.pin ASC, si.id, jsq.questionOrder, qo.order
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
