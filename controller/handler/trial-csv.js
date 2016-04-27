@@ -15,42 +15,42 @@ const configuration = [
         default: ''
     },
     {
-        label: 'patient pin',
+        label: 'Patient Pin',
         key: 'pin',
         default: ''
     },
     {
-        label: 'Date Started',
+        label: 'Patient Date Started',
         key: 'dateStarted',
         default: ''
     },
     {
-        label: 'Date Completed',
+        label: 'Patient Date Completed',
         key: 'dateCompleted',
         default: ''
     },
     {
-        label: 'survey name',
+        label: 'Survey Name',
         key: 'name',
         default: ''
     },
     {
-        label: 'unique survey id',
+        label: 'Survey ID',
         key: 'id',
         default: ''
     },
     {
-        label: 'unique question id',
+        label: 'Question ID',
         key: 'questionId',
         default: ''
     },
     {
-        label: 'question',
+        label: 'Question Prompt',
         key: 'questionText',
         default: ''
     },
     {
-        label: 'question option',
+        label: 'Question Answer',
         key: 'optionText',
         default: ''
     }
