@@ -88,17 +88,10 @@ function trialView (request, reply) {
                 }
             )
         ])
-        .then((data) => {
-            const currentTrial = data[0];
-
+        .then(([currentTrial, stages, patients, compliance, rules]) => {
             if (!currentTrial) {
                 throw new Error('trial does not exist');
             }
-
-            const stages = data[1];
-            const patients = data[2];
-            const compliance = data[3];
-            const rules = data[4];
             const ruleValues = rules.map((ruleData) => {
                 return parseInt(ruleData.rule, 10);
             });

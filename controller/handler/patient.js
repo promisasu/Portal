@@ -76,11 +76,7 @@ function patientView (request, reply) {
                 }
             )
         ])
-        .then((data) => {
-            const currentPatient = data[0];
-            const surveyInstances = data[1];
-            const currentTrial = data[2];
-
+        .then(([currentPatient, surveyInstances, currentTrial]) => {
             // patient not found
             if (!currentPatient) {
                 throw new Error('patient does not exist');
