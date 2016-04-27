@@ -10,6 +10,7 @@ const dashboardPresenter = require('./handler/dashboard');
 const trialPresenter = require('./handler/trial');
 const patientPresenter = require('./handler/patient');
 const patientCSV = require('./handler/patient-csv');
+const trialCSV = require('./handler/trial-csv');
 const surveyPresenter = require('./handler/survey');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
@@ -189,6 +190,21 @@ module.exports = [
                         .number()
                         .integer()
                         .positive()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/trial/{id}.csv',
+        handler: trialCSV,
+        config: {
+            validate: {
+                params: {
+                    id: Joi
+                      .number()
+                      .integer()
+                      .positive()
                 }
             }
         }
