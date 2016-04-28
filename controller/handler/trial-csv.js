@@ -102,8 +102,16 @@ function trialCSV (request, reply) {
         }
     )
     .then((optionsWithAnswers) => {
-        const property = ['trialName', 'pin', 'name', 'id', 'questionText', 'questionId',
-        'dateStarted', 'dateCompleted'];
+        const property = [
+            'trialName',
+            'pin',
+            'name',
+            'id',
+            'questionText',
+            'questionId',
+            'dateStarted',
+            'dateCompleted'
+        ];
         const uniqueAnswers = deduplicate(optionsWithAnswers, property);
 
         return convertJsonToCsv(uniqueAnswers, configuration);
