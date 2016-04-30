@@ -15,7 +15,6 @@ module.exports = [
         path: '/check_surveys',
         handler: checkSurveys,
         config: {
-            cors: true,
             validate: {
                 query: {
                     userPIN: Joi
@@ -31,7 +30,6 @@ module.exports = [
         path: '/get_survey',
         handler: getSurvey,
         config: {
-            cors: true,
             validate: {
                 query: {
                     surveyInstanceID: Joi
@@ -47,7 +45,6 @@ module.exports = [
         path: '/submit_survey',
         handler: submitSurvey,
         config: {
-            cors: true,
             validate: {
                 payload: {
                     surveyInstanceID: Joi
@@ -93,7 +90,6 @@ module.exports = [
         path: '/survey_logger',
         handler: surveyResultsLogger,
         config: {
-            cors: true,
             validate: {
                 payload: {
                     loggerResults: Joi.array().items(
