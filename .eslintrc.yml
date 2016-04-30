@@ -32,6 +32,7 @@ rules:
     no-sparse-arrays: error
     no-unexpected-multiline: error
     no-unreachable: error
+    no-unsafe-finally: error
     use-isnan: error
     valid-jsdoc:
         - error
@@ -272,6 +273,7 @@ rules:
     no-duplicate-imports: off # none
     no-new-symbol: error
     no-this-before-super: error
+    no-useless-computed-key: error
     no-var: error
     no-useless-constructor: error
     object-shorthand: error
