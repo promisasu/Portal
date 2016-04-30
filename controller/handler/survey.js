@@ -66,10 +66,8 @@ function surveyView (request, reply) {
             }
         )
     ])
-    .then((data) => {
-        const survey = data[0];
-        const groupedQuestions = groupBy(data[1], 'questionId');
-        const patientAndTrial = data[2];
+    .then(([survey, questions, patientAndTrial]) => {
+        const groupedQuestions = groupBy(questions, 'questionId');
 
         return reply.view('survey', {
             title: 'Pain Reporting Portal',

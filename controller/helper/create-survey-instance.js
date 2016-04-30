@@ -41,11 +41,7 @@ function createSurveyInstance (patientPin, surveyTemplateId, startDate, openForD
         )
     ])
     // Link SurveyInstance to Patient and SurveyTemplate
-    .then((data) => {
-        const currentPatient = data[0];
-        const currentSurveyTemplate = data[1];
-        const newSurveyInstance = data[2];
-
+    .then(([currentPatient, currentSurveyTemplate, newSurveyInstance]) => {
         if (!currentPatient) {
             throw new Error('patient does not exist');
         }
