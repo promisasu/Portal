@@ -5,10 +5,12 @@ const moment = require('moment');
 
 const createTrial = require('./handler/create-trial');
 const createPatient = require('./handler/create-patient');
+const deactivatePatient = require('./handler/deactivate-patient');
 const dashboardPresenter = require('./handler/dashboard');
 const trialPresenter = require('./handler/trial');
 const patientPresenter = require('./handler/patient');
 const patientCSV = require('./handler/patient-csv');
+const trialCSV = require('./handler/trial-csv');
 const surveyPresenter = require('./handler/survey');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
@@ -27,6 +29,9 @@ module.exports = [
             directory: {
                 path: 'bower_components'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -36,6 +41,9 @@ module.exports = [
             directory: {
                 path: 'view/stylesheet'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -45,6 +53,9 @@ module.exports = [
             directory: {
                 path: 'view/script'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -54,6 +65,9 @@ module.exports = [
             directory: {
                 path: 'view/image'
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -116,7 +130,9 @@ module.exports = [
                     toDate: Joi
                        .date()
                        .format('YYYY-MM-DD')
-                       .default(moment().toDate())
+                       .default(moment().toDate()),
+                    requestType: Joi
+                        .string()
                 }
             }
         }
@@ -164,6 +180,21 @@ module.exports = [
         }
     },
     {
+        method: 'DELETE',
+        path: '/patient/{pin}',
+        handler: deactivatePatient,
+        config: {
+            validate: {
+                params: {
+                    pin: Joi
+                        .number()
+                        .integer()
+                        .positive()
+                }
+            }
+        }
+    },
+    {
         method: 'GET',
         path: '/patient/{pin}.csv',
         handler: patientCSV,
@@ -174,6 +205,21 @@ module.exports = [
                         .number()
                         .integer()
                         .positive()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/trial/{id}.csv',
+        handler: trialCSV,
+        config: {
+            validate: {
+                params: {
+                    id: Joi
+                      .number()
+                      .integer()
+                      .positive()
                 }
             }
         }
@@ -203,6 +249,9 @@ module.exports = [
                     title: 'FAQs for PROMIS App'
                 }
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -215,6 +264,9 @@ module.exports = [
                     title: 'User Guide for PROMIS App'
                 }
             }
+        },
+        config: {
+            auth: false
         }
     },
     {
@@ -227,6 +279,9 @@ module.exports = [
                     title: 'User Guide for PROMIS Portal'
                 }
             }
+        },
+        config: {
+            auth: false
         }
     }
 ];

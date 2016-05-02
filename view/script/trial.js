@@ -18,6 +18,8 @@
     };
     var ctx = document.getElementById('trialChart').getContext('2d');
     var differenceValue = 0;
+    var newData = [];
+
 
     document.getElementById('toDate').setAttribute('min', document.getElementById('fromDate').value);
     $('#fromDate').on('change', function changeToDateValue () {
@@ -36,12 +38,20 @@
         event.preventDefault();
         $.ajax({
             type: 'GET',
-            data: $('#check-compliance').serialize()
+            data: $('#check-compliance').serialize() + '&requestType=ajaxRequest'
         })
-        .done(function successSubmit () {
-            alert("Updating Chart");
+        .done(function successSubmit (newData) {
+            data.datasets[0].data = newData;
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                animation: {
+                    animateScale: true
+                }
+            });
         });
     });
+
     new Chart(ctx, {
         type: 'doughnut',
         data: data,

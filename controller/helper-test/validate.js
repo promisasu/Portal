@@ -105,7 +105,7 @@ test.cb('when user does not exist', (t) => {
     const username = 'example';
     const password = 'example';
     const callback = (err, isValid, user) => {
-        t.true(err instanceof Error, 'it should have an error');
+        t.true(err === null, 'it shound not have an error');
         t.false(isValid, 'it should be a invalid login');
         t.is(user, null, 'it should not have any user infomation');
         t.end();

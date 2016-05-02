@@ -20,9 +20,12 @@ rules:
     # Time
     time-no-imperceptible: true
     # Unit
+    unit-case: lower
     unit-whitelist:
         - px
         - "%"
+    # Shorthand Property
+    shorthand-property-no-redundant-values: true
     # Declaration
     declaration-bang-space-after: never
     declaration-bang-space-before: always
@@ -53,6 +56,7 @@ rules:
     block-opening-brace-space-after: null
     block-opening-brace-space-before: always
     # Selector
+    selector-attribute-brackets-space-inside: never
     selector-class-pattern: '^[a-z\-]+$'
     selector-combinator-space-after: always
     selector-combinator-space-before: always
@@ -61,9 +65,13 @@ rules:
     selector-no-attribute: null
     selector-no-combinator: null
     selector-no-id: null
+    selector-no-qualifying-type: null
     selector-no-type: null
     selector-no-universal: true
     selector-no-vendor-prefix: null
+    selector-pseudo-class-case: lower
+    selector-pseudo-element-case: lower
+    selector-pseudo-class-parentheses-space-inside: never
     selector-pseudo-element-colon-notation: double
     selector-root-no-composition: true
     selector-type-case: lower
@@ -77,11 +85,13 @@ rules:
     rule-non-nested-empty-line-before: null
     # At Rule
     at-rule-empty-line-before: always
+    at-rule-name-case: lower
     at-rule-no-vendor-prefix: true
     at-rule-semicolon-newline-after: always
     # Comment
     comment-empty-line-before: null
     comment-whitespace-inside: always
+    comment-word-blacklist: null
     # General
     indentation: 4
     max-empty-lines: 1

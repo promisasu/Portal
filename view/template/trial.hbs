@@ -73,9 +73,8 @@
                             <label>From date:-</label>
                                 <input id="fromDate"  name="fromDate" type="date" data-format = "yyyy-MM-dd" value="{{ fromDate }}" >
                             <label>To date:-</label>
-                            <input id="toDate"  name="toDate" type="date" data-format = "yyyy-MM-dd" value="{{ toDate }}">
-                            <br><br>
-                            <input type = "submit" id = "submit" value = "Check" onclick="myFunction()"/>
+                                <input id="toDate"  name="toDate" type="date" data-format = "yyyy-MM-dd" value="{{ toDate }}">
+                                <input type = "submit" id = "submit" value = "Check"/>
                     </form>
                 <canvas id="trialChart" height="200%"></canvas>
             </div>
@@ -89,10 +88,15 @@
                                 Patients
                             </h4>
                         </div>
-                        <div class="col-xl-2 col-md-3 col-xl-offset-7 col-md-offset-6">
-                            <button type="button" class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#addPatient">
-                                Enroll New Patient
-                            </button>
+                        <div class="col-xl-1 col-xl-1 col-xl-offset-5 col-md-offset-1">
+                          <button type="button" class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#addPatient">
+                              Enroll New Patient
+                          </button>
+                        </div>
+                        <div class="col-md-3 col-xl-1 col-xl-offset-1">
+                          <a href="/trial/{{ trial.id }}.csv" class="btn btn-primary text-uppercase">
+                              Export Trial Data
+                          </a>
                         </div>
                     </div>
                 </div>
@@ -108,6 +112,12 @@
                                 </th>
                                 <th>
                                     Stage
+                                </th>
+                                <th>
+                                    Start
+                                </th>
+                                <th>
+                                    End
                                 </th>
                                 <th>
                                     Total Missed Past Week
@@ -142,6 +152,12 @@
                                     </td>
                                     <td>
                                         {{ stage }}
+                                    </td>
+                                    <td>
+                                        {{ dateStarted }}
+                                    </td>
+                                    <td>
+                                        {{ dateCompleted }}
                                     </td>
                                     <td>
                                         {{ totalMissed }}

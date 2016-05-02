@@ -19,6 +19,15 @@
                 }
             }
         },
+        "application": {
+            "type": "object",
+            "properties": {
+                "path": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
         "dashboard": {
             "type": "object",
             "required": true,

@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @module controller/handler/patient-csv
+ * @module controller/handler/trial-csv
  */
 
 const database = require('../../model');
@@ -10,48 +10,71 @@ const boom = require('boom');
 const deduplicate = require('../helper/deduplicate');
 const configuration = [
     {
-        label: 'patient pin',
+        label: 'Trial Name',
+        key: 'trialName',
+        default: ''
+    },
+    {
+        label: 'Patient Pin',
         key: 'pin',
         default: ''
     },
     {
-        label: 'survey name',
+        label: 'Patient Date Started',
+        key: 'dateStarted',
+        default: ''
+    },
+    {
+        label: 'Patient Date Completed',
+        key: 'dateCompleted',
+        default: ''
+    },
+    {
+        label: 'Survey Name',
         key: 'name',
         default: ''
     },
     {
-        label: 'unique survey id',
+        label: 'Survey ID',
         key: 'id',
         default: ''
     },
     {
-        label: 'unique question id',
+        label: 'Question ID',
         key: 'questionId',
         default: ''
     },
     {
-        label: 'question',
+        label: 'Question Prompt',
         key: 'questionText',
         default: ''
     },
     {
-        label: 'question option',
+        label: 'Question Answer',
         key: 'optionText',
         default: ''
     }
 ];
 
 /**
- * Create a Comma Seperate Value export of a single patient's data.
+ * Create a Comma Seperate Value export of the data of all the patient's that are enrolled in a trial.
  * @param {Request} request - Hapi request
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
  */
-function patientCSV (request, reply) {
+function trialCSV (request, reply) {
+    const formatSpecifier = '%a %b %d %Y %T';
+
     database.sequelize.query(
         `
-        SELECT pa.pin, st.name, si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
-        FROM active_patients AS pa
+        SELECT tr.name AS trialName, pa.pin, DATE_FORMAT(pa.dateStarted, ?) AS dateStarted,
+        DATE_FORMAT( pa.dateCompleted, ?) AS dateCompleted, st.name,
+        si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
+        FROM trial AS tr
+        JOIN stage
+        ON stage.trialId = tr.id
+        JOIN active_patients AS pa
+        ON pa.stageId = stage.id
         JOIN survey_instance AS si
         ON si.patientId = pa.id
         JOIN survey_template AS st
@@ -65,19 +88,30 @@ function patientCSV (request, reply) {
         JOIN question_result AS qr
         ON qr.surveyInstanceId = si.id
         AND qr.questionOptionId = qo.id
-        WHERE pa.pin = ?
+        WHERE tr.id = ?
         AND si.state = 'completed'
-        ORDER BY si.id, jsq.questionOrder, qo.order
+        ORDER BY pa.pin ASC, si.id, jsq.questionOrder, qo.order
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
             replacements: [
-                request.params.pin
+                formatSpecifier,
+                formatSpecifier,
+                request.params.id
             ]
         }
     )
     .then((optionsWithAnswers) => {
-        const property = ['pin', 'name', 'id', 'questionText', 'questionId'];
+        const property = [
+            'trialName',
+            'pin',
+            'name',
+            'id',
+            'questionText',
+            'questionId',
+            'dateStarted',
+            'dateCompleted'
+        ];
         const uniqueAnswers = deduplicate(optionsWithAnswers, property);
 
         return convertJsonToCsv(uniqueAnswers, configuration);
@@ -86,9 +120,9 @@ function patientCSV (request, reply) {
         return reply(csv).type('text/csv');
     })
     .catch((err) => {
-        request.log('error', err);
+        console.error(err);
         reply(boom.notFound('patient data not found'));
     });
 }
 
-module.exports = patientCSV;
+module.exports = trialCSV;

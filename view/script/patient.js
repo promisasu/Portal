@@ -62,6 +62,24 @@
 
     var ctx = document.getElementById('complianceChart').getContext('2d');
 
+    function redirect () {
+        window.location = '/';
+    }
+
+    function warningMessage () {
+        alert('patient could not be deactivated');
+    }
+
+    document.getElementById('deactivate-patient')
+    .addEventListener('click', function deactivate () {
+        $.ajax({
+            url: window.location.pathname,
+            type: 'DELETE'
+        })
+        .done(redirect)
+        .fail(warningMessage);
+    });
+
     if (isNewPatientRegex.test(isNewPatient)) {
         $('#remember-patient-dialog').modal('show');
     }
