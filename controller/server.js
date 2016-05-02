@@ -28,7 +28,10 @@ function dashboardServer (configuration) {
     const server = new hapi.Server();
     const connectionOptions = {
         port: configuration.dashboard.port,
-        host: configuration.dashboard.hostname
+        host: configuration.dashboard.hostname,
+        routes: {
+            security: true
+        }
     };
 
     if (configuration.tls) {

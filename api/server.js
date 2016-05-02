@@ -22,7 +22,11 @@ function apiServer (configuration) {
     const server = new hapi.Server();
     const connectionOptions = {
         port: configuration.api.port,
-        host: configuration.api.hostname
+        host: configuration.api.hostname,
+        routes: {
+            cors: true,
+            security: true
+        }
     };
 
     if (configuration.tls) {
