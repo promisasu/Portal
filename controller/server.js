@@ -8,7 +8,6 @@
 const authBasic = require('hapi-auth-basic');
 const fs = require('fs');
 const good = require('good');
-const goodFile = require('good-file');
 const handlebars = require('handlebars');
 const hapi = require('hapi');
 const inert = require('inert');
@@ -60,17 +59,52 @@ function dashboardServer (configuration) {
             {
                 register: good,
                 options: {
-                    reporters: [{
-                        reporter: goodFile,
-                        events: {
-                            error: '*',
-                            log: '*',
-                            ops: '*',
-                            request: '*',
-                            response: '*'
-                        },
-                        config: `./logs/${Date.now()}-prp-${configuration.environment}-dashboard-access.log`
-                    }]
+                    ops: {
+                        interval: 60000
+                    },
+                    reporters: {
+                        logs: [
+                            {
+                                module: 'good-squeeze',
+                                name: 'Squeeze',
+                                args: [{
+                                    error: '*',
+                                    log: '*',
+                                    request: '*',
+                                    response: '*'
+                                }]
+                            },
+                            {
+                                module: 'good-squeeze',
+                                name: 'SafeJson'
+                            },
+                            {
+                                module: 'good-file',
+                                args: [
+                                    `./logs/${Date.now()}-prp-${configuration.environment}-dashboard-access.log`
+                                ]
+                            }
+                        ],
+                        ops: [
+                            {
+                                module: 'good-squeeze',
+                                name: 'Squeeze',
+                                args: [{
+                                    ops: '*'
+                                }]
+                            },
+                            {
+                                module: 'good-squeeze',
+                                name: 'SafeJson'
+                            },
+                            {
+                                module: 'good-file',
+                                args: [
+                                    `./logs/${Date.now()}-prp-${configuration.environment}-dashboard-ops.log`
+                                ]
+                            }
+                        ]
+                    }
                 }
             }
         ],
