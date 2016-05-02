@@ -18,8 +18,6 @@
     };
     var ctx = document.getElementById('trialChart').getContext('2d');
     var differenceValue = 0;
-    var newData = [];
-
 
     document.getElementById('toDate').setAttribute('min', document.getElementById('fromDate').value);
     $('#fromDate').on('change', function changeToDateValue () {
