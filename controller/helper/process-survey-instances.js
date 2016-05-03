@@ -16,7 +16,7 @@ const viewDateFormat = 'MM-DD-YYYY HH:mm';
  */
 function processSurveyInstances (surveys) {
     const filterSurveyByState = surveys.filter((survey) => {
-        return survey.state === 'completed';
+        return survey.state === 'completed' || survey.state === 'expired';
     });
 
     return {
@@ -36,7 +36,12 @@ function pickDates (surveys) {
     });
 
     if (surveys[0]) {
-        dates.push(moment(surveys[0].dateCompleted, sqlDateFormat).format(viewDateFormat));
+        // Adding an additional week to include all the dates in compliance chart.
+        // This is done because chart js plots only the first day of the week.
+        const numberOfDays = 7;
+        const endDateforChart = moment(surveys[0].dateCompleted, sqlDateFormat).add(numberOfDays, 'day');
+
+        dates.push(moment(endDateforChart, sqlDateFormat).format(viewDateFormat));
     }
 
     return dates;
@@ -102,10 +107,14 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
 
     // calculate the time in hours until end time
     const totalAvailibleTime = endTime.diff(openTime, 'hours');
-    const timeTaken = endTime.diff(completedTime, 'hours');
+    let percentTimeLeft = minTime;
 
-    // caculate percent of time taken out of total time availible to take the survey
-    const percentTimeLeft = Math.round(timeTaken / totalAvailibleTime * percent);
+    if (completedTime !== null && !isNaN(completedTime)) {
+        const timeTaken = endTime.diff(completedTime, 'hours');
+
+        // caculate percent of time taken out of total time availible to take the survey
+        percentTimeLeft = Math.round(timeTaken / totalAvailibleTime * percent);
+    }
 
     // either take the amount of time left
     // or if the survey instance expired (negative percent) show zero time left

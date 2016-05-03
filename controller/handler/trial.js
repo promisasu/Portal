@@ -33,11 +33,11 @@ function trialView (request, reply) {
             }),
             database.sequelize.query(
                 `
-                SELECT tr.*, pa.pin, st.name AS stage
+                SELECT tr.*, pa.pin, pa.dateStarted, pa.dateCompleted, st.name AS stage
                 FROM trial AS tr
                 JOIN stage AS st
                 ON st.trialId = tr.id
-                JOIN patient AS pa
+                JOIN active_patients AS pa
                 ON pa.stageId = st.id
                 WHERE tr.id = ?
                 `,
@@ -54,7 +54,7 @@ function trialView (request, reply) {
                 SUM(si.state = 'expired') AS expiredCount,
                 SUM(si.state = 'completed') AS completedCount
                 FROM survey_instance AS si
-                JOIN patient AS pa
+                JOIN active_patients AS pa
                 ON pa.id = si.patientId
                 JOIN stage AS st
                 ON st.id = pa.stageId
@@ -88,17 +88,10 @@ function trialView (request, reply) {
                 }
             )
         ])
-        .then((data) => {
-            const currentTrial = data[0];
-
+        .then(([currentTrial, stages, patients, compliance, rules]) => {
             if (!currentTrial) {
                 throw new Error('trial does not exist');
             }
-
-            const stages = data[1];
-            const patients = data[2];
-            const compliance = data[3];
-            const rules = data[4];
             const ruleValues = rules.map((ruleData) => {
                 return parseInt(ruleData.rule, 10);
             });
@@ -120,6 +113,11 @@ function trialView (request, reply) {
                     patient.status = 'Pending';
                     patient.totalMissed = 0;
                 }
+
+                patient.dateStarted = moment(patient.dateStarted)
+                    .format('MM-DD-YYYY');
+                patient.dateCompleted = moment(patient.dateCompleted)
+                    .format('MM-DD-YYYY');
 
                 return patient;
             });

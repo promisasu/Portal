@@ -24,6 +24,9 @@ const addJoinStagesAndSurveys = require('./join-stages-and-surveys');
 const addJoinSurveysAndQuestions = require('./join-surveys-and-questions');
 const addJoinCurrentAndNextStages = require('./join-current-and-next-stages');
 
+// Database Views
+const addViewActivePatients = require('./view-active-patients');
+
 /**
  * a DatabaseConfiguration is a collection of the settings needed to connect to the database.
  * @typedef {Object} DatabaseConfiguration
@@ -69,6 +72,9 @@ function setup (configuration) {
     addJoinStagesAndSurveys(sequelize);
     addJoinSurveysAndQuestions(sequelize);
     addJoinCurrentAndNextStages(sequelize);
+
+    // add the database views
+    addViewActivePatients(sequelize);
 
     // Get the newly created ORM wrappers
     const user = sequelize.model('user');

@@ -27,9 +27,14 @@
                 <div class="card-block">
                     <h4 class="card-title">
                         Patients' Surveys
-                        <a href="/patient/{{ patient.pin }}.csv" class="btn btn-primary btn-sm pull-right">
-                            Export Patient Data
-                        </a>
+                        <span class="pull-right">
+                            <a href="/patient/{{ patient.pin }}.csv" class="btn btn-primary btn-sm">
+                                Export Patient Data
+                            </a>
+                            <button id="deactivate-patient" class="btn btn-danger btn-sm">
+                                Deactivate
+                            </button>
+                        </span>
                     </h4>
                     <div class="table-responsive">
                         <table class="table table-striped">
