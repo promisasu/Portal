@@ -90,10 +90,11 @@
   },
   "nyc": {
     "exclude": [
+      "api/helper-test",
       "bcrypt-shim.js",
-      "model",
       "controller/handler-test",
-      "controller/helper-test"
+      "controller/helper-test",
+      "model"
     ]
   }
 }
