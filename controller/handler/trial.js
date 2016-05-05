@@ -128,10 +128,6 @@ function trialView (request, reply) {
 
             const endDate = processRules(ruleValues, Date.now());
 
-            if (request.query.requestType === 'ajaxRequest') {
-                return reply(complianceCount);
-            }
-
             return reply.view('trial', {
                 title: 'Pain Reporting Portal',
                 fromDate: moment(fromDate).format('YYYY-MM-DD'),
