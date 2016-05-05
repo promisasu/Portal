@@ -24,6 +24,7 @@ function trialView (request, reply) {
     const fromDate = request.query.fromDate;
     const toDate = request.query.toDate;
 
+
     Promise
         .all([
             trial.findById(request.params.id),

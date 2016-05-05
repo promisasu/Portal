@@ -8,6 +8,7 @@ const createPatient = require('./handler/create-patient');
 const deactivatePatient = require('./handler/deactivate-patient');
 const dashboardPresenter = require('./handler/dashboard');
 const trialPresenter = require('./handler/trial');
+const complianceValuesPresenter = require('./handler/complianceValues');
 const patientPresenter = require('./handler/patient');
 const patientCSV = require('./handler/patient-csv');
 const trialCSV = require('./handler/trial-csv');
@@ -112,6 +113,35 @@ module.exports = [
         method: 'GET',
         path: '/trial/{id}',
         handler: trialPresenter,
+        config: {
+            validate: {
+                params: {
+                    id: Joi
+                        .number()
+                        .integer()
+                        .positive()
+                },
+                query: {
+                    fromDate: Joi
+                       .date()
+                       .format('YYYY-MM-DD')
+                       .default(moment().startOf('day').subtract(addOne, 'week')
+                       .toDate()
+                       ),
+                    toDate: Joi
+                       .date()
+                       .format('YYYY-MM-DD')
+                       .default(moment().toDate()),
+                    requestType: Joi
+                        .string()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/complianceValues/{id}',
+        handler: complianceValuesPresenter,
         config: {
             validate: {
                 params: {
