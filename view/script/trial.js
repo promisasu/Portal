@@ -18,6 +18,7 @@
     };
     var ctx = document.getElementById('trialChart').getContext('2d');
     var differenceValue = 0;
+    var trialValue = document.getElementById('trialId').value;
 
     document.getElementById('toDate').setAttribute('min', document.getElementById('fromDate').value);
     $('#fromDate').on('change', function changeToDateValue () {
@@ -36,19 +37,22 @@
         event.preventDefault();
         $.ajax({
             type: 'GET',
-            data: $('#check-compliance').serialize() + '&requestType=ajaxRequest'
-        })
-        .done(function successSubmit (newData) {
-            data.datasets[0].data = newData;
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: data,
-                animation: {
-                    animateScale: true
-                }
-            });
+            data: $('#check-compliance').serialize() + '&requestType=ajaxRequest',
+            url: '/complianceValues/' + trialValue,
+            success: successSubmit
         });
     });
+
+    function successSubmit (newData) {
+        data.datasets[0].data = newData;
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            animation: {
+                animateScale: true
+            }
+        });
+    }
 
     new Chart(ctx, {
         type: 'doughnut',

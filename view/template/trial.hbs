@@ -69,7 +69,8 @@
         </div>
         <div class="col-sm-12 col-md-7 col-lg-6 col-xl-6">
             <div class="card">
-                    <form id = "check-compliance" method= "GET">
+                    <input type = "hidden" id = "trialId" name = "trialId" value = "{{trial.id}}">
+                    <form id = "check-compliance" method= "GET" >
                             <label>From date:-</label>
                                 <input id="fromDate"  name="fromDate" type="date" data-format = "yyyy-MM-dd" value="{{ fromDate }}" >
                             <label>To date:-</label>
