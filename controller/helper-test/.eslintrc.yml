@@ -10,7 +10,7 @@ rules:
         - error
         - exceptions:
             - t
-    ava/assertion-arguments: warn # TODO: enable after throws issue is resolved
+    ava/assertion-arguments: error
     ava/assertion-message: error
     ava/max-asserts: error
     ava/no-cb-test: off
