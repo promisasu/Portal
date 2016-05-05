@@ -7,7 +7,6 @@
 // load node modules
 const fs = require('fs');
 const good = require('good');
-const goodFile = require('good-file');
 const hapi = require('hapi');
 
 // load router and database
@@ -23,7 +22,11 @@ function apiServer (configuration) {
     const server = new hapi.Server();
     const connectionOptions = {
         port: configuration.api.port,
-        host: configuration.api.hostname
+        host: configuration.api.hostname,
+        routes: {
+            cors: true,
+            security: true
+        }
     };
 
     if (configuration.tls) {
@@ -43,17 +46,52 @@ function apiServer (configuration) {
         {
             register: good,
             options: {
-                reporters: [{
-                    reporter: goodFile,
-                    events: {
-                        error: '*',
-                        log: '*',
-                        ops: '*',
-                        request: '*',
-                        response: '*'
-                    },
-                    config: `./logs/${Date.now()}-prp-${configuration.environment}-api-access.log`
-                }]
+                ops: {
+                    interval: 60000
+                },
+                reporters: {
+                    logs: [
+                        {
+                            module: 'good-squeeze',
+                            name: 'Squeeze',
+                            args: [{
+                                error: '*',
+                                log: '*',
+                                request: '*',
+                                response: '*'
+                            }]
+                        },
+                        {
+                            module: 'good-squeeze',
+                            name: 'SafeJson'
+                        },
+                        {
+                            module: 'good-file',
+                            args: [
+                                `./logs/${Date.now()}-prp-${configuration.environment}-api-access.log`
+                            ]
+                        }
+                    ],
+                    ops: [
+                        {
+                            module: 'good-squeeze',
+                            name: 'Squeeze',
+                            args: [{
+                                ops: '*'
+                            }]
+                        },
+                        {
+                            module: 'good-squeeze',
+                            name: 'SafeJson'
+                        },
+                        {
+                            module: 'good-file',
+                            args: [
+                                `./logs/${Date.now()}-prp-${configuration.environment}-api-ops.log`
+                            ]
+                        }
+                    ]
+                }
             }
         },
         (err) => {
