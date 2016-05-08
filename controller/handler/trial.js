@@ -24,7 +24,6 @@ function trialView (request, reply) {
     const fromDate = request.query.fromDate;
     const toDate = request.query.toDate;
 
-
     Promise
         .all([
             trial.findById(request.params.id),
@@ -69,8 +68,10 @@ function trialView (request, reply) {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         request.params.id,
-                        fromDate.toISOString(),
-                        toDate.toISOString()
+                        moment(fromDate)
+                            .format('YYYY-MM-DD HH:mm:ss'),
+                        moment(toDate)
+                            .format('YYYY-MM-DD HH:mm:ss')
                     ]
                 }
             ),

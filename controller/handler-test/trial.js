@@ -57,6 +57,10 @@ test.cb('when there are no patients', (t) => {
         log: sinon.stub(),
         params: {
             id: 1
+        },
+        query: {
+            fromDate: new Date(),
+            toDate: new Date()
         }
     };
 
@@ -136,6 +140,10 @@ test.cb('when there is one patient', (t) => {
         log: sinon.stub(),
         params: {
             id: 1
+        },
+        query: {
+            fromDate: new Date(),
+            toDate: new Date()
         }
     };
 
@@ -195,6 +203,10 @@ test.cb('when trial does not exist', (t) => {
         log: sinon.stub(),
         params: {
             id: 1
+        },
+        query: {
+            fromDate: new Date(),
+            toDate: new Date()
         }
     };
 

@@ -8,7 +8,7 @@ const createPatient = require('./handler/create-patient');
 const deactivatePatient = require('./handler/deactivate-patient');
 const dashboardPresenter = require('./handler/dashboard');
 const trialPresenter = require('./handler/trial');
-const complianceValuesPresenter = require('./handler/complianceValues');
+const complianceValuesPresenter = require('./handler/compliance-values');
 const patientPresenter = require('./handler/patient');
 const patientCSV = require('./handler/patient-csv');
 const trialCSV = require('./handler/trial-csv');
@@ -131,16 +131,14 @@ module.exports = [
                     toDate: Joi
                        .date()
                        .format('YYYY-MM-DD')
-                       .default(moment().toDate()),
-                    requestType: Joi
-                        .string()
+                       .default(moment().toDate())
                 }
             }
         }
     },
     {
         method: 'GET',
-        path: '/complianceValues/{id}',
+        path: '/compliance-values/{id}',
         handler: complianceValuesPresenter,
         config: {
             validate: {

@@ -1,10 +1,11 @@
 'use strict';
 
 /**
- * @module controller/handler/complianceValues
+ * @module controller/handler/compliance-values
  */
 
 const database = require('../../model');
+const moment = require('moment');
 const processComplianceCount = require('../helper/process-compliance-count');
 const httpNotFound = 404;
 
@@ -40,8 +41,10 @@ function complianceValues (request, reply) {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         request.params.id,
-                        fromDate.toISOString(),
-                        toDate.toISOString()
+                        moment(fromDate)
+                            .format('YYYY-MM-DD HH:mm:ss'),
+                        moment(toDate)
+                            .format('YYYY-MM-DD HH:mm:ss')
                     ]
                 }
             )

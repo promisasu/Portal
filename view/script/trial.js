@@ -1,6 +1,10 @@
 (function trial () {
     'use strict';
 
+    var ctx = document.getElementById('trialChart').getContext('2d');
+    var trialValue = document.getElementById('trialId').value;
+    var differenceValue = 0;
+
     var data = {
         labels: [
             'Non-compliant',
@@ -16,11 +20,7 @@
             ]
         }]
     };
-    var ctx = document.getElementById('trialChart').getContext('2d');
-    var differenceValue = 0;
-    var trialValue = document.getElementById('trialId').value;
 
-    document.getElementById('toDate').setAttribute('min', document.getElementById('fromDate').value);
     $('#fromDate').on('change', function changeToDateValue () {
         var fromDateValue = document.getElementById('fromDate').value;
         var newtoDateValue = moment(fromDateValue).add(differenceValue, 'days').format('YYYY-MM-DD');
@@ -37,8 +37,8 @@
         event.preventDefault();
         $.ajax({
             type: 'GET',
-            data: $('#check-compliance').serialize() + '&requestType=ajaxRequest',
-            url: '/complianceValues/' + trialValue,
+            data: $('#check-compliance').serialize(),
+            url: '/compliance-values/' + trialValue,
             success: successSubmit
         });
     });
