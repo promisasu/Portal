@@ -8,36 +8,11 @@ const QueryTypes = {
 };
 
 test.cb('when patients exist in trial', (t) => {
-    const model = sinon.stub();
     const query = sinon.stub();
-
-    model
-    .withArgs('trial')
-    .returns({
-        findById () {
-            return Promise.resolve({
-                name: 'example',
-                description: 'example',
-                IRBID: 1,
-                IRBStart: new Date(),
-                IRBEnd: new Date(),
-                targetCount: 1,
-                patientPinCounter: 1
-            });
-        }
-    });
-
-    model
-    .withArgs('patient')
-    .returns({
-        findAll () {
-            return Promise.resolve([]);
-        }
-    });
 
     const trial = proxyquire('../handler/trial', {
         '../../model': {
-            sequelize: {model, query, QueryTypes}
+            sequelize: {query}
         }
     });
 
