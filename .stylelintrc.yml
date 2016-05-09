@@ -57,6 +57,8 @@ rules:
     block-opening-brace-space-before: always
     # Selector
     selector-attribute-brackets-space-inside: never
+    selector-attribute-operator-space-after: never
+    selector-attribute-operator-space-before: never
     selector-class-pattern: '^[a-z\-]+$'
     selector-combinator-space-after: always
     selector-combinator-space-before: always
@@ -73,8 +75,10 @@ rules:
     selector-pseudo-element-case: lower
     selector-pseudo-class-parentheses-space-inside: never
     selector-pseudo-element-colon-notation: double
+    selector-pseudo-element-no-unknown: true
     selector-root-no-composition: true
     selector-type-case: lower
+    selector-max-empty-lines: 0
     # Selector List
     selector-list-comma-newline-after: always
     selector-list-comma-newline-before: null
@@ -86,6 +90,7 @@ rules:
     # At Rule
     at-rule-empty-line-before: always
     at-rule-name-case: lower
+    at-rule-name-space-after: always
     at-rule-no-vendor-prefix: true
     at-rule-semicolon-newline-after: always
     # Comment
@@ -101,6 +106,7 @@ rules:
     no-descending-specificity: true
     no-duplicate-selectors: true
     no-eol-whitespace: true
+    no-extra-semicolons: true
     no-indistinguishable-colors: true
     no-invalid-double-slash-comments: true
     no-missing-eof-newline: true
