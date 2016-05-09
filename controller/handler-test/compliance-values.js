@@ -10,12 +10,8 @@ const QueryTypes = {
 test.cb('when patients exist in trial', (t) => {
     const query = sinon.stub();
 
-    const trial = proxyquire('../handler/trial', {
-        '../../model': {
-            sequelize: {query}
-        }
-    });
-
+    query.returns(Promise.resolve([]));
+    const complianceValues = proxyquire('../handler/compliance-values');
     const request = {
         log: sinon.stub(),
         params: {
@@ -28,17 +24,15 @@ test.cb('when patients exist in trial', (t) => {
     };
 
     const reply = {
-        view (template, data) {
-            t.is(template, 'trial', 'it should render the trial view');
-            t.is(data.patients.length, 0, 'it should have no patients');
-            t.is(data.complianceCount[0], 0, 'it should have no non-compliant patients');
-            t.is(data.complianceCount[1], 0, 'it should have no semi-compliant patients');
-            t.is(data.complianceCount[2], 0, 'it should have no compliant patients');
+        view (complianceCount) {
+            t.is(complianceCount[0], 0, 'it should have no non-compliant patients');
+            t.is(complianceCount[1], 0, 'it should have no semi-compliant patients');
+            t.is(complianceCount[2], 0, 'it should have no compliant patients');
             t.end();
         }
     };
 
-    trial(request, reply);
+    complianceValues(request, reply);
 });
 
 test.cb('when trial does not exist', (t) => {

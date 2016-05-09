@@ -158,9 +158,7 @@ module.exports = [
                     toDate: Joi
                        .date()
                        .format('YYYY-MM-DD')
-                       .default(moment().toDate()),
-                    requestType: Joi
-                        .string()
+                       .default(moment().toDate())
                 }
             }
         }
