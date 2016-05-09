@@ -8,7 +8,7 @@
   "dependencies": {
     "better-dateinput-polyfill": "1.5.2",
     "bootstrap": "4.0.0-alpha.2",
-    "Chart.js": "2.1.0",
+    "Chart.js": "2.1.2",
     "datatables": "1.10.11",
     "font-awesome": "4.6.2",
     "jquery": "2.2.3",
