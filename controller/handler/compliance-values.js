@@ -19,10 +19,7 @@ function complianceValues (request, reply) {
     const fromDate = request.query.fromDate;
     const toDate = request.query.toDate;
 
-    Promise
-        .all([
-
-            database.sequelize.query(
+    database.sequelize.query(
                 `
                 SELECT pa.id, pa.pin,
                 SUM(si.state = 'expired') AS expiredCount,
@@ -37,18 +34,17 @@ function complianceValues (request, reply) {
                 AND si.endTime <= ?
                 GROUP BY pa.id
                 `,
-                {
-                    type: database.sequelize.QueryTypes.SELECT,
-                    replacements: [
-                        request.params.id,
-                        moment(fromDate)
-                            .format('YYYY-MM-DD HH:mm:ss'),
-                        moment(toDate)
-                            .format('YYYY-MM-DD HH:mm:ss')
-                    ]
-                }
-            )
-        ])
+        {
+            type: database.sequelize.QueryTypes.SELECT,
+            replacements: [
+                request.params.id,
+                moment(fromDate)
+                    .format('YYYY-MM-DD HH:mm:ss'),
+                moment(toDate)
+                    .format('YYYY-MM-DD HH:mm:ss')
+            ]
+        }
+    )
         .then((compliance) => {
             const complianceCount = processComplianceCount(compliance);
 

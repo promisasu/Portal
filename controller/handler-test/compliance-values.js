@@ -28,24 +28,12 @@ test.cb('when patients exist in trial', (t) => {
     });
 
     model
-    .withArgs('stage')
+    .withArgs('patient')
     .returns({
         findAll () {
             return Promise.resolve([]);
         }
     });
-
-    query
-    .onFirstCall()
-    .returns(Promise.resolve([]));
-
-    query
-    .onSecondCall()
-    .returns(Promise.resolve([]));
-
-    query
-    .onThirdCall()
-    .returns(Promise.resolve([]));
 
     const trial = proxyquire('../handler/trial', {
         '../../model': {
