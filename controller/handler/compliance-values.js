@@ -20,20 +20,20 @@ function complianceValues (request, reply) {
     const toDate = request.query.toDate;
 
     database.sequelize.query(
-                `
-                SELECT pa.id, pa.pin,
-                SUM(si.state = 'expired') AS expiredCount,
-                SUM(si.state = 'completed') AS completedCount
-                FROM survey_instance AS si
-                JOIN active_patients AS pa
-                ON pa.id = si.patientId
-                JOIN stage AS st
-                ON st.id = pa.stageId
-                WHERE st.trialId = ?
-                AND si.startTime >= ?
-                AND si.endTime <= ?
-                GROUP BY pa.id
-                `,
+        `
+        SELECT pa.id, pa.pin,
+        SUM(si.state = 'expired') AS expiredCount,
+        SUM(si.state = 'completed') AS completedCount
+        FROM survey_instance AS si
+        JOIN active_patients AS pa
+        ON pa.id = si.patientId
+        JOIN stage AS st
+        ON st.id = pa.stageId
+        WHERE st.trialId = ?
+        AND si.startTime >= ?
+        AND si.endTime <= ?
+        GROUP BY pa.id
+        `,
         {
             type: database.sequelize.QueryTypes.SELECT,
             replacements: [
@@ -45,20 +45,20 @@ function complianceValues (request, reply) {
             ]
         }
     )
-        .then((compliance) => {
-            const complianceCount = processComplianceCount(compliance);
+    .then((compliance) => {
+        const complianceCount = processComplianceCount(compliance);
 
-            return reply(complianceCount);
+        return reply(complianceCount);
+    })
+    .catch((err) => {
+        request.log('error', err);
+
+        reply
+        .view('404', {
+            title: 'Not Found'
         })
-        .catch((err) => {
-            request.log('error', err);
-
-            reply
-            .view('404', {
-                title: 'Not Found'
-            })
             .code(httpNotFound);
-        });
+    });
 }
 
 module.exports = complianceValues;
