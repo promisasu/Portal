@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "better-dateinput-polyfill": "1.5.2",
+    "better-dateinput-polyfill": "2.0.0",
     "bootstrap": "4.0.0-alpha.2",
     "Chart.js": "2.1.3",
     "datatables": "1.10.12",

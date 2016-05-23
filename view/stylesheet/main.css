@@ -19,6 +19,10 @@
     background-color: #5cb85c;
 }
 
+.btr-dateinput-value {
+    display: none !important;
+}
+
 input[type='date'] {
     color: #55595c !important;
 }
