@@ -69,6 +69,16 @@
         </div>
         <div class="col-sm-12 col-md-7 col-lg-6 col-xl-6">
             <div class="card">
+                    <input type="hidden" id="trialId" name="trialId" value="{{trial.id}}">
+                    <form id="check-compliance" method="GET" >
+                            <label>From date:-</label>
+                                <input id="fromDate"  name="fromDate" type="date" data-format="yyyy-MM-dd" value="{{fromDate }}">
+                            <label>To date:-</label>
+
+                                <input id="toDate"  name="toDate" type="date"  data-format="yyyy-MM-dd"  value="{{ toDate }}">
+
+                                <input type="submit" id="submit" value="Check"/>
+                    </form>
                 <canvas id="trialChart" height="200%"></canvas>
             </div>
         </div>

@@ -21,7 +21,8 @@ const httpNotFound = 404;
 function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
     const stage = database.sequelize.model('stage');
-    const startDate = moment().startOf('Week');
+    const fromDate = request.query.fromDate;
+    const toDate = request.query.toDate;
 
     Promise
         .all([
@@ -59,14 +60,18 @@ function trialView (request, reply) {
                 JOIN stage AS st
                 ON st.id = pa.stageId
                 WHERE st.trialId = ?
-                AND si.endTime > ?
+                AND si.startTime >= ?
+                AND si.endTime <= ?
                 GROUP BY pa.id
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         request.params.id,
-                        startDate.toISOString()
+                        moment(fromDate)
+                            .format('YYYY-MM-DD HH:mm:ss'),
+                        moment(toDate)
+                            .format('YYYY-MM-DD HH:mm:ss')
                     ]
                 }
             ),
@@ -126,6 +131,8 @@ function trialView (request, reply) {
 
             return reply.view('trial', {
                 title: 'Pain Reporting Portal',
+                fromDate: moment(fromDate).format('YYYY-MM-DD'),
+                toDate: moment(toDate).format('YYYY-MM-DD'),
                 trial: processTrial(currentTrial),
                 stages,
                 endDate,

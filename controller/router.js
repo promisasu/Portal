@@ -8,12 +8,14 @@ const createPatient = require('./handler/create-patient');
 const deactivatePatient = require('./handler/deactivate-patient');
 const dashboardPresenter = require('./handler/dashboard');
 const trialPresenter = require('./handler/trial');
+const complianceValuesPresenter = require('./handler/compliance-values');
 const patientPresenter = require('./handler/patient');
 const patientCSV = require('./handler/patient-csv');
 const trialCSV = require('./handler/trial-csv');
 const surveyPresenter = require('./handler/survey');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
+const addOne = 1;
 
 module.exports = [
     {
@@ -118,6 +120,45 @@ module.exports = [
                         .number()
                         .integer()
                         .positive()
+                },
+                query: {
+                    fromDate: Joi
+                       .date()
+                       .format('YYYY-MM-DD')
+                       .default(moment().startOf('day').subtract(addOne, 'week')
+                       .toDate()
+                       ),
+                    toDate: Joi
+                       .date()
+                       .format('YYYY-MM-DD')
+                       .default(moment().toDate())
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/compliance-values/{id}',
+        handler: complianceValuesPresenter,
+        config: {
+            validate: {
+                params: {
+                    id: Joi
+                        .number()
+                        .integer()
+                        .positive()
+                },
+                query: {
+                    fromDate: Joi
+                       .date()
+                       .format('YYYY-MM-DD')
+                       .default(moment().startOf('day').subtract(addOne, 'week')
+                       .toDate()
+                       ),
+                    toDate: Joi
+                       .date()
+                       .format('YYYY-MM-DD')
+                       .default(moment().toDate())
                 }
             }
         }
