@@ -35,16 +35,16 @@ function processPercent (trial) {
 
     if (trial.recruitedCount > zeroPercent) {
         return {
-            recruitedPercent: Math.round(trial.recruitedCount / trial.targetCount * percent),
-            unrecruitedPercent: Math.round((trial.targetCount - trial.recruitedCount) / trial.targetCount * percent),
+            recruitedPercent: Math.round(trial.recruitedCount / trial.TargetCount * percent),
+            unrecruitedPercent: Math.round((trial.TargetCount - trial.recruitedCount) / trial.TargetCount * percent),
             completedPercent: Math.round(trial.completedCount / trial.recruitedCount * percent),
             activePercent: Math.round(trial.activeCount / trial.recruitedCount * percent)
         };
     }
 
     return {
-        recruitedPercent: Math.round(trial.recruitedCount / trial.targetCount * percent),
-        unrecruitedPercent: Math.round((trial.targetCount - trial.recruitedCount) / trial.targetCount * percent),
+        recruitedPercent: Math.round(trial.recruitedCount / trial.TargetCount * percent),
+        unrecruitedPercent: Math.round((trial.TargetCount - trial.recruitedCount) / trial.TargetCount * percent),
         completedPercent: zeroPercent,
         activePercent: zeroPercent
     };

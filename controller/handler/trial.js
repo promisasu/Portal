@@ -22,24 +22,36 @@ function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
     const stage = database.sequelize.model('stage');
     const startDate = moment().startOf('Week');
+    console.log("req params - " + request.params.id);
 
     Promise
         .all([
             trial.findById(request.params.id),
-            stage.findAll({
-                where: {
-                    trialId: request.params.id
+            // stage.findAll({
+            //     where: {
+            //         trialId: request.params.id
+            //     }
+            // }),
+            database.sequelize.query(
+                `
+                SELECT id, name, createdAt, updatedAt, deletedAt, trialId FROM stage AS stage WHERE stage.deletedAt IS NULL AND stage.trialId = ?
+                `,
+                {
+                    type: database.sequelize.QueryTypes.SELECT,
+                    replacements: [
+                        request.params.id
+                    ]
                 }
-            }),
+            ),
             database.sequelize.query(
                 `
                 SELECT tr.*, pa.pin, pa.dateStarted, pa.dateCompleted, st.name AS stage
                 FROM trial AS tr
                 JOIN stage AS st
-                ON st.trialId = tr.id
+                ON st.trialId = tr.TrialId
                 JOIN active_patients AS pa
                 ON pa.stageId = st.id
-                WHERE tr.id = ?
+                WHERE tr.TrialId = ?
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -75,10 +87,10 @@ function trialView (request, reply) {
                 SELECT jcns.rule
                 FROM trial AS tr
                 JOIN stage AS st
-                ON tr.id = st.trialId
+                ON tr.TrialId = st.trialId
                 JOIN join_current_and_next_stages AS jcns
                 ON st.id = jcns.stageId
-                WHERE tr.id = ?
+                WHERE tr.TrialId = ?
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -89,6 +101,7 @@ function trialView (request, reply) {
             )
         ])
         .then(([currentTrial, stages, patients, compliance, rules]) => {
+            console.log("here - ", currentTrial);
             if (!currentTrial) {
                 throw new Error('trial does not exist');
             }
@@ -143,6 +156,7 @@ function trialView (request, reply) {
             });
         })
         .catch((err) => {
+            console.log("ERRORCUSTOM - ", err);
             request.log('error', err);
 
             reply
