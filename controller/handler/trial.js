@@ -47,6 +47,7 @@ function trialView (request, reply) {
                 JOIN patients AS pa
                 ON pa.StageIdFK = st.StageId
                 WHERE tr.TrialId = ?
+                ORDER BY pa.DateCompleted DESC
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
