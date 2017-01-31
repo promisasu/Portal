@@ -31,7 +31,7 @@
                             <a href="/patient/{{ patient.pin }}.csv" class="btn btn-primary btn-sm">
                                 Export Patient Data
                             </a>
-                            <button id="deactivate-patient" class="btn btn-danger btn-sm">
+                            <button id="deactivate-patient" class="btn btn-danger btn-sm" disabled>
                                 Deactivate
                             </button>
                         </span>
@@ -68,18 +68,18 @@
                                     <tr class="{{ state-to-status state prefix='table-' }}">
                                         <th scope="row">
                                             <a href="/survey/{{ id }}">
-                                                {{ id }}
+                                                {{ ActivityInstanceId }}
                                                 <i class="fa fa-search"></i>
                                             </a>
                                         </th>
                                         <td>
-                                            {{ state }}
+                                            {{ State }}
                                         </td>
                                         <td>
                                             {{ stageName }}
                                         </td>
                                         <td>
-                                            {{ surveyTemplateName }}
+                                            {{ stageName }}
                                         </td>
                                         <td>
                                             {{ startTime }}
@@ -88,7 +88,7 @@
                                             {{ endTime }}
                                         </td>
                                         <td>
-                                            {{ userSubmissionTime }}
+                                            {{ UserSubmissionTime }}
                                         </td>
                                     </tr>
                                 {{/each}}

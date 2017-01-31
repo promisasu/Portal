@@ -7,7 +7,6 @@
 const database = require('../../model');
 const processSurveyInstances = require('../helper/process-survey-instances');
 const moment = require('moment');
-const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
 const httpNotFound = 404;
 
 /**
@@ -88,13 +87,13 @@ function patientView (request, reply) {
                 surveys: surveyInstances.map((surveyInstance) => {
                     const surveyInstanceCopy = Object.assign({}, surveyInstance);
 
-                    surveyInstanceCopy.startTime = moment(surveyInstanceCopy.startTime, sqlDateFormat)
+                    surveyInstanceCopy.startTime = moment(surveyInstanceCopy.startTime)
                         .format('MM-DD-YYYY');
-                    surveyInstanceCopy.endTime = moment(surveyInstanceCopy.endTime, sqlDateFormat)
+                    surveyInstanceCopy.endTime = moment(surveyInstanceCopy.endTime)
                         .format('MM-DD-YYYY');
                     if (surveyInstanceCopy.userSubmissionTime) {
                         surveyInstanceCopy.userSubmissionTime
-                            = moment(surveyInstanceCopy.userSubmissionTime, sqlDateFormat)
+                            = moment(surveyInstanceCopy.userSubmissionTime)
                                 .format('MM-DD-YYYY h:mma');
                     }
 
