@@ -38,7 +38,7 @@ function patientView (request, reply) {
             database.sequelize.query(
                 `
                 SELECT pa.DateCompleted, si.ActivityInstanceId, si.StartTime, si.EndTime, si.UserSubmissionTime,
-                si.ActualSubmissionTime, si.State, st.Name AS stageName,
+                si.ActualSubmissionTime, si.State, st.Name AS stageName
                 FROM patients AS pa
                 JOIN activity_instance AS si
                 ON si.PatientPinFK = pa.PatientPin
