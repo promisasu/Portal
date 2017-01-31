@@ -21,11 +21,11 @@ function patientView (request, reply) {
         .all([
             database.sequelize.query(
                 `
-                SELECT pa.pin, st.name AS stage
-                FROM active_patients AS pa
+                SELECT pa.PatientPin, st.Name AS stage
+                FROM patients AS pa
                 JOIN stage AS st
-                ON st.id = pa.stageId
-                WHERE pa.pin = ?
+                ON st.StageId = pa.StageIdFK
+                WHERE pa.PatientPin = ?
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -37,18 +37,15 @@ function patientView (request, reply) {
             ),
             database.sequelize.query(
                 `
-                SELECT pa.dateCompleted, si.id, si.startTime, si.endTime, si.userSubmissionTime,
-                si.actualSubmissionTime, si.state, si.surveyTemplateId, st.name AS stageName,
-                srt.name AS surveyTemplateName
-                FROM active_patients AS pa
-                JOIN survey_instance AS si
-                ON si.patientId = pa.id
+                SELECT pa.DateCompleted, si.ActivityInstanceId, si.StartTime, si.EndTime, si.UserSubmissionTime,
+                si.ActualSubmissionTime, si.State, st.Name AS stageName,
+                FROM patients AS pa
+                JOIN activity_instance AS si
+                ON si.PatientPinFK = pa.PatientPin
                 JOIN stage AS st
-                ON st.id = pa.stageId
-                JOIN survey_template AS srt
-                ON srt.id = si.surveyTemplateId
-                WHERE pa.pin = ?
-                ORDER BY si.startTime
+                ON st.StageId = pa.StageIdFK
+                WHERE pa.PatientPin = ?
+                ORDER BY si.StartTime
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -59,13 +56,13 @@ function patientView (request, reply) {
             ),
             database.sequelize.query(
                 `
-                SELECT tr.name, tr.id
-                FROM active_patients AS pa
+                SELECT tr.Name, tr.TrialId
+                FROM patients AS pa
                 JOIN stage AS st
-                ON st.id = pa.stageId
+                ON st.StageId = pa.StageIdFK
                 JOIN trial AS tr
-                ON tr.id = st.trialId
-                WHERE pa.pin = ?
+                ON tr.TrialId = st.TrialId
+                WHERE pa.PatientPin = ?
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -77,6 +74,8 @@ function patientView (request, reply) {
             )
         ])
         .then(([currentPatient, surveyInstances, currentTrial]) => {
+          console.log("GOt the results");
+          console.log("currentPatient");
             // patient not found
             if (!currentPatient) {
                 throw new Error('patient does not exist');
