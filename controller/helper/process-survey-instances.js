@@ -15,8 +15,10 @@ const viewDateFormat = 'MM-DD-YYYY HH:mm';
  * @returns {Object} Complience chart data
  */
 function processSurveyInstances (surveys) {
+  console.log("In process Survey Instances");
+  // console.log(surveys);
     const filterSurveyByState = surveys.filter((survey) => {
-        return survey.state === 'completed' || survey.state === 'expired';
+        return survey.State === 'completed' || survey.State === 'pending';
     });
 
     return {
@@ -32,18 +34,20 @@ function processSurveyInstances (surveys) {
  */
 function pickDates (surveys) {
     const dates = surveys.map((survey) => {
-        return moment(survey.startTime, sqlDateFormat).format(viewDateFormat);
+        return moment(survey.StartTime).format(viewDateFormat);
     });
 
     if (surveys[0]) {
         // Adding an additional week to include all the dates in compliance chart.
         // This is done because chart js plots only the first day of the week.
         const numberOfDays = 7;
-        const endDateforChart = moment(surveys[0].dateCompleted, sqlDateFormat).add(numberOfDays, 'day');
+        const endDateforChart = moment(surveys[surveys.length -1].EndTime).add(numberOfDays, 'day');
 
-        dates.push(moment(endDateforChart, sqlDateFormat).format(viewDateFormat));
+        dates.push(moment(endDateforChart).format(viewDateFormat));
     }
 
+    console.log("Dates");
+    console.log(dates);
     return dates;
 }
 
@@ -53,31 +57,37 @@ function pickDates (surveys) {
  * @returns {Object} processed list of % time left data
  */
 function pickTimeLeft (surveys) {
-    const weeklyDuration = 48;
+    const weeklyDuration = 24;
     const dailyDuration = 24;
+    // console.log("Moment Diff");
+    // console.log(moment(surveys[0].EndTime)
+    // .diff(moment(surveys[0].StartTime), 'hours'));
     const weeklyPercentages = surveys.filter((survey) => {
-        return moment(survey.endTime, sqlDateFormat)
-        .diff(moment(survey.startTime, sqlDateFormat), 'hours') === weeklyDuration;
+        return moment(survey.EndTime)
+        .diff(moment(survey.StartTime), 'hours') > weeklyDuration;
     })
     .map((survey) => {
         return calculateTimeLeft(
-            moment(survey.startTime, sqlDateFormat),
-            moment(survey.endTime, sqlDateFormat),
-            moment(survey.actualSubmissionTime, sqlDateFormat)
+            moment(survey.StartTime),
+            moment(survey.EndTime),
+            moment(survey.ActualSubmissionTime)
         );
     });
     const dailyPercentages = surveys.filter((survey) => {
-        return moment(survey.endTime, sqlDateFormat)
-        .diff(moment(survey.startTime, sqlDateFormat), 'hours') === dailyDuration;
+        return moment(survey.EndTime)
+        .diff(moment(survey.StartTime), 'hours') <= dailyDuration;
     })
     .map((survey) => {
         return calculateTimeLeft(
-            moment(survey.startTime, sqlDateFormat),
-            moment(survey.endTime, sqlDateFormat),
-            moment(survey.actualSubmissionTime, sqlDateFormat)
+            moment(survey.StartTime),
+            moment(survey.EndTime),
+            moment(survey.ActualSubmissionTime)
         );
     });
-
+    // console.log("weeklyPercentages");
+    // console.log(weeklyPercentages);
+    // console.log("Daily");
+    // console.log(dailyPercentages);
     return [{
         label: '% Time left until weekly survey expired',
         backgroundColor: 'rgba(60, 103, 124, 0.2)',

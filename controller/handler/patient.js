@@ -75,6 +75,12 @@ function patientView (request, reply) {
         .then(([currentPatient, surveyInstances, currentTrial]) => {
           console.log("GOt the results");
           console.log("currentPatient");
+
+          var dataChart = processSurveyInstances(surveyInstances);          
+          console.log(dataChart);
+
+
+          // console.log(JSON.stringify(processSurveyInstances(surveyInstances)));
             // patient not found
             if (!currentPatient) {
                 throw new Error('patient does not exist');
@@ -99,12 +105,12 @@ function patientView (request, reply) {
 
                     return surveyInstanceCopy;
                 }),
-                datesJson: JSON.stringify(processSurveyInstances(surveyInstances))
+                datesJson: JSON.stringify(dataChart)
             });
         })
         .catch((err) => {
             request.log('error', err);
-
+            console.log(err);
             reply
             .view('404', {
                 title: 'Not Found'
