@@ -17,6 +17,11 @@
         }]
     };
     var ctx = document.getElementById('trialChart').getContext('2d');
+    var patientsTable = $('#patients-table').DataTable({
+        order: [3, 'desc'],
+        "paging": false
+    });
+    patientsTable.draw();
 
     new Chart(ctx, {
         type: 'doughnut',

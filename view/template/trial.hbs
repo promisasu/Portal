@@ -87,14 +87,14 @@
                           </button>
                         </div>
                         <div class="col-md-3 col-xl-1 col-xl-offset-1">
-                          <a href="/trial/{{ trial.id }}.csv" class="btn btn-primary text-uppercase">
+                          <a href="/trial/{{ trial.id }}.csv" class="btn btn-default text-uppercase" hidden>
                               Export Trial Data
                           </a>
                         </div>
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table id="patients-table" class="table table-hover">
                         <thead>
                             <tr>
                                 <th>
@@ -147,10 +147,10 @@
                                         {{ stage }}
                                     </td>
                                     <td>
-                                        {{ dateStarted }}
+                                        {{ DateStarted }}
                                     </td>
                                     <td>
-                                        {{ dateCompleted }}
+                                        {{ DateCompleted }}
                                     </td>
                                     <td>
                                         {{ totalMissed }}

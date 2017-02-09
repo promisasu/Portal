@@ -27,11 +27,6 @@ function trialView (request, reply) {
     Promise
         .all([
             trial.findById(request.params.id),
-            // stage.findAll({
-            //     where: {
-            //         trialId: request.params.id
-            //     }
-            // }),
             database.sequelize.query(
                 `
                 SELECT StageId, Name, CreatedAt, UpdatedAt, DeletedAt, TrialId FROM stage AS stage WHERE stage.DeletedAt IS NULL AND stage.TrialId = ?
@@ -52,6 +47,7 @@ function trialView (request, reply) {
                 JOIN patients AS pa
                 ON pa.StageIdFK = st.StageId
                 WHERE tr.TrialId = ?
+                ORDER BY pa.DateCompleted DESC
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -103,10 +99,6 @@ function trialView (request, reply) {
         ])
         .then(([currentTrial, stages, patients, compliance]) => {
             const rules = [];
-            console.log("currentTrial - ", currentTrial);
-            console.log("stages - ", stages);
-            console.log("patients - ", patients);
-            console.log("compliance - ", compliance);
             if (!currentTrial) {
                 throw new Error('trial does not exist');
             }
@@ -131,10 +123,9 @@ function trialView (request, reply) {
                     patient.status = 'Pending';
                     patient.totalMissed = 0;
                 }
-
-                patient.dateStarted = moment(patient.dateStarted)
+                patient.DateStarted = moment(patient.DateStarted)
                     .format('MM-DD-YYYY');
-                patient.dateCompleted = moment(patient.dateCompleted)
+                patient.DateCompleted = moment(patient.DateCompleted)
                     .format('MM-DD-YYYY');
 
                 return patient;
