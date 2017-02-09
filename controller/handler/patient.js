@@ -76,7 +76,7 @@ function patientView (request, reply) {
           console.log("GOt the results");
           console.log("currentPatient");
 
-          var dataChart = processSurveyInstances(surveyInstances);          
+          var dataChart = processSurveyInstances(surveyInstances);
           console.log(dataChart);
 
 
@@ -93,13 +93,13 @@ function patientView (request, reply) {
                 surveys: surveyInstances.map((surveyInstance) => {
                     const surveyInstanceCopy = Object.assign({}, surveyInstance);
 
-                    surveyInstanceCopy.startTime = moment(surveyInstanceCopy.startTime)
+                    surveyInstanceCopy.startTime = moment(surveyInstanceCopy.StartTime)
                         .format('MM-DD-YYYY');
-                    surveyInstanceCopy.endTime = moment(surveyInstanceCopy.endTime)
+                    surveyInstanceCopy.endTime = moment(surveyInstanceCopy.EndTime)
                         .format('MM-DD-YYYY');
-                    if (surveyInstanceCopy.userSubmissionTime) {
-                        surveyInstanceCopy.userSubmissionTime
-                            = moment(surveyInstanceCopy.userSubmissionTime)
+                    if (surveyInstanceCopy.UserSubmissionTime) {
+                        surveyInstanceCopy.UserSubmissionTime
+                            = moment(surveyInstanceCopy.UserSubmissionTime)
                                 .format('MM-DD-YYYY h:mma');
                     }
 
