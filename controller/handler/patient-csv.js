@@ -25,6 +25,11 @@ const configuration = [
         default: ''
     },
     {
+        label: 'Date Survey Completed',
+        key: 'date',
+        default: ''
+    },
+    {
         label: 'Question Id',
         key: 'questionId',
         default: ''
@@ -50,16 +55,16 @@ const configuration = [
 function patientCSV (request, reply) {
     database.sequelize.query(
         `
-        SELECT ai.PatientPinFK as pin, ai.activityTitle as name, act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, que.QuestionText as questionText, act.questionOptionIdFk as optionId, ans.OptionText as optionText
+        SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, que.QuestionText as questionText, act.questionOptionIdFk as optionId, ans.OptionText as optionText
         FROM question_result act
         JOIN questions que
         ON act.questionIdFk = que.QuestionId
         JOIN question_options ans
         ON act.questionOptionIdFk = ans.QuestionOptionId
         JOIN activity_instance ai
-        ON act.ActivityInstance = ai.ActivityInstanceIdFk
+        ON act.ActivityInstanceIdFk = ai.ActivityInstanceId
         WHERE act.ActivityInstanceIdFk
-        IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = 2013 and State='completed');
+        IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ? and State='completed');
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
@@ -69,7 +74,7 @@ function patientCSV (request, reply) {
         }
     )
     .then((optionsWithAnswers) => {
-        const property = ['pin', 'name', 'id', 'questionText', 'questionId'];
+        const property = ['pin', 'name', 'id', 'date', 'questionText', 'questionId'];
         const uniqueAnswers = deduplicate(optionsWithAnswers, property);
 
         return convertJsonToCsv(uniqueAnswers, configuration);
@@ -78,7 +83,7 @@ function patientCSV (request, reply) {
         return reply(csv).type('text/csv');
     })
     .catch((err) => {
-        request.log('error', err);
+        console.log('error', err);
         reply(boom.notFound('patient data not found'));
     });
 }
