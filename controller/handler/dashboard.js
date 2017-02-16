@@ -19,8 +19,8 @@ function dashboardView (request, reply) {
 
     database.sequelize.query(
         `
-        SELECT *
-        FROM trial;
+        SELECT t.*, s.StageId, count(1) as recruitedCount from trial t, stage s INNER JOIN patients pa ON s.StageId = pa.StageIdFK  WHERE t.TrialId = s.trialId;
+
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
