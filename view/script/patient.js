@@ -6,6 +6,23 @@
 
     // Makes a copy of window.dates
     var allDatesConfig = Object.create(window.dates);
+
+
+    //calculate y axis
+    // var datasets = window.dates.datasets;
+    // console.log(datasets);
+    // var yAxes = [];
+    // var labels = [];
+    // for (var i = 0; i < datasets.length; i++) {
+    //   var dataSet = datasets[i];
+    //   console.log("Dataset");
+    //   console.log(dataSet);
+    //   yAxes.push();
+    //   labels.push.apply(labels,dataSet.dates);
+    // }
+    // console.log("Y Axes");
+    // console.log(yAxes);
+
     var config = {
         type: 'line',
         data: '',
@@ -26,36 +43,20 @@
                         }
                     }
                 ],
-                yAxes: [
-                    {
-                        id: 'y-axis-0',
-                        type: 'linear',
-                        position: 'left',
-                        ticks: {
-                            max: 100,
-                            min: 0
-                        },
-                        display: true,
-                        scaleLabel: {
-                            show: true,
-                            labelString: '% Time Left'
-                        }
+                yAxes: [{
+                    id: 'y-axis-0',
+                    type: 'linear',
+                    position: 'left',
+                    ticks: {
+                        max: 100,
+                        min: 0
                     },
-                    {
-                        id: 'y-axis-1',
-                        type: 'linear',
-                        position: 'right',
-                        ticks: {
-                            max: 100,
-                            min: 0
-                        },
-                        display: true,
-                        scaleLabel: {
-                            show: true,
-                            labelString: '% Time Left'
-                        }
+                    display: true,
+                    scaleLabel: {
+                        show: true,
+                        labelString: '% Time Left'
                     }
-                ]
+                }]
             }
         }
     };
