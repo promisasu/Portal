@@ -67,7 +67,7 @@
                                 {{#each surveys}}
                                     <tr class="{{ state-to-status state prefix='table-' }}">
                                         <th scope="row">
-                                            <a href="/survey/{{ ActivityInstanceId }}">
+                                            <a href="/survey/{{ ../patient.PatientPin }}/{{ ActivityInstanceId }}">
                                                 {{ ActivityInstanceId }}
                                                 <i class="fa fa-search"></i>
                                             </a>

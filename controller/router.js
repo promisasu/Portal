@@ -211,12 +211,16 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/survey/{id}',
+        path: '/survey/{pin}/{activityInstanceId}',
         handler: surveyPresenter,
         config: {
             validate: {
                 params: {
-                    id: Joi
+                    pin: Joi
+                        .number()
+                        .integer()
+                        .positive(),
+                    activityInstanceId: Joi
                         .number()
                         .integer()
                         .positive()
