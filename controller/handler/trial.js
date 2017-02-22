@@ -21,7 +21,7 @@ const httpNotFound = 404;
 function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
     const stage = database.sequelize.model('stage');
-    const startDate = moment().startOf('Week');
+    const startDate = moment("2016-11-23");
     console.log("req params - " + request.params.id);
 
     Promise
@@ -59,7 +59,7 @@ function trialView (request, reply) {
             database.sequelize.query(
                 `
                 SELECT pa.PatientPin,
-                SUM(si.State = 'pending') AS expiredCount,
+                SUM(si.State = 'expired') AS expiredCount,
                 SUM(si.State = 'completed') AS completedCount
                 FROM activity_instance AS si
                 JOIN patients AS pa
@@ -111,10 +111,11 @@ function trialView (request, reply) {
 
             const patientArray = patients.map((patient) => {
                   // check for patient's status
-                const patientStatus = patientStatuses.find((status) => {
-                    return status.pin === patient.pin;
-                });
 
+                const patientStatus = patientStatuses.find((status) => {
+
+                    return status.PatientPin === patient.PatientPin;
+                });
                 // collect the compliance status as well as expiredCount
                 if (patientStatus) {
                     patient.status = patientStatus.status;

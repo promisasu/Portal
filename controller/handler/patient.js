@@ -37,7 +37,7 @@ function patientView (request, reply) {
             database.sequelize.query(
                 `
                 SELECT pa.DateCompleted, si.ActivityInstanceId, si.StartTime, si.EndTime, si.UserSubmissionTime,
-                si.ActualSubmissionTime, si.State, st.Name AS stageName
+                si.ActualSubmissionTime, si.State as state, st.Name AS stageName
                 FROM patients AS pa
                 JOIN activity_instance AS si
                 ON si.PatientPinFK = pa.PatientPin
@@ -92,7 +92,6 @@ function patientView (request, reply) {
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
                     const surveyInstanceCopy = Object.assign({}, surveyInstance);
-
                     surveyInstanceCopy.startTime = moment(surveyInstanceCopy.StartTime)
                         .format('MM-DD-YYYY');
                     surveyInstanceCopy.endTime = moment(surveyInstanceCopy.EndTime)

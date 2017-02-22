@@ -9,7 +9,7 @@
  * @returns {Array<Number>} number of non-compliant, semi-compliant and compliant patients
  */
 function processComplianceCount (rows) {
-    const nonCompliantThreshold = 2;
+    const nonCompliantThreshold = 4;
     const increment = 1;
     const semiCompliantThreshold = 0;
     const compliance = {
@@ -21,8 +21,8 @@ function processComplianceCount (rows) {
     for (const row of rows) {
         if (row.expiredCount > nonCompliantThreshold) {
             compliance.nonCompliant += increment;
-        } else if (row.expiredCount > semiCompliantThreshold) {
-            compliance.semiCompliant += increment;
+        // } else if (row.expiredCount > semiCompliantThreshold) {
+        //     compliance.semiCompliant += increment;
         } else {
             compliance.compliant += increment;
         }
