@@ -64,7 +64,8 @@ function patientCSV (request, reply) {
         JOIN activity_instance ai
         ON act.ActivityInstanceIdFk = ai.ActivityInstanceId
         WHERE act.ActivityInstanceIdFk
-        IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ? and State='completed');
+        IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ? and State='completed')
+        ORDER BY id;
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
