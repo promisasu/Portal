@@ -28,7 +28,7 @@
                     <h4 class="card-title">
                         Patients' Surveys
                         <span class="pull-right">
-                            <a href="/patient/{{ patient.pin }}.csv" class="btn btn-primary btn-sm">
+                            <a href="/patient/{{ patient.PatientPin }}.csv" class="btn btn-primary btn-sm">
                                 Export Patient Data
                             </a>
                             <button id="deactivate-patient" class="btn btn-danger btn-sm" disabled>
@@ -67,7 +67,7 @@
                                 {{#each surveys}}
                                     <tr class="{{ state-to-status state prefix='table-' }}">
                                         <th scope="row">
-                                            <a href="/survey/{{ id }}">
+                                            <a href="/survey/{{ ../patient.PatientPin }}/{{ ActivityInstanceId }}">
                                                 {{ ActivityInstanceId }}
                                                 <i class="fa fa-search"></i>
                                             </a>
