@@ -17,10 +17,8 @@ const viewDateFormat = 'MM-DD-YYYY HH:mm';
  * @returns {Object} Complience chart data
  */
 function processSurveyInstances (surveys) {
-  // //////console.log("In process Survey Instances");
-  // // ////console.log(surveys);
     const filterSurveyByState = surveys.filter((survey) => {
-        return survey.State === 'completed';
+        return survey.state === 'completed';
     });
     // const filterSurveyByState = surveys;
     var datasets = pickTimeLeft(filterSurveyByState);
