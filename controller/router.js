@@ -13,6 +13,7 @@ const patientCSV = require('./handler/patient-csv');
 const trialCSV = require('./handler/trial-csv');
 const surveyPresenter = require('./handler/survey');
 const webFormPresenter = require('./handler/webform');
+const webFormPresenterPost = require('./handler/webformPost');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
 
@@ -26,6 +27,11 @@ module.exports = [
         method: 'GET',
         path: '/addNew',
         handler: webFormPresenter
+    },
+    {
+        method: 'POST',
+        path: '/addNewSuccess',
+        handler: webFormPresenterPost
     },
     {
         method: 'GET',

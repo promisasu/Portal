@@ -16,302 +16,325 @@
         </li>
     </ol>
     <div class="container">
-      <script type="text/javascript">
-        ClearForm();
-      </script>
-  <form action="" class="well form-horizontal" method="post"  id="patient_form">
-    <fieldset>
-      <!-- Form Name -->
-      <legend>Patient Enrollment Form</legend>
-      <!-- radio checks -->
-      <label class="col-md-4 control-label">* Indicates Required Fields</label><hr>
-      <button type='button' id="ins" onclick="showIns()">Instruction</button>
-      <div class="form-group">
-        <label class="col-md-4 control-label">Which group does the subject belong to? *</label>
-        <div class="col-md-4">
-          <div class="radio">
-            <label>
-              <input type="radio" name="subject_group" value="child"  onclick="isParentCheck()" id="childCheck" required/> Child (8-17)
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="subject_group" value="adult" onclick="isParentCheck()"/> Adult (18-21)
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="subject_group" value="parent_proxy" onclick="isParentCheck()" id="parentCheck"/> Parent
-            </label>
-          </div>
-        </div>
-      </div>
-      <hr>
+        <form action="/addNewSuccess" class="well form-horizontal" method="post" id="patient_form" novalidate="">
+            <fieldset>
+                <!-- Form Name -->
+                <legend>Patient Enrollment Form</legend>
+                <!-- radio checks -->
+                <label class="col-md-4 control-label">* Indicates Required Fields</label>
+                <hr>
+                <button type='button' id="ins" onclick="showIns()">Instruction</button>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Which group does the subject belong to? *</label>
+                    <div class="col-md-4">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="subject_group" value="child" onclick="isParentCheck(this.value)" id="childCheck" required/> Child (8-17)
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="subject_group" value="adult" onclick="isParentCheck(this.value)" /> Adult (18-21)
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="subject_group" value="parent_proxy" onclick="isParentCheck(this.value)" id="parentCheck" /> Parent
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
 
-      <!-- Text input if parent is selected-->
-      <div id="ifParent" style="display:none">
-        <div class="form-group">
-          <label class="col-md-4 control-label" >What is the PIN of your Child? *</label>
-          <div class="col-md-4 inputGroupContainer">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <input  name="childPin" class="form-control"  type="text" required>
-            </div>
-          </div>
-        </div>
-        <hr>
-      </div>
+                <!-- Text input if parent is selected-->
+                <div id="ifParent" style="display:none">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">What is the PIN of your Child? *</label>
+                        <div class="col-md-4 inputGroupContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input name="childPin" onkeypress="setChildPin(this.value)" class="form-control" type="text" required>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
 
-      <!-- radio checks -->
-      <div class="form-group">
-        <label class="col-md-4 control-label">What kind of device will you be using for the study?</label>
-        <div class="col-md-4">
-          <div class="radio">
-            <label>
-              <input type="radio" name="device" value="android smartphone" /> Android smartphone
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="device" value="iPhone" /> iPhone
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="device" value="android tablet" /> Android Tablet
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="device" value="iPad" /> iPad
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="device" value="web broswer" /> Standard web browser on a personal computer
-            </label>
-          </div>
-        </div>
-      </div>
+                <!-- radio checks -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">What kind of device will you be using for the study?</label>
+                    <div class="col-md-4">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="device" value="android smartphone" /> Android smartphone
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="device" value="iPhone" /> iPhone
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="device" value="android tablet" /> Android Tablet
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="device" value="iPad" /> iPad
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="device" value="web broswer" /> Standard web browser on a personal computer
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
-      <hr>
-      <!-- Text input-->
+                <hr>
+                <!-- Text input-->
 
-      <div class="form-group">
-        <label class="col-md-4 control-label" >What is the version of the device in the previous question? This can be checked on smartphones and tablets under Settings.</label>
-        <div class="col-md-4 inputGroupContainer">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input name="device_version" class="form-control"  type="text">
-          </div>
-        </div>
-      </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">What is the version of the device in the previous question? This can be checked on smartphones and tablets under Settings.</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input name="device_version" class="form-control" type="text">
+                        </div>
+                    </div>
+                </div>
 
-      <hr>
-      <!-- radio checks -->
-      <div id="hydroxurea" style="display:none">
-        <div class="form-group">
-          <label class="col-md-4 control-label">How many tablets of hydroxurea does the patient take per day? *</label>
-          <div class="col-md-4">
-            <div class="radio">
-              <label>
-                <input type="radio" name="hydroxurea_tablets" value="0" required/> 0
-              </label>
-            </div>
-            <div class="radio">
-              <label>
-                <input type="radio" name="hydroxurea_tablets" value="1" /> 1
-              </label>
-            </div>
-            <div class="radio">
-              <label>
-                <input type="radio" name="hydroxurea_tablets" value="2" /> 2
-              </label>
-            </div>
-            <div class="radio">
-              <label>
-                <input type="radio" name="hydroxurea_tablets" value="3 or more" /> 3 or more
-              </label>
-            </div>
+                <hr>
+                <!-- radio checks -->
+                <div id="hydroxurea" style="display:none">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">How many tablets of hydroxurea does the patient take per day? *</label>
+                        <div class="col-md-4">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="0" required/> 0
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="1" /> 1
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="2" /> 2
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="3 or more" /> 3 or more
+                                </label>
+                            </div>
 
-          </div>
-        </div>
+                        </div>
+                    </div>
 
 
-        <hr>
+                    <hr>
 
-        <!-- Text input-->
+                    <!-- Text input-->
 
-        <div class="form-group">
-          <label class="col-md-4 control-label">What prescribed medications is the patient allowed to take for the onset of pain? Please indicate the medication and the dosage per unit (tablet) per day basis. *</label>
-          <br> <label>(Please select the medications checkbox first)</label>
-          <div class="col-md-4 inputGroupContainer">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">What prescribed medications is the patient allowed to take for the onset of pain? Please indicate the medication and the dosage per unit (tablet) per day basis.</label>
+                        <br>
+                        <div class="col-md-4 inputGroupContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                <br/>
+                                <label> Oxycodone</label>
+                                <div id="Oxycodone">
+                                    <select id="Oxycodone_tablets" onchange='enable("Oxycodone")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                    Tablets
+                                    <select id="Oxycodone_medicine_mg" disabled>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="40">40</option>
+                                    </select> mg
+                                    </div>
+                                </br>
 
-              <input type="checkbox" name="medicine" value="Oxycodone"> Oxycodone
-              <div id="Oxycodone">
-              <select id="medicine_mg">
-                <option selected="selected" value="0">0</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="40">40</option>
-              </select> mg
-              <select id="tablets">
-                <option selected="selected" value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-              </select>
-              Tablets</div> </br>
+                                <label>Tramadol</label>
+                                <br>
+                                <div id="Tramadol">
+                                    <select id="Tramadol_tablets" onchange='enable("Tramadol")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                    Tablets
+                                    <select id="Tramadol_medicine_mg" disabled>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
+                                        <option value="300">300</option>
+                                    </select> mg
+                                    </div>
+                                </br>
 
-              <input type="checkbox" name="medicine" value="Tramadol" >Tramadol<br>
-              <div id="Tramadol">
-              <select id="medicine_mg">
-                <option selected="selected" value="0">0</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-                <option value="200">200</option>
-                <option value="300">300</option>
-              </select> mg
-              <select id="tablets">
-                <option selected="selected" value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-              </select>
-              Tablets</div></br>
+                                <label>Dilaudid</label>
+                                <br>
+                                <div id="Dilaudid">
+                                    <select id="Dilaudid_tablets" onchange='enable("Dilaudid")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                    Tablets
+                                    <select id="Dilaudid_medicine_mg" disabled>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="2">2</option>
+                                        <option value="4">4</option>
+                                        <option value="8">8</option>
+                                    </select> mg
+                                    </div>
+                                </br>
 
-              <input type="checkbox" name="medicine" value="Dilaudid" >Dilaudid<br>
-              <div id="Dilaudid">
-              <select id="medicine_mg">
-                <option selected="selected" value="0">0</option>
-                <option value="2">2</option>
-                <option value="4">4</option>
-                <option value="8">8</option>
-              </select> mg
-              <select id="tablets">
-                <option selected="selected" value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-              </select>
-              Tablets</div></br>
+                              <label>Percocet</label>
+                                <br>
+                                <div id="Percocet">
+                                    <select id="Percocet_tablets" onchange='enable("Percocet")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                    Tablets
+                                    <select id="Percocet_medicine_mg" disabled>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="40">40</option>
+                                    </select> mg
+                                    </div>
+                                </br>
 
-              <input type="checkbox" name="medicine" value="Percocet" >Percocet<br>
-              <div id="Percocet">
-                <select id="medicine_mg">
-                  <option selected="selected" value="0">0</option>
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="40">40</option>
-                </select> mg
-                <select id="tablets">
-                  <option selected="selected" value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                </select>
-                Tablets</div></br>
+                                <label>Ibuprofen</label>
+                                <br>
+                                <div id="Ibuprofen">
 
-                <input type="checkbox" name="medicine" value="Ibuprofen" >Ibuprofen<br>
-                <div id="Ibuprofen">
-                  <select id="medicine_mg">
-                    <option selected="selected" value="0">0</option>
-                    <option value="200">200</option>
-                    <option value="400">400</option>
-                    <option value="600">600</option>
-                    <option value="800">800</option>
-                  </select> mg
-                  <select id="tablets">
-                    <option selected="selected" value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                  </select>
-                  Tablets</div></br>
+                                    <select id="Ibuprofen_tablets" onchange='enable("Ibuprofen")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                    Tablets
+                                        <select id="Ibuprofen_medicine_mg" disabled>
+                                            <option selected="selected" value="0">0</option>
+                                            <option value="200">200</option>
+                                            <option value="400">400</option>
+                                            <option value="600">600</option>
+                                            <option value="800">800</option>
+                                        </select> mg
+                                    </div>
+                                </br>
 
-                  <input type="checkbox" name="medicine" value="Naprosyn" >Naprosyn<br>
-                  <div id="Naprosyn">
-                    <select id="medicine_mg">
-                      <option selected="selected" value="0">0</option>
-                      <option value="250">250</option>
-                      <option value="375">375</option>
-                      <option value="500">500</option>
-                    </select> mg
-                    <select id="tablets">
-                      <option selected="selected" value="0">0</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                    </select>
-                    Tablets</div></br>
+                                <label>Naprosyn</label>
+                                <br>
+                                <div id="Naprosyn">
 
-                    <input type="checkbox" name="medicine" value="Tylenol with codeine" >Tylenol with codeine<br>
-                    <div id="Tylenol with codeine">
-                      <select id="medicine_mg">
-                        <option selected="selected" value="0">0</option>
-                        <option value="200">200</option>
-                        <option value="400">400</option>
-                        <option value="600">600</option>
-                        <option value="800">800</option>
-                      </select> mg
-                      <select id="tablets">
-                        <option selected="selected" value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                      </select>
-                      Tablets</div></br>
+                                    <select id="Naprosyn_tablets" onchange='enable("Naprosyn")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                    Tablets
+                                        <select id="Naprosyn_medicine_mg" disabled>
+                                            <option selected="selected" value="0">0</option>
+                                            <option value="250">250</option>
+                                            <option value="375">375</option>
+                                            <option value="500">500</option>
+                                        </select> mg
+                                    </div>
+                                </br>
 
-              <label>Other Medications (If Any):<br>
-              [Format: advil 5mg 1Tablet]</label><br>
+                                <label>Tylenol with codeine</label>
+                                <br>
+                                <div id="Tylenol with codeine">
 
-              <textarea name="other_medication" rows="4" cols="50"></textarea>
-            </div>
-          </div>
-        </div>
+                                    <select id="Tylenol with codeine_tablets" onchange='enable("Tylenol with codeine")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                    Tablets
+                                        <select id="Tylenol with codeine_medicine_mg" disabled>
+                                            <option selected="selected" value="0">0</option>
+                                            <option value="200">200</option>
+                                            <option value="400">400</option>
+                                            <option value="600">600</option>
+                                            <option value="800">800</option>
+                                        </select> mg
+                                    </div>
+                                </br>
 
-        <hr>
-      </div>
-      <!-- Text input-->
+                                <label>Other Medications (If Any):
+                                    <br> [Format: advil 5mg 1Tablet]</label>
+                                <br>
 
-      <div class="form-group">
-        <label class="col-md-4 control-label">Please provide any other notes relevant to this subject:</label>
-        <div class="col-md-4 inputGroupContainer">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-            <textarea name="other_info" rows="4" cols="50"></textarea>
-          </div>
-        </div>
-      </div>
-      <hr>
-      <!-- Button -->
-      <div class="form-group">
-        <label class="col-md-4 control-label"></label>
-        <div class="col-md-4">
-          <button type="submit" class="btn btn-warning" onclick="submitData()">Submit <span class="glyphicon glyphicon-send"></span></button><br>
+                                <textarea name="other_medication" rows="4" cols="50"></textarea>
+                            </div>
+                        </div>
+                    </div>
 
-        </div>
-      </div>
+                    <hr>
+                </div>
+                <!-- Text input-->
 
-    </fieldset>
-  </form>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Please provide any other notes relevant to this subject:</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                            <textarea name="other_info" rows="4" cols="50"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label"></label>
+                    <div class="col-md-4">
+                        <input type="submit" disabled><span class="glyphicon glyphicon-send"></span>
+                        </button>
+                        <br>
+
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
 </div>
-</div><!-- /.container -->
-</div>
 
-<script src="/static/script/helper.js" defer></script>
+<script src="/static/script/helper.js"></script>
