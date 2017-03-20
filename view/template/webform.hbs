@@ -21,12 +21,13 @@
                 <!-- Form Name -->
                 <legend>Patient Enrollment Form</legend>
                 <!-- radio checks -->
-                <label class="col-md-4 control-label">* Indicates Required Fields</label>
-                <hr>
-                <button type='button' id="ins" onclick="showIns()">Instruction</button>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Which group does the subject belong to? *</label>
-                    <div class="col-md-4">
+                <label class="control-label">* Indicates Required Fields</label>
+                <!-- <br>
+                <button type='button' id="ins" onclick="showIns()">Instruction</button> -->
+
+                <div class="form-group row">
+                    <label class="control-label">Which group does the subject belong to? *</label>
+                    <div class="">
                         <div class="radio">
                             <label>
                                 <input type="radio" name="subject_group" value="child" onclick="isParentCheck(this.value)" id="childCheck" required/> Child (8-17)
@@ -44,26 +45,24 @@
                         </div>
                     </div>
                 </div>
-                <hr>
+                
 
                 <!-- Text input if parent is selected-->
                 <div id="ifParent" style="display:none">
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">What is the PIN of your Child? *</label>
-                        <div class="col-md-4 inputGroupContainer">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <div class="form-group row">
+                        <label class="control-label">What is the PIN of your Child? *</label>
+                        <div class="inputGroupContainer">
+                            <div class="input-group col-xs-4">
                                 <input name="childPin" onkeypress="setChildPin(this.value)" class="form-control" type="text" required>
                             </div>
                         </div>
                     </div>
-                    <hr>
                 </div>
+                <br>
 
                 <!-- radio checks -->
-                <div class="form-group">
-                    <label class="col-md-4 control-label">What kind of device will you be using for the study?</label>
-                    <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="control-label">What kind of device will you be using for the study?</label>
                         <div class="radio">
                             <label>
                                 <input type="radio" name="device" value="android smartphone" /> Android smartphone
@@ -90,62 +89,59 @@
                             </label>
                         </div>
                     </div>
-                </div>
 
-                <hr>
-                <!-- Text input-->
+                    
+                    <!-- Text input-->
 
-                <div class="form-group">
-                    <label class="col-md-4 control-label">What is the version of the device in the previous question? This can be checked on smartphones and tablets under Settings.</label>
-                    <div class="col-md-4 inputGroupContainer">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input name="device_version" class="form-control" type="text">
-                        </div>
-                    </div>
-                </div>
-
-                <hr>
-                <!-- radio checks -->
-                <div id="hydroxurea" style="display:none">
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">How many tablets of hydroxurea does the patient take per day? *</label>
-                        <div class="col-md-4">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="0" required/> 0
-                                </label>
+                    <div class="form-group row">
+                        <label class="control-label">What is the version of the device in the previous question? This can be checked on smartphones and tablets under Settings.</label>
+                        <div class="col-md-4 inputGroupContainer">
+                            <div class="input-group">
+                                <input name="device_version" class="form-control" type="text">
                             </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="1" /> 1
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="2" /> 2
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="3 or more" /> 3 or more
-                                </label>
-                            </div>
-
                         </div>
                     </div>
 
+                    
+                    <!-- radio checks -->
+                    <div id="hydroxurea" style="display:none">
+                        <div class="form-group row">
+                            <label class="control-label">How many tablets of hydroxurea does the patient take per day? *</label>
+                            <div class="">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="0" required/> 0
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="1" /> 1
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="2" /> 2
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="3 or more" /> 3 or more
+                                    </label>
+                                </div>
 
-                    <hr>
+                            </div>
+                        </div>
+                    </div>
+
+                    
 
                     <!-- Text input-->
 
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">What prescribed medications is the patient allowed to take for the onset of pain? Please indicate the medication and the dosage per unit (tablet) per day basis.</label>
+                    <div class="form-group row">
+                        <label class="control-label">What prescribed medications is the patient allowed to take for the onset of pain? Please indicate the medication and the dosage per unit (tablet) per day basis.</label>
                         <br>
-                        <div class="col-md-4 inputGroupContainer">
+                        <div class="inputGroupContainer">
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                                 <br/>
                                 <label> Oxycodone</label>
                                 <div id="Oxycodone">
@@ -166,7 +162,7 @@
                                         <option value="20">20</option>
                                         <option value="40">40</option>
                                     </select> mg
-                                    </div>
+                                </div>
                                 </br>
 
                                 <label>Tramadol</label>
@@ -189,7 +185,7 @@
                                         <option value="200">200</option>
                                         <option value="300">300</option>
                                     </select> mg
-                                    </div>
+                                </div>
                                 </br>
 
                                 <label>Dilaudid</label>
@@ -211,7 +207,7 @@
                                         <option value="4">4</option>
                                         <option value="8">8</option>
                                     </select> mg
-                                    </div>
+                                </div>
                                 </br>
 
                               <label>Percocet</label>
@@ -234,7 +230,7 @@
                                         <option value="20">20</option>
                                         <option value="40">40</option>
                                     </select> mg
-                                    </div>
+                                </div>
                                 </br>
 
                                 <label>Ibuprofen</label>
@@ -256,7 +252,7 @@
                                             <option value="600">600</option>
                                             <option value="800">800</option>
                                         </select> mg
-                                    </div>
+                                </div>
                                 </br>
 
                                 <label>Naprosyn</label>
@@ -275,7 +271,7 @@
                                             <option value="375">375</option>
                                             <option value="500">500</option>
                                         </select> mg
-                                    </div>
+                                </div>
                                 </br>
 
                                 <label>Tylenol with codeine</label>
@@ -295,42 +291,38 @@
                                             <option value="600">600</option>
                                             <option value="800">800</option>
                                         </select> mg
-                                    </div>
+                                </div>
                                 </br>
 
                                 <label>Other Medications (If Any):
                                     <br> [Format: advil 5mg 1Tablet]</label>
                                 <br>
-
                                 <textarea name="other_medication" rows="4" cols="50"></textarea>
                             </div>
                         </div>
                     </div>
+                    
 
-                    <hr>
-                </div>
-                <!-- Text input-->
-
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Please provide any other notes relevant to this subject:</label>
-                    <div class="col-md-4 inputGroupContainer">
+                    <div class="form-group row">
+                    <label class="control-label">Please provide any other notes relevant to this subject:</label>
+                    <div class="inputGroupContainer">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
                             <textarea name="other_info" rows="4" cols="50"></textarea>
                         </div>
                     </div>
-                </div>
-                <hr>
-                <!-- Button -->
-                <div class="form-group">
-                    <label class="col-md-4 control-label"></label>
-                    <div class="col-md-4">
-                        <input type="submit" disabled><span class="glyphicon glyphicon-send"></span>
-                        </button>
-                        <br>
-
                     </div>
-                </div>
+
+                    <!-- Button -->
+                    <div class="form-group row">
+                        <label class="control-label"></label>
+                        <div class="">
+                            <input type="submit" disabled><span class="glyphicon glyphicon-send"></span>
+                            </button>
+                            <br>
+
+                        </div>
+                    </div>
+                    
 
             </fieldset>
         </form>
