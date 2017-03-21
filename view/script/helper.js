@@ -109,7 +109,7 @@ function callAjax(formData) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        url: "{{postURL}}rest/patients/enrollpatient",
+        url: "http://localhost:8080/v311/rest/patients/enrollpatient",
         method: "POST",
         dataType: "json",
         data: formDataJSON,
@@ -117,11 +117,14 @@ function callAjax(formData) {
             //data - response from server
             // console.log(data.patientPIN);
             // Put the object into storage
+            console.log("Success");
+            console.log(data);
             sessionStorage.setItem('patientPIN', data.patientPIN);
             // window.alert("Your pin is "+data.patientPIN+"\n Please note it down.");
             window.location = "success.html";
         },
         error: function(error) {
+            console.log(error);
             var errorMessage = JSON.parse(error.responseText).message;
             window.alert(errorMessage);
             window.location = "error.html";
