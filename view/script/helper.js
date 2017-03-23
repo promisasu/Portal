@@ -109,7 +109,7 @@ function callAjax(formData) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        url: "http://localhost:8080/v311/rest/patients/enrollpatient",
+        url: "{{postURL}}/rest/patients/enrollpatient",
         method: "POST",
         dataType: "json",
         data: formDataJSON,

@@ -29,8 +29,8 @@ module.exports = [
         handler: webFormPresenter
     },
     {
-        method: 'POST',
-        path: '/addNewSuccess',
+        method: 'GET',
+        path: '/addNewSuccess/{id*}',
         handler: webFormPresenterPost
     },
     {

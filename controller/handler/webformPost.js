@@ -5,6 +5,8 @@
  */
 
 
+var request = require('request');
+
  /**
   * A dashboard with an overview of a specific patient.
   * @param {Request} request - Hapi request
@@ -12,8 +14,19 @@
   * @returns {View} Rendered page
   */
  function webformPost (request, reply) {
-   console.log(request.payload);
-   return reply.view('webform',{'title':'Add a new Patient'});
+   console.log(request.params);
+  //  var options = {
+  //     uri: '{{URL}}/rest/patients/enrollpatient',
+  //     method: 'POST',
+  //     json: JSON.stringify(formData)
+  // };
+  // request(options, function (error, response, body) {
+  // if (!error && response.statusCode == 200) {
+  //  console.log(response) // Print the shortened url.
+  // }
+  // });
+  console.log("Going to success");
+   return reply.view('webformSuccess',{'patientPIN':request.params.id.toString()});
 }
 
 module.exports = webformPost;
