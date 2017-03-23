@@ -121,7 +121,7 @@ function callAjax(formData) {
             console.log(data);
             sessionStorage.setItem('patientPIN', data.patientPIN);
             // window.alert("Your pin is "+data.patientPIN+"\n Please note it down.");
-            window.location = "success.html";
+            window.location = "/addNewSuccess/" + data.patientPIN;
         },
         error: function(error) {
             console.log(error);
