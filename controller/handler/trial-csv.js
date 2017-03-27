@@ -8,52 +8,49 @@ const database = require('../../model');
 const convertJsonToCsv = require('../helper/convert-json-to-csv');
 const boom = require('boom');
 const deduplicate = require('../helper/deduplicate');
+const customMap = require('hashmap');
 const configuration = [
     {
-        label: 'Trial Name',
-        key: 'trialName',
-        default: ''
-    },
-    {
         label: 'Patient Pin',
-        key: 'pin',
+        key: 'PatientPin',
         default: ''
     },
     {
-        label: 'Patient Date Started',
-        key: 'dateStarted',
+        label: 'Date Started',
+        key: 'DateStarted',
         default: ''
     },
     {
-        label: 'Patient Date Completed',
-        key: 'dateCompleted',
+        label: '0',
+        key: 'State0',
         default: ''
     },
     {
-        label: 'Survey Name',
-        key: 'name',
+        label: '1',
+        key: 'State1',
         default: ''
     },
     {
-        label: 'Survey ID',
-        key: 'id',
+        label: '2',
+        key: 'State2',
         default: ''
     },
     {
-        label: 'Question ID',
-        key: 'questionId',
+        label: '3',
+        key: 'State3',
         default: ''
     },
     {
-        label: 'Question Prompt',
-        key: 'questionText',
+        label: '4',
+        key: 'State4',
         default: ''
     },
     {
-        label: 'Question Answer',
-        key: 'optionText',
+        label: '5',
+        key: 'State5',
         default: ''
     }
+
 ];
 
 /**
@@ -67,30 +64,11 @@ function trialCSV (request, reply) {
 
     database.sequelize.query(
         `
-        SELECT tr.name AS trialName, pa.pin, DATE_FORMAT(pa.dateStarted, ?) AS dateStarted,
-        DATE_FORMAT( pa.dateCompleted, ?) AS dateCompleted, st.name,
-        si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
-        FROM trial AS tr
-        JOIN stage
-        ON stage.trialId = tr.id
-        JOIN active_patients AS pa
-        ON pa.stageId = stage.id
-        JOIN survey_instance AS si
-        ON si.patientId = pa.id
-        JOIN survey_template AS st
-        ON st.id = si.surveyTemplateId
-        JOIN join_surveys_and_questions AS jsq
-        ON jsq.surveyTemplateId = st.id
-        JOIN question_template AS qt
-        ON qt.id = jsq.questionTemplateId
-        JOIN question_option AS qo
-        ON qo.questionTemplateId = qt.id
-        JOIN question_result AS qr
-        ON qr.surveyInstanceId = si.id
-        AND qr.questionOptionId = qo.id
-        WHERE tr.id = ?
-        AND si.state = 'completed'
-        ORDER BY pa.pin ASC, si.id, jsq.questionOrder, qo.order
+        SELECT p.PatientPin, p.DateStarted, a.State FROM patients p
+        JOIN activity_instance a
+        ON p.PatientPin = a.PatientPinFk
+        WHERE a.activityTitle='Sickle Cell Weekly Survey'
+        ORDER BY p.PatientPin;
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
@@ -102,19 +80,8 @@ function trialCSV (request, reply) {
         }
     )
     .then((optionsWithAnswers) => {
-        const property = [
-            'trialName',
-            'pin',
-            'name',
-            'id',
-            'questionText',
-            'questionId',
-            'dateStarted',
-            'dateCompleted'
-        ];
-        const uniqueAnswers = deduplicate(optionsWithAnswers, property);
-
-        return convertJsonToCsv(uniqueAnswers, configuration);
+        optionsWithAnswers = formatData(optionsWithAnswers);
+        return convertJsonToCsv(optionsWithAnswers, configuration);
     })
     .then((csv) => {
         return reply(csv).type('text/csv');
@@ -123,6 +90,67 @@ function trialCSV (request, reply) {
         console.error(err);
         reply(boom.notFound('patient data not found'));
     });
+}
+
+
+function formatData(optionsWithAnswers){
+  var map = new customMap();
+  var resultSet = [];
+  var resultObject = {'PatientPin':null,'DateStarted':'somedate', 'State0':'','State1':'','State2':'','State3':'','State4':'','State5':''};
+  for (var row of optionsWithAnswers){
+      var x = -1;
+      resultObject.PatientPin = row.PatientPin;
+      resultObject.DateStarted = row.DateStarted;
+    if(map.has(row.PatientPin)){
+      //do nothing
+    }else{
+      for(var row1 of optionsWithAnswers){
+        if(row1.PatientPin === resultObject.PatientPin){
+                x++;
+                if (x === 0){
+                    resultObject.State0 = determineStatus(row1.State);
+                }
+                else if (x === 1)
+                {
+                        resultObject.State1 = determineStatus(row1.State);
+
+                }else if (x === 2)
+                {
+                        resultObject.State2 = determineStatus(row1.State);
+
+                }else if (x === 3)
+                {
+                      resultObject.State3 = determineStatus(row1.State);
+
+                }else if (x === 4)
+                {
+                  resultObject.State4 = determineStatus(row1.State);
+                }else if (x === 5)
+                {
+                  resultObject.State5 = determineStatus(row1.State);
+                }
+        }
+      }
+      map.set(resultObject.PatientPin, '{"PatientPin":'+resultObject.PatientPin+',"DateStarted":"'+resultObject.DateStarted+'","State0":"'+resultObject.State0+'","State1":"'+resultObject.State1+'","State2":"'+resultObject.State2+'","State3":"'+resultObject.State3+'","State4":"'+resultObject.State4+'","State5":"'+resultObject.State5+'"}');
+    }
+}
+      map.forEach(function(value, key) {
+        resultSet.push(JSON.parse(value));
+      });
+      // console.log(resultSet);
+      return resultSet;
+}
+
+function determineStatus(status){
+  if(status === 'completed'){
+      return 'Y';
+  }else if(status === 'pending'){
+        return 'N';
+  }else if(status === 'expired'){
+        return ' ';
+  }else if(status === 'DEACTIVATED'){
+    return 'DEACTIVATED';
+  }
 }
 
 module.exports = trialCSV;

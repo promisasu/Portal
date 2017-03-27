@@ -61,7 +61,8 @@
     "moment": "^2.13.0",
     "mysql": "^2.10.2",
     "sequelize": "^3.22.0",
-    "vision": "^4.1.0"
+    "vision": "^4.1.0",
+    "hashmap": "^2.0.6"
   },
   "optionalDependencies": {
     "bcrypt": "^0.8.6"
