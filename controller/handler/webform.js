@@ -4,6 +4,9 @@
  * @module controller/handler/webform
  */
 
+ const fs = require('fs');
+ const configuration = require('../../config.json');
+
 
  /**
   * A dashboard with an overview of a specific patient.
@@ -12,7 +15,7 @@
   * @returns {View} Rendered page
   */
  function webform (request, reply) {
-   return reply.view('webform',{'title':'Add a new Patient'});
+   return reply.view('webform',{'title':'Add a new Patient','webFormPostUrl':configuration.webFormPostUrl});
 }
 
 module.exports = webform;

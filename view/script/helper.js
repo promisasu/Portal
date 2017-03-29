@@ -102,6 +102,10 @@ function submitData() {
 }
 
 function callAjax(formData) {
+    var formPostElement = document.getElementById("webFormPostUrl");
+    var postURL = formPostElement.dataset.webformpost;
+    console.log("postURL");
+    console.log(postURL);
     var formDataJSON = JSON.stringify(formData);
     console.log("JSON before sending::" + formDataJSON);
     $.ajax({
@@ -109,7 +113,7 @@ function callAjax(formData) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        url: "{{postURL}}/rest/patients/enrollpatient",
+        url: postURL,
         method: "POST",
         dataType: "json",
         data: formDataJSON,

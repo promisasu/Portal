@@ -119,7 +119,14 @@ read({
 .then((salt) => {
     config.database.salt = salt;
 
-    return writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
+    return read({
+        prompt: 'Web Form Post URL:',
+        default: 'http://swent1linux.asu.edu:8082/v311/rest/patients/enrollpatient'
+    });
+})
+.then((formPostURL) => {
+  config.webFormPostUrl = formPostURL;
+  return writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
 })
 .catch((err) => {
     console.error(err);

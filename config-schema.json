@@ -84,6 +84,11 @@
             "required": true,
             "pattern": "^[a-z]+$"
         },
+        "webFormPostUrl": {
+            "type": "string",
+            "required": true,
+            "pattern": ".*"
+        },
         "tls": {
             "type": "object",
             "additionalProperties": false,
