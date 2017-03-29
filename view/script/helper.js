@@ -63,7 +63,6 @@ function getMedicine() {
 }
 
 function submitData() {
-    //console.log(temp);
     if (patientType === "adult" || patientType === "child") {
         patientProperties["childPin"] = "";
     } else if (patientType === "parent_proxy") {
@@ -118,20 +117,14 @@ function callAjax(formData) {
         dataType: "json",
         data: formDataJSON,
         success: function(data) {
-            //data - response from server
-            // console.log(data.patientPIN);
-            // Put the object into storage
             console.log("Success");
             console.log(data);
             sessionStorage.setItem('patientPIN', data.patientPIN);
-            // window.alert("Your pin is "+data.patientPIN+"\n Please note it down.");
             window.location = "/addNewSuccess/" + data.patientPIN;
         },
         error: function(error) {
             console.log(error);
-            var errorMessage = JSON.parse(error.responseText).message;
-            window.alert(errorMessage);
-            window.location = "error.html";
+            window.location = "/error";
         }
     });
 }
@@ -145,19 +138,18 @@ function showIns() {
     window.location = "ins.html";
 }
 
-function goIndex() {
-    window.location = "index.html";
-}
-
-function goBack() {
-    window.location = "index.html"
-}
-
 function enable(medicineName) {
     var e = document.getElementById(medicineName + "_tablets");
     if (e.options[e.selectedIndex].value == "0") {
         document.getElementById(medicineName + "_medicine_mg").setAttribute("disabled", null);
+        document.getElementById(medicineName + "_medicine_mg").setAttribute("hidden", null);
+        document.getElementById(medicineName + "_medicine_mg").value = "0";
+        document.getElementById(medicineName + "_medicine_mg").selected = false;
+        document.getElementById(medicineName + "_medicine_mg_label").setAttribute("hidden", null);
     } else {
         document.getElementById(medicineName + "_medicine_mg").removeAttribute("disabled");
+        document.getElementById(medicineName + "_medicine_mg").removeAttribute("hidden");
+        document.getElementById(medicineName + "_medicine_mg_label").removeAttribute("disabled");
+        document.getElementById(medicineName + "_medicine_mg_label").removeAttribute("hidden");
     }
 }

@@ -14,6 +14,7 @@ const trialCSV = require('./handler/trial-csv');
 const surveyPresenter = require('./handler/survey');
 const webFormPresenter = require('./handler/webform');
 const webFormPresenterPost = require('./handler/webformPost');
+const errorHandler = require('./handler/errorHandler');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
 
@@ -32,6 +33,11 @@ module.exports = [
         method: 'GET',
         path: '/addNewSuccess/{id*}',
         handler: webFormPresenterPost
+    },
+    {
+        method: 'GET',
+        path: '/error',
+        handler: errorHandler
     },
     {
         method: 'GET',
