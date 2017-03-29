@@ -9,6 +9,8 @@ const convertJsonToCsv = require('../helper/convert-json-to-csv');
 const boom = require('boom');
 const deduplicate = require('../helper/deduplicate');
 const customMap = require('hashmap');
+
+//Configuration JSON for Weekly activities
 // const configuration = [
 //     {
 //         label: 'Patient Pin',
@@ -54,6 +56,7 @@ const customMap = require('hashmap');
 // ];
 
 
+//configuration JSON for Daily activities
 const configuration = [
     {
         label: 'Patient Pin',
@@ -256,20 +259,22 @@ const configuration = [
  */
 function trialCSV (request, reply) {
     const formatSpecifier = '%a %b %d %Y %T';
-    // SELECT PatientPinFk, StartTime, State
-    // FROM activity_instance
-    // ON p.PatientPin = a.PatientPinFk
-    // WHERE activityTitle = 'Sickle Cell Weekly Survey'
-    // ORDER BY PatientPinFk;
+
+    // SELECT a.State, p.DateStarted, p.PatientPin
+    // FROM activity_instance a
+    // JOIN patients p
+    // ON a.PatientPinFk = p.PatientPin
+    // WHERE a.activityTitle = 'Sickle Cell Weekly Survey'   ---->> Query for weekly activities
+    // ORDER BY a.PatientPinFk;
 
     database.sequelize.query(
         `
-        SELECT p.PatientPin, p.DateStarted, a.State FROM patients p
-        JOIN activity_instance a
-        ON p.PatientPin = a.PatientPinFk
-        WHERE a.activityTitle='Sickle Cell Daily Survey'
-        ORDER BY p.PatientPin;
-
+        SELECT a.State, p.DateStarted, p.PatientPin
+        FROM activity_instance a
+        JOIN patients p
+        ON a.PatientPinFk = p.PatientPin
+        WHERE a.activityTitle = 'Sickle Cell Daily Survey'
+        ORDER BY a.PatientPinFk;
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
@@ -281,6 +286,7 @@ function trialCSV (request, reply) {
         }
     )
     .then((optionsWithAnswers) => {
+        //console.log(optionsWithAnswers);
         optionsWithAnswers = formatData(optionsWithAnswers);
         return convertJsonToCsv(optionsWithAnswers, configuration);
     })
@@ -293,7 +299,7 @@ function trialCSV (request, reply) {
     });
 }
 
-
+//Function formatData to format the WEEKLY ACTIVITIES data to get it in the proper fomat for the CSV
 // function formatData(optionsWithAnswers){
 //   var map = new customMap();
 //   var resultSet = [];
@@ -342,12 +348,15 @@ function trialCSV (request, reply) {
 //       return resultSet;
 // }
 
-
+//Function formatData to format the DAILY ACTIVITIES data to get it in the proper format for the CSV
 function formatData(optionsWithAnswers){
   console.log(optionsWithAnswers);
   var map = new customMap();
   var resultSet = [];
-  var resultObject = {'PatientPin':null,'DateStarted':'somedate', 'State0':'','State1':'','State2':'','State3':'','State4':'','State5':''};
+  var resultObject = {'PatientPin':null,'DateStarted':'somedate', 'State0':' ','State1':' ','State2':' ','State3':' ','State4':' ','State5':' ','State6':' ','State7':' ','State8':' ','State9':' ',
+  'State10':' ','State11':' ','State12':' ','State13':' ','State14':' ','State15':' ','State16':' ','State17':' ','State18':' ','State19':' ','State20':' ','State21':' ',
+  'State22':' ','State23':' ','State24':' ','State25':' ','State26':' ','State27':' ','State28':' ','State29':' ','State30':' ','State31':' ','State32':' ','State33':' ','State34':' ',
+  'State35':' '};
   for (var row of optionsWithAnswers){
       var x = -1;
       resultObject.PatientPin = row.PatientPin;
@@ -480,10 +489,11 @@ function formatData(optionsWithAnswers){
       map.forEach(function(value, key) {
         resultSet.push(JSON.parse(value));
       });
-      console.log(resultSet);
+      //console.log(resultSet);
       return resultSet;
 }
 
+//Function determineStatus to get convert the State in the database to the Y/N State required in the CSV
 function determineStatus(status){
   if(status === 'completed'){
       return 'Y';
@@ -493,6 +503,10 @@ function determineStatus(status){
         return ' ';
   }else if(status === 'DEACTIVATED'){
     return 'DEACTIVATED';
+  }else if(status === 'in progress'){
+    return 'IN PROGRESS';
+  }else{
+    return '';
   }
 }
 
