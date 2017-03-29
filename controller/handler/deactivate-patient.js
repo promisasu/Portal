@@ -6,6 +6,7 @@
 
 const boom = require('boom');
 const database = require('../../model');
+const moment = require('moment');
 
 /**
  * Deactivates a patient
@@ -13,35 +14,26 @@ const database = require('../../model');
  * @param {Reply} reply - Hapi Reply
  * @returns {Null} Redirect
  */
-function deactivatePatient (request, reply) {
-    const patient = database.sequelize.model('patient');
-    let transaction = null;
+function deactivatePatient(request, reply) {
 
-    database
-    .sequelize
-    .transaction()
-    .then((newTransaction) => {
-        transaction = newTransaction;
-
-        return patient.findOne({
-            where: {
-                pin: request.params.pin
-            },
-            transaction
-        });
-    })
-    .then((currentPatient) => {
-        return currentPatient.destroy({transaction});
-    })
-    .then(() => {
-        return transaction.commit();
-    })
-    .then(() => {
+    database.sequelize.query(
+        `
+        UPDATE activity_instance SET State = ? where State = ? and EndTime >= ? and PatientPinFk = ?
+        `, {
+            type: database.sequelize.QueryTypes.UPDATE,
+            replacements: [
+                'DEACTIVATED',
+                'pending',
+                moment().format("YYYY-MM-DD HH:mm:ss"),
+                request.params.pin
+            ],
+            plain: true
+        }
+    ).then(function() {
         return reply();
-    })
-    .catch((err) => {
+    }).catch((err) => {
         request.log('error', err);
-        transaction.rollback();
+        console.log(err);
 
         return reply(boom.conflict());
     });
