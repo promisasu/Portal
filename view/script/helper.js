@@ -116,7 +116,7 @@ function callAjax(formData) {
             console.log("Success");
             console.log(data);
             sessionStorage.setItem('patientPIN', data.patientPIN);
-            window.location = "/addNewSuccess/" + data.patientPIN;
+            window.location = "/enrollsuccess/" + data.patientPIN;
         },
         error: function(error) {
             console.log(error);
