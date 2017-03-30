@@ -29,3 +29,8 @@ input[type='date'] {
     background-repeat: no-repeat;
     height: 300px;
 }
+
+.custom-btn {
+    padding-top: .4688rem;
+    padding-bottom: .4688rem;
+}
