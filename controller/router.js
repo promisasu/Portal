@@ -214,7 +214,22 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/trial/{id}.csv',
+        path: '/trial/{id}-weekly.csv',
+        handler: trialCSV,
+        config: {
+            validate: {
+                params: {
+                    id: Joi
+                      .number()
+                      .integer()
+                      .positive()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/trial/{id}-daily.csv',
         handler: trialCSV,
         config: {
             validate: {
