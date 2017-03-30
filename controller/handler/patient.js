@@ -20,7 +20,7 @@ function patientView (request, reply) {
         .all([
             database.sequelize.query(
                 `
-                SELECT pa.PatientPin, st.Name AS stage
+                SELECT pa.PatientPin, pa.ParentPinFK, st.Name AS stage
                 FROM patients AS pa
                 JOIN stage AS st
                 ON st.StageId = pa.StageIdFK
