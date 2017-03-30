@@ -10,247 +10,6 @@ const boom = require('boom');
 const deduplicate = require('../helper/deduplicate');
 const customMap = require('hashmap');
 
-//Configuration JSON for Weekly activities
-// const configuration = [
-//     {
-//         label: 'Patient Pin',
-//         key: 'PatientPin',
-//         default: ''
-//     },
-//     {
-//         label: 'Date Started',
-//         key: 'DateStarted',
-//         default: ''
-//     },
-//     {
-//         label: '0',
-//         key: 'State0',
-//         default: ''
-//     },
-//     {
-//         label: '1',
-//         key: 'State1',
-//         default: ''
-//     },
-//     {
-//         label: '2',
-//         key: 'State2',
-//         default: ''
-//     },
-//     {
-//         label: '3',
-//         key: 'State3',
-//         default: ''
-//     },
-//     {
-//         label: '4',
-//         key: 'State4',
-//         default: ''
-//     },
-//     {
-//         label: '5',
-//         key: 'State5',
-//         default: ''
-//     }
-//
-// ];
-
-
-//configuration JSON for Daily activities
-const configuration = [
-    {
-        label: 'Patient Pin',
-        key: 'PatientPin',
-        default: ''
-    },
-    {
-        label: 'Date Started',
-        key: 'DateStarted',
-        default: ''
-    },
-    {
-        label: '0',
-        key: 'State0',
-        default: ''
-    },
-    {
-        label: '1',
-        key: 'State1',
-        default: ''
-    },
-    {
-        label: '2',
-        key: 'State2',
-        default: ''
-    },
-    {
-        label: '3',
-        key: 'State3',
-        default: ''
-    },
-    {
-        label: '4',
-        key: 'State4',
-        default: ''
-    },
-    {
-        label: '5',
-        key: 'State5',
-        default: ''
-    },
-    {
-        label: '6',
-        key: 'State6',
-        default: ''
-    },
-    {
-        label: '7',
-        key: 'State7',
-        default: ''
-    },
-    {
-        label: '8',
-        key: 'State8',
-        default: ''
-    },
-    {
-        label: '9',
-        key: 'State9',
-        default: ''
-    },
-    {
-        label: '10',
-        key: 'State10',
-        default: ''
-    },
-    {
-        label: '11',
-        key: 'State11',
-        default: ''
-    },
-    {
-        label: '12',
-        key: 'State12',
-        default: ''
-    },
-    {
-        label: '13',
-        key: 'State13',
-        default: ''
-    },
-    {
-        label: '14',
-        key: 'State14',
-        default: ''
-    },
-    {
-        label: '15',
-        key: 'State15',
-        default: ''
-    },
-    {
-        label: '16',
-        key: 'State16',
-        default: ''
-    },
-    {
-        label: '17',
-        key: 'State17',
-        default: ''
-    },
-    {
-        label: '18',
-        key: 'State18',
-        default: ''
-    },
-    {
-        label: '19',
-        key: 'State19',
-        default: ''
-    },
-    {
-        label: '20',
-        key: 'State20',
-        default: ''
-    },
-    {
-        label: '21',
-        key: 'State21',
-        default: ''
-    },
-    {
-        label: '22',
-        key: 'State22',
-        default: ''
-    },
-    {
-        label: '23',
-        key: 'State23',
-        default: ''
-    },
-    {
-        label: '24',
-        key: 'State24',
-        default: ''
-    },
-    {
-        label: '25',
-        key: 'State25',
-        default: ''
-    },
-    {
-        label: '26',
-        key: 'State26',
-        default: ''
-    },
-    {
-        label: '27',
-        key: 'State27',
-        default: ''
-    },
-    {
-        label: '28',
-        key: 'State28',
-        default: ''
-    },
-    {
-        label: '29',
-        key: 'State29',
-        default: ''
-    },
-    {
-        label: '30',
-        key: 'State30',
-        default: ''
-    },
-    {
-        label: '31',
-        key: 'State31',
-        default: ''
-    },
-    {
-        label: '32',
-        key: 'State32',
-        default: ''
-    },
-    {
-        label: '33',
-        key: 'State33',
-        default: ''
-    },
-    {
-        label: '34',
-        key: 'State34',
-        default: ''
-    },
-    {
-        label: '35',
-        key: 'State35',
-        default: ''
-    }
-
-];
-
 /**
  * Create a Comma Seperate Value export of the data of all the patient's that are enrolled in a trial.
  * @param {Request} request - Hapi request
@@ -259,7 +18,260 @@ const configuration = [
  */
 function trialCSV (request, reply) {
     const formatSpecifier = '%a %b %d %Y %T';
+    var dailyregex = new RegExp("/trial/.-daily.csv", 'g');
+    var weeklyregex = new RegExp("/trial/.-weekly.csv", 'g');
+    var activityType;
+    var optionsWithAnswers;
+    var configuration;
+    var query;
 
+    if(weeklyregex.test(request.path) ===  true){
+      console.log("Inside query");
+      configuration = [
+          {
+              label: 'Patient Pin',
+              key: 'PatientPin',
+              default: ''
+          },
+          {
+              label: 'Date Started',
+              key: 'DateStarted',
+              default: ''
+          },
+          {
+              label: '0',
+              key: 'State0',
+              default: ''
+          },
+          {
+              label: '1',
+              key: 'State1',
+              default: ''
+          },
+          {
+              label: '2',
+              key: 'State2',
+              default: ''
+          },
+          {
+              label: '3',
+              key: 'State3',
+              default: ''
+          },
+          {
+              label: '4',
+              key: 'State4',
+              default: ''
+          },
+          {
+              label: '5',
+              key: 'State5',
+              default: ''
+          }
+      ];
+      query = "Sickle Cell Weekly Survey";
+
+    }
+    else if (dailyregex.test(request.path) === true){
+      const configuration = [
+          {
+              label: 'Patient Pin',
+              key: 'PatientPin',
+              default: ''
+          },
+          {
+              label: 'Date Started',
+              key: 'DateStarted',
+              default: ''
+          },
+          {
+              label: '0',
+              key: 'State0',
+              default: ''
+          },
+          {
+              label: '1',
+              key: 'State1',
+              default: ''
+          },
+          {
+              label: '2',
+              key: 'State2',
+              default: ''
+          },
+          {
+              label: '3',
+              key: 'State3',
+              default: ''
+          },
+          {
+              label: '4',
+              key: 'State4',
+              default: ''
+          },
+          {
+              label: '5',
+              key: 'State5',
+              default: ''
+          },
+          {
+              label: '6',
+              key: 'State6',
+              default: ''
+          },
+          {
+              label: '7',
+              key: 'State7',
+              default: ''
+          },
+          {
+              label: '8',
+              key: 'State8',
+              default: ''
+          },
+          {
+              label: '9',
+              key: 'State9',
+              default: ''
+          },
+          {
+              label: '10',
+              key: 'State10',
+              default: ''
+          },
+          {
+              label: '11',
+              key: 'State11',
+              default: ''
+          },
+          {
+              label: '12',
+              key: 'State12',
+              default: ''
+          },
+          {
+              label: '13',
+              key: 'State13',
+              default: ''
+          },
+          {
+              label: '14',
+              key: 'State14',
+              default: ''
+          },
+          {
+              label: '15',
+              key: 'State15',
+              default: ''
+          },
+          {
+              label: '16',
+              key: 'State16',
+              default: ''
+          },
+          {
+              label: '17',
+              key: 'State17',
+              default: ''
+          },
+          {
+              label: '18',
+              key: 'State18',
+              default: ''
+          },
+          {
+              label: '19',
+              key: 'State19',
+              default: ''
+          },
+          {
+              label: '20',
+              key: 'State20',
+              default: ''
+          },
+          {
+              label: '21',
+              key: 'State21',
+              default: ''
+          },
+          {
+              label: '22',
+              key: 'State22',
+              default: ''
+          },
+          {
+              label: '23',
+              key: 'State23',
+              default: ''
+          },
+          {
+              label: '24',
+              key: 'State24',
+              default: ''
+          },
+          {
+              label: '25',
+              key: 'State25',
+              default: ''
+          },
+          {
+              label: '26',
+              key: 'State26',
+              default: ''
+          },
+          {
+              label: '27',
+              key: 'State27',
+              default: ''
+          },
+          {
+              label: '28',
+              key: 'State28',
+              default: ''
+          },
+          {
+              label: '29',
+              key: 'State29',
+              default: ''
+          },
+          {
+              label: '30',
+              key: 'State30',
+              default: ''
+          },
+          {
+              label: '31',
+              key: 'State31',
+              default: ''
+          },
+          {
+              label: '32',
+              key: 'State32',
+              default: ''
+          },
+          {
+              label: '33',
+              key: 'State33',
+              default: ''
+          },
+          {
+              label: '34',
+              key: 'State34',
+              default: ''
+          },
+          {
+              label: '35',
+              key: 'State35',
+              default: ''
+          }
+
+      ];
+
+      query = "Sickle Cell Daily Survey";
+    }
+    else{
+      activityType = "Unknown";
+    }
     // SELECT a.State, p.DateStarted, p.PatientPin
     // FROM activity_instance a
     // JOIN patients p
@@ -273,24 +285,28 @@ function trialCSV (request, reply) {
         FROM activity_instance a
         JOIN patients p
         ON a.PatientPinFk = p.PatientPin
-        WHERE a.activityTitle = 'Sickle Cell Daily Survey'
+        WHERE a.activityTitle = ?
         ORDER BY a.PatientPinFk;
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
             replacements: [
+                query,
                 formatSpecifier,
                 formatSpecifier,
-                request.params.id
             ]
         }
     )
-    .then((optionsWithAnswers) => {
-        //console.log(optionsWithAnswers);
-        optionsWithAnswers = formatData(optionsWithAnswers);
-        return convertJsonToCsv(optionsWithAnswers, configuration);
+    .then((queryResults) => {
+        optionsWithAnswers = queryResults;
+        console.log("After query");
+        return optionsWithAnswers;
     })
-    .then((csv) => {
+    .then((optionsWithAnswers) =>{
+      optionsWithAnswers = formatData(optionsWithAnswers);
+      return convertJsonToCsv(optionsWithAnswers, configuration);
+    })
+    .then((csv) =>{
         return reply(csv).type('text/csv');
     })
     .catch((err) => {
@@ -350,7 +366,7 @@ function trialCSV (request, reply) {
 
 //Function formatData to format the DAILY ACTIVITIES data to get it in the proper format for the CSV
 function formatData(optionsWithAnswers){
-  console.log(optionsWithAnswers);
+  // console.log(optionsWithAnswers);
   var map = new customMap();
   var resultSet = [];
   var resultObject = {'PatientPin':null,'DateStarted':'somedate', 'State0':' ','State1':' ','State2':' ','State3':' ','State4':' ','State5':' ','State6':' ','State7':' ','State8':' ','State9':' ',
