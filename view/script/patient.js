@@ -65,10 +65,10 @@
 
     function redirect () {
         var element = document.getElementById('deactivate-patient');
-        var trialId = element.getAttribute('data-trial-id');
+        var patientPin = element.getAttribute('data-patient-pin');
         var redirectUrl = '/';
-        if (trialId != undefined && trialId != '') {
-            redirectUrl = '/trial/' + trialId;
+        if (patientPin != undefined && patientPin != '') {
+            redirectUrl = '/patient/' + patientPin;
         }
         window.location = redirectUrl;
     }
