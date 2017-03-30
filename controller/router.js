@@ -26,12 +26,12 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/addNew',
+        path: '/enroll',
         handler: webFormPresenter
     },
     {
         method: 'GET',
-        path: '/addNewSuccess/{id*}',
+        path: '/enrollsuccess/{id*}',
         handler: webFormPresenterPost
     },
     {

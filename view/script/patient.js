@@ -64,7 +64,13 @@
     var ctx = document.getElementById('complianceChart').getContext('2d');
 
     function redirect () {
-        window.location = '/';
+        var element = document.getElementById('deactivate-patient');
+        var trialId = element.getAttribute('data-trial-id');
+        var redirectUrl = '/';
+        if (trialId != undefined && trialId != '') {
+            redirectUrl = '/trial/' + trialId;
+        }
+        window.location = redirectUrl;
     }
 
     function warningMessage () {
