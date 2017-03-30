@@ -81,14 +81,19 @@
                                 Patients
                             </h4>
                         </div>
-                        <div class="col-xl-1 col-xl-1 col-xl-offset-5 col-md-offset-1">
-                          <button type="button" class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#addPatient" hidden>
+                        <div class="col-xl-1 col-xl-1 col-xl-offset-1 col-xl-offset-1">
+                          <button type="button" class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#addPatient">
                               Enroll New Patient
                           </button>
                         </div>
-                        <div class="col-md-3 col-xl-1 col-xl-offset-1">
-                          <a href="/trial/{{ trial.id }}.csv" class="btn btn-default text-uppercase" hidden>
-                              Export Trial Data
+                        <div class="col-xl-1 col-xl-1 col-xl-offset-1">
+                          <a href="/trial/{{ trial.TrialId }}-weekly.csv" class="btn btn-primary text-uppercase">
+                              Export Weekly Trial Data
+                          </a>
+                        </div>
+                        <div class="col-xl-1 col-xl-1 col-xl-offset-2">
+                          <a href="/trial/{{ trial.TrialId }}-daily.csv" class="btn btn-primary text-uppercase">
+                              Export Daily Trial Data
                           </a>
                         </div>
                     </div>

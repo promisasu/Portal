@@ -20,13 +20,11 @@ function trialCSV (request, reply) {
     const formatSpecifier = '%a %b %d %Y %T';
     var dailyregex = new RegExp("/trial/.-daily.csv", 'g');
     var weeklyregex = new RegExp("/trial/.-weekly.csv", 'g');
-    var activityType;
     var optionsWithAnswers;
     var configuration;
     var query;
 
     if(weeklyregex.test(request.path) ===  true){
-      console.log("Inside query");
       configuration = [
           {
               label: 'Patient Pin',
@@ -73,7 +71,7 @@ function trialCSV (request, reply) {
 
     }
     else if (dailyregex.test(request.path) === true){
-      const configuration = [
+      configuration = [
           {
               label: 'Patient Pin',
               key: 'PatientPin',
@@ -270,14 +268,8 @@ function trialCSV (request, reply) {
       query = "Sickle Cell Daily Survey";
     }
     else{
-      activityType = "Unknown";
+      query = "Unknown";
     }
-    // SELECT a.State, p.DateStarted, p.PatientPin
-    // FROM activity_instance a
-    // JOIN patients p
-    // ON a.PatientPinFk = p.PatientPin
-    // WHERE a.activityTitle = 'Sickle Cell Weekly Survey'   ---->> Query for weekly activities
-    // ORDER BY a.PatientPinFk;
 
     database.sequelize.query(
         `
@@ -299,12 +291,14 @@ function trialCSV (request, reply) {
     )
     .then((queryResults) => {
         optionsWithAnswers = queryResults;
-        console.log("After query");
         return optionsWithAnswers;
     })
     .then((optionsWithAnswers) =>{
       optionsWithAnswers = formatData(optionsWithAnswers);
-      return convertJsonToCsv(optionsWithAnswers, configuration);
+      return optionsWithAnswers;
+    })
+    .then((formattedOptionsWithAnswers) => {
+      return convertJsonToCsv(formattedOptionsWithAnswers, configuration);
     })
     .then((csv) =>{
         return reply(csv).type('text/csv');
@@ -315,58 +309,8 @@ function trialCSV (request, reply) {
     });
 }
 
-//Function formatData to format the WEEKLY ACTIVITIES data to get it in the proper fomat for the CSV
-// function formatData(optionsWithAnswers){
-//   var map = new customMap();
-//   var resultSet = [];
-//   var resultObject = {'PatientPin':null,'DateStarted':'somedate', 'State0':'','State1':'','State2':'','State3':'','State4':'','State5':''};
-//   for (var row of optionsWithAnswers){
-//       var x = -1;
-//       resultObject.PatientPin = row.PatientPin;
-//       resultObject.DateStarted = row.DateStarted;
-//     if(map.has(row.PatientPin)){
-//       //do nothing
-//     }else{
-//       for(var row1 of optionsWithAnswers){
-//         if(row1.PatientPin === resultObject.PatientPin){
-//                 x++;
-//                 if (x === 0){
-//                     resultObject.State0 = determineStatus(row1.State);
-//                 }
-//                 else if (x === 1)
-//                 {
-//                         resultObject.State1 = determineStatus(row1.State);
-//
-//                 }else if (x === 2)
-//                 {
-//                         resultObject.State2 = determineStatus(row1.State);
-//
-//                 }else if (x === 3)
-//                 {
-//                       resultObject.State3 = determineStatus(row1.State);
-//
-//                 }else if (x === 4)
-//                 {
-//                   resultObject.State4 = determineStatus(row1.State);
-//                 }else if (x === 5)
-//                 {
-//                   resultObject.State5 = determineStatus(row1.State);
-//                 }
-//         }
-//       }
-//       map.set(resultObject.PatientPin, '{"PatientPin":'+resultObject.PatientPin+',"DateStarted":"'+resultObject.DateStarted+'","State0":"'+resultObject.State0+'","State1":"'+resultObject.State1+'","State2":"'+resultObject.State2+'","State3":"'+resultObject.State3+'","State4":"'+resultObject.State4+'","State5":"'+resultObject.State5+'"}');
-//     }
-// }
-//       map.forEach(function(value, key) {
-//         resultSet.push(JSON.parse(value));
-//       });
-//       // console.log(resultSet);
-//       return resultSet;
-// }
-
 //Function formatData to format the DAILY ACTIVITIES data to get it in the proper format for the CSV
 function formatData(optionsWithAnswers){
-  // console.log(optionsWithAnswers);
   var map = new customMap();
   var resultSet = [];
   var resultObject = {'PatientPin':null,'DateStarted':'somedate', 'State0':' ','State1':' ','State2':' ','State3':' ','State4':' ','State5':' ','State6':' ','State7':' ','State8':' ','State9':' ',
@@ -505,7 +449,6 @@ function formatData(optionsWithAnswers){
       map.forEach(function(value, key) {
         resultSet.push(JSON.parse(value));
       });
-      //console.log(resultSet);
       return resultSet;
 }
 
