@@ -67,6 +67,18 @@ function submitData() {
         patientProperties["childPin"] = "";
     } else if (patientType === "parent_proxy") {
         patientProperties["hydroxureaTablets"] = 0 + "";
+
+        //validate child pin
+        const regex = /^\d{4}$/;
+        if (patientProperties["childPin"].match(regex)) {
+            document.getElementById("childPinErrorMessage").setAttribute("hidden", null);
+        } else {
+            document.getElementById("childPinErrorMessage").removeAttribute("hidden");
+            window.setTimeout(function() {
+                document.getElementById("childPin").focus();
+            }, 0);
+            return;
+        }
     }
 
     //get device type
