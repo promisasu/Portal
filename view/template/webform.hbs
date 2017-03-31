@@ -284,7 +284,7 @@
                                             <option value="400">400</option>
                                             <option value="600">600</option>
                                             <option value="800">800</option>
-                                        </select> <span id="Tylenol_label" hidden>mg</span>
+                                        </select> <span id="Tylenol with codeine_medicine_mg_label" hidden>mg</span>
                                 </div>
                                 </br>
 
@@ -321,6 +321,33 @@
             </fieldset>
         </form>
     </div>
+
+    <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">You are all SET!</h4>
+        </div>
+        <div class="modal-body">
+          <UL>
+            <li>Your pin is:<big><big id="patientPIN"> </big></big></li>. Odd PINs get the enhanced version, even PINs the normal version. You do not have to do anything to control this assignment.<br/></br>
+            <li>ANDROID Users: Go to the <a href="https://play.google.com/store/apps/details?id=edu.asu.healPromisV3">Google Playstore</a> and download the app</li><br/>
+            <li>iOS Users: Go to the <a href="https://itunes.apple.com/us/app/promis-pain-report/id1162282071">iTunes App Store</a> and download the app</li><br/>
+            <li>Enter your <b>pin</b> and a <b>server address of:</b> <span id="serverAddress">api.sicklecellpainapp.org/api</span><br/>
+            <li>If you encounter a problem, please email <a href="mailto:promisasu@gmail.com">promisasu@gmail.com</a></li>
+          </UL>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" id="modalClose" data-trial-id={{ trialId }} data-dismiss="modal" >Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <script src="/static/script/helper.js"></script>

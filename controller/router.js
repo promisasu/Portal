@@ -26,13 +26,8 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/enroll',
+        path: '/enroll/{trialId*}',
         handler: webFormPresenter
-    },
-    {
-        method: 'GET',
-        path: '/enrollsuccess/{id*}',
-        handler: webFormPresenterPost
     },
     {
         method: 'GET',

@@ -28,7 +28,7 @@
     .addEventListener('click', function addNewPatient () {
         var element = document.getElementById('add-patient-btn');
         var trialId = element.getAttribute('data-trial-id');
-        window.location = '/enroll';
+        window.location = '/enroll/'+trialId;
     });
 
     new Chart(ctx, {
