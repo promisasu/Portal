@@ -165,3 +165,5 @@ function enable(medicineName) {
         document.getElementById(medicineName + "_medicine_mg_label").removeAttribute("hidden");
     }
 }
+
+ClearForm();
