@@ -110,7 +110,7 @@ function submitData() {
         otherMedicine: patientProperties["otherMedicine"],
         otherInfo: patientProperties["otherInfo"]
     }
-    $('#submitBtn').addClass('disabled');
+    $('#submitBtn').addClass('disabled').attr('disabled',true);
 
     callAjax(formData);
 }
@@ -143,6 +143,7 @@ function callAjax(formData) {
               var trialId = element.getAttribute('data-trial-id');
                 window.location = "/trial/"+trialId;
               });
+              ClearForm();
         },
         error: function(error) {
             console.log(error);
