@@ -31,6 +31,7 @@ function setChildPin(pin) {
 
 function checkRequiredValues() {
     document.getElementById("submitBtn").removeAttribute("disabled");
+    document.getElementById("submitBtn").classList.remove("disabled");
 }
 
 function getDeviceType() {
@@ -155,7 +156,6 @@ function enable(medicineName) {
     if (e.options[e.selectedIndex].value == "0") {
         document.getElementById(medicineName + "_medicine_mg").setAttribute("disabled", null);
         document.getElementById(medicineName + "_medicine_mg").setAttribute("hidden", null);
-        document.getElementById(medicineName + "_medicine_mg").value = "0";
         document.getElementById(medicineName + "_medicine_mg").selected = false;
         document.getElementById(medicineName + "_medicine_mg_label").setAttribute("hidden", null);
     } else {
