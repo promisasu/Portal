@@ -71,7 +71,7 @@ function submitData() {
 
         //validate child pin
         const regex = /^\d{4}$/;
-        if (patientProperties["childPin"].match(regex)) {
+        if (patientProperties["childPin"] != undefined && patientProperties["childPin"].match(regex)) {
             document.getElementById("childPinErrorMessage").setAttribute("hidden", null);
         } else {
             document.getElementById("childPinErrorMessage").removeAttribute("hidden");
