@@ -457,9 +457,9 @@ function determineStatus(status){
   if(status === 'completed'){
       return 'Y';
   }else if(status === 'pending'){
-        return 'N';
-  }else if(status === 'expired'){
         return ' ';
+  }else if(status === 'expired'){
+        return 'N';
   }else if(status === 'DEACTIVATED'){
     return 'DEACTIVATED';
   }else if(status === 'in progress'){
