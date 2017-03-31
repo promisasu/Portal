@@ -54,7 +54,7 @@
                         <label class="control-label">What is the PIN of your Child? *</label>
                         <div class="inputGroupContainer">
                             <div class="input-group col-xs-4">
-                                <input name="childPin" onkeyup="setChildPin(this.value)" class="form-control" type="text" required>
+                                <input name="childPin" id="childPin" onkeyup="setChildPin(this.value)" class="form-control" type="text" required> <span id="childPinErrorMessage" class="alert alert-danger" hidden>Please enter a valid child pin</span>
                             </div>
                         </div>
                     </div>
