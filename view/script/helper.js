@@ -137,7 +137,8 @@ function callAjax(formData) {
             sessionStorage.setItem('patientPIN', data.patientPIN);
             $('#patientPIN').text(data.patientPIN);
             //window.location = "/enrollsuccess/" + data.patientPIN;
-            $('#myModal').modal();
+            $('#myModal').modal({ backdrop: 'static',
+    keyboard: false});
             $("#modalClose").click(function(){
               var element = document.getElementById('modalClose');
               var trialId = element.getAttribute('data-trial-id');
