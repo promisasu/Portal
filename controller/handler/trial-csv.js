@@ -281,7 +281,7 @@ function trialCSV (request, reply) {
         JOIN patients p
         ON a.PatientPinFk = p.PatientPin
         WHERE a.activityTitle = ?
-        ORDER BY a.PatientPinFk;
+        ORDER BY a.PatientPinFk, a.ActivityInstanceId;
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
