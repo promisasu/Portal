@@ -16,7 +16,7 @@ const moment = require('moment');
  */
 function deactivatePatient(request, reply) {
 
-    if(Number(request.params.pin) > 3000 && Number(request.params.pin) < 4000){
+    if(Number(request.params.pin) < 3000){
       database.sequelize.query(
           `
           UPDATE activity_instance SET State = ? where State = ? and EndTime >= ? and PatientPinFk = ?
