@@ -46,29 +46,6 @@ read({
     });
 })
 .then((port) => {
-    config.dashboard.port = port;
-
-    console.log('');
-    console.log('setup for pain reporting portal api');
-    console.log('');
-
-    return read({
-        prompt: 'hostname:',
-        default: 'localhost'
-    });
-})
-.then((hostname) => {
-    config.api = {};
-    config.api.hostname = hostname;
-
-    return read({
-        prompt: 'port number:',
-        default: 3001
-    });
-})
-.then((port) => {
-    config.api.port = port;
-
     console.log('');
     console.log('setup for pain reporting portal database');
     console.log('');
@@ -81,6 +58,7 @@ read({
 .then((databaseHostname) => {
     config.database = {};
     config.database.hostname = databaseHostname;
+
 
     return read({
         prompt: 'database name:',
@@ -134,6 +112,12 @@ read({
 })
 .then((apiURL) => {
   config.apiURL = apiURL;
+
+  //Gotta get rid of these dependencies in the near future
+  config.api = {};
+  config.api.hostname = hostname;
+  config.api.port = port;
+
   return writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
 })
 .catch((err) => {
