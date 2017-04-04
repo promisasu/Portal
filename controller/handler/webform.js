@@ -15,7 +15,10 @@
   * @returns {View} Rendered page
   */
  function webform (request, reply) {
-   return reply.view('webform',{'title':'Add a new Patient','webFormPostUrl':configuration.webFormPostUrl});
+
+   console.log(request.params);
+
+   return reply.view('webform',{'title':'Add a new Patient','webFormPostUrl':configuration.webFormPostUrl,'trialId':request.params.trialId});
 }
 
 module.exports = webform;

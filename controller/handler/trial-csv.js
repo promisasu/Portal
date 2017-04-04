@@ -271,14 +271,17 @@ function trialCSV (request, reply) {
       query = "Unknown";
     }
 
+    // AND a.state IN ('completed','expired')
+
+
     database.sequelize.query(
         `
-        SELECT a.State, p.DateStarted, p.PatientPin
+        SELECT a.State, a.StartTime, p.DateStarted, p.PatientPin
         FROM activity_instance a
         JOIN patients p
         ON a.PatientPinFk = p.PatientPin
         WHERE a.activityTitle = ?
-        ORDER BY a.PatientPinFk;
+        ORDER BY a.PatientPinFk, a.ActivityInstanceId;
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
@@ -291,6 +294,7 @@ function trialCSV (request, reply) {
     )
     .then((queryResults) => {
         optionsWithAnswers = queryResults;
+        //console.log(optionsWithAnswers);
         return optionsWithAnswers;
     })
     .then((optionsWithAnswers) =>{
@@ -313,19 +317,22 @@ function trialCSV (request, reply) {
 function formatData(optionsWithAnswers){
   var map = new customMap();
   var resultSet = [];
-  var resultObject = {'PatientPin':null,'DateStarted':'somedate', 'State0':' ','State1':' ','State2':' ','State3':' ','State4':' ','State5':' ','State6':' ','State7':' ','State8':' ','State9':' ',
-  'State10':' ','State11':' ','State12':' ','State13':' ','State14':' ','State15':' ','State16':' ','State17':' ','State18':' ','State19':' ','State20':' ','State21':' ',
-  'State22':' ','State23':' ','State24':' ','State25':' ','State26':' ','State27':' ','State28':' ','State29':' ','State30':' ','State31':' ','State32':' ','State33':' ','State34':' ',
-  'State35':' '};
   for (var row of optionsWithAnswers){
+    var resultObject = {'PatientPin':null,'DateStarted':'somedate', 'State0':' ','State1':' ','State2':' ','State3':' ','State4':' ','State5':' ','State6':' ','State7':' ','State8':' ','State9':' ',
+    'State10':' ','State11':' ','State12':' ','State13':' ','State14':' ','State15':' ','State16':' ','State17':' ','State18':' ','State19':' ','State20':' ','State21':' ',
+    'State22':' ','State23':' ','State24':' ','State25':' ','State26':' ','State27':' ','State28':' ','State29':' ','State30':' ','State31':' ','State32':' ','State33':' ','State34':' ',
+    'State35':' '};
       var x = -1;
       resultObject.PatientPin = row.PatientPin;
       resultObject.DateStarted = row.DateStarted;
     if(map.has(row.PatientPin)){
       //do nothing
+      console.log(row.PatientPin + "already exists");
     }else{
+      console.log(row.PatientPin + "First Occurence");
       for(var row1 of optionsWithAnswers){
         if(row1.PatientPin === resultObject.PatientPin){
+                console.log(row1.PatientPin+ " " + row1.State);
                 x++;
                 switch(x){
                   case 0:
@@ -449,6 +456,7 @@ function formatData(optionsWithAnswers){
       map.forEach(function(value, key) {
         resultSet.push(JSON.parse(value));
       });
+      console.log(resultSet);
       return resultSet;
 }
 
@@ -457,15 +465,15 @@ function determineStatus(status){
   if(status === 'completed'){
       return 'Y';
   }else if(status === 'pending'){
-        return 'N';
-  }else if(status === 'expired'){
         return ' ';
+  }else if(status === 'expired'){
+        return 'N';
   }else if(status === 'DEACTIVATED'){
     return 'DEACTIVATED';
   }else if(status === 'in progress'){
     return 'IN PROGRESS';
   }else{
-    return '';
+    return ' ';
   }
 }
 

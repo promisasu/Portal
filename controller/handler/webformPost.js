@@ -5,9 +5,7 @@
  */
 
 
-
 const configuration = require('../../config.json');
-
  /**
   * A dashboard with an overview of a specific patient.
   * @param {Request} request - Hapi request

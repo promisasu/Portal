@@ -31,6 +31,7 @@ function setChildPin(pin) {
 
 function checkRequiredValues() {
     document.getElementById("submitBtn").removeAttribute("disabled");
+    document.getElementById("submitBtn").classList.remove("disabled");
 }
 
 function getDeviceType() {
@@ -70,7 +71,7 @@ function submitData() {
 
         //validate child pin
         const regex = /^\d{4}$/;
-        if (patientProperties["childPin"].match(regex)) {
+        if (patientProperties["childPin"] != undefined && patientProperties["childPin"].match(regex)) {
             document.getElementById("childPinErrorMessage").setAttribute("hidden", null);
         } else {
             document.getElementById("childPinErrorMessage").removeAttribute("hidden");
@@ -109,6 +110,8 @@ function submitData() {
         otherMedicine: patientProperties["otherMedicine"],
         otherInfo: patientProperties["otherInfo"]
     }
+    $('#submitBtn').addClass('disabled').attr('disabled',true);
+
     callAjax(formData);
 }
 
@@ -132,7 +135,16 @@ function callAjax(formData) {
             console.log("Success");
             console.log(data);
             sessionStorage.setItem('patientPIN', data.patientPIN);
-            window.location = "/enrollsuccess/" + data.patientPIN;
+            $('#patientPIN').text(data.patientPIN);
+            //window.location = "/enrollsuccess/" + data.patientPIN;
+            $('#myModal').modal({ backdrop: 'static',
+    keyboard: false});
+            $("#modalClose").click(function(){
+              var element = document.getElementById('modalClose');
+              var trialId = element.getAttribute('data-trial-id');
+                window.location = "/trial/"+trialId;
+              });
+              ClearForm();
         },
         error: function(error) {
             console.log(error);
@@ -155,7 +167,6 @@ function enable(medicineName) {
     if (e.options[e.selectedIndex].value == "0") {
         document.getElementById(medicineName + "_medicine_mg").setAttribute("disabled", null);
         document.getElementById(medicineName + "_medicine_mg").setAttribute("hidden", null);
-        document.getElementById(medicineName + "_medicine_mg").value = "0";
         document.getElementById(medicineName + "_medicine_mg").selected = false;
         document.getElementById(medicineName + "_medicine_mg_label").setAttribute("hidden", null);
     } else {
