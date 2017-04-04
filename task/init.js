@@ -46,6 +46,9 @@ read({
     });
 })
 .then((port) => {
+
+    config.dashboard.port = parseInt(port);
+
     console.log('');
     console.log('setup for pain reporting portal database');
     console.log('');
@@ -115,8 +118,8 @@ read({
 
   //Gotta get rid of these dependencies in the near future
   config.api = {};
-  config.api.hostname = hostname;
-  config.api.port = port;
+  config.api.hostname = 'localhost';
+  config.api.port = 3001;
 
   return writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
 })
