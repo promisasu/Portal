@@ -77,6 +77,13 @@
         alert('patient could not be deactivated');
     }
 
+    var proxyPinElement = document.getElementById('parent-proxy');
+    var proxyPin = proxyPinElement.getAttribute('data-proxy-pin');
+    
+    if (proxyPin != undefined && proxyPin != null && proxyPin != '') {
+        proxyPinElement.removeAttribute('hidden');
+    }
+
     document.getElementById('deactivate-patient')
     .addEventListener('click', function deactivate () {
         $.ajax({
