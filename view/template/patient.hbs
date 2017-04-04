@@ -26,7 +26,7 @@
             <div class="card">
                 <div class="card-block">
                     <h4 class="card-title">
-                        Patients' Surveys
+                        Patients' Surveys <span data-proxy-pin='{{patient.ParentPinFK}}' id="parent-proxy" hidden>(Proxy for Patient: <a href="/patient/{{ patient.ParentPinFK }}">{{patient.ParentPinFK}}</a>)</span>
                         <span class="pull-right">
                             <a href="/patient/{{ patient.PatientPin }}.csv" class="btn btn-primary btn-sm">
                                 Export Patient Data
