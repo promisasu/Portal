@@ -110,6 +110,8 @@ function submitData() {
         otherMedicine: patientProperties["otherMedicine"],
         otherInfo: patientProperties["otherInfo"]
     }
+    $('#submitBtn').addClass('disabled').attr('disabled',true);
+
     callAjax(formData);
 }
 
@@ -133,7 +135,16 @@ function callAjax(formData) {
             console.log("Success");
             console.log(data);
             sessionStorage.setItem('patientPIN', data.patientPIN);
-            window.location = "/enrollsuccess/" + data.patientPIN;
+            $('#patientPIN').text(data.patientPIN);
+            //window.location = "/enrollsuccess/" + data.patientPIN;
+            $('#myModal').modal({ backdrop: 'static',
+    keyboard: false});
+            $("#modalClose").click(function(){
+              var element = document.getElementById('modalClose');
+              var trialId = element.getAttribute('data-trial-id');
+                window.location = "/trial/"+trialId;
+              });
+              ClearForm();
         },
         error: function(error) {
             console.log(error);
