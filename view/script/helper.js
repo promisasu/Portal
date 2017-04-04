@@ -9,9 +9,11 @@ function isParentCheck(subjectGroupValue) {
 
         document.getElementById('ifParent').style.display = 'block';
         document.getElementById('hydroxurea').style.display = 'none';
+        document.getElementById('medication-questions').style.display = 'none';
     } else {
         document.getElementById('ifParent').style.display = 'none';
         document.getElementById('hydroxurea').style.display = 'block';
+        document.getElementById('medication-questions').style.display = 'block';
     }
     //get subject group/patientType
     patientType = subjectGroupValue;
