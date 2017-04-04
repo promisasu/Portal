@@ -49,7 +49,7 @@ function deactivatePatient(request, reply) {
                   'DEACTIVATED',
                   'pending',
                   moment().format("YYYY-MM-DD HH:mm:ss"),
-                  request.params.pin
+                  request.params.pin,
                   request.params.pin
               ],
               plain: true
