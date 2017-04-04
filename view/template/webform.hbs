@@ -17,53 +17,53 @@
     </ol>
     <div class="container">
         <element id="webFormPostUrl" data-webFormPost={{webFormPostUrl}}>
-        <form class="well form-horizontal" method="post" id="patient_form" novalidate="">
-            <fieldset>
-                <!-- Form Name -->
-                <legend>Patient Enrollment Form</legend>
-                <!-- radio checks -->
-                <label class="control-label">* Indicates Required Fields</label>
-                <!-- <br>
+            <form class="well form-horizontal" method="post" id="patient_form" novalidate="">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Patient Enrollment Form</legend>
+                    <!-- radio checks -->
+                    <label class="control-label">* Indicates Required Fields</label>
+                    <!-- <br>
                 <button type='button' id="ins" onclick="showIns()">Instruction</button> -->
 
-                <div class="form-group row">
-                    <label class="control-label">Which group does the subject belong to? *</label>
-                    <div class="">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="subject_group" value="child" onclick="isParentCheck(this.value)" id="childCheck" required/> Child (8-17)
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="subject_group" value="adult" onclick="isParentCheck(this.value)" /> Adult (18-21)
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="subject_group" value="parent_proxy" onclick="isParentCheck(this.value)" id="parentCheck" /> Parent
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Text input if parent is selected-->
-                <div id="ifParent" style="display:none">
                     <div class="form-group row">
-                        <label class="control-label">What is the PIN of your Child? *</label>
-                        <div class="inputGroupContainer">
-                            <div class="input-group col-xs-4">
-                                <input name="childPin" id="childPin" onkeyup="setChildPin(this.value)" class="form-control" type="text" required> <span id="childPinErrorMessage" class="alert alert-danger" hidden>Please enter a valid child pin</span>
+                        <label class="control-label">Which group does the subject belong to? *</label>
+                        <div class="">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="subject_group" value="child" onclick="isParentCheck(this.value)" id="childCheck" required/> Child (8-17)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="subject_group" value="adult" onclick="isParentCheck(this.value)" /> Adult (18-21)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="subject_group" value="parent_proxy" onclick="isParentCheck(this.value)" id="parentCheck" /> Parent
+                                </label>
                             </div>
                         </div>
                     </div>
-                </div>
-                <br>
 
-                <!-- radio checks -->
-                <div class="form-group row">
-                    <label class="control-label">What kind of device will you be using for the study?</label>
+
+                    <!-- Text input if parent is selected-->
+                    <div id="ifParent" style="display:none">
+                        <div class="form-group row">
+                            <label class="control-label">What is the PIN of your Child? *</label>
+                            <div class="inputGroupContainer">
+                                <div class="input-group col-xs-4">
+                                    <input name="childPin" id="childPin" onkeyup="setChildPin(this.value)" class="form-control" type="text" required> <span id="childPinErrorMessage" class="alert alert-danger" hidden>Please enter a valid child pin</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <!-- radio checks -->
+                    <div class="form-group row">
+                        <label class="control-label">What kind of device will you be using for the study?</label>
                         <div class="radio">
                             <label>
                                 <input type="radio" name="device" value="android smartphone" /> Android smartphone
@@ -208,7 +208,7 @@
                                 </div>
                                 </br>
 
-                              <label>Percocet</label>
+                                <label>Percocet</label>
                                 <br>
                                 <div id="Percocet">
                                     <select id="Percocet_tablets" onchange='enable("Percocet")'>
@@ -242,12 +242,12 @@
                                         <option value="4">4</option>
                                     </select>
                                     Tablets
-                                        <select id="Ibuprofen_medicine_mg" hidden disabled>
-                                            <option selected="selected" value="200">200</option>
-                                            <option value="400">400</option>
-                                            <option value="600">600</option>
-                                            <option value="800">800</option>
-                                        </select> <span id="Ibuprofen_medicine_mg_label" hidden>mg</span>
+                                    <select id="Ibuprofen_medicine_mg" hidden disabled>
+                                        <option selected="selected" value="200">200</option>
+                                        <option value="400">400</option>
+                                        <option value="600">600</option>
+                                        <option value="800">800</option>
+                                    </select> <span id="Ibuprofen_medicine_mg_label" hidden>mg</span>
                                 </div>
                                 </br>
 
@@ -261,11 +261,11 @@
                                         <option value="2">2</option>
                                     </select>
                                     Tablets
-                                        <select id="Naprosyn_medicine_mg" hidden disabled>
-                                            <option selected="selected" value="250">250</option>
-                                            <option value="375">375</option>
-                                            <option value="500">500</option>
-                                        </select> <span id="Naprosyn_medicine_mg_label" hidden>mg</span>
+                                    <select id="Naprosyn_medicine_mg" hidden disabled>
+                                        <option selected="selected" value="250">250</option>
+                                        <option value="375">375</option>
+                                        <option value="500">500</option>
+                                    </select> <span id="Naprosyn_medicine_mg_label" hidden>mg</span>
                                 </div>
                                 </br>
 
@@ -279,12 +279,12 @@
                                         <option value="2">2</option>
                                     </select>
                                     Tablets
-                                        <select id="Tylenol with codeine_medicine_mg" hidden disabled>
-                                            <option selected="selected" value="200">200</option>
-                                            <option value="400">400</option>
-                                            <option value="600">600</option>
-                                            <option value="800">800</option>
-                                        </select> <span id="Tylenol with codeine_medicine_mg_label" hidden>mg</span>
+                                    <select id="Tylenol with codeine_medicine_mg" hidden disabled>
+                                        <option selected="selected" value="200">200</option>
+                                        <option value="400">400</option>
+                                        <option value="600">600</option>
+                                        <option value="800">800</option>
+                                    </select> <span id="Tylenol with codeine_medicine_mg_label" hidden>mg</span>
                                 </div>
                                 </br>
 
@@ -298,12 +298,12 @@
 
 
                     <div class="form-group row">
-                    <label class="control-label">Please provide any other notes relevant to this subject:</label>
-                    <div class="inputGroupContainer">
-                        <div class="input-group">
-                            <textarea name="other_info" rows="4" cols="50"></textarea>
+                        <label class="control-label">Please provide any other notes relevant to this subject:</label>
+                        <div class="inputGroupContainer">
+                            <div class="input-group">
+                                <textarea name="other_info" rows="4" cols="50"></textarea>
+                            </div>
                         </div>
-                    </div>
                     </div>
 
                     <!-- Button -->
@@ -318,36 +318,65 @@
                     </div>
 
 
-            </fieldset>
-        </form>
+                </fieldset>
+            </form>
     </div>
 
-    <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+    <!-- Success Modal -->
+    <div class="modal fade" id="success-modal" role="dialog">
+        <div class="modal-dialog">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">You are all SET!</h4>
-        </div>
-        <div class="modal-body">
-          <UL>
-            <li>Your pin is:<big><big id="patientPIN"> </big></big></li>. Odd PINs get the enhanced version, even PINs the normal version. You do not have to do anything to control this assignment.<br/></br>
-            <li>ANDROID Users: Go to the <a href="https://play.google.com/store/apps/details?id=edu.asu.healPromisV3">Google Playstore</a> and download the app</li><br/>
-            <li>iOS Users: Go to the <a href="https://itunes.apple.com/us/app/promis-pain-report/id1162282071">iTunes App Store</a> and download the app</li><br/>
-            <li>Enter your <b>pin</b> and a <b>server address of:</b> {{apiURL}}<br/>
-            <li>If you encounter a problem, please email <a href="mailto:promisasu@gmail.com">promisasu@gmail.com</a></li>
-          </UL>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" id="modalClose" data-trial-id={{ trialId }} data-dismiss="modal" >Close</button>
-        </div>
-      </div>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">You are all SET!</h4>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>Your pin is:<big><big id="patientPIN"> </big></big>
+                        </li>. Odd PINs get the enhanced version, even PINs the normal version. You do not have to do anything to control this assignment.
+                        <br/>
+                        <br/>
+                        <li>ANDROID Users: Go to the <a href="https://play.google.com/store/apps/details?id=edu.asu.healPromisV3">Google Playstore</a> and download the app</li>
+                        <br/>
+                        <li>iOS Users: Go to the <a href="https://itunes.apple.com/us/app/promis-pain-report/id1162282071">iTunes App Store</a> and download the app</li>
+                        <br/>
+                        <li>Enter your <b>pin</b> and a <b>server address of:</b> {{apiURL}}
+                            <br/>
+                            <li>If you encounter a problem, please email <a href="mailto:promisasu@gmail.com">promisasu@gmail.com</a>
+                            </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="enroll-new-btn" data-trial-id='{{ trialId }}' data-dismiss="modal">Enroll New Patient</button>
+                    <button type="button" class="btn btn-default" id="success-modal-close" data-trial-id='{{ trialId }}' data-dismiss="modal">Close</button>
+                </div>
+            </div>
 
+        </div>
     </div>
-  </div>
+
+    <!-- Error Modal -->
+    <div class="modal fade" id="error-modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">ERROR!</h4>
+                </div>
+                <div class="modal-body">
+                    There was an error. 
+                    <p id="error-message" class="alert alert-danger"></p>
+                    Please try again. If the error persists, please get in touch with us at <a href="mailto:promisasu@gmail.com">promisasu@gmail.com</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="error-modal-dismiss" data-trial-id='{{ trialId }}' data-dismiss="modal">Dismiss</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <script src="/static/script/helper.js"></script>
