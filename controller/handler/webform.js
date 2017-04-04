@@ -18,7 +18,7 @@
 
    console.log(request.params);
 
-   return reply.view('webform',{'title':'Add a new Patient','webFormPostUrl':configuration.webFormPostUrl,'trialId':request.params.trialId});
+   return reply.view('webform',{'title':'Add a new Patient','webFormPostUrl':configuration.webFormPostUrl,'trialId':request.params.trialId,'apiURL':configuration.apiURL});
 }
 
 module.exports = webform;
