@@ -38,7 +38,7 @@ function deactivatePatient(request, reply) {
 
           return reply(boom.conflict());
       });
-    }else if((Number)request.params.pin > 4000){
+    }else if(Number(request.params.pin) > 4000){
       database.sequelize.query(
           `
           UPDATE activity_instance SET State = ? WHERE State = ? AND EndTime >= ? AND PatientPinFk
