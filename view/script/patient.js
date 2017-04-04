@@ -79,9 +79,10 @@
 
     var proxyPinElement = document.getElementById('parent-proxy');
     var proxyPin = proxyPinElement.getAttribute('data-proxy-pin');
-    
+
     if (proxyPin != undefined && proxyPin != null && proxyPin != '') {
         proxyPinElement.removeAttribute('hidden');
+        document.getElementById('deactivate-patient').setAttribute("hidden",null);
     }
 
     document.getElementById('deactivate-patient')

@@ -16,27 +16,54 @@ const moment = require('moment');
  */
 function deactivatePatient(request, reply) {
 
-    database.sequelize.query(
-        `
-        UPDATE activity_instance SET State = ? where State = ? and EndTime >= ? and PatientPinFk = ?
-        `, {
-            type: database.sequelize.QueryTypes.UPDATE,
-            replacements: [
-                'DEACTIVATED',
-                'pending',
-                moment().format("YYYY-MM-DD HH:mm:ss"),
-                request.params.pin
-            ],
-            plain: true
-        }
-    ).then(function() {
-        return reply();
-    }).catch((err) => {
-        request.log('error', err);
-        console.log(err);
+    if(Number(request.params.pin) > 3000 && Number(request.params.pin) < 4000){
+      database.sequelize.query(
+          `
+          UPDATE activity_instance SET State = ? where State = ? and EndTime >= ? and PatientPinFk = ?
+          `, {
+              type: database.sequelize.QueryTypes.UPDATE,
+              replacements: [
+                  'DEACTIVATED',
+                  'pending',
+                  moment().format("YYYY-MM-DD HH:mm:ss"),
+                  request.params.pin
+              ],
+              plain: true
+          }
+      ).then(function() {
+          return reply();
+      }).catch((err) => {
+          request.log('error', err);
+          console.log(err);
 
-        return reply(boom.conflict());
-    });
+          return reply(boom.conflict());
+      });
+    }else if((Number)request.params.pin > 4000){
+      database.sequelize.query(
+          `
+          UPDATE activity_instance SET State = ? WHERE State = ? AND EndTime >= ? AND PatientPinFk
+          IN (?, (SELECT PatientPin FROM patients WHERE ParentPinFK = ?));
+          `, {
+              type: database.sequelize.QueryTypes.UPDATE,
+              replacements: [
+                  'DEACTIVATED',
+                  'pending',
+                  moment().format("YYYY-MM-DD HH:mm:ss"),
+                  request.params.pin
+                  request.params.pin
+              ],
+              plain: true
+          }
+      ).then(function() {
+          return reply();
+      }).catch((err) => {
+          request.log('error', err);
+          console.log(err);
+
+          return reply(boom.conflict());
+      });
+    }
+
 }
 
 module.exports = deactivatePatient;
