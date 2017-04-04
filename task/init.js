@@ -126,6 +126,14 @@ read({
 })
 .then((formPostURL) => {
   config.webFormPostUrl = formPostURL;
+
+  return read({
+      prompt: 'API Url for the web app:',
+      default: 'http://swent1linux.asu.edu:8082/api'
+  });
+})
+.then((apiURL) => {
+  config.apiURL = apiURL;
   return writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
 })
 .catch((err) => {

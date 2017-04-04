@@ -5,7 +5,8 @@
  */
 
 
-var request = require('request');
+
+const configuration = require('../../config.json');
 
  /**
   * A dashboard with an overview of a specific patient.
@@ -26,7 +27,7 @@ var request = require('request');
   // }
   // });
   console.log("Going to success");
-   return reply.view('webformSuccess',{'patientPIN':request.params.id.toString()});
+   return reply.view('webformSuccess',{'patientPIN':request.params.id.toString(),'apiURL':config.apiURL});
 }
 
 module.exports = webformPost;
