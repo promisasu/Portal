@@ -145,7 +145,7 @@ function callAjax(formData) {
             });
 
             $("#success-modal-close").click(function() {
-                var element = document.getElementById('modalClose');
+                var element = document.getElementById('success-modal-close');
                 var trialId = element.getAttribute('data-trial-id');
                 window.location = "/trial/" + trialId;
             });
