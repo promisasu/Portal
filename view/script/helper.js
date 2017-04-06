@@ -150,7 +150,7 @@ function callAjax(formData) {
                 window.location = "/trial/" + trialId;
             });
 
-            ClearForm();
+            clearForm();
         },
         error: function(error) {
             console.log(error);
@@ -170,13 +170,12 @@ function callAjax(formData) {
     });
 }
 
-function ClearForm() {
+function clearForm() {
     document.getElementById('patient_form').reset();
+    for (var i = MEDICINE_CONSTANTS.length - 1; i >= 0; i--) {
+        enable(MEDICINE_CONSTANTS[i]);
+    }
     sessionStorage.setItem('patientPIN', 0);
-}
-
-function showIns() {
-    window.location = "ins.html";
 }
 
 function enable(medicineName) {
@@ -194,4 +193,4 @@ function enable(medicineName) {
     }
 }
 
-ClearForm();
+clearForm();
