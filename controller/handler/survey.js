@@ -4,7 +4,7 @@
  * @module controller/handler/survey
  */
 
-const groupBy = require('../helper/group-by.js');
+// const groupBy = require('../helper/group-by.js');
 const database = require('../../model');
 const httpNotFound = 404;
 const convertJsonToCsv = require('../helper/convert-json-to-csv');
