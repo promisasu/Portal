@@ -7,22 +7,6 @@
     // Makes a copy of window.dates
     var allDatesConfig = Object.create(window.dates);
 
-
-    //calculate y axis
-    // var datasets = window.dates.datasets;
-    // console.log(datasets);
-    // var yAxes = [];
-    // var labels = [];
-    // for (var i = 0; i < datasets.length; i++) {
-    //   var dataSet = datasets[i];
-    //   console.log("Dataset");
-    //   console.log(dataSet);
-    //   yAxes.push();
-    //   labels.push.apply(labels,dataSet.dates);
-    // }
-    // console.log("Y Axes");
-    // console.log(yAxes);
-
     var config = {
         type: 'line',
         data: '',
@@ -62,6 +46,7 @@
     };
 
     var ctx = document.getElementById('complianceChart').getContext('2d');
+    var ctx2 = document.getElementById('complianceChart2').getContext('2d');
 
     function redirect () {
         var element = document.getElementById('deactivate-patient');
@@ -101,4 +86,7 @@
 
     config.data = allDatesConfig;
     new Chart(ctx, config);
+
+    new Chart(ctx2, config);
+
 }());
