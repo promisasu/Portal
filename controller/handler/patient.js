@@ -104,7 +104,8 @@ function patientView (request, reply) {
 
                     return surveyInstanceCopy;
                 }),
-                datesJson: JSON.stringify(dataChart)
+                datesJson: JSON.stringify(dataChart),
+                clinicalValues: JSON.stringify(dataChart)
             });
         })
         .catch((err) => {
