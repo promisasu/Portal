@@ -161,7 +161,13 @@ function pickClinicianDataset(surveys){
 }
 
 function calculatePromisScore(surveys){
-  
+  //Filter out the surveys that you are going to process, eg, Daily or weekly endDateforChart
+  // Calculate the promis score for each surveys
+  // Calculate the labels for your filtered surveys.
+  // var dates = surveys.map((survey) => {
+  //     return moment(survey.StartTime).format(viewDateFormat);
+  // });  
+  // Return data like so [{x:<label>,y:<value>},{x:<label>,y:<value>}]
 }
 
 module.exports = processSurveyInstances;
