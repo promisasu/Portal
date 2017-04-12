@@ -143,25 +143,25 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
 
 function processClinicanData(surveys){
   console.log("In clinician data");
-  var datasets = pickTimeLeft(surveys);
+  var datasets = pickClinicianDataset(surveys);
   var labels = [];
-  // for (var i = 0; i < 3; i++) {
-    var dataSet = datasets[0];
-    var y = dataSet.data;
-    var x = dataSet.dates;
-    datasets[0].data = [];
-    for (var j = 0; j < x.length; j++) {
-      datasets[0].data.push({'x':x[j],'y':Math.floor(Math.random() * (100 - 0)) + 0});
-    }
-    labels.push.apply(labels,dataSet.dates);
-  // }
   const numberOfDays = 7;
   const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
   labels.push(moment(endDateforChart).format(viewDateFormat));
   return {
-      labels: labels.slice(0,datasets[0].length),
-      datasets: datasets[0]
+      labels:labels,
+      datasets: datasets
   };
+}
+
+function pickClinicianDataset(surveys){
+  var dates = surveys.map((survey) => {
+      return moment(survey.StartTime).format(viewDateFormat);
+  });
+}
+
+function calculatePromisScore(surveys){
+  
 }
 
 module.exports = processSurveyInstances;
