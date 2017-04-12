@@ -120,7 +120,7 @@ function trialCSV (request, reply) {
         return reply(csv).type('text/csv');
     })
     .catch((err) => {
-        console.error(err);
+        request.log('error', err);
         reply(boom.notFound('patient data not found'));
     });
 }
