@@ -46,8 +46,8 @@
         }
     };
 
-    var ctx = document.getElementById('complianceChart').getContext('2d');
-    var ctx2 = document.getElementById('complianceChart2').getContext('2d');
+    var ctx = document.getElementById('surveyComplianceChart').getContext('2d');
+    var ctx2 = document.getElementById('scoresComplianceChart').getContext('2d');
 
     function redirect () {
         var element = document.getElementById('deactivate-patient');

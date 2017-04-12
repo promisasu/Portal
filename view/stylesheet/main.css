@@ -34,3 +34,7 @@ input[type='date'] {
     padding-top: .4688rem;
     padding-bottom: .4688rem;
 }
+a.active {
+    text-decoration: underline;
+    font-weight: bold;
+}
