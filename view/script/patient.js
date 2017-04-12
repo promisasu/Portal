@@ -85,12 +85,63 @@
         $('#remember-patient-dialog').modal('show');
     }
 
-    var clinicalConfig = Object.assign({},config);
+    var clinicalChartConfig = {
+    type: 'line',
+    data : {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+        {
+            label: "My First dataset",
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(75,192,192,1)",
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: [65, 59, 80, 81, 56, 55, 40],
+        },
+        {
+          label: "My Second dataset",
+          backgroundColor: "rgba(75,192,192,0.4)",
+          borderColor: "rgba(75,192,192,1)",
+          pointBorderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: [100, 90, 80, 70, 60, 50, 40],
+        },
+        {
+          label: "My Second dataset",
+          backgroundColor: "rgba(75,192,192,0.4)",
+          borderColor: "rgba(75,192,192,1)",
+          pointBorderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: [0, 10, 20, 30, 40, 50, 60],
+        }
+    ]
+},
+    options: {
+        scales: {
+            yAxes: [{
+                stacked: false
+            }]
+        }
+    }
+};
+
 
     config.data = allDatesConfig;
     new Chart(ctx, config);
 
-    clinicalConfig.data = allClinicalValues;
-    new Chart(ctx2, clinicalConfig);
+    // clinicalConfig.data = allClinicalValues;
+    new Chart(ctx2, clinicalChartConfig);
 
 }());

@@ -36,12 +36,10 @@ function processSurveyInstances (surveys) {
     const numberOfDays = 7;
     const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
     labels.push(moment(endDateforChart).format(viewDateFormat));
-
     return {
         labels: labels,
         datasets: datasets
     };
-    return pickTimeLeft(filterSurveyByState);
 }
 
 /**
@@ -63,7 +61,6 @@ function pickDates (surveys) {
         dates.push(moment(endDateforChart).format(viewDateFormat));
     }
 
-    console.log(dates);
     return dates;
 }
 
@@ -144,7 +141,31 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
     return Math.max(percentTimeLeft, minTime);
 }
 
+function processClinicanData(surveys){
+  console.log("In clinician data");
+  var datasets = pickTimeLeft(surveys);
+  var labels = [];
+  // for (var i = 0; i < 3; i++) {
+    var dataSet = datasets[0];
+    var y = dataSet.data;
+    var x = dataSet.dates;
+    datasets[0].data = [];
+    for (var j = 0; j < x.length; j++) {
+      datasets[0].data.push({'x':x[j],'y':Math.floor(Math.random() * (100 - 0)) + 0});
+    }
+    labels.push.apply(labels,dataSet.dates);
+  // }
+  const numberOfDays = 7;
+  const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
+  labels.push(moment(endDateforChart).format(viewDateFormat));
+  return {
+      labels: labels.slice(0,datasets[0].length),
+      datasets: datasets[0]
+  };
+}
+
 module.exports = processSurveyInstances;
 module.exports.pickDates = pickDates;
 module.exports.pickTimeLeft = pickTimeLeft;
 module.exports.calculateTimeLeft = calculateTimeLeft;
+module.exports.processClinicanData = processClinicanData;
