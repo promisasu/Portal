@@ -21,6 +21,7 @@ function processSurveyInstances (surveys) {
         return survey.state === 'completed';
     });
     // const filterSurveyByState = surveys;
+
     var datasets = pickTimeLeft(filterSurveyByState);
     var labels = [];
     for (var i = 0; i < datasets.length; i++) {

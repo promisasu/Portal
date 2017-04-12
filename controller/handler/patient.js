@@ -8,6 +8,7 @@ const database = require('../../model');
 const processSurveyInstances = require('../helper/process-survey-instances');
 const moment = require('moment');
 const httpNotFound = 404;
+const calculateScores = require('../helper/calculate-scores');
 
 /**
  * A dashboard with an overview of a specific patient.
@@ -15,7 +16,7 @@ const httpNotFound = 404;
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
  */
-function patientView (request, reply) {
+function patientView(request, reply) {
     Promise
         .all([
             database.sequelize.query(
@@ -25,8 +26,7 @@ function patientView (request, reply) {
                 JOIN stage AS st
                 ON st.StageId = pa.StageIdFK
                 WHERE pa.PatientPin = ?
-                `,
-                {
+                `, {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         request.params.pin
@@ -45,8 +45,7 @@ function patientView (request, reply) {
                 ON st.StageId = pa.StageIdFK
                 WHERE pa.PatientPin = ?
                 ORDER BY si.StartTime
-                `,
-                {
+                `, {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         request.params.pin
@@ -62,25 +61,43 @@ function patientView (request, reply) {
                 JOIN trial AS tr
                 ON tr.TrialId = st.TrialId
                 WHERE pa.PatientPin = ?
-                `,
-                {
+                `, {
                     type: database.sequelize.QueryTypes.SELECT,
                     replacements: [
                         request.params.pin
                     ],
                     plain: true
                 }
+            ),
+            database.sequelize.query(
+                `
+                SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, act.questionOptionIdFk as optionId, ans.OptionText as optionText, que.SurveyBlockIdFk as questionType
+                FROM question_result act
+                JOIN questions que
+                ON act.questionIdFk = que.QuestionId
+                JOIN question_options ans
+                ON act.questionOptionIdFk = ans.QuestionOptionId
+                JOIN activity_instance ai
+                ON act.ActivityInstanceIdFk = ai.ActivityInstanceId
+                WHERE act.ActivityInstanceIdFk
+                IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ? and State='completed' and ai.activityTitle='Sickle Cell Weekly Survey');
+
+                `, {
+                    type: database.sequelize.QueryTypes.SELECT,
+                    replacements: [
+                        request.params.pin
+                    ]
+                }
             )
         ])
-        .then(([currentPatient, surveyInstances, currentTrial]) => {
-          //console.log("GOt the results");
-          //console.log("currentPatient");
+        .then(([currentPatient, surveyInstances, currentTrial, surveyResults]) => {
 
-          var dataChart = processSurveyInstances(surveyInstances);
-          //console.log(dataChart);
+            console.log(calculateScores.calculatePromisScores(surveyResults));
+            var dataChart = processSurveyInstances(surveyInstances);
+            //console.log(dataChart);
 
 
-          // //console.log(JSON.stringify(processSurveyInstances(surveyInstances)));
+            // //console.log(JSON.stringify(processSurveyInstances(surveyInstances)));
             // patient not found
             if (!currentPatient) {
                 throw new Error('patient does not exist');
@@ -97,9 +114,8 @@ function patientView (request, reply) {
                     surveyInstanceCopy.endTime = moment(surveyInstanceCopy.EndTime)
                         .format('MM-DD-YYYY');
                     if (surveyInstanceCopy.UserSubmissionTime) {
-                        surveyInstanceCopy.UserSubmissionTime
-                            = moment(surveyInstanceCopy.UserSubmissionTime)
-                                .format('MM-DD-YYYY h:mma');
+                        surveyInstanceCopy.UserSubmissionTime = moment(surveyInstanceCopy.UserSubmissionTime)
+                            .format('MM-DD-YYYY h:mma');
                     }
 
                     return surveyInstanceCopy;
@@ -111,10 +127,10 @@ function patientView (request, reply) {
             request.log('error', err);
             //console.log(err);
             reply
-            .view('404', {
-                title: 'Not Found'
-            })
-            .code(httpNotFound);
+                .view('404', {
+                    title: 'Not Found'
+                })
+                .code(httpNotFound);
         });
 }
 
