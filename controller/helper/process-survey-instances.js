@@ -144,6 +144,7 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
 function processClinicanData(surveys){
   console.log("In clinician data");
   var datasets = pickClinicianDataset(surveys);
+  console.log(datasets);
   var labels = surveys.map((survey) => {
       return moment(survey.StartTime).format(viewDateFormat);
   });
@@ -165,10 +166,10 @@ var white = "rgba(255,255,255, 0.9)";
 function pickClinicianDataset(surveys){
   var dataPoints = [];
   var datasets = [];
-  dataPoints.push({label: 'Opoid Equivalance',data:getOpoidEquivivalance(),color:pink});
-  dataPoints.push({label: 'Promis Score',data:getPromisScore(),color:green});
-  dataPoints.push({label: 'Pain Intensity',data:getPainIntensity(),color:yellow});
-  dataPoints.push({label: 'Opoid Threshold',data:getOpioidThreshold(),color:blue});
+  dataPoints.push({label: 'Opoid Equivalance',data:getOpoidEquivivalance(surveys),color:pink});
+  dataPoints.push({label: 'Promis Score',data:getPromisScore(surveys),color:green});
+  dataPoints.push({label: 'Pain Intensity',data:getPainIntensity(surveys),color:yellow});
+  dataPoints.push({label: 'Opoid Threshold',data:getOpioidThreshold(surveys),color:blue});
   for (var i = 0; i < dataPoints.length; i++) {
     datasets.push({
                     label: dataPoints[i].label,
@@ -180,17 +181,56 @@ function pickClinicianDataset(surveys){
                     pointBorderWidth: 10,
                     pointRadius: 10,
                     data: dataPoints[i].data,
-                })
+                });
+    if (dataPoints[i].label == 'Opoid Threshold') {
+      datasets[i].borderDash = [10,5];
+    }
     }
   return datasets;
 }
 
-function getDatasetDict(values){
-
+function getOpoidEquivivalance(surveys){
+  var data = [];
+  var labels = surveys.map((survey) => {
+      return moment(survey.StartTime).format(viewDateFormat);
+  });
+  for (var i = 0; i < labels.length; i++) {
+    data.push({x:labels[i],y:i*2});
+  }
+  return data;
 }
 
-function getOpoidEquivivalance(){
+function getPromisScore(surveys){
+  var data = [];
+  var labels = surveys.map((survey) => {
+      return moment(survey.StartTime).format(viewDateFormat);
+  });
+  for (var i = 0; i < labels.length; i++) {
+    data.push({x:labels[i],y:i*4});
+  }
+  return data;
+}
 
+function getOpioidThreshold(surveys){
+  var data = [];
+  var labels = surveys.map((survey) => {
+      return moment(survey.StartTime).format(viewDateFormat);
+  });
+  for (var i = 0; i < labels.length; i++) {
+    data.push({x:labels[i],y:50});
+  }
+  return data;
+}
+
+function getPainIntensity(surveys){
+  var data = [];
+  var labels = surveys.map((survey) => {
+      return moment(survey.StartTime).format(viewDateFormat);
+  });
+  for (var i = 0; i < labels.length; i++) {
+    data.push({x:labels[i],y:i*3});
+  }
+  return data;
 }
 
 function calculatePromisScore(surveys){

@@ -85,8 +85,7 @@ function patientView (request, reply) {
             if (!currentPatient) {
                 throw new Error('patient does not exist');
             }
-            // var clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances);
-            var clinicalValuesChart = processSurveyInstances(surveyInstances);
+            var clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances);
             console.log(clinicalValuesChart);
             console.log(clinicalValuesChart.datasets.data);
             return reply.view('patient', {
