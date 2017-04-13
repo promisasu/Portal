@@ -36,12 +36,10 @@ function processSurveyInstances (surveys) {
     const numberOfDays = 7;
     const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
     labels.push(moment(endDateforChart).format(viewDateFormat));
-
     return {
         labels: labels,
         datasets: datasets
     };
-    return pickTimeLeft(filterSurveyByState);
 }
 
 /**
@@ -63,7 +61,6 @@ function pickDates (surveys) {
         dates.push(moment(endDateforChart).format(viewDateFormat));
     }
 
-    console.log(dates);
     return dates;
 }
 
@@ -101,6 +98,8 @@ function pickTimeLeft (surveys) {
             backgroundColor: getRGBA(),
             borderColor: getRGBA(),
             pointBorderColor: getRGBA(),
+            pointBorderWidth: 10,
+            pointRadius: 10,
             data: dataPoints,
             dates: dates
         }
@@ -144,7 +143,110 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
     return Math.max(percentTimeLeft, minTime);
 }
 
+function processClinicanData(surveys){
+  console.log("In clinician data");
+  var datasets = pickClinicianDataset(surveys);
+  console.log(datasets);
+  var labels = surveys.map((survey) => {
+      return moment(survey.StartTime).format(viewDateFormat);
+  });
+  const numberOfDays = 7;
+  const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
+  labels.push(moment(endDateforChart).format(viewDateFormat));
+  return {
+      labels:labels,
+      datasets: datasets
+  };
+}
+
+var pink = "rgba(254, 160,172, 1)";
+var green = "rgba(122, 198,150, 1)";
+var yellow = "rgba(182, 29,57, 1)";
+var blue = "rgba(2, 117,216, 0.6)";
+var white = "rgba(255,255,255, 0.9)";
+
+function pickClinicianDataset(surveys){
+  var dataPoints = [];
+  var datasets = [];
+  dataPoints.push({label: 'Opoid Equivalance',data:getOpoidEquivivalance(surveys),color:pink});
+  dataPoints.push({label: 'Promis Score',data:getPromisScore(surveys),color:green});
+  dataPoints.push({label: 'Pain Intensity',data:getPainIntensity(surveys),color:yellow});
+  dataPoints.push({label: 'Opoid Threshold',data:getOpioidThreshold(surveys),color:blue});
+  for (var i = 0; i < dataPoints.length; i++) {
+    datasets.push({
+                    label: dataPoints[i].label,
+                    fill:false,
+                    backgroundColor: dataPoints[i].color,
+                    borderColor: dataPoints[i].color,
+                    pointBorderColor: dataPoints[i].color,
+                    pointBackgroundColor: white,
+                    pointBorderWidth: 10,
+                    pointRadius: 10,
+                    data: dataPoints[i].data,
+                });
+    if (dataPoints[i].label == 'Opoid Threshold') {
+      datasets[i].borderDash = [10,5];
+    }
+    }
+  return datasets;
+}
+
+function getOpoidEquivivalance(surveys){
+  var data = [];
+  var labels = surveys.map((survey) => {
+      return moment(survey.StartTime).format(viewDateFormat);
+  });
+  for (var i = 0; i < labels.length; i++) {
+    data.push({x:labels[i],y:i*2});
+  }
+  return data;
+}
+
+function getPromisScore(surveys){
+  var data = [];
+  var labels = surveys.map((survey) => {
+      return moment(survey.StartTime).format(viewDateFormat);
+  });
+  for (var i = 0; i < labels.length; i++) {
+    data.push({x:labels[i],y:i*4});
+  }
+  return data;
+}
+
+function getOpioidThreshold(surveys){
+  var data = [];
+  var labels = surveys.map((survey) => {
+      return moment(survey.StartTime).format(viewDateFormat);
+  });
+  for (var i = 0; i < labels.length; i++) {
+    data.push({x:labels[i],y:50});
+  }
+  return data;
+}
+
+function getPainIntensity(surveys){
+  var data = [];
+  var labels = surveys.map((survey) => {
+      return moment(survey.StartTime).format(viewDateFormat);
+  });
+  for (var i = 0; i < labels.length; i++) {
+    data.push({x:labels[i],y:i*3});
+  }
+  return data;
+}
+
+function calculatePromisScore(surveys){
+  //Filter out the surveys that you are going to process, eg, Daily or weekly endDateforChart
+  // Calculate the promis score for each surveys
+  // Calculate the labels for your filtered surveys.
+  // var dates = surveys.map((survey) => {
+  //     return moment(survey.StartTime).format(viewDateFormat);
+  // });
+  // Return data like so [{x:<label>,y:<value>},{x:<label>,y:<value>}]
+}
+
 module.exports = processSurveyInstances;
 module.exports.pickDates = pickDates;
 module.exports.pickTimeLeft = pickTimeLeft;
 module.exports.calculateTimeLeft = calculateTimeLeft;
+module.exports.processClinicanData = processClinicanData;

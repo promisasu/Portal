@@ -84,13 +84,22 @@
     if (isNewPatientRegex.test(isNewPatient)) {
         $('#remember-patient-dialog').modal('show');
     }
+    var clinicalChartConfig = {
+    type: 'line',
+    options: {
+        scales: {
+            yAxes: [{
+                stacked: false
+            }]
+        }
+    }
+};
 
-    var clinicalConfig = Object.assign({},config);
 
     config.data = allDatesConfig;
     new Chart(ctx, config);
 
-    clinicalConfig.data = allClinicalValues;
-    new Chart(ctx2, clinicalConfig);
+    clinicalChartConfig.data = allClinicalValues;
+    new Chart(ctx2, clinicalChartConfig);
 
 }());

@@ -85,7 +85,9 @@ function patientView (request, reply) {
             if (!currentPatient) {
                 throw new Error('patient does not exist');
             }
-
+            var clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances);
+            console.log(clinicalValuesChart);
+            console.log(clinicalValuesChart.datasets.data);
             return reply.view('patient', {
                 title: 'Pain Reporting Portal',
                 patient: currentPatient,
@@ -105,7 +107,7 @@ function patientView (request, reply) {
                     return surveyInstanceCopy;
                 }),
                 datesJson: JSON.stringify(dataChart),
-                clinicalValues: JSON.stringify(dataChart)
+                clinicalValues: JSON.stringify(clinicalValuesChart)
             });
         })
         .catch((err) => {
