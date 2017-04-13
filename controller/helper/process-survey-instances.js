@@ -144,7 +144,9 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
 function processClinicanData(surveys){
   console.log("In clinician data");
   var datasets = pickClinicianDataset(surveys);
-  var labels = [];
+  var labels = surveys.map((survey) => {
+      return moment(survey.StartTime).format(viewDateFormat);
+  });
   const numberOfDays = 7;
   const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
   labels.push(moment(endDateforChart).format(viewDateFormat));
@@ -154,10 +156,41 @@ function processClinicanData(surveys){
   };
 }
 
+var pink = "rgba(254, 160,172, 1)";
+var green = "rgba(122, 198,150, 1)";
+var yellow = "rgba(182, 29,57, 1)";
+var blue = "rgba(2, 117,216, 0.6)";
+var white = "rgba(255,255,255, 0.9)";
+
 function pickClinicianDataset(surveys){
-  var dates = surveys.map((survey) => {
-      return moment(survey.StartTime).format(viewDateFormat);
-  });
+  var dataPoints = [];
+  var datasets = [];
+  dataPoints.push({label: 'Opoid Equivalance',data:getOpoidEquivivalance(),color:pink});
+  dataPoints.push({label: 'Promis Score',data:getPromisScore(),color:green});
+  dataPoints.push({label: 'Pain Intensity',data:getPainIntensity(),color:yellow});
+  dataPoints.push({label: 'Opoid Threshold',data:getOpioidThreshold(),color:blue});
+  for (var i = 0; i < dataPoints.length; i++) {
+    datasets.push({
+                    label: dataPoints[i].label,
+                    fill:false,
+                    backgroundColor: dataPoints[i].color,
+                    borderColor: dataPoints[i].color,
+                    pointBorderColor: dataPoints[i].color,
+                    pointBackgroundColor: white,
+                    pointBorderWidth: 10,
+                    pointRadius: 10,
+                    data: dataPoints[i].data,
+                })
+    }
+  return datasets;
+}
+
+function getDatasetDict(values){
+
+}
+
+function getOpoidEquivivalance(){
+
 }
 
 function calculatePromisScore(surveys){
@@ -166,7 +199,7 @@ function calculatePromisScore(surveys){
   // Calculate the labels for your filtered surveys.
   // var dates = surveys.map((survey) => {
   //     return moment(survey.StartTime).format(viewDateFormat);
-  // });  
+  // });
   // Return data like so [{x:<label>,y:<value>},{x:<label>,y:<value>}]
 }
 

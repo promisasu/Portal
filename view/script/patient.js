@@ -84,47 +84,59 @@
     if (isNewPatientRegex.test(isNewPatient)) {
         $('#remember-patient-dialog').modal('show');
     }
-
+    var pink = "rgba(254, 160,172, 1)";
+    var green = "rgba(122, 198,150, 1)";
+    var yellow = "rgba(182, 29,57, 1)";
+    var blue = "rgba(2, 117,216, 0.6)";
     var clinicalChartConfig = {
     type: 'line',
     data : {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
         {
-            label: "My First dataset",
-            backgroundColor: "rgba(75,192,192,0.4)",
-            borderColor: "rgba(75,192,192,1)",
-            pointBorderColor: "rgba(75,192,192,1)",
+            label: "Opioid Equivalance",
+            fill:false,
+            backgroundColor: pink,
+            borderColor: pink,
+            pointBorderColor: pink,
             pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointRadius: 1,
-            pointHitRadius: 10,
+            pointBorderWidth: 10,
+            pointRadius: 10,
             data: [65, 59, 80, 81, 56, 55, 40],
         },
         {
-          label: "My Second dataset",
-          backgroundColor: "rgba(75,192,192,0.4)",
-          borderColor: "rgba(75,192,192,1)",
-          pointBorderColor: "rgba(75,192,192,1)",
+          label: "Pain Intensity",
+          fill:false,
+          backgroundColor: green,
+          borderColor: green,
+          pointBorderColor: green,
           pointBackgroundColor: "#fff",
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointRadius: 1,
-          pointHitRadius: 10,
+          pointBorderWidth: 10,
+          pointRadius: 10,
           data: [100, 90, 80, 70, 60, 50, 40],
         },
         {
-          label: "My Second dataset",
-          backgroundColor: "rgba(75,192,192,0.4)",
-          borderColor: "rgba(75,192,192,1)",
-          pointBorderColor: "rgba(75,192,192,1)",
+          label: "Promis Score",
+          fill:false,
+          backgroundColor: yellow,
+          borderColor: yellow,
+          pointBorderColor: yellow,
           pointBackgroundColor: "#fff",
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          data: [0, 10, 20, 30, 40, 50, 60],
+          pointBorderWidth: 10,
+          pointRadius: 10,
+          data: [10, 20, 30, 40, 50, 60, 70],
+        },
+        {
+          label: "Opoid Threshold",
+          fill:false,
+          backgroundColor: blue,
+          borderColor: blue,
+          pointBorderColor: blue,
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 10,
+          pointRadius: 10,
+          data: [50, 50, 50,50, 50, 50, 50],
+          borderDash: [10,5],
         }
     ]
 },
