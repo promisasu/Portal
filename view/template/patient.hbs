@@ -16,9 +16,9 @@
         </li>
     </ol>
     <div style="text-align:center">
-        <a href="#" id="survey-chart" class="active" onclick="showChart('survey')">Survey Chart</a>
+        <a href="#" id="survey-chart" class="active" onclick="return showChart('survey');">Survey Chart</a>
         <span> | </span>
-        <a href="#" onclick="showChart('scores')" id="scores-chart" class="">Scores Chart</a>
+        <a href="#" onclick="return showChart('scores');" id="scores-chart" class="">Scores Chart</a>
     </div>
     <div class="row">
         <div class="col-sm-12">
@@ -132,6 +132,7 @@
             document.getElementById("survey-chart").classList.add("active");
             document.getElementById("scores-chart").classList.remove("active");
         }
+        return false;
     }
 </script>
 <script src="/static/script/patient.js" defer></script>
