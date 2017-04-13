@@ -98,6 +98,8 @@ function pickTimeLeft (surveys) {
             backgroundColor: getRGBA(),
             borderColor: getRGBA(),
             pointBorderColor: getRGBA(),
+            pointBorderWidth: 10,
+            pointRadius: 10,
             data: dataPoints,
             dates: dates
         }
