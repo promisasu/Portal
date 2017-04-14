@@ -73,35 +73,31 @@ function patientView (request, reply) {
             )
         ])
         .then(([currentPatient, surveyInstances, currentTrial]) => {
-          //console.log("GOt the results");
-          //console.log("currentPatient");
+            let dataChart = processSurveyInstances(surveyInstances);
 
-          var dataChart = processSurveyInstances(surveyInstances);
-          //console.log(dataChart);
-
-
-          // //console.log(JSON.stringify(processSurveyInstances(surveyInstances)));
             // patient not found
             if (!currentPatient) {
                 throw new Error('patient does not exist');
             }
-            var clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances);
+            let clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances);
+
             console.log(clinicalValuesChart);
             console.log(clinicalValuesChart.datasets.data);
+
             return reply.view('patient', {
                 title: 'Pain Reporting Portal',
                 patient: currentPatient,
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
                     const surveyInstanceCopy = Object.assign({}, surveyInstance);
+
                     surveyInstanceCopy.startTime = moment(surveyInstanceCopy.StartTime)
                         .format('MM-DD-YYYY');
                     surveyInstanceCopy.endTime = moment(surveyInstanceCopy.EndTime)
                         .format('MM-DD-YYYY');
                     if (surveyInstanceCopy.UserSubmissionTime) {
-                        surveyInstanceCopy.UserSubmissionTime
-                            = moment(surveyInstanceCopy.UserSubmissionTime)
-                                .format('MM-DD-YYYY h:mma');
+                        surveyInstanceCopy.UserSubmissionTime = moment(surveyInstanceCopy.UserSubmissionTime)
+                            .format('MM-DD-YYYY h:mma');
                     }
 
                     return surveyInstanceCopy;
@@ -112,7 +108,6 @@ function patientView (request, reply) {
         })
         .catch((err) => {
             request.log('error', err);
-            //console.log(err);
             reply
             .view('404', {
                 title: 'Not Found'

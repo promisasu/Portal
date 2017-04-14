@@ -46,7 +46,6 @@ read({
     });
 })
 .then((port) => {
-
     config.dashboard.port = parseInt(port);
 
     console.log('');
@@ -61,7 +60,6 @@ read({
 .then((databaseHostname) => {
     config.database = {};
     config.database.hostname = databaseHostname;
-
 
     return read({
         prompt: 'database name:',
@@ -106,22 +104,22 @@ read({
     });
 })
 .then((formPostURL) => {
-  config.webFormPostUrl = formPostURL;
+    config.webFormPostUrl = formPostURL;
 
-  return read({
-      prompt: 'API Url for the web app:',
-      default: 'http://swent1linux.asu.edu:8082/api'
-  });
+    return read({
+        prompt: 'API Url for the web app:',
+        default: 'http://swent1linux.asu.edu:8082/api'
+    });
 })
 .then((apiURL) => {
-  config.apiURL = apiURL;
+    config.apiURL = apiURL;
 
-  //Gotta get rid of these dependencies in the near future
-  config.api = {};
-  config.api.hostname = 'localhost';
-  config.api.port = 3001;
+    // Gotta get rid of these dependencies in the near future
+    config.api = {};
+    config.api.hostname = 'localhost';
+    config.api.port = 3001;
 
-  return writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
+    return writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
 })
 .catch((err) => {
     console.error(err);

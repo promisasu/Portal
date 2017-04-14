@@ -55,7 +55,9 @@ const configuration = [
 function patientCSV (request, reply) {
     database.sequelize.query(
         `
-        SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, que.QuestionText as questionText, act.questionOptionIdFk as optionId, ans.OptionText as optionText
+        SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date,
+        act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, que.QuestionText as questionText,
+        act.questionOptionIdFk as optionId, ans.OptionText as optionText
         FROM question_result act
         JOIN questions que
         ON act.questionIdFk = que.QuestionId
