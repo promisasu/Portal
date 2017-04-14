@@ -84,7 +84,7 @@ function trialView (request, reply) {
         ])
         .then(([currentTrial, stages, patients, compliance]) => {
             const rules = [];
-
+            
             if (!currentTrial) {
                 throw new Error('trial does not exist');
             }
