@@ -45,7 +45,20 @@ function register (sequelize) {
             },
             dateCompleted: {
                 type: Sequelize.DATE
-            }
+            },
+            targetCount {
+                type: Sequelize.DATE
+            },
+
+            recruitedCount {
+                type: Sequelize.DATE
+            },
+            activeCount {
+                type: Sequelize.DATE
+            },
+            compliantCount {
+                type: Sequelize.DATE
+            }           
         },
         {
             freezeTableName: true,
