@@ -71,7 +71,7 @@ function patientView(request, reply) {
             ),
             database.sequelize.query(
                 `
-                SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, act.questionOptionIdFk as optionId, ans.OptionText as optionText, que.SurveyBlockIdFk as questionType
+                SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, act.questionOptionIdFk as optionId, ans.OptionText as optionText, que.SurveyBlockIdFk as questionType, ai.StartTime as StartTime, ans.likertScale as likertScale, pi.type as patientType
                 FROM question_result act
                 JOIN questions que
                 ON act.questionIdFk = que.QuestionId
@@ -79,6 +79,8 @@ function patientView(request, reply) {
                 ON act.questionOptionIdFk = ans.QuestionOptionId
                 JOIN activity_instance ai
                 ON act.ActivityInstanceIdFk = ai.ActivityInstanceId
+                JOIN patients pi
+                ON ai.PatientPinFK = pi.PatientPin
                 WHERE act.ActivityInstanceIdFk
                 IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ? and State='completed' and ai.activityTitle='Sickle Cell Weekly Survey');
 

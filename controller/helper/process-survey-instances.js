@@ -16,7 +16,7 @@ const viewDateFormat = 'MM-DD-YYYY HH:mm';
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Object} Complience chart data
  */
-function processSurveyInstances (surveys) {
+function processSurveyInstances(surveys) {
     const filterSurveyByState = surveys.filter((survey) => {
         return survey.state === 'completed';
     });
@@ -25,14 +25,17 @@ function processSurveyInstances (surveys) {
     var datasets = pickTimeLeft(filterSurveyByState);
     var labels = [];
     for (var i = 0; i < datasets.length; i++) {
-      var dataSet = datasets[i];
-      var y = dataSet.data;
-      var x = dataSet.dates;
-      datasets[i].data = [];
-      for (var j = 0; j < x.length; j++) {
-        datasets[i].data.push({'x':x[j],'y':y[j]});
-      }
-      labels.push.apply(labels,dataSet.dates);
+        var dataSet = datasets[i];
+        var y = dataSet.data;
+        var x = dataSet.dates;
+        datasets[i].data = [];
+        for (var j = 0; j < x.length; j++) {
+            datasets[i].data.push({
+                'x': x[j],
+                'y': y[j]
+            });
+        }
+        labels.push.apply(labels, dataSet.dates);
     }
     const numberOfDays = 7;
     const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
@@ -50,7 +53,7 @@ function processSurveyInstances (surveys) {
  * @param {Object} surveys - list of survey instances
  * @returns {Object} processed list of datetimes
  */
-function pickDates (surveys) {
+function pickDates(surveys) {
     const dates = surveys.map((survey) => {
         return moment(survey.StartTime).format(viewDateFormat);
     });
@@ -59,7 +62,7 @@ function pickDates (surveys) {
         // Adding an additional week to include all the dates in compliance chart.
         // This is done because chart js plots only the first day of the week.
         const numberOfDays = 7;
-        const endDateforChart = moment(surveys[surveys.length -1].EndTime).add(numberOfDays, 'day');
+        const endDateforChart = moment(surveys[surveys.length - 1].EndTime).add(numberOfDays, 'day');
 
         dates.push(moment(endDateforChart).format(viewDateFormat));
     }
@@ -73,49 +76,50 @@ function pickDates (surveys) {
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Object} processed list of % time left data
  */
-function pickTimeLeft (surveys) {
+function pickTimeLeft(surveys) {
     var surveySet = new Set();
     for (var i = 0; i < surveys.length; i++) {
-      surveySet.add(surveys[i].activityTitle);
+        surveySet.add(surveys[i].activityTitle);
     }
-    var surveyTypes = [] ;
+    var surveyTypes = [];
     for (let activityTitle of surveySet) {
-      surveyTypes.push(surveys.filter((survey) =>
-        {return survey.activityTitle === activityTitle}));
+        surveyTypes.push(surveys.filter((survey) => {
+            return survey.activityTitle === activityTitle
+        }));
     }
     var returnArray = [];
     for (var i = 0; i < surveyTypes.length; i++) {
-      if (surveyTypes[i].length>0) {
-        var samplePoint = surveyTypes[i][0];
-        var dataPoints = surveyTypes[i].map((survey) => {
-            return calculateTimeLeft(
-                moment(survey.StartTime),
-                moment(survey.EndTime),
-                moment(survey.ActualSubmissionTime)
-            )
-        });
-        var dates = surveyTypes[i].map((survey) => {
-            return moment(survey.StartTime).format(viewDateFormat);
-        });
-        var dataArr = {
-            label: '% Time left until '+ samplePoint.activityTitle + ' expired',
-            backgroundColor: getRGBA(),
-            borderColor: getRGBA(),
-            pointBorderColor: getRGBA(),
-            data: dataPoints,
-            dates: dates
+        if (surveyTypes[i].length > 0) {
+            var samplePoint = surveyTypes[i][0];
+            var dataPoints = surveyTypes[i].map((survey) => {
+                return calculateTimeLeft(
+                    moment(survey.StartTime),
+                    moment(survey.EndTime),
+                    moment(survey.ActualSubmissionTime)
+                )
+            });
+            var dates = surveyTypes[i].map((survey) => {
+                return moment(survey.StartTime).format(viewDateFormat);
+            });
+            var dataArr = {
+                label: '% Time left until ' + samplePoint.activityTitle + ' expired',
+                backgroundColor: getRGBA(),
+                borderColor: getRGBA(),
+                pointBorderColor: getRGBA(),
+                data: dataPoints,
+                dates: dates
+            }
+            returnArray.push(dataArr);
         }
-        returnArray.push(dataArr);
-      }
     }
-  return returnArray;
+    return returnArray;
 }
 
-function getRGBA(){
-  var red = Math.floor(Math.random() * 255) + 1;
-  var green = Math.floor(Math.random() * 255) + 1;
-  var blue = Math.floor(Math.random() * 255) + 1;
-  return  'rgba(' + red.toString() + ',' + green.toString() + ',' + blue.toString() + ',0.5)'
+function getRGBA() {
+    var red = Math.floor(Math.random() * 255) + 1;
+    var green = Math.floor(Math.random() * 255) + 1;
+    var blue = Math.floor(Math.random() * 255) + 1;
+    return 'rgba(' + red.toString() + ',' + green.toString() + ',' + blue.toString() + ',0.5)'
 }
 
 /**
@@ -125,7 +129,7 @@ function getRGBA(){
  * @param {Moment} completedTime - When the survey instance was actually completed
  * @returns {Number} percent time left after completing survey instance
  */
-function calculateTimeLeft (openTime, endTime, completedTime) {
+function calculateTimeLeft(openTime, endTime, completedTime) {
     const percent = 100;
     const minTime = 0;
 
