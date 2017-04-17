@@ -46,9 +46,9 @@ read({
     });
 })
 .then((port) => {
-
     config.dashboard.port = parseInt(port);
-
+})
+.then(() => {
     console.log('');
     console.log('setup for pain reporting portal database');
     console.log('');
