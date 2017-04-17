@@ -2,7 +2,7 @@
     "title": "project configuration schema",
     "description": "a json schema v3 description of the configuration file",
     "type": "object",
-    "additionalProperties": false,
+    "additionalProperties": true,
     "properties": {
         "application": {
             "type": "object",
@@ -16,7 +16,7 @@
         "dashboard": {
             "type": "object",
             "required": true,
-            "additionalProperties": false,
+            "additionalProperties": true,
             "properties": {
                 "hostname": {
                     "type": "hostname",
