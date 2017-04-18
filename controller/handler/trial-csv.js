@@ -18,261 +18,259 @@ const customMap = require('hashmap');
  */
 function trialCSV (request, reply) {
     const formatSpecifier = '%a %b %d %Y %T';
-    var dailyregex = new RegExp("/trial/.-daily.csv", 'g');
-    var weeklyregex = new RegExp("/trial/.-weekly.csv", 'g');
+    var dailyregex = new RegExp('/trial/.-daily.csv', 'g');
+    var weeklyregex = new RegExp('/trial/.-weekly.csv', 'g');
     var optionsWithAnswers;
     var configuration;
     var query;
 
-    if(weeklyregex.test(request.path) ===  true){
-      configuration = [
-          {
-              label: 'Patient Pin',
-              key: 'PatientPin',
-              default: ''
-          },
-          {
-              label: 'Date Started',
-              key: 'DateStarted',
-              default: ''
-          },
-          {
-              label: '0',
-              key: 'State0',
-              default: ''
-          },
-          {
-              label: '1',
-              key: 'State1',
-              default: ''
-          },
-          {
-              label: '2',
-              key: 'State2',
-              default: ''
-          },
-          {
-              label: '3',
-              key: 'State3',
-              default: ''
-          },
-          {
-              label: '4',
-              key: 'State4',
-              default: ''
-          },
-          {
-              label: '5',
-              key: 'State5',
-              default: ''
-          }
-      ];
-      query = "Sickle Cell Weekly Survey";
-
+    if (weeklyregex.test(request.path) === true) {
+        configuration = [
+            {
+                label: 'Patient Pin',
+                key: 'PatientPin',
+                default: ''
+            },
+            {
+                label: 'Date Started',
+                key: 'DateStarted',
+                default: ''
+            },
+            {
+                label: 'Week 0',
+                key: 'State0',
+                default: ''
+            },
+            {
+                label: 'Week 1',
+                key: 'State1',
+                default: ''
+            },
+            {
+                label: 'Week 2',
+                key: 'State2',
+                default: ''
+            },
+            {
+                label: 'Week 3',
+                key: 'State3',
+                default: ''
+            },
+            {
+                label: 'Week 4',
+                key: 'State4',
+                default: ''
+            },
+            {
+                label: 'Week 5',
+                key: 'State5',
+                default: ''
+            }
+        ];
+        query = 'Sickle Cell Weekly Survey';
     }
-    else if (dailyregex.test(request.path) === true){
-      configuration = [
-          {
-              label: 'Patient Pin',
-              key: 'PatientPin',
-              default: ''
-          },
-          {
-              label: 'Date Started',
-              key: 'DateStarted',
-              default: ''
-          },
-          {
-              label: '0',
-              key: 'State0',
-              default: ''
-          },
-          {
-              label: '1',
-              key: 'State1',
-              default: ''
-          },
-          {
-              label: '2',
-              key: 'State2',
-              default: ''
-          },
-          {
-              label: '3',
-              key: 'State3',
-              default: ''
-          },
-          {
-              label: '4',
-              key: 'State4',
-              default: ''
-          },
-          {
-              label: '5',
-              key: 'State5',
-              default: ''
-          },
-          {
-              label: '6',
-              key: 'State6',
-              default: ''
-          },
-          {
-              label: '7',
-              key: 'State7',
-              default: ''
-          },
-          {
-              label: '8',
-              key: 'State8',
-              default: ''
-          },
-          {
-              label: '9',
-              key: 'State9',
-              default: ''
-          },
-          {
-              label: '10',
-              key: 'State10',
-              default: ''
-          },
-          {
-              label: '11',
-              key: 'State11',
-              default: ''
-          },
-          {
-              label: '12',
-              key: 'State12',
-              default: ''
-          },
-          {
-              label: '13',
-              key: 'State13',
-              default: ''
-          },
-          {
-              label: '14',
-              key: 'State14',
-              default: ''
-          },
-          {
-              label: '15',
-              key: 'State15',
-              default: ''
-          },
-          {
-              label: '16',
-              key: 'State16',
-              default: ''
-          },
-          {
-              label: '17',
-              key: 'State17',
-              default: ''
-          },
-          {
-              label: '18',
-              key: 'State18',
-              default: ''
-          },
-          {
-              label: '19',
-              key: 'State19',
-              default: ''
-          },
-          {
-              label: '20',
-              key: 'State20',
-              default: ''
-          },
-          {
-              label: '21',
-              key: 'State21',
-              default: ''
-          },
-          {
-              label: '22',
-              key: 'State22',
-              default: ''
-          },
-          {
-              label: '23',
-              key: 'State23',
-              default: ''
-          },
-          {
-              label: '24',
-              key: 'State24',
-              default: ''
-          },
-          {
-              label: '25',
-              key: 'State25',
-              default: ''
-          },
-          {
-              label: '26',
-              key: 'State26',
-              default: ''
-          },
-          {
-              label: '27',
-              key: 'State27',
-              default: ''
-          },
-          {
-              label: '28',
-              key: 'State28',
-              default: ''
-          },
-          {
-              label: '29',
-              key: 'State29',
-              default: ''
-          },
-          {
-              label: '30',
-              key: 'State30',
-              default: ''
-          },
-          {
-              label: '31',
-              key: 'State31',
-              default: ''
-          },
-          {
-              label: '32',
-              key: 'State32',
-              default: ''
-          },
-          {
-              label: '33',
-              key: 'State33',
-              default: ''
-          },
-          {
-              label: '34',
-              key: 'State34',
-              default: ''
-          },
-          {
-              label: '35',
-              key: 'State35',
-              default: ''
-          }
+    else if (dailyregex.test(request.path) === true) {
+        configuration = [
+            {
+                label: 'Patient Pin',
+                key: 'PatientPin',
+                default: ''
+            },
+            {
+                label: 'Date Started',
+                key: 'DateStarted',
+                default: ''
+            },
+            {
+                label: 'Day 0',
+                key: 'State0',
+                default: ''
+            },
+            {
+                label: 'Day 1',
+                key: 'State1',
+                default: ''
+            },
+            {
+                label: 'Day 2',
+                key: 'State2',
+                default: ''
+            },
+            {
+                label: 'Day 3',
+                key: 'State3',
+                default: ''
+            },
+            {
+                label: 'Day 4',
+                key: 'State4',
+                default: ''
+            },
+            {
+                label: 'Day 5',
+                key: 'State5',
+                default: ''
+            },
+            {
+                label: 'Day 6',
+                key: 'State6',
+                default: ''
+            },
+            {
+                label: 'Day 7',
+                key: 'State7',
+                default: ''
+            },
+            {
+                label: 'Day 8',
+                key: 'State8',
+                default: ''
+            },
+            {
+                label: 'Day 9',
+                key: 'State9',
+                default: ''
+            },
+            {
+                label: 'Day 10',
+                key: 'State10',
+                default: ''
+            },
+            {
+                label: 'Day 11',
+                key: 'State11',
+                default: ''
+            },
+            {
+                label: 'Day 12',
+                key: 'State12',
+                default: ''
+            },
+            {
+                label: 'Day 13',
+                key: 'State13',
+                default: ''
+            },
+            {
+                label: 'Day 14',
+                key: 'State14',
+                default: ''
+            },
+            {
+                label: 'Day 15',
+                key: 'State15',
+                default: ''
+            },
+            {
+                label: 'Day 16',
+                key: 'State16',
+                default: ''
+            },
+            {
+                label: 'Day 17',
+                key: 'State17',
+                default: ''
+            },
+            {
+                label: 'Day 18',
+                key: 'State18',
+                default: ''
+            },
+            {
+                label: 'Day 19',
+                key: 'State19',
+                default: ''
+            },
+            {
+                label: 'Day 20',
+                key: 'State20',
+                default: ''
+            },
+            {
+                label: 'Day 21',
+                key: 'State21',
+                default: ''
+            },
+            {
+                label: 'Day 22',
+                key: 'State22',
+                default: ''
+            },
+            {
+                label: 'Day 23',
+                key: 'State23',
+                default: ''
+            },
+            {
+                label: 'Day 24',
+                key: 'State24',
+                default: ''
+            },
+            {
+                label: 'Day 25',
+                key: 'State25',
+                default: ''
+            },
+            {
+                label: 'Day 26',
+                key: 'State26',
+                default: ''
+            },
+            {
+                label: 'Day 27',
+                key: 'State27',
+                default: ''
+            },
+            {
+                label: 'Day 28',
+                key: 'State28',
+                default: ''
+            },
+            {
+                label: 'Day 29',
+                key: 'State29',
+                default: ''
+            },
+            {
+                label: 'Day 30',
+                key: 'State30',
+                default: ''
+            },
+            {
+                label: 'Day 31',
+                key: 'State31',
+                default: ''
+            },
+            {
+                label: 'Day 32',
+                key: 'State32',
+                default: ''
+            },
+            {
+                label: 'Day 33',
+                key: 'State33',
+                default: ''
+            },
+            {
+                label: 'Day 34',
+                key: 'State34',
+                default: ''
+            },
+            {
+                label: 'Day 35',
+                key: 'State35',
+                default: ''
+            }
 
-      ];
+        ];
 
-      query = "Sickle Cell Daily Survey";
+        query = 'Sickle Cell Daily Survey';
     }
-    else{
-      query = "Unknown";
+    else {
+        query = 'Unknown';
     }
 
     // AND a.state IN ('completed','expired')
-
 
     database.sequelize.query(
         `
@@ -288,23 +286,23 @@ function trialCSV (request, reply) {
             replacements: [
                 query,
                 formatSpecifier,
-                formatSpecifier,
+                formatSpecifier
             ]
         }
     )
     .then((queryResults) => {
         optionsWithAnswers = queryResults;
-        //console.log(optionsWithAnswers);
+        // console.log(optionsWithAnswers);
         return optionsWithAnswers;
     })
-    .then((optionsWithAnswers) =>{
-      optionsWithAnswers = formatData(optionsWithAnswers);
-      return optionsWithAnswers;
+    .then((optionsWithAnswers) => {
+        optionsWithAnswers = formatData(optionsWithAnswers);
+        return optionsWithAnswers;
     })
     .then((formattedOptionsWithAnswers) => {
-      return convertJsonToCsv(formattedOptionsWithAnswers, configuration);
+        return convertJsonToCsv(formattedOptionsWithAnswers, configuration);
     })
-    .then((csv) =>{
+    .then((csv) => {
         return reply(csv).type('text/csv');
     })
     .catch((err) => {
@@ -313,168 +311,168 @@ function trialCSV (request, reply) {
     });
 }
 
-//Function formatData to format the DAILY ACTIVITIES data to get it in the proper format for the CSV
-function formatData(optionsWithAnswers){
-  var map = new customMap();
-  var resultSet = [];
-  for (var row of optionsWithAnswers){
-    var resultObject = {'PatientPin':null,'DateStarted':'somedate', 'State0':' ','State1':' ','State2':' ','State3':' ','State4':' ','State5':' ','State6':' ','State7':' ','State8':' ','State9':' ',
-    'State10':' ','State11':' ','State12':' ','State13':' ','State14':' ','State15':' ','State16':' ','State17':' ','State18':' ','State19':' ','State20':' ','State21':' ',
-    'State22':' ','State23':' ','State24':' ','State25':' ','State26':' ','State27':' ','State28':' ','State29':' ','State30':' ','State31':' ','State32':' ','State33':' ','State34':' ',
-    'State35':' '};
-      var x = -1;
-      resultObject.PatientPin = row.PatientPin;
-      resultObject.DateStarted = row.DateStarted;
-    if(map.has(row.PatientPin)){
-      //do nothing
-      console.log(row.PatientPin + "already exists");
-    }else{
-      console.log(row.PatientPin + "First Occurence");
-      for(var row1 of optionsWithAnswers){
-        if(row1.PatientPin === resultObject.PatientPin){
-                console.log(row1.PatientPin+ " " + row1.State);
-                x++;
-                switch(x){
-                  case 0:
-                  resultObject.State0 = determineStatus(row1.State);
-                  break;
-                  case 1:
-                  resultObject.State1 = determineStatus(row1.State);
-                  break;
-                  case 2:
-                  resultObject.State2 = determineStatus(row1.State);
-                  break;
-                  case 3:
-                  resultObject.State3 = determineStatus(row1.State);
-                  break;
-                  case 4:
-                  resultObject.State4 = determineStatus(row1.State);
-                  break;
-                  case 5:
-                  resultObject.State5 = determineStatus(row1.State);
-                  break;
-                  case 6:
-                  resultObject.State6 = determineStatus(row1.State);
-                  break;
-                  case 7:
-                  resultObject.State7 = determineStatus(row1.State);
-                  break;
-                  case 8:
-                  resultObject.State8 = determineStatus(row1.State);
-                  break;
-                  case 9:
-                  resultObject.State9 = determineStatus(row1.State);
-                  break;
-                  case 10:
-                  resultObject.State10 = determineStatus(row1.State);
-                  break;
-                  case 11:
-                  resultObject.State11 = determineStatus(row1.State);
-                  break;
-                  case 12:
-                  resultObject.State12 = determineStatus(row1.State);
-                  break;
-                  case 13:
-                  resultObject.State13 = determineStatus(row1.State);
-                  break;
-                  case 14:
-                  resultObject.State14 = determineStatus(row1.State);
-                  break;
-                  case 15:
-                  resultObject.State15 = determineStatus(row1.State);
-                  break;
-                  case 16:
-                  resultObject.State16 = determineStatus(row1.State);
-                  break;
-                  case 17:
-                  resultObject.State17 = determineStatus(row1.State);
-                  break;
-                  case 18:
-                  resultObject.State18 = determineStatus(row1.State);
-                  break;
-                  case 19:
-                  resultObject.State19 = determineStatus(row1.State);
-                  break;
-                  case 20:
-                  resultObject.State20 = determineStatus(row1.State);
-                  break;
-                  case 21:
-                  resultObject.State21 = determineStatus(row1.State);
-                  break;
-                  case 22:
-                  resultObject.State22 = determineStatus(row1.State);
-                  break;
-                  case 23:
-                  resultObject.State23 = determineStatus(row1.State);
-                  break;
-                  case 24:
-                  resultObject.State24 = determineStatus(row1.State);
-                  break;
-                  case 25:
-                  resultObject.State25 = determineStatus(row1.State);
-                  break;
-                  case 26:
-                  resultObject.State26 = determineStatus(row1.State);
-                  break;
-                  case 27:
-                  resultObject.State27 = determineStatus(row1.State);
-                  break;
-                  case 28:
-                  resultObject.State28 = determineStatus(row1.State);
-                  break;
-                  case 29:
-                  resultObject.State29 = determineStatus(row1.State);
-                  break;
-                  case 30:
-                  resultObject.State30 = determineStatus(row1.State);
-                  break;
-                  case 31:
-                  resultObject.State31 = determineStatus(row1.State);
-                  break;
-                  case 32:
-                  resultObject.State32 = determineStatus(row1.State);
-                  break;
-                  case 33:
-                  resultObject.State33 = determineStatus(row1.State);
-                  break;
-                  case 34:
-                  resultObject.State34 = determineStatus(row1.State);
-                  break;
-                  case 35:
-                  resultObject.State35 = determineStatus(row1.State);
-                  break;
+// Function formatData to format the DAILY ACTIVITIES data to get it in the proper format for the CSV
+function formatData (optionsWithAnswers) {
+    var map = new customMap();
+    var resultSet = [];
+    for (var row of optionsWithAnswers) {
+        var resultObject = {'PatientPin': null, 'DateStarted': 'somedate', 'State0': ' ', 'State1': ' ', 'State2': ' ', 'State3': ' ', 'State4': ' ', 'State5': ' ', 'State6': ' ', 'State7': ' ', 'State8': ' ', 'State9': ' ',
+    'State10': ' ', 'State11': ' ', 'State12': ' ', 'State13': ' ', 'State14': ' ', 'State15': ' ', 'State16': ' ', 'State17': ' ', 'State18': ' ', 'State19': ' ', 'State20': ' ', 'State21': ' ',
+    'State22': ' ', 'State23': ' ', 'State24': ' ', 'State25': ' ', 'State26': ' ', 'State27': ' ', 'State28': ' ', 'State29': ' ', 'State30': ' ', 'State31': ' ', 'State32': ' ', 'State33': ' ', 'State34': ' ',
+    'State35': ' '};
+        var x = -1;
+        resultObject.PatientPin = row.PatientPin;
+        resultObject.DateStarted = row.DateStarted;
+        if (map.has(row.PatientPin)) {
+      // do nothing
+      // console.log(row.PatientPin + "already exists");
+        } else {
+      // console.log(row.PatientPin + "First Occurence");
+            for (var row1 of optionsWithAnswers) {
+                if (row1.PatientPin === resultObject.PatientPin) {
+                // console.log(row1.PatientPin+ " " + row1.State);
+                    x++;
+                    switch (x) {
+                        case 0:
+                            resultObject.State0 = determineStatus(row1.State);
+                            break;
+                        case 1:
+                            resultObject.State1 = determineStatus(row1.State);
+                            break;
+                        case 2:
+                            resultObject.State2 = determineStatus(row1.State);
+                            break;
+                        case 3:
+                            resultObject.State3 = determineStatus(row1.State);
+                            break;
+                        case 4:
+                            resultObject.State4 = determineStatus(row1.State);
+                            break;
+                        case 5:
+                            resultObject.State5 = determineStatus(row1.State);
+                            break;
+                        case 6:
+                            resultObject.State6 = determineStatus(row1.State);
+                            break;
+                        case 7:
+                            resultObject.State7 = determineStatus(row1.State);
+                            break;
+                        case 8:
+                            resultObject.State8 = determineStatus(row1.State);
+                            break;
+                        case 9:
+                            resultObject.State9 = determineStatus(row1.State);
+                            break;
+                        case 10:
+                            resultObject.State10 = determineStatus(row1.State);
+                            break;
+                        case 11:
+                            resultObject.State11 = determineStatus(row1.State);
+                            break;
+                        case 12:
+                            resultObject.State12 = determineStatus(row1.State);
+                            break;
+                        case 13:
+                            resultObject.State13 = determineStatus(row1.State);
+                            break;
+                        case 14:
+                            resultObject.State14 = determineStatus(row1.State);
+                            break;
+                        case 15:
+                            resultObject.State15 = determineStatus(row1.State);
+                            break;
+                        case 16:
+                            resultObject.State16 = determineStatus(row1.State);
+                            break;
+                        case 17:
+                            resultObject.State17 = determineStatus(row1.State);
+                            break;
+                        case 18:
+                            resultObject.State18 = determineStatus(row1.State);
+                            break;
+                        case 19:
+                            resultObject.State19 = determineStatus(row1.State);
+                            break;
+                        case 20:
+                            resultObject.State20 = determineStatus(row1.State);
+                            break;
+                        case 21:
+                            resultObject.State21 = determineStatus(row1.State);
+                            break;
+                        case 22:
+                            resultObject.State22 = determineStatus(row1.State);
+                            break;
+                        case 23:
+                            resultObject.State23 = determineStatus(row1.State);
+                            break;
+                        case 24:
+                            resultObject.State24 = determineStatus(row1.State);
+                            break;
+                        case 25:
+                            resultObject.State25 = determineStatus(row1.State);
+                            break;
+                        case 26:
+                            resultObject.State26 = determineStatus(row1.State);
+                            break;
+                        case 27:
+                            resultObject.State27 = determineStatus(row1.State);
+                            break;
+                        case 28:
+                            resultObject.State28 = determineStatus(row1.State);
+                            break;
+                        case 29:
+                            resultObject.State29 = determineStatus(row1.State);
+                            break;
+                        case 30:
+                            resultObject.State30 = determineStatus(row1.State);
+                            break;
+                        case 31:
+                            resultObject.State31 = determineStatus(row1.State);
+                            break;
+                        case 32:
+                            resultObject.State32 = determineStatus(row1.State);
+                            break;
+                        case 33:
+                            resultObject.State33 = determineStatus(row1.State);
+                            break;
+                        case 34:
+                            resultObject.State34 = determineStatus(row1.State);
+                            break;
+                        case 35:
+                            resultObject.State35 = determineStatus(row1.State);
+                            break;
 
+                    }
                 }
-          }
-      }
-      map.set(resultObject.PatientPin, '{"PatientPin":'+resultObject.PatientPin+',"DateStarted":"'+resultObject.DateStarted+'","State0":"'+resultObject.State0+'","State1":"'+resultObject.State1+'","State2":"'+resultObject.State2+'","State3":"'+resultObject.State3+'","State4":"'+resultObject.State4+'","State5":"'+resultObject.State5+'","State6":"'+resultObject.State6+'","State7":"'+resultObject.State7+'","State8":"'+resultObject.State8+
-      '","State9":"'+resultObject.State9+'","State10":"'+resultObject.State10+'","State11":"'+resultObject.State11+'","State12":"'+resultObject.State12+'","State13":"'+resultObject.State13+'","State14":"'+resultObject.State14+'","State15":"'+resultObject.State15+'","State16":"'+resultObject.State16+'","State17":"'+resultObject.State17+'","State18":"'+resultObject.State18+'","State19":"'+resultObject.State19+'","State20":"'+resultObject.State20+'","State21":"'
-      +resultObject.State21+'","State22":"'+resultObject.State22+'","State23":"'+resultObject.State23+'","State24":"'+resultObject.State24+'","State25":"'+resultObject.State25+'","State26":"'+resultObject.State26+'","State27":"'+resultObject.State27+'","State28":"'+resultObject.State28+'","State29":"'+resultObject.State29+'","State30":"'+resultObject.State30+'","State31":"'+resultObject.State31+'","State32":"'+resultObject.State32+'","State33":"'+
-      resultObject.State33+'","State34":"'+resultObject.State34+'","State35":"'+resultObject.State35+'"}');
+            }
+            map.set(resultObject.PatientPin, '{"PatientPin":' + resultObject.PatientPin + ',"DateStarted":"' + resultObject.DateStarted + '","State0":"' + resultObject.State0 + '","State1":"' + resultObject.State1 + '","State2":"' + resultObject.State2 + '","State3":"' + resultObject.State3 + '","State4":"' + resultObject.State4 + '","State5":"' + resultObject.State5 + '","State6":"' + resultObject.State6 + '","State7":"' + resultObject.State7 + '","State8":"' + resultObject.State8 +
+      '","State9":"' + resultObject.State9 + '","State10":"' + resultObject.State10 + '","State11":"' + resultObject.State11 + '","State12":"' + resultObject.State12 + '","State13":"' + resultObject.State13 + '","State14":"' + resultObject.State14 + '","State15":"' + resultObject.State15 + '","State16":"' + resultObject.State16 + '","State17":"' + resultObject.State17 + '","State18":"' + resultObject.State18 + '","State19":"' + resultObject.State19 + '","State20":"' + resultObject.State20 + '","State21":"'
+      + resultObject.State21 + '","State22":"' + resultObject.State22 + '","State23":"' + resultObject.State23 + '","State24":"' + resultObject.State24 + '","State25":"' + resultObject.State25 + '","State26":"' + resultObject.State26 + '","State27":"' + resultObject.State27 + '","State28":"' + resultObject.State28 + '","State29":"' + resultObject.State29 + '","State30":"' + resultObject.State30 + '","State31":"' + resultObject.State31 + '","State32":"' + resultObject.State32 + '","State33":"' +
+      resultObject.State33 + '","State34":"' + resultObject.State34 + '","State35":"' + resultObject.State35 + '"}');
+        }
     }
-}
-      map.forEach(function(value, key) {
+    map.forEach(function (value, key) {
         resultSet.push(JSON.parse(value));
-      });
-      console.log(resultSet);
-      return resultSet;
+    });
+      // console.log(resultSet);
+    return resultSet;
 }
 
-//Function determineStatus to get convert the State in the database to the Y/N State required in the CSV
-function determineStatus(status){
-  if(status === 'completed'){
-      return 'Y';
-  }else if(status === 'pending'){
+// Function determineStatus to get convert the State in the database to the Y/N State required in the CSV
+function determineStatus (status) {
+    if (status === 'completed') {
+        return 'Y';
+    } else if (status === 'pending') {
         return ' ';
-  }else if(status === 'expired'){
+    } else if (status === 'expired') {
         return 'N';
-  }else if(status === 'DEACTIVATED'){
-    return 'DEACTIVATED';
-  }else if(status === 'in progress'){
-    return 'IN PROGRESS';
-  }else{
-    return ' ';
-  }
+    } else if (status === 'DEACTIVATED') {
+        return 'PIN DEACTIVATED AT THIS POINT';
+    } else if (status === 'in progress') {
+        return 'IN PROGRESS';
+    } else {
+        return ' ';
+    }
 }
 
 module.exports = trialCSV;

@@ -14,23 +14,54 @@ const moment = require('moment');
  * @param {Reply} reply - Hapi Reply
  * @returns {Null} Redirect
  */
-function deactivatePatient(request, reply) {
-
-    if(Number(request.params.pin) < 3000){
-      database.sequelize.query(
+function deactivatePatient (request, reply) {
+    if (Number(request.params.pin) < 3000) {
+        Promise
+      .all([
+          database.sequelize.query(
           `
-          UPDATE activity_instance SET State = ? where State = ? and EndTime >= ? and PatientPinFk = ?
+          UPDATE activity_instance SET State = ? WHERE State = ? AND EndTime >= ? AND PatientPinFk = ?
           `, {
               type: database.sequelize.QueryTypes.UPDATE,
               replacements: [
                   'DEACTIVATED',
                   'pending',
-                  moment().format("YYYY-MM-DD HH:mm:ss"),
+                  moment().format('YYYY-MM-DD HH:mm:ss'),
                   request.params.pin
               ],
               plain: true
           }
-      ).then(function() {
+        ),
+          database.sequelize.query(
+              `
+              DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 1 DAY) AND PatientPinFk = ?
+              AND activityTitle = 'Sickle Cell Daily Survey'
+              `, {
+                  type: database.sequelize.QueryTypes.UPDATE,
+                  replacements: [
+                      'DEACTIVATED',
+                      moment().format('YYYY-MM-DD HH:mm:ss'),
+                      request.params.pin
+                  ],
+                  plain: true
+              }
+        ),
+          database.sequelize.query(
+              `
+              DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 7 DAY) AND PatientPinFk = ?
+              AND activityTitle = 'Sickle Cell Weekly Survey'
+              `, {
+                  type: database.sequelize.QueryTypes.UPDATE,
+                  replacements: [
+                      'DEACTIVATED',
+                      moment().format('YYYY-MM-DD HH:mm:ss'),
+                      request.params.pin
+                  ],
+                  plain: true
+              }
+        )
+      ])
+      .then(function () {
           return reply();
       }).catch((err) => {
           request.log('error', err);
@@ -38,8 +69,10 @@ function deactivatePatient(request, reply) {
 
           return reply(boom.conflict());
       });
-    }else if(Number(request.params.pin) > 4000){
-      database.sequelize.query(
+    } else if (Number(request.params.pin) > 4000) {
+        Promise
+      .all([
+          database.sequelize.query(
           `
           UPDATE activity_instance SET State = ? WHERE State = ? AND EndTime >= ? AND PatientPinFk
           IN (?, (SELECT PatientPin FROM patients WHERE ParentPinFK = ?));
@@ -48,13 +81,45 @@ function deactivatePatient(request, reply) {
               replacements: [
                   'DEACTIVATED',
                   'pending',
-                  moment().format("YYYY-MM-DD HH:mm:ss"),
+                  moment().format('YYYY-MM-DD HH:mm:ss'),
                   request.params.pin,
                   request.params.pin
               ],
               plain: true
           }
-      ).then(function() {
+      ),
+          database.sequelize.query(
+          `
+          DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 1 DAY) AND PatientPinFk
+          IN (?, (SELECT PatientPin FROM patients WHERE ParentPinFK = ?)) and activityTitle = 'Sickle Cell Daily Survey'
+          `, {
+              type: database.sequelize.QueryTypes.UPDATE,
+              replacements: [
+                  'DEACTIVATED',
+                  moment().format('YYYY-MM-DD HH:mm:ss'),
+                  request.params.pin,
+                  request.params.pin
+              ],
+              plain: true
+          }
+      ),
+          database.sequelize.query(
+          `
+          DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 7 DAY) AND PatientPinFk
+          IN (?, (SELECT PatientPin FROM patients WHERE ParentPinFK = ?)) and activityTitle = 'Sickle Cell Weekly Survey'
+          `, {
+              type: database.sequelize.QueryTypes.UPDATE,
+              replacements: [
+                  'DEACTIVATED',
+                  moment().format('YYYY-MM-DD HH:mm:ss'),
+                  request.params.pin,
+                  request.params.pin
+              ],
+              plain: true
+          }
+      )
+      ])
+      .then(function () {
           return reply();
       }).catch((err) => {
           request.log('error', err);
@@ -63,7 +128,6 @@ function deactivatePatient(request, reply) {
           return reply(boom.conflict());
       });
     }
-
 }
 
 module.exports = deactivatePatient;
