@@ -59,8 +59,10 @@ function trialView (request, reply) {
             database.sequelize.query(
                 `
                 SELECT pa.PatientPin,
-                SUM(si.State = 'expired') AS expiredCount,
-                SUM(si.State = 'completed') AS completedCount
+                SUM(si.State = 'expired' and activityTitle = 'Sickle Cell Weekly Survey') AS expiredWeeklyCount,
+                SUM(si.State = 'completed' and activityTitle = 'Sickle Cell Weekly Survey') AS completedWeeklyCount,
+                SUM(si.State = 'expired' and activityTitle = 'Sickle Cell Daily Survey') AS expiredDailyCount,
+                SUM(si.State = 'completed' and activityTitle = 'Sickle Cell Daily Survey') AS completedDailyCount
                 FROM activity_instance AS si
                 JOIN patients AS pa
                 ON pa.PatientPin = si.PatientPinFK

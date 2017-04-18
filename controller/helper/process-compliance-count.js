@@ -9,6 +9,8 @@
  * @returns {Array<Number>} number of non-compliant, semi-compliant and compliant patients
  */
 function processComplianceCount (rows) {
+    console.log('Outputting rows from processComplianceCount -----------------------');
+    console.log(rows);
     const nonCompliantThreshold = 4;
     const increment = 1;
     const semiCompliantThreshold = 0;
