@@ -28,6 +28,7 @@
     "stop-scheduler": "node task/stop-scheduler",
     "sync": "node task/sync",
     "test": "env TEST=true nyc ava */*-test/*.js --timeout=15s",
+    "preuser": "node task/createUserSchema",
     "user": "node task/user",
     "validate": "jsonlint config.json --validate config-schema.json --quiet"
   },
@@ -59,8 +60,10 @@
     "joi": "^8.0.5",
     "moment": "^2.13.0",
     "mysql": "^2.10.2",
+    "request": "^2.81.0",
     "sequelize": "^3.22.0",
-    "vision": "^4.1.0"
+    "vision": "^4.1.0",
+    "hashmap": "^2.0.6"
   },
   "optionalDependencies": {
     "bcrypt": "^0.8.6"

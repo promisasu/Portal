@@ -7,7 +7,6 @@
 const database = require('../../model');
 const processSurveyInstances = require('../helper/process-survey-instances');
 const moment = require('moment');
-const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
 const httpNotFound = 404;
 
 /**
@@ -21,11 +20,11 @@ function patientView (request, reply) {
         .all([
             database.sequelize.query(
                 `
-                SELECT pa.pin, st.name AS stage
-                FROM active_patients AS pa
+                SELECT pa.PatientPin, pa.ParentPinFK, st.Name AS stage
+                FROM patients AS pa
                 JOIN stage AS st
-                ON st.id = pa.stageId
-                WHERE pa.pin = ?
+                ON st.StageId = pa.StageIdFK
+                WHERE pa.PatientPin = ?
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -37,18 +36,15 @@ function patientView (request, reply) {
             ),
             database.sequelize.query(
                 `
-                SELECT pa.dateCompleted, si.id, si.startTime, si.endTime, si.userSubmissionTime,
-                si.actualSubmissionTime, si.state, si.surveyTemplateId, st.name AS stageName,
-                srt.name AS surveyTemplateName
-                FROM active_patients AS pa
-                JOIN survey_instance AS si
-                ON si.patientId = pa.id
+                SELECT pa.DateCompleted, si.ActivityInstanceId, si.StartTime, si.EndTime, si.UserSubmissionTime,
+                si.ActualSubmissionTime, si.activityTitle,si.State as state, st.Name AS stageName
+                FROM patients AS pa
+                JOIN activity_instance AS si
+                ON si.PatientPinFK = pa.PatientPin
                 JOIN stage AS st
-                ON st.id = pa.stageId
-                JOIN survey_template AS srt
-                ON srt.id = si.surveyTemplateId
-                WHERE pa.pin = ?
-                ORDER BY si.startTime
+                ON st.StageId = pa.StageIdFK
+                WHERE pa.PatientPin = ?
+                ORDER BY si.StartTime
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -59,13 +55,13 @@ function patientView (request, reply) {
             ),
             database.sequelize.query(
                 `
-                SELECT tr.name, tr.id
-                FROM active_patients AS pa
+                SELECT tr.Name, tr.TrialId
+                FROM patients AS pa
                 JOIN stage AS st
-                ON st.id = pa.stageId
+                ON st.StageId = pa.StageIdFK
                 JOIN trial AS tr
-                ON tr.id = st.trialId
-                WHERE pa.pin = ?
+                ON tr.TrialId = st.TrialId
+                WHERE pa.PatientPin = ?
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -77,6 +73,14 @@ function patientView (request, reply) {
             )
         ])
         .then(([currentPatient, surveyInstances, currentTrial]) => {
+          //console.log("GOt the results");
+          //console.log("currentPatient");
+
+          var dataChart = processSurveyInstances(surveyInstances);
+          //console.log(dataChart);
+
+
+          // //console.log(JSON.stringify(processSurveyInstances(surveyInstances)));
             // patient not found
             if (!currentPatient) {
                 throw new Error('patient does not exist');
@@ -88,25 +92,24 @@ function patientView (request, reply) {
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
                     const surveyInstanceCopy = Object.assign({}, surveyInstance);
-
-                    surveyInstanceCopy.startTime = moment(surveyInstanceCopy.startTime, sqlDateFormat)
+                    surveyInstanceCopy.startTime = moment(surveyInstanceCopy.StartTime)
                         .format('MM-DD-YYYY');
-                    surveyInstanceCopy.endTime = moment(surveyInstanceCopy.endTime, sqlDateFormat)
+                    surveyInstanceCopy.endTime = moment(surveyInstanceCopy.EndTime)
                         .format('MM-DD-YYYY');
-                    if (surveyInstanceCopy.userSubmissionTime) {
-                        surveyInstanceCopy.userSubmissionTime
-                            = moment(surveyInstanceCopy.userSubmissionTime, sqlDateFormat)
+                    if (surveyInstanceCopy.UserSubmissionTime) {
+                        surveyInstanceCopy.UserSubmissionTime
+                            = moment(surveyInstanceCopy.UserSubmissionTime)
                                 .format('MM-DD-YYYY h:mma');
                     }
 
                     return surveyInstanceCopy;
                 }),
-                datesJson: JSON.stringify(processSurveyInstances(surveyInstances))
+                datesJson: JSON.stringify(dataChart)
             });
         })
         .catch((err) => {
             request.log('error', err);
-
+            //console.log(err);
             reply
             .view('404', {
                 title: 'Not Found'

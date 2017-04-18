@@ -12,6 +12,9 @@ const patientPresenter = require('./handler/patient');
 const patientCSV = require('./handler/patient-csv');
 const trialCSV = require('./handler/trial-csv');
 const surveyPresenter = require('./handler/survey');
+const webFormPresenter = require('./handler/webform');
+const webFormPresenterPost = require('./handler/webformPost');
+const errorHandler = require('./handler/errorHandler');
 const minimumNameLength = 3;
 const minimumIrbLength = 4;
 
@@ -20,6 +23,16 @@ module.exports = [
         method: 'GET',
         path: '/',
         handler: dashboardPresenter
+    },
+    {
+        method: 'GET',
+        path: '/enroll/{trialId*}',
+        handler: webFormPresenter
+    },
+    {
+        method: 'GET',
+        path: '/error',
+        handler: errorHandler
     },
     {
         method: 'GET',
@@ -196,7 +209,7 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/trial/{id}.csv',
+        path: '/trial/{id}-weekly.csv',
         handler: trialCSV,
         config: {
             validate: {
@@ -211,12 +224,31 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/survey/{id}',
-        handler: surveyPresenter,
+        path: '/trial/{id}-daily.csv',
+        handler: trialCSV,
         config: {
             validate: {
                 params: {
                     id: Joi
+                      .number()
+                      .integer()
+                      .positive()
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/survey/{pin}/{activityInstanceId}',
+        handler: surveyPresenter,
+        config: {
+            validate: {
+                params: {
+                    pin: Joi
+                        .number()
+                        .integer()
+                        .positive(),
+                    activityInstanceId: Joi
                         .number()
                         .integer()
                         .positive()

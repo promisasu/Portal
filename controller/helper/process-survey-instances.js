@@ -9,6 +9,8 @@ const moment = require('moment');
 const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
 const viewDateFormat = 'MM-DD-YYYY HH:mm';
 
+
+
 /**
  * Takes in a Survey Instances and processes it to get Complience chart details
  * @param {Array<Object>} surveys - list of survey instances
@@ -16,13 +18,30 @@ const viewDateFormat = 'MM-DD-YYYY HH:mm';
  */
 function processSurveyInstances (surveys) {
     const filterSurveyByState = surveys.filter((survey) => {
-        return survey.state === 'completed' || survey.state === 'expired';
+        return survey.state === 'completed';
     });
+    // const filterSurveyByState = surveys;
+    var datasets = pickTimeLeft(filterSurveyByState);
+    var labels = [];
+    for (var i = 0; i < datasets.length; i++) {
+      var dataSet = datasets[i];
+      var y = dataSet.data;
+      var x = dataSet.dates;
+      datasets[i].data = [];
+      for (var j = 0; j < x.length; j++) {
+        datasets[i].data.push({'x':x[j],'y':y[j]});
+      }
+      labels.push.apply(labels,dataSet.dates);
+    }
+    const numberOfDays = 7;
+    const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
+    labels.push(moment(endDateforChart).format(viewDateFormat));
 
     return {
-        labels: pickDates(filterSurveyByState),
-        datasets: pickTimeLeft(filterSurveyByState)
+        labels: labels,
+        datasets: datasets
     };
+    return pickTimeLeft(filterSurveyByState);
 }
 
 /**
@@ -32,18 +51,19 @@ function processSurveyInstances (surveys) {
  */
 function pickDates (surveys) {
     const dates = surveys.map((survey) => {
-        return moment(survey.startTime, sqlDateFormat).format(viewDateFormat);
+        return moment(survey.StartTime).format(viewDateFormat);
     });
 
     if (surveys[0]) {
         // Adding an additional week to include all the dates in compliance chart.
         // This is done because chart js plots only the first day of the week.
         const numberOfDays = 7;
-        const endDateforChart = moment(surveys[0].dateCompleted, sqlDateFormat).add(numberOfDays, 'day');
+        const endDateforChart = moment(surveys[surveys.length -1].EndTime).add(numberOfDays, 'day');
 
-        dates.push(moment(endDateforChart, sqlDateFormat).format(viewDateFormat));
+        dates.push(moment(endDateforChart).format(viewDateFormat));
     }
 
+    console.log(dates);
     return dates;
 }
 
@@ -53,45 +73,48 @@ function pickDates (surveys) {
  * @returns {Object} processed list of % time left data
  */
 function pickTimeLeft (surveys) {
-    const weeklyDuration = 48;
-    const dailyDuration = 24;
-    const weeklyPercentages = surveys.filter((survey) => {
-        return moment(survey.endTime, sqlDateFormat)
-        .diff(moment(survey.startTime, sqlDateFormat), 'hours') === weeklyDuration;
-    })
-    .map((survey) => {
-        return calculateTimeLeft(
-            moment(survey.startTime, sqlDateFormat),
-            moment(survey.endTime, sqlDateFormat),
-            moment(survey.actualSubmissionTime, sqlDateFormat)
-        );
-    });
-    const dailyPercentages = surveys.filter((survey) => {
-        return moment(survey.endTime, sqlDateFormat)
-        .diff(moment(survey.startTime, sqlDateFormat), 'hours') === dailyDuration;
-    })
-    .map((survey) => {
-        return calculateTimeLeft(
-            moment(survey.startTime, sqlDateFormat),
-            moment(survey.endTime, sqlDateFormat),
-            moment(survey.actualSubmissionTime, sqlDateFormat)
-        );
-    });
+    var surveySet = new Set();
+    for (var i = 0; i < surveys.length; i++) {
+      surveySet.add(surveys[i].activityTitle);
+    }
+    var surveyTypes = [] ;
+    for (let activityTitle of surveySet) {
+      surveyTypes.push(surveys.filter((survey) =>
+        {return survey.activityTitle === activityTitle}));
+    }
+    var returnArray = [];
+    for (var i = 0; i < surveyTypes.length; i++) {
+      if (surveyTypes[i].length>0) {
+        var samplePoint = surveyTypes[i][0];
+        var dataPoints = surveyTypes[i].map((survey) => {
+            return calculateTimeLeft(
+                moment(survey.StartTime),
+                moment(survey.EndTime),
+                moment(survey.ActualSubmissionTime)
+            )
+        });
+        var dates = surveyTypes[i].map((survey) => {
+            return moment(survey.StartTime).format(viewDateFormat);
+        });
+        var dataArr = {
+            label: '% Time left until '+ samplePoint.activityTitle + ' expired',
+            backgroundColor: getRGBA(),
+            borderColor: getRGBA(),
+            pointBorderColor: getRGBA(),
+            data: dataPoints,
+            dates: dates
+        }
+        returnArray.push(dataArr);
+      }
+    }
+  return returnArray;
+}
 
-    return [{
-        label: '% Time left until weekly survey expired',
-        backgroundColor: 'rgba(60, 103, 124, 0.2)',
-        borderColor: 'rgba(60, 103, 124, 1)',
-        pointBorderColor: 'rgba(60, 103, 124, 1)',
-        data: weeklyPercentages
-    },
-    {
-        label: '% Time left until daily survey expired',
-        backgroundColor: 'rgba(247, 94, 24, 0.2)',
-        borderColor: 'rgba(247, 94, 24, 1)',
-        pointBorderColor: 'rgba(247, 94, 24, 1)',
-        data: dailyPercentages
-    }];
+function getRGBA(){
+  var red = Math.floor(Math.random() * 255) + 1;
+  var green = Math.floor(Math.random() * 255) + 1;
+  var blue = Math.floor(Math.random() * 255) + 1;
+  return  'rgba(' + red.toString() + ',' + green.toString() + ',' + blue.toString() + ',0.5)'
 }
 
 /**

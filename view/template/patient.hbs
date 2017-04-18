@@ -7,12 +7,12 @@
             </a>
         </li>
         <li>
-            <a href="/trial/{{ trial.id }}">
-                Trial: {{ trial.name }}
+            <a href="/trial/{{ trial.TrialId }}">
+                Trial: {{ trial.Name }}
             </a>
         </li>
         <li class="active">
-            Patient: {{ patient.pin }}
+            Patient: {{ patient.PatientPin }}
         </li>
     </ol>
     <div class="row">
@@ -26,12 +26,12 @@
             <div class="card">
                 <div class="card-block">
                     <h4 class="card-title">
-                        Patients' Surveys
+                        Patients' Surveys <span data-proxy-pin='{{patient.ParentPinFK}}' id="parent-proxy" hidden>(Proxy for Patient: <a href="/patient/{{ patient.ParentPinFK }}">{{patient.ParentPinFK}}</a>)</span>
                         <span class="pull-right">
-                            <a href="/patient/{{ patient.pin }}.csv" class="btn btn-primary btn-sm">
+                            <a href="/patient/{{ patient.PatientPin }}.csv" class="btn btn-primary btn-sm">
                                 Export Patient Data
                             </a>
-                            <button id="deactivate-patient" class="btn btn-danger btn-sm">
+                            <button id="deactivate-patient" class="btn btn-danger btn-sm" data-patient-pin="{{ patient.PatientPin }}">
                                 Deactivate
                             </button>
                         </span>
@@ -41,7 +41,7 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Survey ID
+                                        Activity Instance ID
                                     </th>
                                     <th>
                                         Status
@@ -50,7 +50,7 @@
                                         Stage
                                     </th>
                                     <th>
-                                        Survey Type
+                                        Activity Type
                                     </th>
                                     <th>
                                         Start
@@ -67,8 +67,8 @@
                                 {{#each surveys}}
                                     <tr class="{{ state-to-status state prefix='table-' }}">
                                         <th scope="row">
-                                            <a href="/survey/{{ id }}">
-                                                {{ id }}
+                                            <a href="/survey/{{ ../patient.PatientPin }}/{{ ActivityInstanceId }}">
+                                                {{ ActivityInstanceId }}
                                                 <i class="fa fa-search"></i>
                                             </a>
                                         </th>
@@ -79,7 +79,7 @@
                                             {{ stageName }}
                                         </td>
                                         <td>
-                                            {{ surveyTemplateName }}
+                                            {{ activityTitle }}
                                         </td>
                                         <td>
                                             {{ startTime }}
@@ -88,7 +88,7 @@
                                             {{ endTime }}
                                         </td>
                                         <td>
-                                            {{ userSubmissionTime }}
+                                            {{ ActualSubmissionTime }}
                                         </td>
                                     </tr>
                                 {{/each}}

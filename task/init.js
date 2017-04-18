@@ -46,28 +46,8 @@ read({
     });
 })
 .then((port) => {
-    config.dashboard.port = port;
 
-    console.log('');
-    console.log('setup for pain reporting portal api');
-    console.log('');
-
-    return read({
-        prompt: 'hostname:',
-        default: 'localhost'
-    });
-})
-.then((hostname) => {
-    config.api = {};
-    config.api.hostname = hostname;
-
-    return read({
-        prompt: 'port number:',
-        default: 3001
-    });
-})
-.then((port) => {
-    config.api.port = port;
+    config.dashboard.port = parseInt(port);
 
     console.log('');
     console.log('setup for pain reporting portal database');
@@ -81,6 +61,7 @@ read({
 .then((databaseHostname) => {
     config.database = {};
     config.database.hostname = databaseHostname;
+
 
     return read({
         prompt: 'database name:',
@@ -119,7 +100,28 @@ read({
 .then((salt) => {
     config.database.salt = salt;
 
-    return writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
+    return read({
+        prompt: 'Web Form Post URL:',
+        default: 'http://swent1linux.asu.edu:8082/v311/rest/patients/enrollpatient'
+    });
+})
+.then((formPostURL) => {
+  config.webFormPostUrl = formPostURL;
+
+  return read({
+      prompt: 'API Url for the web app:',
+      default: 'http://swent1linux.asu.edu:8082/api'
+  });
+})
+.then((apiURL) => {
+  config.apiURL = apiURL;
+
+  //Gotta get rid of these dependencies in the near future
+  config.api = {};
+  config.api.hostname = 'localhost';
+  config.api.port = 3001;
+
+  return writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
 })
 .catch((err) => {
     console.error(err);
