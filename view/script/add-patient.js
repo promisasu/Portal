@@ -1,5 +1,5 @@
+'use strict';
 (function addPatient () {
-    'use strict';
     document.getElementById('patient-end').addEventListener('change', function showWarnings (event) {
         var isRecommended = event.target.dataset.recommendedEnd === event.target.value;
         var isWithinIrb = moment(event.target.value, 'YYYY-MM-DD')

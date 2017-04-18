@@ -29,7 +29,7 @@ function calculatePromisScores (surveyResults) {
             patientType: result.patientType
         };
 
-        if (!singleSurveyBlock[result.id]) {
+        if (typeof singleSurveyBlock[result.id] === 'undefined') {
             singleSurveyBlock[result.id] = [temp];
         } else {
             singleSurveyBlock[result.id].push(temp);
@@ -80,6 +80,7 @@ function calculatePromisScores (surveyResults) {
             resultSet.push(result);
         }
     }
+
     return resultSet;
 }
 

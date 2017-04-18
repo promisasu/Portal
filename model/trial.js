@@ -27,7 +27,7 @@ function register (sequelize) {
         'trial',
         {
             TrialId: {
-                type:Sequelize.INTEGER,
+                type: Sequelize.INTEGER,
                 primaryKey: true,
                 validate: {
                     notEmpty: true

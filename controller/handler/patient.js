@@ -16,8 +16,8 @@ const calculateScores = require('../helper/calculate-scores');
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
  */
-function patientView(request, reply) {
-    console.log("patient js");
+function patientView (request, reply) {
+    console.log('patient js');
     Promise
         .all([
             database.sequelize.query(
@@ -72,7 +72,11 @@ function patientView(request, reply) {
             ),
             database.sequelize.query(
                 `
-                SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, act.questionOptionIdFk as optionId, ans.OptionText as optionText, que.SurveyBlockIdFk as questionType, ai.StartTime as StartTime, ans.likertScale as likertScale, pi.type as patientType
+                SELECT ai.PatientPinFK as pin, ai.activityTitle as name,
+                ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id,
+                act.questionIdFk as questionId, act.questionOptionIdFk as optionId,
+                ans.OptionText as optionText, que.SurveyBlockIdFk as questionType,
+                ai.StartTime as StartTime, ans.likertScale as likertScale, pi.type as patientType
                 FROM question_result act
                 JOIN questions que
                 ON act.questionIdFk = que.QuestionId
@@ -83,7 +87,8 @@ function patientView(request, reply) {
                 JOIN patients pi
                 ON ai.PatientPinFK = pi.PatientPin
                 WHERE act.ActivityInstanceIdFk
-                IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ? and State='completed' and ai.activityTitle='Sickle Cell Weekly Survey');
+                IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ?
+                and State='completed' and ai.activityTitle='Sickle Cell Weekly Survey');
 
                 `, {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -94,27 +99,30 @@ function patientView(request, reply) {
             )
         ])
         .then(([currentPatient, surveyInstances, currentTrial, surveyResults]) => {
-            console.log("In patient JS");
+            console.log('In patient JS');
             console.log(calculateScores.calculatePromisScores(surveyResults));
-            console.log("After Chintans code");
-            var dataChart = processSurveyInstances(surveyInstances);
-            //console.log(dataChart);
+            console.log('After Chintans code');
+            let dataChart = processSurveyInstances(surveyInstances);
 
+            // console.log(dataChart);
 
             // //console.log(JSON.stringify(processSurveyInstances(surveyInstances)));
             // patient not found
             if (!currentPatient) {
                 throw new Error('patient does not exist');
             }
-            var clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances);
+            let clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances);
+
             console.log(clinicalValuesChart);
             console.log(clinicalValuesChart.datasets.data);
+
             return reply.view('patient', {
                 title: 'Pain Reporting Portal',
                 patient: currentPatient,
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
                     const surveyInstanceCopy = Object.assign({}, surveyInstance);
+
                     surveyInstanceCopy.startTime = moment(surveyInstanceCopy.StartTime)
                         .format('MM-DD-YYYY');
                     surveyInstanceCopy.endTime = moment(surveyInstanceCopy.EndTime)
@@ -132,7 +140,6 @@ function patientView(request, reply) {
         })
         .catch((err) => {
             request.log('error', err);
-            //console.log(err);
             reply
                 .view('404', {
                     title: 'Not Found'

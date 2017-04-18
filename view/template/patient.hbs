@@ -117,21 +117,23 @@
 {{> remember-patient-pin}}
 
 <script>
+    'use strict';
     window.dates = JSON.parse('{{{ datesJson }}}');
     window.clinicalValues = JSON.parse('{{{ clinicalValues }}}');
 
-    function showChart(type) {
-        if (type == 'scores') {
+    function showChart (type) {
+        if (type === 'scores') {
             document.getElementById('scoresChartCanvasDiv').style.display = 'block';
             document.getElementById('surveyChartCanvasDiv').style.display = 'none';
-            document.getElementById("scores-chart").classList.add("active");
-            document.getElementById("survey-chart").classList.remove("active");
+            document.getElementById('scores-chart').classList.add('active');
+            document.getElementById('survey-chart').classList.remove('active');
         } else {
             document.getElementById('surveyChartCanvasDiv').style.display = 'block';
             document.getElementById('scoresChartCanvasDiv').style.display = 'none';
-            document.getElementById("survey-chart").classList.add("active");
-            document.getElementById("scores-chart").classList.remove("active");
+            document.getElementById('survey-chart').classList.add('active');
+            document.getElementById('scores-chart').classList.remove('active');
         }
+
         return false;
     }
 </script>
