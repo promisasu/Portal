@@ -21,15 +21,18 @@ const httpNotFound = 404;
 function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
     const stage = database.sequelize.model('stage');
-    const startDate = moment("2016-11-23");
-    console.log("req params - " + request.params.id);
+    const startDate = moment('2016-11-23');
+
+    console.log('req params - ' + request.params.id);
 
     Promise
         .all([
             trial.findById(request.params.id),
             database.sequelize.query(
                 `
-                SELECT StageId, Name, CreatedAt, UpdatedAt, DeletedAt, TrialId FROM stage AS stage WHERE stage.DeletedAt IS NULL AND stage.TrialId = ?
+                SELECT StageId, Name, CreatedAt, UpdatedAt, DeletedAt, TrialId
+                FROM stage AS stage WHERE stage.DeletedAt IS NULL
+                AND stage.TrialId = ?
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -78,27 +81,10 @@ function trialView (request, reply) {
                     ]
                 }
             )
-            //,
-            // database.sequelize.query(
-            //     `
-            //     SELECT jcns.rule
-            //     FROM trial AS tr
-            //     JOIN stage AS st
-            //     ON tr.TrialId = st.trialId
-            //     JOIN join_current_and_next_stages AS jcns
-            //     ON st.id = jcns.stageId
-            //     WHERE tr.TrialId = ?
-            //     `,
-            //     {
-            //         type: database.sequelize.QueryTypes.SELECT,
-            //         replacements: [
-            //             request.params.id
-            //         ]
-            //     }
-            // )
         ])
         .then(([currentTrial, stages, patients, compliance]) => {
             const rules = [];
+
             if (!currentTrial) {
                 throw new Error('trial does not exist');
             }
@@ -113,9 +99,9 @@ function trialView (request, reply) {
                   // check for patient's status
 
                 const patientStatus = patientStatuses.find((status) => {
-
                     return status.PatientPin === patient.PatientPin;
                 });
+
                 // collect the compliance status as well as expiredCount
                 if (patientStatus) {
                     patient.status = patientStatus.status;
@@ -153,7 +139,7 @@ function trialView (request, reply) {
             });
         })
         .catch((err) => {
-            console.log("ERRORCUSTOM - ", err);
+            console.log('ERRORCUSTOM - ', err);
             request.log('error', err);
 
             reply

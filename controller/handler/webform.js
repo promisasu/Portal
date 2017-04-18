@@ -4,9 +4,8 @@
  * @module controller/handler/webform
  */
 
- const fs = require('fs');
- const configuration = require('../../config.json');
-
+const fs = require('fs');
+const configuration = require('../../config.json');
 
  /**
   * A dashboard with an overview of a specific patient.
@@ -14,11 +13,15 @@
   * @param {Reply} reply - Hapi Reply
   * @returns {View} Rendered page
   */
- function webform (request, reply) {
+function webform (request, reply) {
+    console.log(request.params);
 
-   console.log(request.params);
-
-   return reply.view('webform',{'title':'Add a new Patient','webFormPostUrl':configuration.webFormPostUrl,'trialId':request.params.trialId,'apiURL':configuration.apiURL});
+    return reply.view('webform', {
+        title: 'Add a new Patient',
+        webFormPostUrl: configuration.webFormPostUrl,
+        trialId: request.params.trialId,
+        apiURL: configuration.apiURL
+    });
 }
 
 module.exports = webform;

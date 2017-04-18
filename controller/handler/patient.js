@@ -16,8 +16,8 @@ const httpNotFound = 404;
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
  */
-function patientView(request, reply) {
-    console.log("patient js");
+function patientView (request, reply) {
+    console.log('patient js');
     Promise
         .all([
             database.sequelize.query(
@@ -72,7 +72,11 @@ function patientView(request, reply) {
             ),
             database.sequelize.query(
                 `
-                SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, act.questionOptionIdFk as optionId, ans.OptionText as optionText, que.SurveyBlockIdFk as questionType, ai.StartTime as StartTime, ans.likertScale as likertScale, pi.type as patientType
+                SELECT ai.PatientPinFK as pin, ai.activityTitle as name,
+                ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id,
+                act.questionIdFk as questionId, act.questionOptionIdFk as optionId,
+                ans.OptionText as optionText, que.SurveyBlockIdFk as questionType,
+                ai.StartTime as StartTime, ans.likertScale as likertScale, pi.type as patientType
                 FROM question_result act
                 JOIN questions que
                 ON act.questionIdFk = que.QuestionId
@@ -83,7 +87,8 @@ function patientView(request, reply) {
                 JOIN patients pi
                 ON ai.PatientPinFK = pi.PatientPin
                 WHERE act.ActivityInstanceIdFk
-                IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ? and State='completed' and ai.activityTitle='Sickle Cell Weekly Survey');
+                IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ?
+                and State='completed' and ai.activityTitle='Sickle Cell Weekly Survey');
 
                 `, {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -105,6 +110,7 @@ function patientView(request, reply) {
                 trial: currentTrial,
                 surveys: surveyInstances.map((surveyInstance) => {
                     const surveyInstanceCopy = Object.assign({}, surveyInstance);
+
                     surveyInstanceCopy.startTime = moment(surveyInstanceCopy.StartTime)
                         .format('MM-DD-YYYY');
                     surveyInstanceCopy.endTime = moment(surveyInstanceCopy.EndTime)
@@ -122,7 +128,6 @@ function patientView(request, reply) {
         })
         .catch((err) => {
             request.log('error', err);
-            //console.log(err);
             reply
                 .view('404', {
                     title: 'Not Found'

@@ -1,12 +1,13 @@
+'use strict';
 (function patient () {
-    'use strict';
-
     var isNewPatient = window.location.search;
     var isNewPatientRegex = /newPatient=true/;
 
     // Makes a copy of window.dates
     var allDatesConfig = Object.create(window.dates);
     var allClinicalValues = Object.create(window.clinicalValues);
+    var proxyPinElement = document.getElementById('parent-proxy');
+    var proxyPin = proxyPinElement.getAttribute('data-proxy-pin');
 
     var config = {
         type: 'line',
@@ -46,14 +47,26 @@
         }
     };
 
-    var ctx = document.getElementById('surveyComplianceChart').getContext('2d');
-    var ctx2 = document.getElementById('scoresComplianceChart').getContext('2d');
+    var surveyContext = document.getElementById('surveyComplianceChart').getContext('2d');
+    var scoresContext = document.getElementById('scoresComplianceChart').getContext('2d');
+
+    var clinicalChartConfig = {
+        type: 'line',
+        options: {
+            scales: {
+                yAxes: [{
+                    stacked: false
+                }]
+            }
+        }
+    };
 
     function redirect () {
         var element = document.getElementById('deactivate-patient');
         var patientPin = element.getAttribute('data-patient-pin');
         var redirectUrl = '/';
-        if (patientPin != undefined && patientPin != '') {
+
+        if (typeof patientPin !== 'undefined' && patientPin !== '') {
             redirectUrl = '/patient/' + patientPin;
         }
         window.location = redirectUrl;
@@ -63,12 +76,9 @@
         alert('patient could not be deactivated');
     }
 
-    var proxyPinElement = document.getElementById('parent-proxy');
-    var proxyPin = proxyPinElement.getAttribute('data-proxy-pin');
-
-    if (proxyPin != undefined && proxyPin != null && proxyPin != '') {
+    if (typeof proxyPin !== 'undefined' && proxyPin !== null && proxyPin !== '') {
         proxyPinElement.removeAttribute('hidden');
-        document.getElementById('deactivate-patient').setAttribute("hidden",null);
+        document.getElementById('deactivate-patient').setAttribute('hidden', null);
     }
 
     document.getElementById('deactivate-patient')
@@ -84,22 +94,10 @@
     if (isNewPatientRegex.test(isNewPatient)) {
         $('#remember-patient-dialog').modal('show');
     }
-    var clinicalChartConfig = {
-    type: 'line',
-    options: {
-        scales: {
-            yAxes: [{
-                stacked: false
-            }]
-        }
-    }
-};
-
 
     config.data = allDatesConfig;
-    new Chart(ctx, config);
+    new Chart(surveyContext, config);
 
     clinicalChartConfig.data = allClinicalValues;
-    new Chart(ctx2, clinicalChartConfig);
-
+    new Chart(scoresContext, clinicalChartConfig);
 }());
