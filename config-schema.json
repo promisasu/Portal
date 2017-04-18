@@ -29,6 +29,25 @@
                 }
             }
         },
+        "opioid": {
+            "type": "object",
+            "required": false,
+            "additionalProperties": true,
+            "properties": {
+                "tramadol": {
+                    "type": "float",
+                    "required": true
+                },
+                "oxycodone": {
+                    "type": "float",
+                    "required": true
+                },
+                "hydromorphone": {
+                    "type": "float",
+                    "required": true
+                }
+            }
+        },
         "database": {
             "type": "object",
             "required": true,
