@@ -54,7 +54,7 @@ test.cb('when the survey has not been completed', (t) => {
         view (template, data) {
             t.is(template, 'survey', 'it should render survey view');
             // t.is(data.questions.length, 0, 'it should have no questions');
-            
+
             return {
                 code (code) {
                     t.is(code, 404, 'it should have not found status code');

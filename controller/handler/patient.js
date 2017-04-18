@@ -96,7 +96,8 @@ function patientView (request, reply) {
                         request.params.pin
                     ]
                 }
-            ),database.sequelize.query(
+            ),
+            database.sequelize.query(
                 `
                 SELECT ai.PatientPinFK as pin, ai.activityTitle as name,
                 ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id,
@@ -131,7 +132,9 @@ function patientView (request, reply) {
             if (!currentPatient) {
                 throw new Error('patient does not exist');
             }
-            let clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances, surveyResults, bodyPainResults);
+            let clinicalValuesChart = processSurveyInstances.processClinicanData(
+                surveyInstances, surveyResults, bodyPainResults
+                );
 
             return reply.view('patient', {
                 title: 'Pain Reporting Portal',

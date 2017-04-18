@@ -123,7 +123,7 @@ read({
     });
 })
 .then((tramadol) => {
-    config.opioid = {}
+    config.opioid = {};
     config.opioid.tramadol = parseFloat(tramadol);
 
     return read({
@@ -139,7 +139,7 @@ read({
         default: 4
     });
 })
-.then((hydromorphone) => {    
+.then((hydromorphone) => {
     config.opioid.hydromorphone = parseFloat(hydromorphone);
 
     // Gotta get rid of these dependencies in the near future
