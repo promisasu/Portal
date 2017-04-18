@@ -17,12 +17,14 @@ const viewDateFormat = 'MM-DD-YYYY HH:mm';
  * @returns {Object} Complience chart data
  */
 function processSurveyInstances(surveys) {
+    console.log("In process surbey instances");
     const filterSurveyByState = surveys.filter((survey) => {
         return survey.state === 'completed';
     });
-    // const filterSurveyByState = surveys;
-    console.log("process survey instances");
+    console.log("filtered survey instances");
+    // console.log(filterSurveyByState);
     var datasets = pickTimeLeft(filterSurveyByState);
+    console.log("After pick time left datasets");
     console.log(datasets);
     var labels = [];
     for (var i = 0; i < datasets.length; i++) {
@@ -108,32 +110,11 @@ function pickTimeLeft(surveys) {
             pointRadius: 10,
             data: dataPoints,
             dates: dates
-        // if (surveyTypes[i].length > 0) {
-        //     var samplePoint = surveyTypes[i][0];
-        //     var dataPoints = surveyTypes[i].map((survey) => {
-        //         return calculateTimeLeft(
-        //             moment(survey.StartTime),
-        //             moment(survey.EndTime),
-        //             moment(survey.ActualSubmissionTime)
-        //         )
-        //     });
-        //     var dates = surveyTypes[i].map((survey) => {
-        //         return moment(survey.StartTime).format(viewDateFormat);
-        //     });
-        //     var dataArr = {
-        //         label: '% Time left until ' + samplePoint.activityTitle + ' expired',
-        //         backgroundColor: getRGBA(),
-        //         borderColor: getRGBA(),
-        //         pointBorderColor: getRGBA(),
-        //         data: dataPoints,
-        //         dates: dates
-        //     }
-        //     returnArray.push(dataArr);
-// >>>>>>> origin/US#122
+          }
+          returnArray.push(dataArr);
         }
     }
     return returnArray;
-}
 }
 
 function getRGBA() {
@@ -171,9 +152,9 @@ function calculateTimeLeft(openTime, endTime, completedTime) {
 }
 
 function processClinicanData(surveys){
-  console.log("In clinician data");
+  //console.log("In clinician data");
   var datasets = pickClinicianDataset(surveys);
-  console.log(datasets);
+  //console.log(datasets);
   var labels = surveys.map((survey) => {
       return moment(survey.StartTime).format(viewDateFormat);
   });
