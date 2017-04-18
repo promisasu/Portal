@@ -93,11 +93,6 @@
             "required": true,
             "pattern": ".*"
         },
-        "apiURL": {
-            "type": "string",
-            "required": true,
-            "pattern": ".*"
-        },
         "tls": {
             "type": "object",
             "additionalProperties": false,
