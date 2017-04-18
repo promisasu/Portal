@@ -5,6 +5,7 @@
  */
 
 const moment = require('moment');
+const calculateScores = require('../helper/calculate-scores');
 
 const sqlDateFormat = 'ddd MMM DD YYYY HH:mm:ss ZZ';
 const viewDateFormat = 'MM-DD-YYYY HH:mm';
@@ -21,11 +22,8 @@ function processSurveyInstances(surveys) {
     const filterSurveyByState = surveys.filter((survey) => {
         return survey.state === 'completed';
     });
-    console.log("filtered survey instances");
     // console.log(filterSurveyByState);
     var datasets = pickTimeLeft(filterSurveyByState);
-    console.log("After pick time left datasets");
-    console.log(datasets);
     var labels = [];
     for (var i = 0; i < datasets.length; i++) {
         var dataSet = datasets[i];
@@ -151,9 +149,9 @@ function calculateTimeLeft(openTime, endTime, completedTime) {
     return Math.max(percentTimeLeft, minTime);
 }
 
-function processClinicanData(surveys){
+function processClinicanData(surveys,surveyDetails){
   //console.log("In clinician data");
-  var datasets = pickClinicianDataset(surveys);
+  var datasets = pickClinicianDataset(surveys,surveyDetails);
   //console.log(datasets);
   var labels = surveys.map((survey) => {
       return moment(survey.StartTime).format(viewDateFormat);
@@ -173,11 +171,11 @@ var yellow = "rgba(182, 29,57, 1)";
 var blue = "rgba(2, 117,216, 0.6)";
 var white = "rgba(255,255,255, 0.9)";
 
-function pickClinicianDataset(surveys){
+function pickClinicianDataset(surveys,surveyDetails){
   var dataPoints = [];
   var datasets = [];
   dataPoints.push({label: 'Opoid Equivalance',data:getOpoidEquivivalance(surveys),color:pink});
-  dataPoints.push({label: 'Promis Score',data:getPromisScore(surveys),color:green});
+  dataPoints.push({label: 'Promis Score',data:getPromisScore(surveyDetails),color:green});
   dataPoints.push({label: 'Pain Intensity',data:getPainIntensity(surveys),color:yellow});
   dataPoints.push({label: 'Opoid Threshold',data:getOpioidThreshold(surveys),color:blue});
   for (var i = 0; i < dataPoints.length; i++) {
@@ -210,15 +208,8 @@ function getOpoidEquivivalance(surveys){
   return data;
 }
 
-function getPromisScore(surveys){
-  var data = [];
-  var labels = surveys.map((survey) => {
-      return moment(survey.StartTime).format(viewDateFormat);
-  });
-  for (var i = 0; i < labels.length; i++) {
-    data.push({x:labels[i],y:i*4});
-  }
-  return data;
+function getPromisScore(surveyDetails){
+  return calculateScores.calculatePromisScores(surveyDetails);
 }
 
 function getOpioidThreshold(surveys){

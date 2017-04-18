@@ -8,7 +8,7 @@ const database = require('../../model');
 const processSurveyInstances = require('../helper/process-survey-instances');
 const moment = require('moment');
 const httpNotFound = 404;
-const calculateScores = require('../helper/calculate-scores');
+
 
 /**
  * A dashboard with an overview of a specific patient.
@@ -94,21 +94,11 @@ function patientView(request, reply) {
             )
         ])
         .then(([currentPatient, surveyInstances, currentTrial, surveyResults]) => {
-            console.log("In patient JS");
-            console.log(calculateScores.calculatePromisScores(surveyResults));
-            console.log("After Chintans code");
             var dataChart = processSurveyInstances(surveyInstances);
-            //console.log(dataChart);
-
-
-            // //console.log(JSON.stringify(processSurveyInstances(surveyInstances)));
-            // patient not found
             if (!currentPatient) {
                 throw new Error('patient does not exist');
             }
-            var clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances);
-            console.log(clinicalValuesChart);
-            console.log(clinicalValuesChart.datasets.data);
+            var clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances,surveyResults);
             return reply.view('patient', {
                 title: 'Pain Reporting Portal',
                 patient: currentPatient,
