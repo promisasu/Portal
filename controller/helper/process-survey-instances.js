@@ -21,8 +21,9 @@ function processSurveyInstances(surveys) {
         return survey.state === 'completed';
     });
     // const filterSurveyByState = surveys;
-
+    console.log("process survey instances");
     var datasets = pickTimeLeft(filterSurveyByState);
+    console.log(datasets);
     var labels = [];
     for (var i = 0; i < datasets.length; i++) {
         var dataSet = datasets[i];
@@ -86,52 +87,53 @@ function pickTimeLeft(surveys) {
     }
     var returnArray = [];
     for (var i = 0; i < surveyTypes.length; i++) {
-      // if (surveyTypes[i].length>0) {
-      //   var samplePoint = surveyTypes[i][0];
-      //   var dataPoints = surveyTypes[i].map((survey) => {
-      //       return calculateTimeLeft(
-      //           moment(survey.StartTime),
-      //           moment(survey.EndTime),
-      //           moment(survey.ActualSubmissionTime)
-      //       )
-      //   });
-      //   var dates = surveyTypes[i].map((survey) => {
-      //       return moment(survey.StartTime).format(viewDateFormat);
-      //   });
-      //   var dataArr = {
-      //       label: '% Time left until '+ samplePoint.activityTitle + ' expired',
-      //       backgroundColor: getRGBA(),
-      //       borderColor: getRGBA(),
-      //       pointBorderColor: getRGBA(),
-      //       pointBorderWidth: 10,
-      //       pointRadius: 10,
-      //       data: dataPoints,
-      //       dates: dates
-        if (surveyTypes[i].length > 0) {
-            var samplePoint = surveyTypes[i][0];
-            var dataPoints = surveyTypes[i].map((survey) => {
-                return calculateTimeLeft(
-                    moment(survey.StartTime),
-                    moment(survey.EndTime),
-                    moment(survey.ActualSubmissionTime)
-                )
-            });
-            var dates = surveyTypes[i].map((survey) => {
-                return moment(survey.StartTime).format(viewDateFormat);
-            });
-            var dataArr = {
-                label: '% Time left until ' + samplePoint.activityTitle + ' expired',
-                backgroundColor: getRGBA(),
-                borderColor: getRGBA(),
-                pointBorderColor: getRGBA(),
-                data: dataPoints,
-                dates: dates
-            }
-            returnArray.push(dataArr);
+      if (surveyTypes[i].length>0) {
+        var samplePoint = surveyTypes[i][0];
+        var dataPoints = surveyTypes[i].map((survey) => {
+            return calculateTimeLeft(
+                moment(survey.StartTime),
+                moment(survey.EndTime),
+                moment(survey.ActualSubmissionTime)
+            )
+        });
+        var dates = surveyTypes[i].map((survey) => {
+            return moment(survey.StartTime).format(viewDateFormat);
+        });
+        var dataArr = {
+            label: '% Time left until '+ samplePoint.activityTitle + ' expired',
+            backgroundColor: getRGBA(),
+            borderColor: getRGBA(),
+            pointBorderColor: getRGBA(),
+            pointBorderWidth: 10,
+            pointRadius: 10,
+            data: dataPoints,
+            dates: dates
+        // if (surveyTypes[i].length > 0) {
+        //     var samplePoint = surveyTypes[i][0];
+        //     var dataPoints = surveyTypes[i].map((survey) => {
+        //         return calculateTimeLeft(
+        //             moment(survey.StartTime),
+        //             moment(survey.EndTime),
+        //             moment(survey.ActualSubmissionTime)
+        //         )
+        //     });
+        //     var dates = surveyTypes[i].map((survey) => {
+        //         return moment(survey.StartTime).format(viewDateFormat);
+        //     });
+        //     var dataArr = {
+        //         label: '% Time left until ' + samplePoint.activityTitle + ' expired',
+        //         backgroundColor: getRGBA(),
+        //         borderColor: getRGBA(),
+        //         pointBorderColor: getRGBA(),
+        //         data: dataPoints,
+        //         dates: dates
+        //     }
+        //     returnArray.push(dataArr);
 // >>>>>>> origin/US#122
         }
     }
     return returnArray;
+}
 }
 
 function getRGBA() {

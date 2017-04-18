@@ -17,6 +17,7 @@ const calculateScores = require('../helper/calculate-scores');
  * @returns {View} Rendered page
  */
 function patientView(request, reply) {
+    console.log("patient js");
     Promise
         .all([
             database.sequelize.query(
@@ -93,8 +94,9 @@ function patientView(request, reply) {
             )
         ])
         .then(([currentPatient, surveyInstances, currentTrial, surveyResults]) => {
-
+            console.log("In patient JS");
             console.log(calculateScores.calculatePromisScores(surveyResults));
+            console.log("After Chintans code");
             var dataChart = processSurveyInstances(surveyInstances);
             //console.log(dataChart);
 
