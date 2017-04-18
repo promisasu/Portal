@@ -96,15 +96,42 @@ function patientView (request, reply) {
                         request.params.pin
                     ]
                 }
+            ),database.sequelize.query(
+                `
+                SELECT ai.PatientPinFK as pin, ai.activityTitle as name,
+                ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id,
+                act.questionIdFk as questionId, act.questionOptionIdFk as optionId,
+                ans.OptionText as optionText, que.SurveyBlockIdFk as questionType,
+                ai.StartTime as StartTime, ans.likertScale as likertScale, pi.type as patientType
+                FROM question_result act
+                JOIN questions que
+                ON act.questionIdFk = que.QuestionId
+                JOIN question_options ans
+                ON act.questionOptionIdFk = ans.QuestionOptionId
+                JOIN activity_instance ai
+                ON act.ActivityInstanceIdFk = ai.ActivityInstanceId
+                JOIN patients pi
+                ON ai.PatientPinFK = pi.PatientPin
+                WHERE act.ActivityInstanceIdFk
+                IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ?
+                and State='completed' and que.questionId IN (74));
+
+                `, {
+                    type: database.sequelize.QueryTypes.SELECT,
+                    replacements: [
+                        request.params.pin
+                    ]
+                }
             )
+
         ])
-        .then(([currentPatient, surveyInstances, currentTrial, surveyResults]) => {
+        .then(([currentPatient, surveyInstances, currentTrial, surveyResults, bodyPainResults]) => {
             let dataChart = processSurveyInstances(surveyInstances);
 
             if (!currentPatient) {
                 throw new Error('patient does not exist');
             }
-            let clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances, surveyResults);
+            let clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances, surveyResults, bodyPainResults);
 
             return reply.view('patient', {
                 title: 'Pain Reporting Portal',
