@@ -159,6 +159,12 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
     return Math.max(percentTimeLeft, minTime);
 }
 
+/**
+ * Takes in a Survey Instances and processes to get opioid equivalence
+ * @param {Array<Object>} surveys - list of survey instances
+ * @param {Array<Object>} surveyDetails - list of survey instances
+ * @returns {Array<Object>} data for the chart
+ */
 function processClinicanData(surveys,surveyDetails){
   //console.log("In clinician data");
   var datasets = pickClinicianDataset(surveys,surveyDetails);
@@ -181,6 +187,13 @@ var yellow = "rgba(182, 29,57, 1)";
 var blue = "rgba(2, 117,216, 0.6)";
 var white = "rgba(255,255,255, 0.9)";
 
+
+/**
+ * Takes in a Survey Instances and processes to get opioid equivalence
+ * @param {Array<Object>} surveys - list of survey instances
+ * @param {Array<Object>} surveyDetails - list of survey instances
+ * @returns {Array<Object>} data for the chart
+ */
 function pickClinicianDataset(surveys,surveyDetails){
   var dataPoints = [];
   var datasets = [];
