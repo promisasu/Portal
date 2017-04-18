@@ -151,6 +151,10 @@ function patientView (request, reply) {
                         surveyInstanceCopy.UserSubmissionTime = moment(surveyInstanceCopy.UserSubmissionTime)
                             .format('MM-DD-YYYY h:mma');
                     }
+                    if (surveyInstanceCopy.ActualSubmissionTime) {
+                        surveyInstanceCopy.ActualSubmissionTime = moment(surveyInstanceCopy.ActualSubmissionTime)
+                            .format('MM-DD-YYYY h:mma');
+                    }
 
                     return surveyInstanceCopy;
                 }),
