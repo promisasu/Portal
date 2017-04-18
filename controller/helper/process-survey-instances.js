@@ -21,12 +21,14 @@ function processSurveyInstances (surveys) {
         return survey.state === 'completed';
     });
     // console.log(filterSurveyByState);
-    var datasets = pickTimeLeft(filterSurveyByState);
-    var labels = [];
-    for (var i = 0; i < datasets.length; i++) {
-        var dataSet = datasets[i];
-        var y = dataSet.data;
-        var x = dataSet.dates;
+    let datasets = pickTimeLeft(filterSurveyByState);
+    let labels = [];
+
+    for (let i = 0; i < datasets.length; i++) {
+        let dataSet = datasets[i];
+        let y = dataSet.data;
+        let x = dataSet.dates;
+
         datasets[i].data = [];
         for (let j = 0; j < x.length; j++) {
             datasets[i].data.push({
@@ -165,28 +167,30 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
  * @param {Array<Object>} surveyDetails - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function processClinicanData(surveys,surveyDetails){
-  //console.log("In clinician data");
-  var datasets = pickClinicianDataset(surveys,surveyDetails);
-  //console.log(datasets);
-  var labels = surveys.map((survey) => {
-      return moment(survey.StartTime).format(viewDateFormat);
-  });
-  const numberOfDays = 7;
-  const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
-  labels.push(moment(endDateforChart).format(viewDateFormat));
-  return {
-      labels:labels,
-      datasets: datasets
-  };
+function processClinicanData (surveys, surveyDetails) {
+    // console.log('In clinician data');
+    let datasets = pickClinicianDataset(surveys, surveyDetails);
+
+    // console.log(datasets);
+    let labels = surveys.map((survey) => {
+        return moment(survey.StartTime).format(viewDateFormat);
+    });
+    const numberOfDays = 7;
+    const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
+
+    labels.push(moment(endDateforChart).format(viewDateFormat));
+
+    return {
+        labels: labels,
+        datasets: datasets
+    };
 }
 
-var pink = "rgba(254, 160,172, 1)";
-var green = "rgba(122, 198,150, 1)";
-var yellow = "rgba(182, 29,57, 1)";
-var blue = "rgba(2, 117,216, 0.6)";
-var white = "rgba(255,255,255, 0.9)";
-
+let pink = 'rgba(254, 160,172, 1)';
+let green = 'rgba(122, 198,150, 1)';
+let yellow = 'rgba(182, 29,57, 1)';
+let blue = 'rgba(2, 117,216, 0.6)';
+let white = 'rgba(255,255,255, 0.9)';
 
 /**
  * Takes in a Survey Instances and processes to get opioid equivalence
@@ -194,28 +198,29 @@ var white = "rgba(255,255,255, 0.9)";
  * @param {Array<Object>} surveyDetails - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function pickClinicianDataset(surveys,surveyDetails){
-  var dataPoints = [];
-  var datasets = [];
-  dataPoints.push({label: 'Opoid Equivalance',data:getOpoidEquivivalance(surveys),color:pink});
-  dataPoints.push({label: 'Promis Score',data:getPromisScore(surveyDetails),color:green});
-  dataPoints.push({label: 'Pain Intensity',data:getPainIntensity(surveys),color:yellow});
-  dataPoints.push({label: 'Opoid Threshold',data:getOpioidThreshold(surveys),color:blue});
-  for (var i = 0; i < dataPoints.length; i++) {
-    datasets.push({
-                    label: dataPoints[i].label,
-                    fill:false,
-                    backgroundColor: dataPoints[i].color,
-                    borderColor: dataPoints[i].color,
-                    pointBorderColor: dataPoints[i].color,
-                    pointBackgroundColor: white,
-                    pointBorderWidth: 10,
-                    pointRadius: 10,
-                    data: dataPoints[i].data,
-                });
-    if (dataPoints[i].label == 'Opoid Threshold') {
-      datasets[i].borderDash = [10,5];
-    }
+function pickClinicianDataset (surveys, surveyDetails) {
+    let dataPoints = [];
+    let datasets = [];
+
+    dataPoints.push({label: 'Opoid Equivalance', data: getOpoidEquivivalance(surveys), color: pink});
+    dataPoints.push({label: 'Promis Score', data: getPromisScore(surveyDetails), color: green});
+    dataPoints.push({label: 'Pain Intensity', data: getPainIntensity(surveys), color: yellow});
+    dataPoints.push({label: 'Opoid Threshold', data: getOpioidThreshold(surveys), color: blue});
+    for (let i = 0; i < dataPoints.length; i++) {
+        datasets.push({
+            label: dataPoints[i].label,
+            fill: false,
+            backgroundColor: dataPoints[i].color,
+            borderColor: dataPoints[i].color,
+            pointBorderColor: dataPoints[i].color,
+            pointBackgroundColor: white,
+            pointBorderWidth: 10,
+            pointRadius: 10,
+            data: dataPoints[i].data
+        });
+        if (dataPoints[i].label === 'Opoid Threshold') {
+            datasets[i].borderDash = [10, 5];
+        }
     }
 
     return datasets;
@@ -241,11 +246,11 @@ function getOpoidEquivivalance (surveys) {
 
 /**
  * Takes in a Survey Instances and processes to get PROMIS score
- * @param {Array<Object>} surveys - list of survey instances
+ * @param {Array<Object>} surveyDetails - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getPromisScore(surveyDetails){
-  return calculateScores.calculatePromisScores(surveyDetails);
+function getPromisScore (surveyDetails) {
+    return calculateScores.calculatePromisScores(surveyDetails);
 }
 
 /**

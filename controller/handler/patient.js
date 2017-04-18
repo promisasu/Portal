@@ -99,11 +99,13 @@ function patientView (request, reply) {
             )
         ])
         .then(([currentPatient, surveyInstances, currentTrial, surveyResults]) => {
-            var dataChart = processSurveyInstances(surveyInstances);
+            let dataChart = processSurveyInstances(surveyInstances);
+
             if (!currentPatient) {
                 throw new Error('patient does not exist');
             }
-            var clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances,surveyResults);
+            let clinicalValuesChart = processSurveyInstances.processClinicanData(surveyInstances, surveyResults);
+
             return reply.view('patient', {
                 title: 'Pain Reporting Portal',
                 patient: currentPatient,
