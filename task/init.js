@@ -117,6 +117,31 @@ read({
 .then((apiURL) => {
     config.apiURL = apiURL;
 
+    return read({
+        prompt: 'Opioid conversion factor for Tramadol:',
+        default: 0.1
+    });
+})
+.then((tramadol) => {
+    config.opioid = {}
+    config.opioid.tramadol = parseFloat(tramadol);
+
+    return read({
+        prompt: 'Opioid conversion factor for Oxycodone:',
+        default: 1.5
+    });
+})
+.then((oxycodone) => {
+    config.opioid.oxycodone = parseFloat(oxycodone);
+
+    return read({
+        prompt: 'Opioid conversion factor for Hydromorphone:',
+        default: 4
+    });
+})
+.then((hydromorphone) => {    
+    config.opioid.hydromorphone = parseFloat(hydromorphone);
+
     // Gotta get rid of these dependencies in the near future
     config.api = {};
     config.api.hostname = 'localhost';
