@@ -169,10 +169,14 @@ test.cb('when survey does not exist', (t) => {
         }
     };
 
-    const reply = function() {
+    const reply = () => {
         return {
-            type: () => {}
-        }
+            type: () => {
+                t.end();
+
+                return;
+            }
+        };
     };
 
     survey(request, reply);

@@ -30,7 +30,8 @@ test.cb('when trial has no patients', (t) => {
     const reply = (data) => {
         t.is(
             data,
-            'Patient Pin,Date Started,0,1,2,3,4,5\n'
+            'Patient Pin,Date Started,0,1,2,3,4,5\n',
+            'it should return headers'
         );
 
         return {
