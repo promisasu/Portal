@@ -64,7 +64,9 @@ function trialView (request, reply) {
                 SUM(si.State = 'expired' and activityTitle = 'Sickle Cell Weekly Survey') AS expiredWeeklyCount,
                 SUM(si.State = 'completed' and activityTitle = 'Sickle Cell Weekly Survey') AS completedWeeklyCount,
                 SUM(si.State = 'expired' and activityTitle = 'Sickle Cell Daily Survey') AS expiredDailyCount,
-                SUM(si.State = 'completed' and activityTitle = 'Sickle Cell Daily Survey') AS completedDailyCount
+                SUM(si.State = 'completed' and activityTitle = 'Sickle Cell Daily Survey') AS completedDailyCount,
+                SUM(si.State = 'pending') AS pendingCount,
+                SUM(si.State = 'DEACTIVATED') AS deactivatedCount
                 FROM activity_instance AS si
                 JOIN patients AS pa
                 ON pa.PatientPin = si.PatientPinFK
@@ -119,6 +121,7 @@ function trialView (request, reply) {
                 });
                 // collect the compliance status as well as expiredCount
                 if (patientStatus) {
+                    patient.trialStatus = patientStatus.trialStatus;
                     patient.status = patientStatus.status;
                     patient.compliancePercentage = patientStatus.compliancePercentage;
                 } else {

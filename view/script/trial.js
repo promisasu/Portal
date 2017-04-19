@@ -17,8 +17,8 @@
         }]
     };
     var ctx = document.getElementById('trialChart').getContext('2d');
-    var columnStart = 2;
-    var columnCompliancePercentage = 4;
+    var columnStart = 3;
+    var columnCompliancePercentage = 5;
     var columnPin = 0;
 
     var patientsTable = $('#patients-table').DataTable({

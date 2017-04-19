@@ -11,6 +11,7 @@
 function processPatientStatus (row) {
     const redThreshold = 33.33;
     const yellowThresholdBegin = 66.67;
+    const zero = 0;
 
     if (row.compliancePercentage <= redThreshold) {
         row.status = 'Non-Compliant';
@@ -18,6 +19,14 @@ function processPatientStatus (row) {
         row.status = 'Partially-Compliant';
     } else {
         row.status = 'Compliant';
+    }
+
+    if (row.deactivatedCount > zero) {
+        row.trialStatus = 'DEACTIVATED';
+    } else if (row.pendingCount > zero) {
+        row.trialStatus = 'Active';
+    } else {
+        row.trialStatus = 'Completed';
     }
 
     return row;
