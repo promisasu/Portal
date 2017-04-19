@@ -18,7 +18,7 @@ function processRule (rules, start) {
         return preVal + postVal;
     }, initRule);
 
-    return moment(start).add(ruleTotal, 'days').format('YYYY-MM-DD');
+    return moment(start).add(ruleTotal, 'days').format('MM-DD-YYYY');
 }
 
 module.exports = processRule;

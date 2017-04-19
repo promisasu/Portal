@@ -52,8 +52,8 @@ test('when trial is processed', (t) => {
         activeCount: 0,
         completedCount: 0,
         description: 'example',
-        IRBStart: '2000-01-01',
-        IRBEnd: '2001-01-01',
+        IRBStart: '01-01-2001',
+        IRBEnd: '01-01-2001',
         recruitedCount: 0,
         TargetCount: 4
     };
@@ -65,13 +65,13 @@ test('when trial is processed', (t) => {
         activeCount: 0,
         completedCount: 0,
         description: 'example',
-        IRBStart: '2000-01-01',
-        IRBEnd: '2001-01-01',
+        IRBStart: '01-01-2001',
+        IRBEnd: '01-01-2001',
         recruitedCount: 0,
         TargetCount: 4,
         // new keys
-        start: '2000-01-01',
-        end: '2001-01-01',
+        start: '01-01-2001',
+        end: '01-01-2001',
         recruitedPercent: 0,
         unrecruitedPercent: 100,
         completedPercent: 0,
