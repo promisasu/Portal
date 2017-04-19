@@ -14,9 +14,6 @@ const moment = require('moment');
 function processTrial (trial) {
     const allPercent = processPercent(trial);
 
-    console.log('logging all percent');
-    console.log(allPercent);
-
     return Object.assign(trial, {
         start: moment(trial.IRBStart).format('YYYY-MM-DD'),
         end: moment(trial.IRBEnd).format('YYYY-MM-DD'),
@@ -36,20 +33,18 @@ function processPercent (trial) {
     const percent = 100;
     const zeroPercent = 0;
 
-    console.log('Trail from process percent');
-    console.log(trial);
     if (trial.recruitedCount > zeroPercent) {
         return {
-            recruitedPercent: Math.round(trial.recruitedCount / trial.targetCount * percent),
-            unrecruitedPercent: Math.round((trial.targetCount - trial.recruitedCount) / trial.targetCount * percent),
+            recruitedPercent: Math.round(trial.recruitedCount / trial.TargetCount * percent),
+            unrecruitedPercent: Math.round((trial.TargetCount - trial.recruitedCount) / trial.TargetCount * percent),
             completedPercent: Math.round(trial.completedCount / trial.recruitedCount * percent),
             activePercent: Math.round(trial.activeCount / trial.recruitedCount * percent)
         };
     }
 
     return {
-        recruitedPercent: Math.round(trial.recruitedCount / trial.targetCount * percent),
-        unrecruitedPercent: Math.round((trial.targetCount - trial.recruitedCount) / trial.targetCount * percent),
+        recruitedPercent: Math.round(trial.recruitedCount / trial.TargetCount * percent),
+        unrecruitedPercent: Math.round((trial.TargetCount - trial.recruitedCount) / trial.TargetCount * percent),
         completedPercent: zeroPercent,
         activePercent: zeroPercent
     };

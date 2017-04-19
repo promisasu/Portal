@@ -8,7 +8,7 @@ test('when there are recruited patients', (t) => {
         activeCount: 1,
         completedCount: 1,
         recruitedCount: 2,
-        targetCount: 4
+        TargetCount: 4
     };
 
     const result = processTrial.processPercent(data);
@@ -32,7 +32,7 @@ test('when there are no recruited patients', (t) => {
         activeCount: 0,
         completedCount: 0,
         recruitedCount: 0,
-        targetCount: 4
+        TargetCount: 4
     };
 
     const result = processTrial.processPercent(data);
@@ -55,7 +55,7 @@ test('when trial is processed', (t) => {
         IRBStart: '2000-01-01',
         IRBEnd: '2001-01-01',
         recruitedCount: 0,
-        targetCount: 4
+        TargetCount: 4
     };
 
     const result = processTrial(data);
@@ -68,7 +68,7 @@ test('when trial is processed', (t) => {
         IRBStart: '2000-01-01',
         IRBEnd: '2001-01-01',
         recruitedCount: 0,
-        targetCount: 4,
+        TargetCount: 4,
         // new keys
         start: '2000-01-01',
         end: '2001-01-01',
