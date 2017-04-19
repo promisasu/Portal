@@ -9,12 +9,14 @@
  * @returns {Object} row - updated patient record with compliance status set
  */
 function processPatientStatus (row) {
-    const redThreshold = 4;
-    const yellowThresholdBegin = 0;
+    const redThreshold = 33.33;
+    const yellowThresholdBegin = 66.67;
 
-    if (row.expiredCount > redThreshold) {
+    if (row.compliancePercentage <= redThreshold) {
         row.status = 'Non-Compliant';
-    }else {
+    } else if (row.compliancePercentage <= yellowThresholdBegin) {
+        row.status = 'Partially-Compliant';
+    } else {
         row.status = 'Compliant';
     }
 

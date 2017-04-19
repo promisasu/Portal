@@ -110,16 +110,13 @@
                                     Compliance Status
                                 </th>
                                 <th>
-                                    Stage
-                                </th>
-                                <th>
                                     Start
                                 </th>
                                 <th>
                                     End
                                 </th>
                                 <th>
-                                    Total Missed
+                                    Compliance Percentage
                                 </th>
                             </tr>
                         </thead>
@@ -150,16 +147,13 @@
                                         {{ status }}
                                     </td>
                                     <td>
-                                        {{ stage }}
-                                    </td>
-                                    <td>
                                         {{ DateStarted }}
                                     </td>
                                     <td>
                                         {{ DateCompleted }}
                                     </td>
                                     <td>
-                                        {{ totalMissed }}
+                                        {{ compliancePercentage }}
                                     </td>
                                 </tr>
                             {{/each}}

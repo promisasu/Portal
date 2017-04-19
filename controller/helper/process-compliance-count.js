@@ -9,24 +9,35 @@
  * @returns {Array<Number>} number of non-compliant, semi-compliant and compliant patients
  */
 function processComplianceCount (rows) {
-    for (const row of rows){
-      row.expiredWeeklyCount = row.expiredWeeklyCount * 3;
-      row.completedWeeklyCount = row.completedWeeklyCount * 3;
+    const weeklyActivityWeight = 3;
+
+    for (const row of rows) {
+        row.expiredWeeklyCount *= weeklyActivityWeight;
+        row.completedWeeklyCount *= weeklyActivityWeight;
     }
-    const nonCompliantThreshold = 66.67;
+    const nonCompliantThreshold = 33.33;
     const increment = 1;
-    const semiCompliantThreshold = 33.33;
+    const semiCompliantThreshold = 66.67;
     const compliance = {
         compliant: 0,
         semiCompliant: 0,
         nonCompliant: 0
     };
 
+    const percent = 100;
+    const decimal = 2;
+
     for (const row of rows) {
-        var compliancePercentage = (row.expiredWeeklyCount + row.expiredDailyCount)/(row.expiredWeeklyCount + row.expiredDailyCount + row.completedWeeklyCount + row.completedDailyCount);
-        if (compliancePercentage >= nonCompliantThreshold) {
+        let compliancePercentage = (row.completedWeeklyCount + row.completedDailyCount)
+                  / (row.expiredWeeklyCount + row.expiredDailyCount
+                  + row.completedWeeklyCount + row.completedDailyCount)
+                  * percent;
+
+        compliancePercentage = parseFloat(compliancePercentage).toFixed(decimal);
+        row.compliancePercentage = compliancePercentage;
+        if (compliancePercentage <= nonCompliantThreshold) {
             compliance.nonCompliant += increment;
-        } else if (compliancePercentage >= semiCompliantThreshold) {
+        } else if (compliancePercentage <= semiCompliantThreshold) {
             compliance.semiCompliant += increment;
         } else {
             compliance.compliant += increment;
