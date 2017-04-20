@@ -80,3 +80,36 @@ Tasks can be run by calling `npm run <task>`
 * `test` run the test suite
 * `user` create a new user
 * `validate` detect invalid server configuration
+
+##Opioid Equivalance
+Regarding the new chart that includes opiod equivalence
+
+[1:43] 
+Zena says to use this calculator: http://www.globalrph.com/narcotic.cgi
+globalrph.com
+Opioid - Narcotic - Converter
+opioid converter
+
+[1:43] 
+she will also send me a paper.
+
+[1:43] 
+When putting in values, Hydromorphone == Dilaudid, and Percocet == Oxycodone
+
+[1:44] 
+We already have an Oxycodone, so we will basically map that and Percocet to the same thing dosage wise.
+
+[1:44] 
+Tramadol is also in this calculator. Our other meds (Ibuprofen, Tylenol w/ codeine, naprosyn) can be ignored for this
+
+[1:44] 
+Step 3 should be left at 0%
+
+[1:45] 
+Step 4 - the “Converting To:” should be Morphine
+
+[1:45] 
+Step 1 and Step 4 should use “Oral” not “IV/IM/SC” values
+
+[1:46] 
+If we plug in 2-3 different values for each medication we will see what the multiplier is, and can replicate in our code.

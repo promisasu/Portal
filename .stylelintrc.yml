@@ -6,14 +6,14 @@ rules:
     color-no-hex: null
     color-no-invalid-hex: true
     # Font Family
-    font-family-name-quotes: single-where-recommended
+    font-family-name-quotes: always-where-recommended
     # Font Weight
     font-weight-notation: named-where-possible
     # Number
     number-leading-zero: always
     number-max-precision: 2
     number-no-trailing-zeros: true
-    number-zero-length-no-unit: true
+    length-zero-no-unit: true
     # String
     string-no-newline: true
     string-quotes: single
@@ -24,6 +24,7 @@ rules:
     unit-whitelist:
         - px
         - "%"
+        - rem
     # Shorthand Property
     shorthand-property-no-redundant-values: true
     # Declaration
@@ -105,5 +106,4 @@ rules:
     no-invalid-double-slash-comments: true
     no-missing-eof-newline: true
     no-unknown-animations: true
-    no-unsupported-browser-features: true
     stylelint-disable-reason: always-before

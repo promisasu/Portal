@@ -13,7 +13,7 @@ globals:
 
 rules:
     # Possible Errors
-    no-console: error
+    no-console: off
 
     # Best Practices
     block-scoped-var: error
@@ -21,15 +21,15 @@ rules:
     new-cap: off
     no-invalid-this: off
     no-loop-func: error
-    no-magic-numbers:
-        - error
-        - ignoreArrayIndexes: true
+    # no-magic-numbers:
+    #     - error
+    #     - ignoreArrayIndexes: true
     no-new: off
 
     # Strict Mode
     strict:
         - error
-        - function
+        - global
 
     # Stylistic Issues
     require-jsdoc: off

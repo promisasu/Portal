@@ -4,7 +4,7 @@
  * @module controller/handler/survey
  */
 
-const groupBy = require('../helper/group-by.js');
+// const groupBy = require('../helper/group-by.js');
 const database = require('../../model');
 const httpNotFound = 404;
 const convertJsonToCsv = require('../helper/convert-json-to-csv');
@@ -57,7 +57,9 @@ const configuration = [
 function surveyCSV (request, reply) {
     database.sequelize.query(
         `
-        SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, que.QuestionText as questionText, act.questionOptionIdFk as optionId, ans.OptionText as optionText
+        SELECT a.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date,
+        act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, que.QuestionText as questionText,
+        act.questionOptionIdFk as optionId, ans.OptionText as optionText
         FROM question_result act
         JOIN questions que
         ON act.questionIdFk = que.QuestionId
@@ -66,7 +68,8 @@ function surveyCSV (request, reply) {
         JOIN activity_instance ai
         ON act.ActivityInstanceIdFk = ai.ActivityInstanceId
         WHERE act.ActivityInstanceIdFk
-        IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ? and ActivityInstanceId = ? and State='completed');
+        IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ?
+        and ActivityInstanceId = ? and State='completed');
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
@@ -77,7 +80,7 @@ function surveyCSV (request, reply) {
         }
     )
     .then((optionsWithAnswers) => {
-    const property = ['pin', 'name', 'id', 'date', 'questionText', 'questionId'];
+        const property = ['pin', 'name', 'id', 'date', 'questionText', 'questionId'];
         const uniqueAnswers = deduplicate(optionsWithAnswers, property);
 
         return convertJsonToCsv(uniqueAnswers, configuration);
@@ -87,7 +90,11 @@ function surveyCSV (request, reply) {
     })
     .catch((err) => {
         console.log('error', err);
-        reply(boom.notFound('survey data not found'));
+        reply
+            .view('404', {
+                title: 'Not Found'
+            })
+            .code(httpNotFound);
     });
 }
 

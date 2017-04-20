@@ -2,23 +2,8 @@
     "title": "project configuration schema",
     "description": "a json schema v3 description of the configuration file",
     "type": "object",
-    "additionalProperties": false,
+    "additionalProperties": true,
     "properties": {
-        "api": {
-            "type": "object",
-            "required": true,
-            "properties": {
-                "hostname": {
-                    "type": "hostname",
-                    "required": true
-                },
-                "port": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "required": true
-                }
-            }
-        },
         "application": {
             "type": "object",
             "properties": {
@@ -31,7 +16,7 @@
         "dashboard": {
             "type": "object",
             "required": true,
-            "additionalProperties": false,
+            "additionalProperties": true,
             "properties": {
                 "hostname": {
                     "type": "hostname",
@@ -40,6 +25,25 @@
                 "port": {
                     "type": "integer",
                     "minimum": 0,
+                    "required": true
+                }
+            }
+        },
+        "opioid": {
+            "type": "object",
+            "required": false,
+            "additionalProperties": true,
+            "properties": {
+                "tramadol": {
+                    "type": "float",
+                    "required": true
+                },
+                "oxycodone": {
+                    "type": "float",
+                    "required": true
+                },
+                "hydromorphone": {
+                    "type": "float",
                     "required": true
                 }
             }
@@ -85,11 +89,6 @@
             "pattern": "^[a-z]+$"
         },
         "webFormPostUrl": {
-            "type": "string",
-            "required": true,
-            "pattern": ".*"
-        },
-        "apiURL": {
             "type": "string",
             "required": true,
             "pattern": ".*"

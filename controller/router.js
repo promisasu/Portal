@@ -99,11 +99,11 @@ module.exports = [
                         .min(minimumIrbLength),
                     IRBStart: Joi
                         .date()
-                        .format('YYYY-MM-DD')
+                        .format('MM-DD-YYYY')
                         .min(moment().startOf('day').toDate()),
                     IRBEnd: Joi
                         .date()
-                        .format('YYYY-MM-DD')
+                        .format('MM-DD-YYYY')
                         .min(Joi.ref('IRBStart')),
                     targetCount: Joi
                         .number()
@@ -152,11 +152,11 @@ module.exports = [
                         .positive(),
                     startDate: Joi
                         .date()
-                        .format('YYYY-MM-DD')
+                        .format('MM-DD-YYYY')
                         .min(moment().startOf('day').toDate()),
                     endDate: Joi
                         .date()
-                        .format('YYYY-MM-DD')
+                        .format('MM-DD-YYYY')
                         .min(Joi.ref('startDate'))
                 }
             }

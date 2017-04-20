@@ -31,6 +31,10 @@ input[type='date'] {
 }
 
 .custom-btn {
-    padding-top: .4688rem;
-    padding-bottom: .4688rem;
+    padding-bottom: 0.47rem;
+    padding-top: 0.47rem;
+}
+a.active {
+    font-weight: bold;
+    text-decoration: underline;
 }

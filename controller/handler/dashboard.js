@@ -19,7 +19,8 @@ function dashboardView (request, reply) {
 
     database.sequelize.query(
         `
-        SELECT t.*, s.StageId, count(1) as recruitedCount from trial t, stage s INNER JOIN patients pa ON s.StageId = pa.StageIdFK  WHERE t.TrialId = s.trialId;
+        SELECT t.*, s.StageId, count(1) as recruitedCount from trial t, stage s
+        INNER JOIN patients pa ON s.StageId = pa.StageIdFK  WHERE t.TrialId = s.trialId;
 
         `,
         {
@@ -31,12 +32,9 @@ function dashboardView (request, reply) {
         }
         )
         .then((trials) => {
-            console.log("Testing");
-            console.log(trials);
             // Process data into format expected in view
             const trialData = trials.map(processTrial);
-            console.log("Trial data is below");
-            console.log(trialData);
+
             // Display view
             return reply.view('dashboard', {
                 title: 'Pain Reporting Portal',

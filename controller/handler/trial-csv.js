@@ -8,7 +8,7 @@ const database = require('../../model');
 const convertJsonToCsv = require('../helper/convert-json-to-csv');
 const boom = require('boom');
 const deduplicate = require('../helper/deduplicate');
-const customMap = require('hashmap');
+const CustomMap = require('hashmap');
 
 /**
  * Create a Comma Seperate Value export of the data of all the patient's that are enrolled in a trial.
@@ -18,11 +18,10 @@ const customMap = require('hashmap');
  */
 function trialCSV (request, reply) {
     const formatSpecifier = '%a %b %d %Y %T';
-    var dailyregex = new RegExp('/trial/.-daily.csv', 'g');
-    var weeklyregex = new RegExp('/trial/.-weekly.csv', 'g');
-    var optionsWithAnswers;
-    var configuration;
-    var query;
+    let dailyregex = new RegExp('/trial/.-daily.csv', 'g');
+    let weeklyregex = new RegExp('/trial/.-weekly.csv', 'g');
+    let configuration = '';
+    let query = '';
 
     if (weeklyregex.test(request.path) === true) {
         configuration = [
@@ -65,11 +64,9 @@ function trialCSV (request, reply) {
                 label: 'Week 5',
                 key: 'State5',
                 default: ''
-            }
-        ];
+            }];
         query = 'Sickle Cell Weekly Survey';
-    }
-    else if (dailyregex.test(request.path) === true) {
+    } else if (dailyregex.test(request.path) === true) {
         configuration = [
             {
                 label: 'Patient Pin',
@@ -261,204 +258,262 @@ function trialCSV (request, reply) {
                 key: 'State35',
                 default: ''
             }
-
         ];
-
         query = 'Sickle Cell Daily Survey';
-    }
-    else {
+    } else {
         query = 'Unknown';
     }
 
     // AND a.state IN ('completed','expired')
 
     database.sequelize.query(
-        `
+            `
         SELECT a.State, a.StartTime, p.DateStarted, p.PatientPin
         FROM activity_instance a
         JOIN patients p
         ON a.PatientPinFk = p.PatientPin
         WHERE a.activityTitle = ?
         ORDER BY a.PatientPinFk, a.ActivityInstanceId;
-        `,
-        {
+        `, {
             type: database.sequelize.QueryTypes.SELECT,
             replacements: [
                 query,
                 formatSpecifier,
                 formatSpecifier
             ]
-        }
-    )
-    .then((queryResults) => {
-        optionsWithAnswers = queryResults;
-        // console.log(optionsWithAnswers);
-        return optionsWithAnswers;
-    })
-    .then((optionsWithAnswers) => {
-        optionsWithAnswers = formatData(optionsWithAnswers);
-        return optionsWithAnswers;
-    })
-    .then((formattedOptionsWithAnswers) => {
-        return convertJsonToCsv(formattedOptionsWithAnswers, configuration);
-    })
-    .then((csv) => {
-        return reply(csv).type('text/csv');
-    })
-    .catch((err) => {
-        console.error(err);
-        reply(boom.notFound('patient data not found'));
-    });
-}
+        })
+        .then((queryResults) => {
+            let optionsWithAnswers = queryResults;
 
-// Function formatData to format the DAILY ACTIVITIES data to get it in the proper format for the CSV
+            return optionsWithAnswers;
+        })
+        .then((returnedOptionsWithAnswers) => {
+            let optionsWithAnswers = formatData(returnedOptionsWithAnswers);
+
+            return optionsWithAnswers;
+        })
+        .then((formattedOptionsWithAnswers) => {
+            return convertJsonToCsv(formattedOptionsWithAnswers, configuration);
+        })
+        .then((csv) => {
+            return reply(csv).type('text/csv');
+        })
+        .catch((err) => {
+            console.error(err);
+            reply(boom.notFound('patient data not found'));
+        });
+}
+/**
+ * Forms a result set for the csv.
+ * @param {Array} optionsWithAnswers - all options with answers.
+ * @returns {Array} A result set.
+ */
 function formatData (optionsWithAnswers) {
-    var map = new customMap();
-    var resultSet = [];
-    for (var row of optionsWithAnswers) {
-        var resultObject = {'PatientPin': null, 'DateStarted': 'somedate', 'State0': ' ', 'State1': ' ', 'State2': ' ', 'State3': ' ', 'State4': ' ', 'State5': ' ', 'State6': ' ', 'State7': ' ', 'State8': ' ', 'State9': ' ',
-    'State10': ' ', 'State11': ' ', 'State12': ' ', 'State13': ' ', 'State14': ' ', 'State15': ' ', 'State16': ' ', 'State17': ' ', 'State18': ' ', 'State19': ' ', 'State20': ' ', 'State21': ' ',
-    'State22': ' ', 'State23': ' ', 'State24': ' ', 'State25': ' ', 'State26': ' ', 'State27': ' ', 'State28': ' ', 'State29': ' ', 'State30': ' ', 'State31': ' ', 'State32': ' ', 'State33': ' ', 'State34': ' ',
-    'State35': ' '};
-        var x = -1;
+    let map = new CustomMap();
+    let resultSet = [];
+
+    for (let row of optionsWithAnswers) {
+        let resultObject = {
+            'PatientPin': null,
+            'DateStarted': 'somedate',
+            'State0': ' ',
+            'State1': ' ',
+            'State2': ' ',
+            'State3': ' ',
+            'State4': ' ',
+            'State5': ' ',
+            'State6': ' ',
+            'State7': ' ',
+            'State8': ' ',
+            'State9': ' ',
+            'State10': ' ',
+            'State11': ' ',
+            'State12': ' ',
+            'State13': ' ',
+            'State14': ' ',
+            'State15': ' ',
+            'State16': ' ',
+            'State17': ' ',
+            'State18': ' ',
+            'State19': ' ',
+            'State20': ' ',
+            'State21': ' ',
+            'State22': ' ',
+            'State23': ' ',
+            'State24': ' ',
+            'State25': ' ',
+            'State26': ' ',
+            'State27': ' ',
+            'State28': ' ',
+            'State29': ' ',
+            'State30': ' ',
+            'State31': ' ',
+            'State32': ' ',
+            'State33': ' ',
+            'State34': ' ',
+            'State35': ' '
+        };
+        let x = -1;
+
         resultObject.PatientPin = row.PatientPin;
         resultObject.DateStarted = row.DateStarted;
         if (map.has(row.PatientPin)) {
-      // do nothing
-      // console.log(row.PatientPin + "already exists");
+            // do nothing
+            // console.log(row.PatientPin + 'already exists');
         } else {
-      // console.log(row.PatientPin + "First Occurence");
-            for (var row1 of optionsWithAnswers) {
-                if (row1.PatientPin === resultObject.PatientPin) {
-                // console.log(row1.PatientPin+ " " + row1.State);
+            console.log(row.PatientPin + 'First Occurence');
+            for (let innerRow of optionsWithAnswers) {
+                if (innerRow.PatientPin === resultObject.PatientPin) {
+                    console.log(innerRow.PatientPin + ' ' + innerRow.State);
                     x++;
                     switch (x) {
                         case 0:
-                            resultObject.State0 = determineStatus(row1.State);
+                            resultObject.State0 = determineStatus(innerRow.State);
                             break;
                         case 1:
-                            resultObject.State1 = determineStatus(row1.State);
+                            resultObject.State1 = determineStatus(innerRow.State);
                             break;
                         case 2:
-                            resultObject.State2 = determineStatus(row1.State);
+                            resultObject.State2 = determineStatus(innerRow.State);
                             break;
                         case 3:
-                            resultObject.State3 = determineStatus(row1.State);
+                            resultObject.State3 = determineStatus(innerRow.State);
                             break;
                         case 4:
-                            resultObject.State4 = determineStatus(row1.State);
+                            resultObject.State4 = determineStatus(innerRow.State);
                             break;
                         case 5:
-                            resultObject.State5 = determineStatus(row1.State);
+                            resultObject.State5 = determineStatus(innerRow.State);
                             break;
                         case 6:
-                            resultObject.State6 = determineStatus(row1.State);
+                            resultObject.State6 = determineStatus(innerRow.State);
                             break;
                         case 7:
-                            resultObject.State7 = determineStatus(row1.State);
+                            resultObject.State7 = determineStatus(innerRow.State);
                             break;
                         case 8:
-                            resultObject.State8 = determineStatus(row1.State);
+                            resultObject.State8 = determineStatus(innerRow.State);
                             break;
                         case 9:
-                            resultObject.State9 = determineStatus(row1.State);
+                            resultObject.State9 = determineStatus(innerRow.State);
                             break;
                         case 10:
-                            resultObject.State10 = determineStatus(row1.State);
+                            resultObject.State10 = determineStatus(innerRow.State);
                             break;
                         case 11:
-                            resultObject.State11 = determineStatus(row1.State);
+                            resultObject.State11 = determineStatus(innerRow.State);
                             break;
                         case 12:
-                            resultObject.State12 = determineStatus(row1.State);
+                            resultObject.State12 = determineStatus(innerRow.State);
                             break;
                         case 13:
-                            resultObject.State13 = determineStatus(row1.State);
+                            resultObject.State13 = determineStatus(innerRow.State);
                             break;
                         case 14:
-                            resultObject.State14 = determineStatus(row1.State);
+                            resultObject.State14 = determineStatus(innerRow.State);
                             break;
                         case 15:
-                            resultObject.State15 = determineStatus(row1.State);
+                            resultObject.State15 = determineStatus(innerRow.State);
                             break;
                         case 16:
-                            resultObject.State16 = determineStatus(row1.State);
+                            resultObject.State16 = determineStatus(innerRow.State);
                             break;
                         case 17:
-                            resultObject.State17 = determineStatus(row1.State);
+                            resultObject.State17 = determineStatus(innerRow.State);
                             break;
                         case 18:
-                            resultObject.State18 = determineStatus(row1.State);
+                            resultObject.State18 = determineStatus(innerRow.State);
                             break;
                         case 19:
-                            resultObject.State19 = determineStatus(row1.State);
+                            resultObject.State19 = determineStatus(innerRow.State);
                             break;
                         case 20:
-                            resultObject.State20 = determineStatus(row1.State);
+                            resultObject.State20 = determineStatus(innerRow.State);
                             break;
                         case 21:
-                            resultObject.State21 = determineStatus(row1.State);
+                            resultObject.State21 = determineStatus(innerRow.State);
                             break;
                         case 22:
-                            resultObject.State22 = determineStatus(row1.State);
+                            resultObject.State22 = determineStatus(innerRow.State);
                             break;
                         case 23:
-                            resultObject.State23 = determineStatus(row1.State);
+                            resultObject.State23 = determineStatus(innerRow.State);
                             break;
                         case 24:
-                            resultObject.State24 = determineStatus(row1.State);
+                            resultObject.State24 = determineStatus(innerRow.State);
                             break;
                         case 25:
-                            resultObject.State25 = determineStatus(row1.State);
+                            resultObject.State25 = determineStatus(innerRow.State);
                             break;
                         case 26:
-                            resultObject.State26 = determineStatus(row1.State);
+                            resultObject.State26 = determineStatus(innerRow.State);
                             break;
                         case 27:
-                            resultObject.State27 = determineStatus(row1.State);
+                            resultObject.State27 = determineStatus(innerRow.State);
                             break;
                         case 28:
-                            resultObject.State28 = determineStatus(row1.State);
+                            resultObject.State28 = determineStatus(innerRow.State);
                             break;
                         case 29:
-                            resultObject.State29 = determineStatus(row1.State);
+                            resultObject.State29 = determineStatus(innerRow.State);
                             break;
                         case 30:
-                            resultObject.State30 = determineStatus(row1.State);
+                            resultObject.State30 = determineStatus(innerRow.State);
                             break;
                         case 31:
-                            resultObject.State31 = determineStatus(row1.State);
+                            resultObject.State31 = determineStatus(innerRow.State);
                             break;
                         case 32:
-                            resultObject.State32 = determineStatus(row1.State);
+                            resultObject.State32 = determineStatus(innerRow.State);
                             break;
                         case 33:
-                            resultObject.State33 = determineStatus(row1.State);
+                            resultObject.State33 = determineStatus(innerRow.State);
                             break;
                         case 34:
-                            resultObject.State34 = determineStatus(row1.State);
+                            resultObject.State34 = determineStatus(innerRow.State);
                             break;
                         case 35:
-                            resultObject.State35 = determineStatus(row1.State);
+                            resultObject.State35 = determineStatus(innerRow.State);
                             break;
 
                     }
                 }
             }
-            map.set(resultObject.PatientPin, '{"PatientPin":' + resultObject.PatientPin + ',"DateStarted":"' + resultObject.DateStarted + '","State0":"' + resultObject.State0 + '","State1":"' + resultObject.State1 + '","State2":"' + resultObject.State2 + '","State3":"' + resultObject.State3 + '","State4":"' + resultObject.State4 + '","State5":"' + resultObject.State5 + '","State6":"' + resultObject.State6 + '","State7":"' + resultObject.State7 + '","State8":"' + resultObject.State8 +
-      '","State9":"' + resultObject.State9 + '","State10":"' + resultObject.State10 + '","State11":"' + resultObject.State11 + '","State12":"' + resultObject.State12 + '","State13":"' + resultObject.State13 + '","State14":"' + resultObject.State14 + '","State15":"' + resultObject.State15 + '","State16":"' + resultObject.State16 + '","State17":"' + resultObject.State17 + '","State18":"' + resultObject.State18 + '","State19":"' + resultObject.State19 + '","State20":"' + resultObject.State20 + '","State21":"'
-      + resultObject.State21 + '","State22":"' + resultObject.State22 + '","State23":"' + resultObject.State23 + '","State24":"' + resultObject.State24 + '","State25":"' + resultObject.State25 + '","State26":"' + resultObject.State26 + '","State27":"' + resultObject.State27 + '","State28":"' + resultObject.State28 + '","State29":"' + resultObject.State29 + '","State30":"' + resultObject.State30 + '","State31":"' + resultObject.State31 + '","State32":"' + resultObject.State32 + '","State33":"' +
-      resultObject.State33 + '","State34":"' + resultObject.State34 + '","State35":"' + resultObject.State35 + '"}');
+            map.set(resultObject.PatientPin, '{"PatientPin":' + resultObject.PatientPin
+                + ',"DateStarted":"' + resultObject.DateStarted + '","State0":"' + resultObject.State0
+                + '","State1":"' + resultObject.State1 + '","State2":"' + resultObject.State2
+                + '","State3":"' + resultObject.State3 + '","State4":"' + resultObject.State4
+                + '","State5":"' + resultObject.State5 + '","State6":"' + resultObject.State6
+                + '","State7":"' + resultObject.State7 + '","State8":"' + resultObject.State8
+                + '","State9":"' + resultObject.State9 + '","State10":"' + resultObject.State10
+                + '","State11":"' + resultObject.State11 + '","State12":"' + resultObject.State12
+                + '","State13":"' + resultObject.State13 + '","State14":"' + resultObject.State14
+                + '","State15":"' + resultObject.State15 + '","State16":"' + resultObject.State16
+                + '","State17":"' + resultObject.State17 + '","State18":"' + resultObject.State18
+                + '","State19":"' + resultObject.State19 + '","State20":"' + resultObject.State20
+                + '","State21":"' + resultObject.State21 + '","State22":"' + resultObject.State22
+                + '","State23":"' + resultObject.State23 + '","State24":"' + resultObject.State24
+                + '","State25":"' + resultObject.State25 + '","State26":"' + resultObject.State26
+                + '","State27":"' + resultObject.State27 + '","State28":"' + resultObject.State28
+                + '","State29":"' + resultObject.State29 + '","State30":"' + resultObject.State30
+                + '","State31":"' + resultObject.State31 + '","State32":"' + resultObject.State32
+                + '","State33":"' + resultObject.State33 + '","State34":"' + resultObject.State34
+                + '","State35":"' + resultObject.State35 + '"}');
         }
     }
-    map.forEach(function (value, key) {
+    map.forEach((value, key) => {
         resultSet.push(JSON.parse(value));
     });
-      // console.log(resultSet);
+    console.log(resultSet);
+
     return resultSet;
 }
 
-// Function determineStatus to get convert the State in the database to the Y/N State required in the CSV
+/**
+ * Determine status
+ * @param {string} status as a string.
+ * @returns {string} status in terms of required csv format.
+ */
 function determineStatus (status) {
     if (status === 'completed') {
         return 'Y';

@@ -34,7 +34,8 @@ function deactivatePatient (request, reply) {
         ),
           database.sequelize.query(
               `
-              DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 1 DAY) AND PatientPinFk = ?
+              DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 1 DAY)
+              AND PatientPinFk = ?
               AND activityTitle = 'Sickle Cell Daily Survey'
               `, {
                   type: database.sequelize.QueryTypes.UPDATE,
@@ -48,7 +49,8 @@ function deactivatePatient (request, reply) {
         ),
           database.sequelize.query(
               `
-              DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 7 DAY) AND PatientPinFk = ?
+              DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 7 DAY)
+              AND PatientPinFk = ?
               AND activityTitle = 'Sickle Cell Weekly Survey'
               `, {
                   type: database.sequelize.QueryTypes.UPDATE,
@@ -61,7 +63,7 @@ function deactivatePatient (request, reply) {
               }
         )
       ])
-      .then(function () {
+      .then(() => {
           return reply();
       }).catch((err) => {
           request.log('error', err);
@@ -90,8 +92,10 @@ function deactivatePatient (request, reply) {
       ),
           database.sequelize.query(
           `
-          DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 1 DAY) AND PatientPinFk
-          IN (?, (SELECT PatientPin FROM patients WHERE ParentPinFK = ?)) and activityTitle = 'Sickle Cell Daily Survey'
+          DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 1 DAY)
+          AND PatientPinFk
+          IN (?, (SELECT PatientPin FROM patients WHERE ParentPinFK = ?))
+          AND activityTitle = 'Sickle Cell Daily Survey'
           `, {
               type: database.sequelize.QueryTypes.UPDATE,
               replacements: [
@@ -105,8 +109,10 @@ function deactivatePatient (request, reply) {
       ),
           database.sequelize.query(
           `
-          DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 7 DAY) AND PatientPinFk
-          IN (?, (SELECT PatientPin FROM patients WHERE ParentPinFK = ?)) and activityTitle = 'Sickle Cell Weekly Survey'
+          DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 7 DAY)
+          AND PatientPinFk
+          IN (?, (SELECT PatientPin FROM patients WHERE ParentPinFK = ?))
+          AND activityTitle = 'Sickle Cell Weekly Survey'
           `, {
               type: database.sequelize.QueryTypes.UPDATE,
               replacements: [
@@ -119,7 +125,7 @@ function deactivatePatient (request, reply) {
           }
       )
       ])
-      .then(function () {
+      .then(() => {
           return reply();
       }).catch((err) => {
           request.log('error', err);

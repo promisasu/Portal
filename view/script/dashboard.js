@@ -1,6 +1,5 @@
+'use strict';
 (function dashboard () {
-    'use strict';
-
     var nameColumn = 0;
     var table = $('#trials').DataTable({order: [nameColumn, 'desc']});
     var strategy = filterStrategyFactory();
