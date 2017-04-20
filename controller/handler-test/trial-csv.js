@@ -12,7 +12,7 @@ test.cb('when trial has no patients', (t) => {
 
     query.returns(Promise.resolve([]));
 
-    const patientCSV = proxyquire('../handler/trial-csv', {
+    const trialCSV = proxyquire('../handler/trial-csv', {
         boom: sinon.stub(),
         '../../model': {
             sequelize: {query, QueryTypes}
@@ -23,16 +23,15 @@ test.cb('when trial has no patients', (t) => {
         log: sinon.stub(),
         params: {
             pin: 1
-        }
+        },
+        path: '/trial/2-weekly.csv'
     };
 
     const reply = (data) => {
         t.is(
             data,
-            'Trial Name,Patient Pin,Patient Date Started,Patient Date Completed'
-            + ',Survey Name,Survey ID,Question ID,Question Prompt,Question'
-            + ' Answer\n',
-            'it should show the headers with no data'
+            'Patient Pin,Date Started,0,1,2,3,4,5\n',
+            'it should return headers'
         );
 
         return {
@@ -43,7 +42,7 @@ test.cb('when trial has no patients', (t) => {
         };
     };
 
-    patientCSV(request, reply);
+    trialCSV(request, reply);
 });
 
 test.cb('when trial does not exist', (t) => {
@@ -51,7 +50,7 @@ test.cb('when trial does not exist', (t) => {
 
     query.returns(Promise.reject([]));
 
-    const patientCSV = proxyquire('../handler/trial-csv', {
+    const trialCSV = proxyquire('../handler/trial-csv', {
         '../../model': {
             sequelize: {query, QueryTypes}
         }
@@ -61,7 +60,8 @@ test.cb('when trial does not exist', (t) => {
         log: sinon.stub(),
         params: {
             pin: Number.NaN
-        }
+        },
+        path: '/trial/2-weekly.csv'
     };
 
     const reply = (data) => {
@@ -69,5 +69,5 @@ test.cb('when trial does not exist', (t) => {
         t.end();
     };
 
-    patientCSV(request, reply);
+    trialCSV(request, reply);
 });
