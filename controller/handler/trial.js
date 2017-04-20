@@ -93,9 +93,23 @@ function trialView (request, reply) {
                         startDate.toISOString()
                     ]
                 }
+            ),
+            database.sequelize.query(
+              `
+              SELECT State, EndTime, PatientPinFK
+              FROM activity_instance
+              WHERE activityTitle = 'Sickle Cell Weekly Survey'
+              AND EndTime > DATE_SUB(now(),INTERVAL 8 DAY)
+              AND EndTime <= now()
+              ORDER BY EndTime
+              DESC
+              `,
+                {
+                    type: database.sequelize.QueryTypes.SELECT
+                }
             )
         ])
-        .then(([currentTrial, stages, patients, compliance]) => {
+        .then(([currentTrial, stages, patients, compliance, missedLastWeek]) => {
             const rules = [];
 
             if (!currentTrial) {
@@ -111,6 +125,23 @@ function trialView (request, reply) {
                 const patientStatus = patientStatuses.find((status) => {
                     return status.PatientPin === patient.PatientPin;
                 });
+
+                let missedWeekly = missedLastWeek.find((missed) => {
+
+                    return missed.PatientPinFK === patient.PatientPin;
+                });
+
+                if (missedWeekly) {
+                    if (typeof patient.lastWeekly === 'undefined') {
+                        if (missedWeekly.State === 'expired') {
+                            patient.lastWeekly = 'Missed';
+                        } else if (missedWeekly.State === 'completed') {
+                            patient.lastWeekly = 'Taken';
+                        }
+                    }
+                } else {
+                    patient.lastWeekly = ' ---- ';
+                }
 
                 // collect the compliance status as well as expiredCount
                 if (patientStatus) {
