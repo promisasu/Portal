@@ -43,6 +43,11 @@ function processSurveyInstances (surveys) {
 
     labels.push(moment(endDateforChart).format(viewDateFormat));
 
+    console.log("Scores Chart");
+    for (var i = 0; i < datasets.length; i++) {
+      console.log(datasets[i].data);
+    }
+
     return {
         labels: labels,
         datasets: datasets
@@ -168,9 +173,9 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
  * @param {Array<Object>} bodyPainResults - list of body pain questions answered
  * @returns {Array<Object>} data for the chart
  */
-function processClinicanData (surveys, surveyDetails, bodyPainResults) {
+function processClinicanData (surveys, surveyDetails, bodyPainResults, opioidResults) {
     // console.log('In clinician data');
-    let datasets = pickClinicianDataset(surveys, surveyDetails, bodyPainResults);
+    let datasets = pickClinicianDataset(surveys, surveyDetails, bodyPainResults, opioidResults);
 
     // console.log(datasets);
     let labels = surveys.map((survey) => {
@@ -200,13 +205,12 @@ let white = 'rgba(255,255,255, 0.9)';
  * @param {Array<Object>} bodyPainResults - list of body pain answers
  * @returns {Array<Object>} data for the chart
  */
-function pickClinicianDataset (surveys, surveyDetails, bodyPainResults) {
+function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidResults) {
     let dataPoints = [];
     let datasets = [];
-
     dataPoints.push({
         label: 'Opoid Equivalance',
-        data: getOpoidEquivivalance(surveys),
+        data: getOpoidEquivivalance(opioidResults),
         color: pink
     });
     dataPoints.push({
@@ -221,9 +225,10 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults) {
     });
     dataPoints.push({
         label: 'Opoid Threshold',
-        data: getOpioidThreshold(surveys),
+        data: getOpioidThreshold(opioidResults),
         color: blue
     });
+    console.log("GOnna return Datasets");
     for (let i = 0; i < dataPoints.length; i++) {
         datasets.push({
             label: dataPoints[i].label,
@@ -238,9 +243,17 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults) {
         });
         if (dataPoints[i].label === 'Opoid Threshold') {
             datasets[i].borderDash = [10, 5];
+            datasets[i].pointBorderWidth = 0;
+            datasets[i].radius = 0;
+            delete datasets[i].pointBorderColor;
+            delete datasets[i].pointBackgroundColor;
+            delete datasets[i].pointBorderWidth;
         }
     }
-
+    console.log("Clinician Chart");
+    for (var i = 0; i < datasets.length; i++) {
+      console.log(datasets[i].data);
+    }
     return datasets;
 }
 
@@ -249,20 +262,8 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults) {
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getOpoidEquivivalance (surveys) {
-    let data = [];
-    let labels = surveys.map((survey) => {
-        return moment(survey.StartTime).format(viewDateFormat);
-    });
-
-    for (let i = 0; i < labels.length; i++) {
-        data.push({
-            x: labels[i],
-            y: i * 2
-        });
-    }
-
-    return data;
+function getOpoidEquivivalance (opioidResults) {
+  return calculateScores.opioidResultsCalculation(opioidResults);
 }
 
 /**
@@ -279,20 +280,8 @@ function getPromisScore (surveyDetails) {
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getOpioidThreshold (surveys) {
-    let data = [];
-    let labels = surveys.map((survey) => {
-        return moment(survey.StartTime).format(viewDateFormat);
-    });
-
-    for (let i = 0; i < labels.length; i++) {
-        data.push({
-            x: labels[i],
-            y: 50
-        });
-    }
-
-    return data;
+function getOpioidThreshold (opioidResults) {  
+  return calculateScores.opioidThresholdCalculation(opioidResults);
 }
 
 /**
@@ -342,7 +331,6 @@ function getPainIntensity (bodyPainResults) {
             resultSet.push(result);
         }
     }
-
     return resultSet;
 }
 

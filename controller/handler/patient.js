@@ -98,6 +98,34 @@ function patientView (request, reply) {
                 }
             ),
             database.sequelize.query(
+              `
+              SELECT ai.PatientPinFK as pin, ai.activityTitle as name,
+               ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id,
+               act.questionIdFk as questionId, act.questionOptionIdFk as optionId,
+               ans.OptionText as optionText, act.dosage, que.SurveyBlockIdFk as questionType,
+               ai.StartTime as StartTime, ans.likertScale as likertScale, pi.type as patientType, mi.prescribedDosage, mi.noOfTablets as prescribedNoOfTablets
+               FROM question_result act
+               JOIN questions que
+               ON act.questionIdFk = que.QuestionId
+               JOIN question_options ans
+               ON act.questionOptionIdFk = ans.QuestionOptionId
+               JOIN activity_instance ai
+               ON act.ActivityInstanceIdFk = ai.ActivityInstanceId
+               JOIN patients pi
+               ON ai.PatientPinFK = pi.PatientPin
+               JOIN medication_information mi
+               ON mi.PatientPINFK = ai.PatientPinFK and mi.MedicationName = ans.optionText
+               WHERE act.ActivityInstanceIdFk
+               IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ?
+               and State='completed' and ai.activityTitle='Sickle Cell Daily Survey');
+                `, {
+                    type: database.sequelize.QueryTypes.SELECT,
+                    replacements: [
+                        request.params.pin
+                    ]
+                }
+            ),
+            database.sequelize.query(
                 `
                 SELECT ai.PatientPinFK as pin, ai.activityTitle as name,
                 ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id,
@@ -126,14 +154,15 @@ function patientView (request, reply) {
             )
 
         ])
-        .then(([currentPatient, surveyInstances, currentTrial, surveyResults, bodyPainResults]) => {
+        .then(([currentPatient, surveyInstances, currentTrial, surveyResults,opioidResults, bodyPainResults]) => {
             let dataChart = processSurveyInstances(surveyInstances);
-
+            // console.log("Logging opioidResults");
+            // console.log(opioidResults);
             if (!currentPatient) {
                 throw new Error('patient does not exist');
             }
             let clinicalValuesChart = processSurveyInstances.processClinicanData(
-                surveyInstances, surveyResults, bodyPainResults
+                surveyInstances, surveyResults, bodyPainResults,opioidResults
                 );
 
             return reply.view('patient', {

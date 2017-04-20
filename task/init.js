@@ -124,7 +124,7 @@ read({
 })
 .then((tramadol) => {
     config.opioid = {};
-    config.opioid.tramadol = parseFloat(tramadol);
+    config.opioid.Tramadol = parseFloat(tramadol);
 
     return read({
         prompt: 'Opioid conversion factor for Oxycodone:',
@@ -132,7 +132,7 @@ read({
     });
 })
 .then((oxycodone) => {
-    config.opioid.oxycodone = parseFloat(oxycodone);
+    config.opioid.Oxycodone = parseFloat(oxycodone);
 
     return read({
         prompt: 'Opioid conversion factor for Hydromorphone:',
@@ -140,7 +140,7 @@ read({
     });
 })
 .then((hydromorphone) => {
-    config.opioid.hydromorphone = parseFloat(hydromorphone);
+    config.opioid.Dilaudid = parseFloat(hydromorphone);
 
     // Gotta get rid of these dependencies in the near future
     config.api = {};
