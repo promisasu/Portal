@@ -16,14 +16,16 @@ function deduplicate (rows, properties) {
 
     return copyOfRows.map((row) => {
         for (const property of properties) {
-            if (property === 'date'){
-                row[property] = String(row[property]); //Used to facilitate the comparison of the date coming from the database with the date in current[property]
+            if (property === 'date') {
+                /* Used to facilitate the comparison of the date coming from
+                the database with the date in current[property] */
+                row[property] = String(row[property]);
             }
             if (row[property] === current[property]) {
-                console.log("Inside if");
+                // console.log("Inside if");
                 row[property] = '';
             } else {
-                console.log("Inside else");
+                // console.log("Inside else");
                 current[property] = row[property];
             }
         }
