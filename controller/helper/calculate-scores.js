@@ -414,5 +414,10 @@ function convertToTScore() {
 }
 
 module.exports = {
-    calculatePromisScores: calculatePromisScores
+    calculatePromisScores: calculatePromisScores,
+    calculatePR_Fatigue: calculatePR_Fatigue,
+    calculatePR_Anxiety: calculatePR_Anxiety,
+    calculatePR_PhyFuncMob: calculatePR_PhyFuncMob,
+    calculatePR_PainInt,
+    calculatePR_PainInt
 };
