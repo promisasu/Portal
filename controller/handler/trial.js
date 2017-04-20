@@ -20,10 +20,7 @@ const httpNotFound = 404;
  */
 function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
-    const stage = database.sequelize.model('stage');
     const startDate = moment('2016-11-23');
-
-    console.log('req params - ' + request.params.id);
 
     Promise
         .all([
@@ -31,7 +28,8 @@ function trialView (request, reply) {
             database.sequelize.query(
                 `
                 SELECT StageId, Name, CreatedAt, UpdatedAt, DeletedAt, TrialId
-                FROM stage AS stage WHERE stage.DeletedAt IS NULL
+                FROM stage AS stage
+                WHERE stage.DeletedAt IS NULL
                 AND stage.TrialId = ?
                 `,
                 {
@@ -62,15 +60,30 @@ function trialView (request, reply) {
             database.sequelize.query(
                 `
                 SELECT pa.PatientPin,
-                SUM(si.State = 'expired') AS expiredCount,
-                SUM(si.State = 'completed') AS completedCount
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Weekly Survey') AS expiredWeeklyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Weekly Survey') AS completedWeeklyCount,
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Daily Survey') AS expiredDailyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Daily Survey') AS completedDailyCount,
+                SUM(si.State = 'pending') AS pendingCount,
+                SUM(si.State = 'DEACTIVATED') AS deactivatedCount,
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Weekly Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS expiredTrendingWeeklyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Weekly Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS completedTrendingWeeklyCount,
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Daily Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS expiredTrendingDailyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Daily Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS completedTrendingDailyCount
                 FROM activity_instance AS si
                 JOIN patients AS pa
                 ON pa.PatientPin = si.PatientPinFK
                 JOIN stage AS st
                 ON st.StageId = pa.StageIdFK
                 WHERE st.TrialId = ?
-                AND si.EndTime > ?
                 GROUP BY pa.PatientPin
                 `,
                 {
@@ -94,21 +107,19 @@ function trialView (request, reply) {
             const complianceCount = processComplianceCount(compliance);
             const patientCount = patients.length;
             const patientStatuses = compliance.map(processPatientStatus);
-
             const patientArray = patients.map((patient) => {
-                  // check for patient's status
-
                 const patientStatus = patientStatuses.find((status) => {
                     return status.PatientPin === patient.PatientPin;
                 });
 
                 // collect the compliance status as well as expiredCount
                 if (patientStatus) {
+                    patient.trialStatus = patientStatus.trialStatus;
                     patient.status = patientStatus.status;
-                    patient.totalMissed = patientStatus.expiredCount;
+                    patient.compliancePercentage = patientStatus.compliancePercentage;
+                    patient.trendingCompliance = patientStatus.trendingCompliance;
                 } else {
                     patient.status = 'Pending';
-                    patient.totalMissed = 0;
                 }
                 patient.DateStarted = moment(patient.DateStarted)
                     .format('MM-DD-YYYY');

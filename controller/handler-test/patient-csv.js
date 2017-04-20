@@ -29,7 +29,7 @@ test.cb('when patient has no surveys', (t) => {
     const reply = (data) => {
         t.is(
             data,
-            'Patient Pin,Survey Title/Type,Survey Activity Id,Date Survey Completed,Question Id,Question,Answer\n',
+            'Patient Pin,Survey Title/Type,Survey Activity Id,Date Survey Completed,Question Id,Question,Answer,Dosage,Value\n',
             'it should show the headers with no data'
         );
 

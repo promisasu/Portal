@@ -107,10 +107,10 @@
                                     Patient Pin
                                 </th>
                                 <th>
-                                    Compliance Status
+                                    Trial Status
                                 </th>
                                 <th>
-                                    Stage
+                                    Compliance Status
                                 </th>
                                 <th>
                                     Start
@@ -119,7 +119,10 @@
                                     End
                                 </th>
                                 <th>
-                                    Total Missed
+                                    Compliance Percentage
+                                </th>
+                                <th>
+                                    Compliance Percentage This Past Week
                                 </th>
                             </tr>
                         </thead>
@@ -147,10 +150,10 @@
                                         </a>
                                     </td>
                                     <td>
-                                        {{ status }}
+                                        {{ trialStatus }}
                                     </td>
                                     <td>
-                                        {{ stage }}
+                                        {{ status }}
                                     </td>
                                     <td>
                                         {{ DateStarted }}
@@ -159,7 +162,10 @@
                                         {{ DateCompleted }}
                                     </td>
                                     <td>
-                                        {{ totalMissed }}
+                                        {{ compliancePercentage }}
+                                    </td>
+                                    <td>
+                                        {{ trendingCompliance }}
                                     </td>
                                 </tr>
                             {{/each}}

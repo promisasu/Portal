@@ -43,6 +43,16 @@ const configuration = [
         label: 'Answer',
         key: 'optionText',
         default: ''
+    },
+    {
+        label: 'Dosage',
+        key: 'dosage',
+        default: ''
+    },
+    {
+        label: 'Value',
+        key: 'Value',
+        default: ''
     }
 ];
 
@@ -57,7 +67,7 @@ function patientCSV (request, reply) {
         `
         SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date,
         act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, que.QuestionText as questionText,
-        act.questionOptionIdFk as optionId, ans.OptionText as optionText
+        act.questionOptionIdFk as optionId, ans.OptionText as optionText, act.dosage, act.Value
         FROM question_result act
         JOIN questions que
         ON act.questionIdFk = que.QuestionId
