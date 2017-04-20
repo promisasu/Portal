@@ -34,15 +34,15 @@
             "required": false,
             "additionalProperties": true,
             "properties": {
-                "tramadol": {
+                "Tramadol": {
                     "type": "float",
                     "required": true
                 },
-                "oxycodone": {
+                "Oxycodone": {
                     "type": "float",
                     "required": true
                 },
-                "hydromorphone": {
+                "Dilaudid": {
                     "type": "float",
                     "required": true
                 }
