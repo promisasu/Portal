@@ -170,7 +170,7 @@ function opioidThresholdCalculation(opioidResults){
     //console.log(oxy + tra + dil);
     var returnArr = [];
     for (var i = 0; i < opioidResults.length; i++) {
-      returnArr.push({'y':oxy + tra + dil});
+      returnArr.push(50);
     }
     return returnArr;
 }
@@ -186,6 +186,9 @@ function isInt (value) {
         return (x | 0) === x;
     })(parseFloat(value));
 }
+
+
+
 
 module.exports = {
     calculatePromisScores: calculatePromisScores,

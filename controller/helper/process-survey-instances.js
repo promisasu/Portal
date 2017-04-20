@@ -114,8 +114,8 @@ function pickTimeLeft (surveys) {
                 backgroundColor: getRGBA(),
                 borderColor: getRGBA(),
                 pointBorderColor: getRGBA(),
-                pointBorderWidth: 10,
-                pointRadius: 10,
+                pointBorderWidth: 5,
+                pointRadius: 5,
                 data: dataPoints,
                 dates: dates
             };
@@ -175,9 +175,6 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
  */
 function processClinicanData (surveys, surveyDetails, bodyPainResults, opioidResults) {
     // console.log('In clinician data');
-    let datasets = pickClinicianDataset(surveys, surveyDetails, bodyPainResults, opioidResults);
-
-    // console.log(datasets);
     let labels = surveys.map((survey) => {
         return moment(survey.StartTime).format(viewDateFormat);
     });
@@ -185,6 +182,10 @@ function processClinicanData (surveys, surveyDetails, bodyPainResults, opioidRes
     const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
 
     labels.push(moment(endDateforChart).format(viewDateFormat));
+
+    let datasets = pickClinicianDataset(surveys, surveyDetails, bodyPainResults, opioidResults, labels);
+
+    // console.log(datasets);
 
     return {
         labels: labels,
@@ -205,29 +206,34 @@ let white = 'rgba(255,255,255, 0.9)';
  * @param {Array<Object>} bodyPainResults - list of body pain answers
  * @returns {Array<Object>} data for the chart
  */
-function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidResults) {
+function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidResults, labels) {
     let dataPoints = [];
     let datasets = [];
+    console.log("Here1");
     dataPoints.push({
         label: 'Opoid Equivalance',
-        data: getOpoidEquivivalance(opioidResults),
+        data: getOpoidEquivivalance(opioidResults,labels),
         color: pink
     });
+    console.log("Here1");
     dataPoints.push({
         label: 'Promis Score',
-        data: getPromisScore(surveyDetails),
+        data: getPromisScore(surveyDetails,labels),
         color: green
     });
+    console.log("Here1");
     dataPoints.push({
         label: 'Pain Intensity',
-        data: getPainIntensity(bodyPainResults),
+        data: getPainIntensity(bodyPainResults,labels),
         color: yellow
     });
+    console.log("Here1");
     dataPoints.push({
         label: 'Opoid Threshold',
         data: getOpioidThreshold(opioidResults),
         color: blue
     });
+    console.log("Here1");
     console.log("GOnna return Datasets");
     for (let i = 0; i < dataPoints.length; i++) {
         datasets.push({
@@ -237,9 +243,10 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidRe
             borderColor: dataPoints[i].color,
             pointBorderColor: dataPoints[i].color,
             pointBackgroundColor: white,
-            pointBorderWidth: 10,
-            pointRadius: 10,
-            data: dataPoints[i].data
+            pointBorderWidth: 5,
+            pointRadius: 5,
+            data: dataPoints[i].data,
+            spanGaps: true
         });
         if (dataPoints[i].label === 'Opoid Threshold') {
             datasets[i].borderDash = [10, 5];
@@ -248,6 +255,7 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidRe
             delete datasets[i].pointBorderColor;
             delete datasets[i].pointBackgroundColor;
             delete datasets[i].pointBorderWidth;
+            delete datasets[i].pointRadius;
         }
     }
     console.log("Clinician Chart");
@@ -262,8 +270,8 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidRe
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getOpoidEquivivalance (opioidResults) {
-  return calculateScores.opioidResultsCalculation(opioidResults);
+function getOpoidEquivivalance (opioidResults,labels) {
+  return createMultiLinePoints(calculateScores.opioidResultsCalculation(opioidResults),labels);
 }
 
 /**
@@ -271,8 +279,9 @@ function getOpoidEquivivalance (opioidResults) {
  * @param {Array<Object>} surveyDetails - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getPromisScore (surveyDetails) {
-    return calculateScores.calculatePromisScores(surveyDetails);
+function getPromisScore (surveyDetails, labels) {
+    let promisScores = calculateScores.calculatePromisScores(surveyDetails);
+    return createMultiLinePoints(promisScores,labels);
 }
 
 /**
@@ -280,7 +289,7 @@ function getPromisScore (surveyDetails) {
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getOpioidThreshold (opioidResults) {  
+function getOpioidThreshold (opioidResults) {
   return calculateScores.opioidThresholdCalculation(opioidResults);
 }
 
@@ -289,7 +298,7 @@ function getOpioidThreshold (opioidResults) {
  * @param {Array<Object>} bodyPainResults - list of body pain answers
  * @returns {Array<Object>} data for the chart
  */
-function getPainIntensity (bodyPainResults) {
+function getPainIntensity (bodyPainResults, labels) {
     let singleBodyPainAnswer = {};
     let instanceId = '';
     let resultSet = [];
@@ -331,7 +340,44 @@ function getPainIntensity (bodyPainResults) {
             resultSet.push(result);
         }
     }
-    return resultSet;
+    return createMultiLinePoints(resultSet,labels);
+    // return resultSet;
+}
+
+function createMultiLinePoints(data,labels){
+  console.log(data);
+  console.log(labels);
+  let returnData = [];
+  var j=0;
+  for (var i = 0; i < labels.length; i++) {
+      if (data[j] && labels[i] == data[j].x && j > -1) {
+          returnData.push(data[j].y);
+          if (j == data.length) {
+            j = -1;
+          } else {
+            j += 1;
+          }
+      } else {
+          returnData.push(null);
+      }
+    }
+    return normalizeValues(returnData);
+}
+
+function normalizeValues(data){
+    let max = 0;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i]!== null && max < data[i]) {
+        max = data[i];
+      }
+    }
+    let conversionFactor = 100/max;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i]!== null) {
+        data[i] = data[i] * conversionFactor;
+      }
+    }
+    return data;
 }
 
 /**
