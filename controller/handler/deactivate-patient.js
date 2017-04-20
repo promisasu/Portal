@@ -33,6 +33,18 @@ function deactivatePatient (request, reply) {
           }
         ),
           database.sequelize.query(
+          `
+          UPDATE patients SET DateCompleted = ? AND PatientPin = ?
+          `, {
+              type: database.sequelize.QueryTypes.UPDATE,
+              replacements: [
+                  moment().format('YYYY-MM-DD HH:mm:ss'),
+                  request.params.pin
+              ],
+              plain: true
+          }
+        ),
+          database.sequelize.query(
               `
               DELETE FROM activity_instance WHERE State = ? AND EndTime >= DATE_ADD(?, INTERVAL 1 DAY)
               AND PatientPinFk = ?

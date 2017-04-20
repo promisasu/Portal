@@ -119,10 +119,13 @@
                                     End
                                 </th>
                                 <th>
-                                    Compliance Percentage
+                                    Compliance %
                                 </th>
                                 <th>
-                                    Compliance Percentage This Past Week
+                                    Compliance % Last Week
+                                </th>
+                                <th>
+                                    Last Weekly
                                 </th>
                             </tr>
                         </thead>
@@ -166,6 +169,9 @@
                                     </td>
                                     <td>
                                         {{ trendingCompliance }}
+                                    </td>
+                                    <td>
+                                        {{ lastWeekly }}
                                     </td>
                                 </tr>
                             {{/each}}
