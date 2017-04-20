@@ -198,6 +198,10 @@ let green = 'rgba(122, 198,150, 1)';
 let yellow = 'rgba(182, 29,57, 1)';
 let blue = 'rgba(2, 117,216, 0.6)';
 let white = 'rgba(255,255,255, 0.9)';
+let darkBrown = 'rgba(101,56,33, 1)';
+let gray = 'rgba(76,76,76, 1)';
+let violet = 'rgba(119,65,119, 1)';
+
 
 /**
  * Takes in a Survey Instances and processes to get opioid equivalence
@@ -209,12 +213,26 @@ let white = 'rgba(255,255,255, 0.9)';
 function pickClinicianDataset(surveys, surveyDetails, bodyPainResults, opioidResults, labels) {
     let dataPoints = [];
     let datasets = [];
-    console.log("Here1");
-    // dataPoints.push({
-    //     label: 'Anxiety',
-    //     data: getPRAnxietyScore(surveyDetails, labels),
-    //     color: darkPink
-    // });
+    dataPoints.push({
+        label: 'PR Anxiety',
+        data: getPRAnxietyScore(surveyDetails, labels),
+        color: darkPink
+    });
+    dataPoints.push({
+        label: 'PR Physical',
+        data: getPRPhysicalFunc(surveyDetails, labels),
+        color: darkBrown
+    });
+    dataPoints.push({
+        label: 'PR Fatigue',
+        data: getPRFatigue(surveyDetails, labels),
+        color: gray
+    });
+    dataPoints.push({
+        label: 'PR Pain Intensity',
+        data: getPRPainIntensity(surveyDetails, labels),
+        color: violet
+    });
     dataPoints.push({
         label: 'Opoid Equivalance',
         data: getOpoidEquivivalance(opioidResults, labels),
