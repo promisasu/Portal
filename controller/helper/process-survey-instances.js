@@ -15,7 +15,7 @@ const viewDateFormat = 'MM-DD-YYYY HH:mm';
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Object} Complience chart data
  */
-function processSurveyInstances(surveys) {
+function processSurveyInstances (surveys) {
     console.log('In process surbey instances');
     const filterSurveyByState = surveys.filter((survey) => {
         return survey.state === 'completed';
@@ -54,7 +54,7 @@ function processSurveyInstances(surveys) {
  * @param {Object} surveys - list of survey instances
  * @returns {Object} processed list of datetimes
  */
-function pickDates(surveys) {
+function pickDates (surveys) {
     const dates = surveys.map((survey) => {
         return moment(survey.StartTime).format(viewDateFormat);
     });
@@ -76,7 +76,7 @@ function pickDates(surveys) {
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Object} processed list of % time left data
  */
-function pickTimeLeft(surveys) {
+function pickTimeLeft (surveys) {
     let surveySet = new Set();
 
     for (let i = 0; i < surveys.length; i++) {
@@ -126,7 +126,7 @@ function pickTimeLeft(surveys) {
  * Generates and returns random colors
  * @returns {Object} processed list of datetimes
  */
-function getRGBA() {
+function getRGBA () {
     let red = Math.floor(Math.random() * 255) + 1;
     let green = Math.floor(Math.random() * 255) + 1;
     let blue = Math.floor(Math.random() * 255) + 1;
@@ -141,7 +141,7 @@ function getRGBA() {
  * @param {Moment} completedTime - When the survey instance was actually completed
  * @returns {Number} percent time left after completing survey instance
  */
-function calculateTimeLeft(openTime, endTime, completedTime) {
+function calculateTimeLeft (openTime, endTime, completedTime) {
     const percent = 100;
     const minTime = 0;
 
@@ -168,7 +168,7 @@ function calculateTimeLeft(openTime, endTime, completedTime) {
  * @param {Array<Object>} bodyPainResults - list of body pain questions answered
  * @returns {Array<Object>} data for the chart
  */
-function processClinicanData(surveys, surveyDetails, bodyPainResults) {
+function processClinicanData (surveys, surveyDetails, bodyPainResults) {
     // console.log('In clinician data');
     let datasets = pickClinicianDataset(surveys, surveyDetails, bodyPainResults);
 
@@ -197,9 +197,10 @@ let white = 'rgba(255,255,255, 0.9)';
  * Takes in a Survey Instances and processes to get opioid equivalence
  * @param {Array<Object>} surveys - list of survey instances
  * @param {Array<Object>} surveyDetails - list of survey instances
+ * @param {Array<Object>} bodyPainResults - list of body pain answers
  * @returns {Array<Object>} data for the chart
  */
-function pickClinicianDataset(surveys, surveyDetails, bodyPainResults) {
+function pickClinicianDataset (surveys, surveyDetails, bodyPainResults) {
     let dataPoints = [];
     let datasets = [];
 
@@ -248,7 +249,7 @@ function pickClinicianDataset(surveys, surveyDetails, bodyPainResults) {
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getOpoidEquivivalance(surveys) {
+function getOpoidEquivivalance (surveys) {
     let data = [];
     let labels = surveys.map((survey) => {
         return moment(survey.StartTime).format(viewDateFormat);
@@ -269,7 +270,7 @@ function getOpoidEquivivalance(surveys) {
  * @param {Array<Object>} surveyDetails - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getPromisScore(surveyDetails) {
+function getPromisScore (surveyDetails) {
     return calculateScores.calculatePromisScores(surveyDetails);
 }
 
@@ -278,7 +279,7 @@ function getPromisScore(surveyDetails) {
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getOpioidThreshold(surveys) {
+function getOpioidThreshold (surveys) {
     let data = [];
     let labels = surveys.map((survey) => {
         return moment(survey.StartTime).format(viewDateFormat);
@@ -295,51 +296,54 @@ function getOpioidThreshold(surveys) {
 }
 
 /**
- * Takes in a Survey Instances and processes to get pain intensity
- * @param {Array<Object>} surveys - list of survey instances
+ * Takes in set of body pain answers and processes to get pain intensity
+ * @param {Array<Object>} bodyPainResults - list of body pain answers
  * @returns {Array<Object>} data for the chart
  */
-function getPainIntensity(bodyPainResults) {
-  let singleBodyPainAnswer = {};
-  let instanceId = '';
-  let resultSet = [];
-  bodyPainResults.forEach((result) => {
-      // console.log(result);
-      let temp = {
-          questionId: result.questionId,
-          optionId: result.optionId,
-          optionText: result.optionText,
-          questionType: result.questionType,
-          StartTime: result.StartTime,
-          patientType: result.patientType
-      };
+function getPainIntensity (bodyPainResults) {
+    let singleBodyPainAnswer = {};
+    let instanceId = '';
+    let resultSet = [];
 
-      if (typeof singleBodyPainAnswer[result.id] === 'undefined') {
-          singleBodyPainAnswer[result.id] = [temp];
-      } else {
-          singleBodyPainAnswer[result.id].push(temp);
-      }
-  });
-  for (let activityInstanceId in singleBodyPainAnswer) {
-      if (singleBodyPainAnswer.hasOwnProperty(activityInstanceId)) {
-          let result = {
-              x: '',
-              y: 0
-          };
-          let bodyPainScore = 0;
-          let date = new Date();
-          singleBodyPainAnswer[activityInstanceId].forEach((answer) => {
-              date = moment(answer.StartTime).format(viewDateFormat);
-              if (isInt(answer.optionText)) {
-                  bodyPainScore = parseInt(answer.optionText);
-              }
-          });
-          result.x = date;
-          result.y = bodyPainScore;
-          resultSet.push(result);
-      }
-  }
-  return resultSet;
+    bodyPainResults.forEach((result) => {
+        // console.log(result);
+        let temp = {
+            questionId: result.questionId,
+            optionId: result.optionId,
+            optionText: result.optionText,
+            questionType: result.questionType,
+            StartTime: result.StartTime,
+            patientType: result.patientType
+        };
+
+        if (typeof singleBodyPainAnswer[result.id] === 'undefined') {
+            singleBodyPainAnswer[result.id] = [temp];
+        } else {
+            singleBodyPainAnswer[result.id].push(temp);
+        }
+    });
+    for (let activityInstanceId in singleBodyPainAnswer) {
+        if (singleBodyPainAnswer.hasOwnProperty(activityInstanceId)) {
+            let result = {
+                x: '',
+                y: 0
+            };
+            let bodyPainScore = 0;
+            let date = new Date();
+
+            singleBodyPainAnswer[activityInstanceId].forEach((answer) => {
+                date = moment(answer.StartTime).format(viewDateFormat);
+                if (isInt(answer.optionText)) {
+                    bodyPainScore = parseInt(answer.optionText);
+                }
+            });
+            result.x = date;
+            result.y = bodyPainScore;
+            resultSet.push(result);
+        }
+    }
+
+    return resultSet;
 }
 
 /**
@@ -347,7 +351,7 @@ function getPainIntensity(bodyPainResults) {
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function calculatePromisScore(surveys) {
+function calculatePromisScore (surveys) {
     // Filter out the surveys that you are going to process, eg, Daily or weekly endDateforChart
     // Calculate the promis score for each surveys
     // Calculate the labels for your filtered surveys.
@@ -357,6 +361,11 @@ function calculatePromisScore(surveys) {
     // Return data like so [{x:<label>,y:<value>},{x:<label>,y:<value>}]
 }
 
+/**
+ * Takes in a value and checks whether the value is an integer
+ * @param {Integer} value - to be checked for integer
+ * @returns {Boolean} return true if the number is an integer or false otherwise
+ */
 function isInt (value) {
     return !isNaN(value) && ((x) => {
         return (x | 0) === x;

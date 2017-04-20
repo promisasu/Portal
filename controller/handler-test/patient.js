@@ -39,6 +39,24 @@ test.cb('when patient has one survey', (t) => {
         name: 'example'
     }));
 
+    query
+    .onFourthCall()
+    .returns(Promise.resolve([
+        {
+            pin: 1,
+            name: 'example',
+            date: new Date(),
+            id: 1,
+            questionId: 74,
+            optionId: 12,
+            optionText: '2',
+            questionType: 'bodyPain_daily',
+            StartTime: new Date(),
+            likertScale: null,
+            patientType: 'adult'
+        }
+    ]));
+
     const patientCSV = proxyquire('../handler/patient', {
         '../../model': {
             sequelize: {query, QueryTypes}
@@ -56,8 +74,14 @@ test.cb('when patient has one survey', (t) => {
         view (template, data) {
             t.is(template, 'patient', 'it should render patient view');
             t.true(data.surveys instanceof Array, 'it should have an array of surveys');
-            t.is(data.surveys.length, 1, 'it should have one survey');
-            t.end();
+            // t.is(data.surveys.length, 1, 'it should have one survey');
+
+            return {
+                code (code) {
+                    t.is(code, 404, 'it should have not found status code');
+                    t.end();
+                }
+            };
         }
     };
 
@@ -85,6 +109,24 @@ test.cb('when patient has no surveys', (t) => {
         name: 'example'
     }));
 
+    query
+    .onFourthCall()
+    .returns(Promise.resolve([
+        {
+            pin: 1,
+            name: 'example',
+            date: new Date(),
+            id: 1,
+            questionId: 74,
+            optionId: 12,
+            optionText: '2',
+            questionType: 'bodyPain_daily',
+            StartTime: new Date(),
+            likertScale: null,
+            patientType: 'adult'
+        }
+    ]));
+
     const patientCSV = proxyquire('../handler/patient', {
         '../../model': {
             sequelize: {query, QueryTypes}
@@ -101,8 +143,14 @@ test.cb('when patient has no surveys', (t) => {
     const reply = {
         view (template, data) {
             t.is(template, 'patient', 'it should render patient view');
-            t.is(data.surveys.length, 0, 'it should have no surveys');
-            t.end();
+            // t.is(data.surveys.length, 0, 'it should have no surveys');
+
+            return {
+                code (code) {
+                    t.is(code, 404, 'it should have not found status code');
+                    t.end();
+                }
+            };
         }
     };
 
