@@ -154,7 +154,7 @@ function patientView (request, reply) {
             )
 
         ])
-        .then(([currentPatient, surveyInstances, currentTrial, surveyResults,opioidResults, bodyPainResults]) => {
+        .then(([currentPatient, surveyInstances, currentTrial, surveyResults, opioidResults, bodyPainResults]) => {
             let dataChart = processSurveyInstances(surveyInstances);
             // console.log("Logging opioidResults");
             // console.log(opioidResults);
@@ -162,7 +162,7 @@ function patientView (request, reply) {
                 throw new Error('patient does not exist');
             }
             let clinicalValuesChart = processSurveyInstances.processClinicanData(
-                surveyInstances, surveyResults, bodyPainResults,opioidResults
+                surveyInstances, surveyResults, bodyPainResults, opioidResults
                 );
 
             return reply.view('patient', {

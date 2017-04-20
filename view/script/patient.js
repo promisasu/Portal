@@ -56,7 +56,7 @@
             scales: {
                 yAxes: [{
                     stacked: false,
-                    display: false                    
+                    display: false
                 }]
             }
         }

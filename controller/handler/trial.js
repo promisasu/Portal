@@ -127,7 +127,6 @@ function trialView (request, reply) {
                 });
 
                 let missedWeekly = missedLastWeek.find((missed) => {
-
                     return missed.PatientPinFK === patient.PatientPin;
                 });
 

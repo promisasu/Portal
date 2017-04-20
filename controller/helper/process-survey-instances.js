@@ -15,7 +15,7 @@ const viewDateFormat = 'MM-DD-YYYY HH:mm';
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Object} Complience chart data
  */
-function processSurveyInstances(surveys) {
+function processSurveyInstances (surveys) {
     console.log('In process surbey instances');
     const filterSurveyByState = surveys.filter((survey) => {
         return survey.state === 'completed';
@@ -43,7 +43,7 @@ function processSurveyInstances(surveys) {
 
     labels.push(moment(endDateforChart).format(viewDateFormat));
 
-    console.log("Scores Chart");
+    console.log('Scores Chart');
     for (var i = 0; i < datasets.length; i++) {
         console.log(datasets[i].data);
     }
@@ -59,7 +59,7 @@ function processSurveyInstances(surveys) {
  * @param {Object} surveys - list of survey instances
  * @returns {Object} processed list of datetimes
  */
-function pickDates(surveys) {
+function pickDates (surveys) {
     const dates = surveys.map((survey) => {
         return moment(survey.StartTime).format(viewDateFormat);
     });
@@ -81,7 +81,7 @@ function pickDates(surveys) {
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Object} processed list of % time left data
  */
-function pickTimeLeft(surveys) {
+function pickTimeLeft (surveys) {
     let surveySet = new Set();
 
     for (let i = 0; i < surveys.length; i++) {
@@ -131,7 +131,7 @@ function pickTimeLeft(surveys) {
  * Generates and returns random colors
  * @returns {Object} processed list of datetimes
  */
-function getRGBA() {
+function getRGBA () {
     let red = Math.floor(Math.random() * 255) + 1;
     let green = Math.floor(Math.random() * 255) + 1;
     let blue = Math.floor(Math.random() * 255) + 1;
@@ -146,7 +146,7 @@ function getRGBA() {
  * @param {Moment} completedTime - When the survey instance was actually completed
  * @returns {Number} percent time left after completing survey instance
  */
-function calculateTimeLeft(openTime, endTime, completedTime) {
+function calculateTimeLeft (openTime, endTime, completedTime) {
     const percent = 100;
     const minTime = 0;
 
@@ -173,7 +173,7 @@ function calculateTimeLeft(openTime, endTime, completedTime) {
  * @param {Array<Object>} bodyPainResults - list of body pain questions answered
  * @returns {Array<Object>} data for the chart
  */
-function processClinicanData(surveys, surveyDetails, bodyPainResults, opioidResults) {
+function processClinicanData (surveys, surveyDetails, bodyPainResults, opioidResults) {
     // console.log('In clinician data');
     let labels = surveys.map((survey) => {
         return moment(survey.StartTime).format(viewDateFormat);
@@ -202,7 +202,6 @@ let darkBrown = 'rgba(101,56,33, 1)';
 let gray = 'rgba(76,76,76, 1)';
 let violet = 'rgba(119,65,119, 1)';
 
-
 /**
  * Takes in a Survey Instances and processes to get opioid equivalence
  * @param {Array<Object>} surveys - list of survey instances
@@ -210,7 +209,7 @@ let violet = 'rgba(119,65,119, 1)';
  * @param {Array<Object>} bodyPainResults - list of body pain answers
  * @returns {Array<Object>} data for the chart
  */
-function pickClinicianDataset(surveys, surveyDetails, bodyPainResults, opioidResults, labels) {
+function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidResults, labels) {
     let dataPoints = [];
     let datasets = [];
     dataPoints.push({
@@ -238,26 +237,26 @@ function pickClinicianDataset(surveys, surveyDetails, bodyPainResults, opioidRes
         data: getOpoidEquivivalance(opioidResults, labels),
         color: pink
     });
-    console.log("Here1");
+    console.log('Here1');
     dataPoints.push({
         label: 'Promis Score',
         data: getPromisScore(surveyDetails, labels),
         color: green
     });
-    console.log("Here1");
+    console.log('Here1');
     dataPoints.push({
         label: 'Pain Intensity',
         data: getPainIntensity(bodyPainResults, labels),
         color: yellow
     });
-    console.log("Here1");
+    console.log('Here1');
     dataPoints.push({
         label: 'Opoid Threshold',
         data: getOpioidThreshold(opioidResults),
         color: blue
     });
-    console.log("Here1");
-    console.log("GOnna return Datasets");
+    console.log('Here1');
+    console.log('GOnna return Datasets');
     for (let i = 0; i < dataPoints.length; i++) {
         datasets.push({
             label: dataPoints[i].label,
@@ -281,7 +280,7 @@ function pickClinicianDataset(surveys, surveyDetails, bodyPainResults, opioidRes
             delete datasets[i].pointRadius;
         }
     }
-    console.log("Clinician Chart");
+    console.log('Clinician Chart');
     for (var i = 0; i < datasets.length; i++) {
         console.log(datasets[i].data);
     }
@@ -293,7 +292,7 @@ function pickClinicianDataset(surveys, surveyDetails, bodyPainResults, opioidRes
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getOpoidEquivivalance(opioidResults, labels) {
+function getOpoidEquivivalance (opioidResults, labels) {
     return createMultiLinePoints(calculateScores.opioidResultsCalculation(opioidResults), labels);
 }
 
@@ -302,17 +301,17 @@ function getOpoidEquivivalance(opioidResults, labels) {
  * @param {Array<Object>} surveyDetails - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getPromisScore(surveyDetails, labels) {
+function getPromisScore (surveyDetails, labels) {
     let promisScores = calculateScores.calculatePromisScores(surveyDetails);
     return createMultiLinePoints(promisScores, labels);
 }
 
-function getPRPainIntensity(surveyDetails, labels) {
+function getPRPainIntensity (surveyDetails, labels) {
     let promisScores = calculateScores.calculatePR_PainInt(surveyDetails);
     return createMultiLinePoints(promisScores, labels);
 }
 
-function getPRAnxietyScore(surveyDetails, labels) {
+function getPRAnxietyScore (surveyDetails, labels) {
     let promisScores = calculateScores.calculatePR_Anxiety(surveyDetails);
     console.log('-------------PROMIS SCores -------------');
     console.log(promisScores);
@@ -320,23 +319,22 @@ function getPRAnxietyScore(surveyDetails, labels) {
     return createMultiLinePoints(promisScores, labels);
 }
 
-function getPRPhysicalFunc(surveyDetails, labels) {
+function getPRPhysicalFunc (surveyDetails, labels) {
     let promisScores = calculateScores.calculatePR_PhyFuncMob(surveyDetails);
     return createMultiLinePoints(promisScores, labels);
 }
 
-function getPRFatigue(surveyDetails, labels) {
+function getPRFatigue (surveyDetails, labels) {
     let promisScores = calculateScores.calculatePR_Fatigue(surveyDetails);
     return createMultiLinePoints(promisScores, labels);
 }
-
 
 /**
  * Takes in a Survey Instances and processes to get opioid threshold
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function getOpioidThreshold(opioidResults) {
+function getOpioidThreshold (opioidResults) {
     return calculateScores.opioidThresholdCalculation(opioidResults);
 }
 
@@ -345,7 +343,7 @@ function getOpioidThreshold(opioidResults) {
  * @param {Array<Object>} bodyPainResults - list of body pain answers
  * @returns {Array<Object>} data for the chart
  */
-function getPainIntensity(bodyPainResults, labels) {
+function getPainIntensity (bodyPainResults, labels) {
     let singleBodyPainAnswer = {};
     let instanceId = '';
     let resultSet = [];
@@ -391,7 +389,7 @@ function getPainIntensity(bodyPainResults, labels) {
     // return resultSet;
 }
 
-function createMultiLinePoints(data, labels) {
+function createMultiLinePoints (data, labels) {
     console.log(data);
     console.log(labels);
     let returnData = [];
@@ -415,7 +413,7 @@ function createMultiLinePoints(data, labels) {
     return normalizeValues(returnData);
 }
 
-function normalizeValues(data) {
+function normalizeValues (data) {
     let max = 0;
     for (var i = 0; i < data.length; i++) {
         if (data[i] !== null && max < data[i]) {
@@ -440,7 +438,7 @@ function normalizeValues(data) {
  * @param {Array<Object>} surveys - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
-function calculatePromisScore(surveys) {
+function calculatePromisScore (surveys) {
     // Filter out the surveys that you are going to process, eg, Daily or weekly endDateforChart
     // Calculate the promis score for each surveys
     // Calculate the labels for your filtered surveys.
@@ -455,7 +453,7 @@ function calculatePromisScore(surveys) {
  * @param {Integer} value - to be checked for integer
  * @returns {Boolean} return true if the number is an integer or false otherwise
  */
-function isInt(value) {
+function isInt (value) {
     return !isNaN(value) && ((x) => {
         return (x | 0) === x;
     })(parseFloat(value));
