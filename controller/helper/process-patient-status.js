@@ -23,10 +23,12 @@ function processPatientStatus (row) {
 
     if (row.deactivatedCount > zero) {
         row.trialStatus = 'DEACTIVATED';
+        row.trendingCompliance = ' ---- ';
     } else if (row.pendingCount > zero) {
         row.trialStatus = 'Active';
     } else {
         row.trialStatus = 'Completed';
+        row.trendingCompliance = ' ---- ';
     }
 
     return row;

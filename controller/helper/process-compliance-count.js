@@ -32,9 +32,15 @@ function processComplianceCount (rows) {
                   / (row.expiredWeeklyCount + row.expiredDailyCount
                   + row.completedWeeklyCount + row.completedDailyCount)
                   * percent;
+        let trendingCompliance = (row.completedTrendingWeeklyCount + row.completedTrendingDailyCount)
+                  / (row.expiredTrendingWeeklyCount + row.expiredTrendingDailyCount
+                  + row.completedTrendingWeeklyCount + row.completedTrendingDailyCount)
+                  * percent;
 
         compliancePercentage = parseFloat(compliancePercentage).toFixed(decimal);
+        trendingCompliance = parseFloat(trendingCompliance).toFixed(decimal);
         row.compliancePercentage = compliancePercentage;
+        row.trendingCompliance = trendingCompliance;
         if (compliancePercentage <= nonCompliantThreshold) {
             compliance.nonCompliant += increment;
         } else if (compliancePercentage <= semiCompliantThreshold) {

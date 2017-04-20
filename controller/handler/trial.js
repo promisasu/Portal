@@ -61,19 +61,30 @@ function trialView (request, reply) {
             database.sequelize.query(
                 `
                 SELECT pa.PatientPin,
-                SUM(si.State = 'expired' and activityTitle = 'Sickle Cell Weekly Survey') AS expiredWeeklyCount,
-                SUM(si.State = 'completed' and activityTitle = 'Sickle Cell Weekly Survey') AS completedWeeklyCount,
-                SUM(si.State = 'expired' and activityTitle = 'Sickle Cell Daily Survey') AS expiredDailyCount,
-                SUM(si.State = 'completed' and activityTitle = 'Sickle Cell Daily Survey') AS completedDailyCount,
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Weekly Survey') AS expiredWeeklyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Weekly Survey') AS completedWeeklyCount,
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Daily Survey') AS expiredDailyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Daily Survey') AS completedDailyCount,
                 SUM(si.State = 'pending') AS pendingCount,
-                SUM(si.State = 'DEACTIVATED') AS deactivatedCount
+                SUM(si.State = 'DEACTIVATED') AS deactivatedCount,
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Weekly Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS expiredTrendingWeeklyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Weekly Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS completedTrendingWeeklyCount,
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Daily Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS expiredTrendingDailyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Daily Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS completedTrendingDailyCount
                 FROM activity_instance AS si
                 JOIN patients AS pa
                 ON pa.PatientPin = si.PatientPinFK
                 JOIN stage AS st
                 ON st.StageId = pa.StageIdFK
                 WHERE st.TrialId = ?
-                AND si.EndTime > ?
                 GROUP BY pa.PatientPin
                 `,
                 {
@@ -124,9 +135,9 @@ function trialView (request, reply) {
                     patient.trialStatus = patientStatus.trialStatus;
                     patient.status = patientStatus.status;
                     patient.compliancePercentage = patientStatus.compliancePercentage;
+                    patient.trendingCompliance = patientStatus.trendingCompliance;
                 } else {
                     patient.status = 'Pending';
-                    patient.totalMissed = 0;
                 }
                 patient.DateStarted = moment(patient.DateStarted)
                     .format('MM-DD-YYYY');
