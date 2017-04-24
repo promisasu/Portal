@@ -1,7 +1,7 @@
 'use strict';
 (function dashboard () {
     var nameColumn = 0;
-    var table = $('#trials').DataTable({order: [nameColumn, 'desc']});
+    var table = $('#trials').DataTable({order: [nameColumn, 'desc'], bFilter: false, bInfo: false});
     var strategy = filterStrategyFactory();
 
     $('.dropdown-menu').on('click', 'div', function selectItem () {
