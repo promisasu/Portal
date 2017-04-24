@@ -34,7 +34,7 @@ function deactivatePatient (request, reply) {
         ),
           database.sequelize.query(
           `
-          UPDATE patients SET DateCompleted = ? AND PatientPin = ?
+          UPDATE patients SET DateCompleted = ? WHERE PatientPin = ?
           `, {
               type: database.sequelize.QueryTypes.UPDATE,
               replacements: [
