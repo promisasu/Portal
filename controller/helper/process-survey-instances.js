@@ -44,7 +44,7 @@ function processSurveyInstances (surveys) {
     labels.push(moment(endDateforChart).format(viewDateFormat));
 
     console.log('Scores Chart');
-    for (var i = 0; i < datasets.length; i++) {
+    for (let i = 0; i < datasets.length; i++) {
         console.log(datasets[i].data);
     }
 
@@ -171,10 +171,10 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
  * @param {Array<Object>} surveys - list of survey instances
  * @param {Array<Object>} surveyDetails - list of survey instances
  * @param {Array<Object>} bodyPainResults - list of body pain questions answered
+ * @param {Array<Object>} opioidResults - list of survey instances
  * @returns {Array<Object>} data for the chart
  */
 function processClinicanData (surveys, surveyDetails, bodyPainResults, opioidResults) {
-    // console.log('In clinician data');
     let labels = surveys.map((survey) => {
         return moment(survey.StartTime).format(viewDateFormat);
     });
@@ -184,8 +184,6 @@ function processClinicanData (surveys, surveyDetails, bodyPainResults, opioidRes
     labels.push(moment(endDateforChart).format(viewDateFormat));
 
     let datasets = pickClinicianDataset(surveys, surveyDetails, bodyPainResults, opioidResults, labels);
-
-    // console.log(datasets);
 
     return {
         labels: labels,
@@ -207,11 +205,14 @@ let violet = 'rgba(119,65,119, 1)';
  * @param {Array<Object>} surveys - list of survey instances
  * @param {Array<Object>} surveyDetails - list of survey instances
  * @param {Array<Object>} bodyPainResults - list of body pain answers
+ * @param {Array<Object>} opioidResults - list of survey instances
+ * @param {Array<Object>} labels - labels for the chart
  * @returns {Array<Object>} data for the chart
  */
 function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidResults, labels) {
     let dataPoints = [];
     let datasets = [];
+
     dataPoints.push({
         label: 'PR Anxiety',
         data: getPRAnxietyScore(surveyDetails, labels),
@@ -237,26 +238,21 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidRe
         data: getOpoidEquivivalance(opioidResults, labels),
         color: pink
     });
-    console.log('Here1');
     dataPoints.push({
         label: 'Promis Score',
         data: getPromisScore(surveyDetails, labels),
         color: green
     });
-    console.log('Here1');
     dataPoints.push({
         label: 'Pain Intensity',
         data: getPainIntensity(bodyPainResults, labels),
         color: yellow
     });
-    console.log('Here1');
     dataPoints.push({
         label: 'Opoid Threshold',
         data: getOpioidThreshold(opioidResults),
         color: blue
     });
-    console.log('Here1');
-    console.log('GOnna return Datasets');
     for (let i = 0; i < dataPoints.length; i++) {
         datasets.push({
             label: dataPoints[i].label,
@@ -280,16 +276,17 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidRe
             delete datasets[i].pointRadius;
         }
     }
-    console.log('Clinician Chart');
-    for (var i = 0; i < datasets.length; i++) {
+    for (let i = 0; i < datasets.length; i++) {
         console.log(datasets[i].data);
     }
+
     return datasets;
 }
 
 /**
  * Takes in a Survey Instances and processes to get opioid equivalence
- * @param {Array<Object>} surveys - list of survey instances
+ * @param {Array<Object>} opioidResults - list of survey instances
+ * @param {Array<Object>} labels - labels for the chart
  * @returns {Array<Object>} data for the chart
  */
 function getOpoidEquivivalance (opioidResults, labels) {
@@ -299,39 +296,66 @@ function getOpoidEquivivalance (opioidResults, labels) {
 /**
  * Takes in a Survey Instances and processes to get PROMIS score
  * @param {Array<Object>} surveyDetails - list of survey instances
+ * @param {Array<Object>} labels - labels for the chart
  * @returns {Array<Object>} data for the chart
  */
 function getPromisScore (surveyDetails, labels) {
     let promisScores = calculateScores.calculatePromisScores(surveyDetails);
-    return createMultiLinePoints(promisScores, labels);
-}
 
-function getPRPainIntensity (surveyDetails, labels) {
-    let promisScores = calculateScores.calculatePR_PainInt(surveyDetails);
-    return createMultiLinePoints(promisScores, labels);
-}
-
-function getPRAnxietyScore (surveyDetails, labels) {
-    let promisScores = calculateScores.calculatePR_Anxiety(surveyDetails);
-    console.log('-------------PROMIS SCores -------------');
-    console.log(promisScores);
-    console.log('----------------------------------------');
-    return createMultiLinePoints(promisScores, labels);
-}
-
-function getPRPhysicalFunc (surveyDetails, labels) {
-    let promisScores = calculateScores.calculatePR_PhyFuncMob(surveyDetails);
-    return createMultiLinePoints(promisScores, labels);
-}
-
-function getPRFatigue (surveyDetails, labels) {
-    let promisScores = calculateScores.calculatePR_Fatigue(surveyDetails);
     return createMultiLinePoints(promisScores, labels);
 }
 
 /**
- * Takes in a Survey Instances and processes to get opioid threshold
- * @param {Array<Object>} surveys - list of survey instances
+ * Takes in set of body pain answers and processes to get pain intensity
+ * @param {Array<Object>} surveyDetails - list of body pain answers
+ * @param {Array<Object>} labels - labels for the chart
+ * @returns {Array<Object>} data for the chart
+ */
+function getPRPainIntensity (surveyDetails, labels) {
+    let promisScores = calculateScores.calculatePRPainInt(surveyDetails);
+
+    return createMultiLinePoints(promisScores, labels);
+}
+
+/**
+ * Takes in set of anxiety scores and creates points for chart
+ * @param {Array<Object>} surveyDetails - list of body pain answers
+ * @param {Array<Object>} labels - labels for the chart
+ * @returns {Array<Object>} data for the chart
+ */
+function getPRAnxietyScore (surveyDetails, labels) {
+    let promisScores = calculateScores.calculatePRAnxiety(surveyDetails);
+
+    return createMultiLinePoints(promisScores, labels);
+}
+
+/**
+ * Takes in set of PR physical scores and creates points for chart
+ * @param {Array<Object>} surveyDetails - list of body pain answers
+ * @param {Array<Object>} labels - labels for the chart
+ * @returns {Array<Object>} data for the chart
+ */
+function getPRPhysicalFunc (surveyDetails, labels) {
+    let promisScores = calculateScores.calculatePRPhyFuncMob(surveyDetails);
+
+    return createMultiLinePoints(promisScores, labels);
+}
+
+/**
+ * Takes in set of fatigue scores and creates points for chart
+ * @param {Array<Object>} surveyDetails - list of body pain answers
+ * @param {Array<Object>} labels - labels for the chart
+ * @returns {Array<Object>} data for the chart
+ */
+function getPRFatigue (surveyDetails, labels) {
+    let promisScores = calculateScores.calculatePRFatigue(surveyDetails);
+
+    return createMultiLinePoints(promisScores, labels);
+}
+
+/**
+ * Takes in set of opioid scores and creates points for chart
+ * @param {Array<Object>} opioidResults - list of opioid scores
  * @returns {Array<Object>} data for the chart
  */
 function getOpioidThreshold (opioidResults) {
@@ -341,6 +365,7 @@ function getOpioidThreshold (opioidResults) {
 /**
  * Takes in set of body pain answers and processes to get pain intensity
  * @param {Array<Object>} bodyPainResults - list of body pain answers
+ * @param {Array<Object>} labels - labels for the chart
  * @returns {Array<Object>} data for the chart
  */
 function getPainIntensity (bodyPainResults, labels) {
@@ -385,19 +410,25 @@ function getPainIntensity (bodyPainResults, labels) {
             resultSet.push(result);
         }
     }
+
     return createMultiLinePoints(resultSet, labels);
     // return resultSet;
 }
 
+/**
+ * Takes in a value and normalizes it for the graph
+ * @param {Array<Object>} data - scores
+ * @param {Array<Object>} labels - labels for the chart
+ * @returns {Array<Object>} normalized scores
+ */
 function createMultiLinePoints (data, labels) {
-    console.log(data);
-    console.log(labels);
     let returnData = [];
-    var j = 0;
-    for (var i = 0; i < labels.length; i++) {
-        if (data[j] && labels[i] == data[j].x && j > -1) {
+    let j = 0;
+
+    for (let i = 0; i < labels.length; i++) {
+        if (data[j] && labels[i] === data[j].x && j > -1) {
             returnData.push(data[j].y);
-            if (j == data.length) {
+            if (j === data.length) {
                 j = -1;
             } else {
                 j += 1;
@@ -406,29 +437,31 @@ function createMultiLinePoints (data, labels) {
             returnData.push(null);
         }
     }
-    console.log('------------------Return data -----------------');
-    console.log(returnData);
-    console.log('-----------------------------------');
 
     return normalizeValues(returnData);
 }
 
+/**
+ * Takes in a value and normalizes it for the graph
+ * @param {Array<Object>} data - scores
+ * @returns {Array<Object>} normalized scores
+ */
 function normalizeValues (data) {
     let max = 0;
-    for (var i = 0; i < data.length; i++) {
+    let i = 0;
+
+    for (i = 0; i < data.length; i++) {
         if (data[i] !== null && max < data[i]) {
             max = data[i];
         }
     }
     let conversionFactor = 100 / max;
-    for (var i = 0; i < data.length; i++) {
+
+    for (i = 0; i < data.length; i++) {
         if (data[i] !== null) {
-            data[i] = data[i] * conversionFactor;
+            data[i] *= conversionFactor;
         }
     }
-    console.log('------------------data -----------------');
-    console.log(data);
-    console.log('-----------------------------------');
 
     return data;
 }

@@ -3,24 +3,27 @@
 /**
  * @module controller/helper/calculate-scores
  */
-const PR_Anxiety = {};
-const PR_Fatigue = {};
-const PR_PhyFuncMob = {};
-const PR_PainInt = {};
+const prAnxiety = {};
+const prFatigue = {};
+const prPhyFuncMob = {};
+const prPainInt = {};
+
 /**
- * A helper function that calculates promise aggragate score.
+ * A helper function that calculates promis T score.
  * @returns {Array<Object>} -
  */
-
-function promiseTScore() {
-
+function promiseTScore () {
+    return;
 }
 
-function promiseTScoreMapping() {
-
+/**
+ * A helper function that promis T score.
+ * @returns {Array<Object>} -
+ */
+function promiseTScoreMapping () {
+    return;
 }
-
 
 module.exports = {
-    promiseTScoreMapping: promiseTScoreMapping;
+    promiseTScoreMapping: promiseTScoreMapping
 };
