@@ -58,6 +58,17 @@
                     stacked: false,
                     display: false
                 }]
+            },
+            tooltips: {
+              callbacks:{
+                label:function(tooltipItem, data) {
+                    console.log("In toolTip");                    
+                    console.log(data.datasets[tooltipItem.datasetIndex].conversionFactor);
+                    console.log(tooltipItem.y);
+                    console.log("Out toolTip");
+                    return "y: " + tooltipItem.y * data.datasets[tooltipItem.datasetIndex].conversionFactor/100;
+                }
+              }
             }
         }
     };
