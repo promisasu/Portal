@@ -16,11 +16,11 @@ const viewDateFormat = 'MM-DD-YYYY HH:mm';
  * @returns {Object} Complience chart data
  */
 function processSurveyInstances (surveys) {
-    console.log('In process surbey instances');
+    ////console.log('In process surbey instances');
     const filterSurveyByState = surveys.filter((survey) => {
         return survey.state === 'completed';
     });
-    // console.log(filterSurveyByState);
+    // ////console.log(filterSurveyByState);
     let datasets = pickTimeLeft(filterSurveyByState);
     let labels = [];
 
@@ -38,14 +38,16 @@ function processSurveyInstances (surveys) {
         }
         labels.push.apply(labels, dataSet.dates);
     }
-    const numberOfDays = 7;
+    const numberOfDays = 2;
     const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
 
     labels.push(moment(endDateforChart).format(viewDateFormat));
+    console.log("------------- Labels -----------");
+    console.log(labels);
 
-    console.log('Scores Chart');
+    ////console.log('Scores Chart');
     for (var i = 0; i < datasets.length; i++) {
-        console.log(datasets[i].data);
+        ////console.log(datasets[i].data);
     }
 
     return {
@@ -174,18 +176,18 @@ function calculateTimeLeft (openTime, endTime, completedTime) {
  * @returns {Array<Object>} data for the chart
  */
 function processClinicanData (surveys, surveyDetails, bodyPainResults, opioidResults) {
-    // console.log('In clinician data');
+    // ////console.log('In clinician data');
     let labels = surveys.map((survey) => {
         return moment(survey.StartTime).format(viewDateFormat);
     });
-    const numberOfDays = 7;
+    const numberOfDays = 2;
     const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
 
     labels.push(moment(endDateforChart).format(viewDateFormat));
 
     let datasets = pickClinicianDataset(surveys, surveyDetails, bodyPainResults, opioidResults, labels);
 
-    // console.log(datasets);
+    // ////console.log(datasets);
 
     return {
         labels: labels,
@@ -217,16 +219,19 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidRe
         data: getPRAnxietyScore(surveyDetails, labels),
         color: darkPink
     });
+    ////console.log("PR anxiety");
     dataPoints.push({
         label: 'PR Physical',
         data: getPRPhysicalFunc(surveyDetails, labels),
         color: darkBrown
     });
+    ////console.log("PR physical");
     dataPoints.push({
         label: 'PR Fatigue',
         data: getPRFatigue(surveyDetails, labels),
         color: gray
     });
+    ////console.log("PR Fatigue");
     dataPoints.push({
         label: 'PR Pain Intensity',
         data: getPRPainIntensity(surveyDetails, labels),
@@ -237,26 +242,26 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidRe
         data: getOpoidEquivivalance(opioidResults, labels),
         color: pink
     });
-    console.log('Here1');
+    ////console.log('Here1');
     dataPoints.push({
         label: 'Promis Score',
         data: getPromisScore(surveyDetails, labels),
         color: green
     });
-    console.log('Here1');
+    ////console.log('Here1');
     dataPoints.push({
         label: 'Pain Intensity',
         data: getPainIntensity(bodyPainResults, labels),
         color: yellow
     });
-    console.log('Here1');
+    ////console.log('Here1');
     dataPoints.push({
         label: 'Opoid Threshold',
         data: getOpioidThreshold(opioidResults),
         color: blue
     });
-    console.log('Here1');
-    console.log('GOnna return Datasets');
+    ////console.log('Here1');
+    ////console.log('GOnna return Datasets');
     for (let i = 0; i < dataPoints.length; i++) {
         datasets.push({
             label: dataPoints[i].label,
@@ -280,9 +285,9 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidRe
             delete datasets[i].pointRadius;
         }
     }
-    console.log('Clinician Chart');
+    ////console.log('Clinician Chart');
     for (var i = 0; i < datasets.length; i++) {
-        console.log(datasets[i].data);
+        ////console.log(datasets[i].data);
     }
     return datasets;
 }
@@ -293,6 +298,8 @@ function pickClinicianDataset (surveys, surveyDetails, bodyPainResults, opioidRe
  * @returns {Array<Object>} data for the chart
  */
 function getOpoidEquivivalance (opioidResults, labels) {
+    //console.log("-------------- equivalence ___________");
+    //console.log(labels);
     return createMultiLinePoints(calculateScores.opioidResultsCalculation(opioidResults), labels);
 }
 
@@ -308,25 +315,25 @@ function getPromisScore (surveyDetails, labels) {
 
 function getPRPainIntensity (surveyDetails, labels) {
     let promisScores = calculateScores.calculatePR_PainInt(surveyDetails);
-    return createMultiLinePoints(promisScores, labels);
+    return createMultiLinePoints(promisScores[0], labels, promisScores[1]);
 }
 
 function getPRAnxietyScore (surveyDetails, labels) {
     let promisScores = calculateScores.calculatePR_Anxiety(surveyDetails);
-    console.log('-------------PROMIS SCores -------------');
-    console.log(promisScores);
-    console.log('----------------------------------------');
-    return createMultiLinePoints(promisScores, labels);
+    ////console.log('-------------PROMIS SCores -------------');
+    ////console.log(promisScores);
+    ////console.log('----------------------------------------');
+    return createMultiLinePoints(promisScores[0], labels, promisScores[1]);
 }
 
 function getPRPhysicalFunc (surveyDetails, labels) {
     let promisScores = calculateScores.calculatePR_PhyFuncMob(surveyDetails);
-    return createMultiLinePoints(promisScores, labels);
+    return createMultiLinePoints(promisScores[0], labels, promisScores[1]);
 }
 
 function getPRFatigue (surveyDetails, labels) {
     let promisScores = calculateScores.calculatePR_Fatigue(surveyDetails);
-    return createMultiLinePoints(promisScores, labels);
+    return createMultiLinePoints(promisScores[0], labels, promisScores[1]);
 }
 
 /**
@@ -349,7 +356,7 @@ function getPainIntensity (bodyPainResults, labels) {
     let resultSet = [];
 
     bodyPainResults.forEach((result) => {
-        // console.log(result);
+        // ////console.log(result);
         let temp = {
             questionId: result.questionId,
             optionId: result.optionId,
@@ -389,9 +396,12 @@ function getPainIntensity (bodyPainResults, labels) {
     // return resultSet;
 }
 
-function createMultiLinePoints (data, labels) {
-    console.log(data);
-    console.log(labels);
+function createMultiLinePoints (data, labels, conversionFactor = -1) {
+    //console.log("Create MultiLine Points conversionFactor");
+    //console.log(conversionFactor);
+    //console.log("Data");
+    //console.log(data);
+    // ////console.log(labels);
     let returnData = [];
     var j = 0;
     for (var i = 0; i < labels.length; i++) {
@@ -406,29 +416,35 @@ function createMultiLinePoints (data, labels) {
             returnData.push(null);
         }
     }
-    console.log('------------------Return data -----------------');
-    console.log(returnData);
-    console.log('-----------------------------------');
+    ////console.log('------------------Return data -----------------');
+    ////console.log(returnData);
+    ////console.log('-----------------------------------');
 
-    return normalizeValues(returnData);
+    return normalizeValues(returnData,conversionFactor);
 }
 
-function normalizeValues (data) {
-    let max = 0;
+function normalizeValues (data,conversionFactor = -1) {
+  ////console.log("In normalize values");
+  let max = 0;
     for (var i = 0; i < data.length; i++) {
         if (data[i] !== null && max < data[i]) {
             max = data[i];
         }
     }
-    let conversionFactor = 100 / max;
+    ////console.log("reached here");
+    let newConversionFactor = conversionFactor;
+    if (conversionFactor == -1) {
+        newConversionFactor = 100/max;
+    }
+    ////console.log("reached here");
     for (var i = 0; i < data.length; i++) {
         if (data[i] !== null) {
-            data[i] = data[i] * conversionFactor;
+            data[i] = data[i] * newConversionFactor;
         }
     }
-    console.log('------------------data -----------------');
-    console.log(data);
-    console.log('-----------------------------------');
+    ////console.log('------------------data -----------------');
+    ////console.log(data);
+    ////console.log('-----------------------------------');
 
     return data;
 }

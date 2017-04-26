@@ -68,7 +68,7 @@ function calculatePromisScores (surveyResults) {
     let resultSet = [];
 
     surveyResults.forEach((result) => {
-        // //console.log(result);
+        // ////console.log(result);
         let temp = {
             questionId: result.questionId,
             optionId: result.optionId,
@@ -122,10 +122,10 @@ function calculatePromisScores (surveyResults) {
             scorePainInt = (scorePainInt * 8) / 6;
             scoreAnxity = (scoreAnxity * 8) / 6;
 
-            console.log('scoreFatigue =  ' + scoreFatigue);
-            console.log('scorePhyFunc =  ' + scorePhyFunc);
-            console.log('scorePainInt =  ' + scorePainInt);
-            console.log('scoreAnxity =  ' + scoreAnxity);
+            //console.log('scoreFatigue =  ' + scoreFatigue);
+            //console.log('scorePhyFunc =  ' + scorePhyFunc);
+            //console.log('scorePainInt =  ' + scorePainInt);
+            //console.log('scoreAnxity =  ' + scoreAnxity);
             score = scoreFatigue + scoreAnxity + scorePainInt + scorePhyFunc;
 
             result.x = date;
@@ -133,7 +133,7 @@ function calculatePromisScores (surveyResults) {
             resultSet.push(result);
         }
     }
-    console.log(resultSet);
+    //console.log(resultSet);
     return resultSet;
 }
 
@@ -141,9 +141,10 @@ function calculatePR_Fatigue (surveyResults) {
     let singleSurveyBlock = {};
     let instanceId = '';
     let resultSet = [];
+    let maxVal = 0;
 
     surveyResults.forEach((result) => {
-        // console.log(result);
+        // //console.log(result);
         let temp = {
             questionId: result.questionId,
             optionId: result.optionId,
@@ -187,29 +188,37 @@ function calculatePR_Fatigue (surveyResults) {
             score = Math.round(score);
             if (questionType === 'PR_Fatigue_Adlt') {
                 score = PR_Fatigue_TScore_Adult[score];
+                maxVal = calculateConversionFactor(PR_Fatigue_TScore_Adult);
             } else if (questionType === 'PR_Fatigue_Chld') {
                 score = PR_Fatigue_TScore_Pediatric[score];
+                maxVal = calculateConversionFactor(PR_Fatigue_TScore_Pediatric);
             } else {
                 score = PR_Fatigue_TScore_Parent[score];
+                maxVal = calculateConversionFactor(PR_Fatigue_TScore_Parent);
             }
-            console.log('scoreAnxity =  ' + score);
+            //console.log('scoreAnxity =  ' + score);
             result.x = date;
             result.y = score;
             resultSet.push(result);
         }
     }
-    console.log('-------------------------------calculatePR_Fatigue-------------------');
-    console.log(resultSet);
-    return resultSet;
+    //console.log('-------------------------------calculatePR_Fatigue-------------------');
+    //console.log(resultSet);
+    return [resultSet,maxVal];
+}
+
+function calculateConversionFactor(data){
+    return 100 / data[data.length - 1];
 }
 
 function calculatePR_Anxiety (surveyResults) {
     let singleSurveyBlock = {};
     let instanceId = '';
     let resultSet = [];
+    let maxVal = 0;
 
     surveyResults.forEach((result) => {
-        // console.log(result);
+        // //console.log(result);
         let temp = {
             questionId: result.questionId,
             optionId: result.optionId,
@@ -253,30 +262,34 @@ function calculatePR_Anxiety (surveyResults) {
             score = Math.round(score);
             if (questionType === 'PR_Anxiety_Adlt') {
                 score = PR_Anxiety_TScore_Adult[score];
+                maxVal = calculateConversionFactor(PR_Anxiety_TScore_Adult);
             } else if (questionType === 'PR_Anxiety_Chld') {
                 score = PR_Anxiety_TScore_Pediatric[score];
+                maxVal = calculateConversionFactor(PR_Anxiety_TScore_Pediatric);
             } else {
                 score = PR_Anxiety_TScore_Parent[score];
+                maxVal = calculateConversionFactor(PR_Anxiety_TScore_Parent);
             }
-            console.log('scoreAnxity =  ' + score);
+            //console.log('scoreAnxity =  ' + score);
             result.x = date;
             result.y = score;
             resultSet.push(result);
         }
     }
-    console.log('-------------------------------calculatePR_Anxiety-------------------');
+    //console.log('-------------------------------calculatePR_Anxiety-------------------');
 
-    console.log(resultSet);
-    return resultSet;
+    //console.log(resultSet);
+    return [resultSet, maxVal];
 }
 
 function calculatePR_PhyFuncMob (surveyResults) {
     let singleSurveyBlock = {};
     let instanceId = '';
     let resultSet = [];
+    let maxVal = 0;
 
     surveyResults.forEach((result) => {
-        // console.log(result);
+        // //console.log(result);
         let temp = {
             questionId: result.questionId,
             optionId: result.optionId,
@@ -320,29 +333,34 @@ function calculatePR_PhyFuncMob (surveyResults) {
             score = Math.round(score);
             if (questionType === 'PR_PhyFuncMob_Adlt') {
                 score = PR_PhyFuncMob_TScore_Adult[score];
+                maxVal = calculateConversionFactor(PR_PhyFuncMob_TScore_Adult);
             } else if (questionType === 'PR_PhyFuncMob_Chld') {
                 score = PR_PhyFuncMob_TScore_Pediatric[score];
+                maxVal = calculateConversionFactor(PR_PhyFuncMob_TScore_Pediatric);
             } else {
                 score = PR_PhyFuncMob_TScore_Parent[score];
+                maxVal = calculateConversionFactor(PR_PhyFuncMob_TScore_Parent);
+
             }
-            console.log('scoreAnxity =  ' + score);
+            //console.log('scoreAnxity =  ' + score);
             result.x = date;
             result.y = score;
             resultSet.push(result);
         }
     }
-    console.log('-------------------calculatePR_PhyFuncMob----------------------------');
-    console.log(resultSet);
-    return resultSet;
+    //console.log('-------------------calculatePR_PhyFuncMob----------------------------');
+    //console.log(resultSet);
+    return [resultSet, maxVal];;
 }
 
 function calculatePR_PainInt (surveyResults) {
     let singleSurveyBlock = {};
     let instanceId = '';
     let resultSet = [];
+    let maxVal = 0;
 
     surveyResults.forEach((result) => {
-        // console.log(result);
+        // //console.log(result);
         let temp = {
             questionId: result.questionId,
             optionId: result.optionId,
@@ -386,103 +404,158 @@ function calculatePR_PainInt (surveyResults) {
             score = Math.round(score);
             if (questionType === 'PR_PainInt_Adlt') {
                 score = PR_PainInt_TScore_Adult[score];
+                maxVal = calculateConversionFactor(PR_PainInt_TScore_Adult);
             } else if (questionType === 'PR_PainInt_Chld') {
                 score = PR_PainInt_TScore_Pediatric[score];
+                maxVal = calculateConversionFactor(PR_PainInt_TScore_Pediatric);
             } else {
                 score = PR_PainInt_TScore_Parent[score];
+                maxVal = calculateConversionFactor(PR_PainInt_TScore_Parent);
             }
-            console.log('scoreAnxity =  ' + score);
+            //console.log('scoreAnxity =  ' + score);
             result.x = date;
             result.y = score;
             resultSet.push(result);
         }
     }
-    console.log('---------------------calculatePR_PainInt-----------------------');
-    console.log(resultSet);
-    return resultSet;
+    //console.log('---------------------calculatePR_PainInt-----------------------');
+    //console.log(resultSet);
+    return [resultSet,maxVal];;
 }
 
 function opioidResultsCalculation (opioidResults) {
-    let singleSurveyBlock = {};
-    let instanceId = '';
-    let resultSet = [];
-    let date = new Date();
-    opioidResults.forEach((result) => {
-        result.optionText = result.optionText.replace(' ', '');
-        if (result.optionText == 'Oxycodone' || result.optionText == 'Tramadol' || result.optionText == 'Dilaudid') {
-            let temp = {
-                questionId: result.questionId,
-                optionId: result.optionId,
-                optionText: result.optionText,
-                questionType: result.questionType,
-                StartTime: result.StartTime,
-                likertScale: result.likertScale,
-                patientType: result.patientType,
-                dosage: result.dosage,
-                prescribedDosage: result.prescribedDosage,
-                prescribedNoOfTablets: result.prescribedNoOfTablets
-            };
-
-            if (typeof singleSurveyBlock[result.id] === 'undefined') {
-                singleSurveyBlock[result.id] = [temp];
-            } else {
-                singleSurveyBlock[result.id].push(temp);
-            }
-        }
-    });
-    let returnDict = {};
-    let returnArr = [];
-    for (var key in singleSurveyBlock) {
-        if (singleSurveyBlock.hasOwnProperty(key)) {
-            let result = {
-                x: '',
-                y: 0
-            };
-            date = moment(singleSurveyBlock[key][0].StartTime).format(viewDateFormat);
-            // console.log(date);
-            returnDict[date] = 0;
-            singleSurveyBlock[key].forEach((survey) => {
-                survey.dosage = survey.dosage.replace(' ', '');
-                survey.dosage = survey.dosage.replace('*', '');
-                returnDict[date] += parseFloat(survey.dosage) * config.opioid[survey.optionText] * parseFloat(survey.prescribedDosage);
-            });
-            result.y = returnDict[date];
-            result.x = date;
-            returnArr.push(result);
-        }
+    let returnArr = getOpioidActualValuesCalculated(opioidResults);
+    let tempMax = 0;
+    for (var i = 0; i < returnArr.length; i++) {
+          if (tempMax < returnArr[i].y) {
+              tempMax = returnArr[i].y;
+          }
     }
+    let actualOpioidVal = getOpioidTHresholdActualValue(opioidResults);
+    //console.log(actualOpioidVal);
+    //console.log("----------- OPIOID Actual ----------------");
+    //console.log(tempMax);//console.log(actualOpioidVal);
+    //console.log("----------- OPIOID Actual ----------------");
+    //console.log(returnArr);
+    let returnArrValues = [];
+    let multiplier = 0;
+    if (tempMax > actualOpioidVal) {
+        multiplier = tempMax;
+    } else {
+      multiplier = actualOpioidVal;
+    }
+    //console.log("----------- OPIOID multiplier ----------------");
+    //console.log(multiplier);
+    for (var i = 0; i < returnArr.length; i++) {
+      returnArr[i].y = returnArr[i].y *100/multiplier;
+    }
+    //console.log("----------- OPIOID RETURN ----------------");
+    ////console.log(returnArr);
     return returnArr;
 }
 
 function opioidThresholdCalculation (opioidResults) {
-    // console.log("adasdasdsa");
-    let singleSurveyBlock = {};
-    let instanceId = '';
-    let oxy = 0;
-    let tra = 0;
-    let dil = 0;
-    // console.log("adasdasdsa");
-    // console.log(opioidResults);
-    opioidResults.forEach((result) => {
-        result.optionText = result.optionText.replace(' ', '');
-        // console.log(result);
-        if (result.optionText == 'Oxycodone') {
-            oxy = parseFloat(result.prescribedNoOfTablets) * config.opioid[result.optionText] * parseFloat(result.prescribedDosage);
-        }
-        if (result.optionText == 'Tramadol') {
-            tra = parseFloat(result.prescribedNoOfTablets) * config.opioid[result.optionText] * parseFloat(result.prescribedDosage);
-        }
-        if (result.optionText == 'Dilaudid') {
-            dil = parseFloat(result.prescribedNoOfTablets) * config.opioid[result.optionText] * parseFloat(result.prescribedDosage);
-        }
-    });
-    // console.log("adasdasdsa");
-    // console.log(oxy + tra + dil);
+    let opioidVal = getOpioidTHresholdActualValue(opioidResults);
+    let opioid
+    let tempMax = 0;
+    let opioidActualVals = getOpioidActualValuesCalculated(opioidResults);
+    //console.log("----------- OPIOID THRESHOLD ----------------");
+    //console.log(opioidActualVals);
+    //console.log("----------- OPIOID THRESHOLD ----------------");
+
+    for (var i = 0; i < opioidActualVals.length; i++) {
+          if (tempMax < opioidActualVals[i].y) {
+              tempMax = opioidActualVals[i].y;
+          }
+    }
+    if (tempMax > opioidVal) {
+        opioidVal = opioidVal * 100/tempMax;
+    }
     var returnArr = [];
     for (var i = 0; i < opioidResults.length; i++) {
-        returnArr.push(70);
+        returnArr.push(opioidVal);
     }
+    //console.log("----------- OPIOID THRESHOLD CALCULATION ----------------");
+    //console.log(returnArr);
+    //console.log("----------- OPIOID THRESHOLD CALCULATION ----------------");
     return returnArr;
+}
+
+function getOpioidTHresholdActualValue(opioidResults){
+  // //console.log("adasdasdsa");
+  let singleSurveyBlock = {};
+  let instanceId = '';
+  let oxy = 0;
+  let tra = 0;
+  let dil = 0;
+  // //console.log("adasdasdsa");
+  // //console.log(opioidResults);
+  opioidResults.forEach((result) => {
+      result.optionText = result.optionText.replace(' ', '');
+      // //console.log(result);
+      if (result.optionText == 'Oxycodone') {
+          oxy = parseFloat(result.prescribedNoOfTablets) * config.opioid[result.optionText] * parseFloat(result.prescribedDosage);
+      }
+      if (result.optionText == 'Tramadol') {
+          tra = parseFloat(result.prescribedNoOfTablets) * config.opioid[result.optionText] * parseFloat(result.prescribedDosage);
+      }
+      if (result.optionText == 'Dilaudid') {
+          dil = parseFloat(result.prescribedNoOfTablets) * config.opioid[result.optionText] * parseFloat(result.prescribedDosage);
+      }
+  });
+  return oxy + tra + dil;
+}
+
+function getOpioidActualValuesCalculated(opioidResults){
+  let singleSurveyBlock = {};
+  let instanceId = '';
+  let resultSet = [];
+  let date = new Date();
+  opioidResults.forEach((result) => {
+      result.optionText = result.optionText.replace(' ', '');
+      if (result.optionText == 'Oxycodone' || result.optionText == 'Tramadol' || result.optionText == 'Dilaudid') {
+          let temp = {
+              questionId: result.questionId,
+              optionId: result.optionId,
+              optionText: result.optionText,
+              questionType: result.questionType,
+              StartTime: result.StartTime,
+              likertScale: result.likertScale,
+              patientType: result.patientType,
+              dosage: result.dosage,
+              prescribedDosage: result.prescribedDosage,
+              prescribedNoOfTablets: result.prescribedNoOfTablets
+          };
+
+          if (typeof singleSurveyBlock[result.id] === 'undefined') {
+              singleSurveyBlock[result.id] = [temp];
+          } else {
+              singleSurveyBlock[result.id].push(temp);
+          }
+      }
+  });
+  let returnDict = {};
+  let returnArr = [];
+  for (var key in singleSurveyBlock) {
+      if (singleSurveyBlock.hasOwnProperty(key)) {
+          let result = {
+              x: '',
+              y: 0
+          };
+          date = moment(singleSurveyBlock[key][0].StartTime).format(viewDateFormat);
+          // //console.log(date);
+          returnDict[date] = 0;
+          singleSurveyBlock[key].forEach((survey) => {
+              survey.dosage = survey.dosage.replace(' ', '');
+              survey.dosage = survey.dosage.replace('*', '');
+              returnDict[date] += parseFloat(survey.dosage) * config.opioid[survey.optionText] * parseFloat(survey.prescribedDosage);
+          });
+          result.y = returnDict[date];
+          result.x = date;
+          returnArr.push(result);
+      }
+  }
+  return returnArr;
 }
 
 /**
