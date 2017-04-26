@@ -20,7 +20,7 @@
                         display: true,
                         time: {
                             format: 'MMDDYYYY HHmm',
-                            unit: 'week',
+                            unit: 'day',
                             round: 'day'
                         },
                         scaleLabel: {

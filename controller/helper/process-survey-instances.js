@@ -38,7 +38,7 @@ function processSurveyInstances (surveys) {
         }
         labels.push.apply(labels, dataSet.dates);
     }
-    const numberOfDays = 2;
+    const numberOfDays = 1;
     const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
 
     labels.push(moment(endDateforChart).format(viewDateFormat));
@@ -69,7 +69,7 @@ function pickDates (surveys) {
     if (surveys[0]) {
         // Adding an additional week to include all the dates in compliance chart.
         // This is done because chart js plots only the first day of the week.
-        const numberOfDays = 7;
+        const numberOfDays = 1;
         const endDateforChart = moment(surveys[surveys.length - 1].EndTime).add(numberOfDays, 'day');
 
         dates.push(moment(endDateforChart).format(viewDateFormat));
@@ -180,7 +180,7 @@ function processClinicanData (surveys, surveyDetails, bodyPainResults, opioidRes
     let labels = surveys.map((survey) => {
         return moment(survey.StartTime).format(viewDateFormat);
     });
-    const numberOfDays = 2;
+    const numberOfDays = 1;
     const endDateforChart = moment(labels[labels.length - 1]).add(numberOfDays, 'day');
 
     labels.push(moment(endDateforChart).format(viewDateFormat));
