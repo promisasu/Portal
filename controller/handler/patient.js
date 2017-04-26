@@ -103,7 +103,9 @@ function patientView (request, reply) {
                ai.UserSubmissionTime as date, act.ActivityInstanceIdFk as id,
                act.questionIdFk as questionId, act.questionOptionIdFk as optionId,
                ans.OptionText as optionText, act.dosage, que.SurveyBlockIdFk as questionType,
-               ai.StartTime as StartTime, ans.likertScale as likertScale, pi.type as patientType, mi.prescribedDosage, mi.noOfTablets as prescribedNoOfTablets
+               ai.StartTime as StartTime, ans.likertScale as likertScale,
+               pi.type as patientType, mi.prescribedDosage,
+               mi.noOfTablets as prescribedNoOfTablets
                FROM question_result act
                JOIN questions que
                ON act.questionIdFk = que.QuestionId
@@ -156,8 +158,7 @@ function patientView (request, reply) {
         ])
         .then(([currentPatient, surveyInstances, currentTrial, surveyResults, opioidResults, bodyPainResults]) => {
             let dataChart = processSurveyInstances(surveyInstances);
-            // console.log("Logging opioidResults");
-            // console.log(opioidResults);
+
             if (!currentPatient) {
                 throw new Error('patient does not exist');
             }
