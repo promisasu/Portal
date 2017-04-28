@@ -101,6 +101,7 @@ function trialView (request, reply) {
               WHERE activityTitle = 'Sickle Cell Weekly Survey'
               AND EndTime > DATE_SUB(now(),INTERVAL 8 DAY)
               AND EndTime <= now()
+              AND State != 'pending'
               ORDER BY EndTime
               DESC
               `,
