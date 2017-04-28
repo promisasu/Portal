@@ -25,9 +25,8 @@ As well as allowing clinicians to monitor patient responses to look for possible
 ## Setup Instructions
 
 1. if you do not already have a database user, create one
-2. create a new empty database `CREATE SCHEMA prp_development;`
+2. create a new empty database `CREATE SCHEMA dev_scdpromis;`
 3. run `npm run init`
-4. run `npm run seed`
 
 ## Start the Portal
 
@@ -66,14 +65,11 @@ Tasks can be run by calling `npm run <task>`
 * `lint` lint check project files
 * `lint-fix` auto fixes some lint errors
 * `log` view server logs
-* `seed` fill database with sample data
 * `start` start all services
-* `start-api` start api service
 * `start-dashboard` start dashboard service
 * `start-scheduler` start scheduler service
 * `status` check service statuses
 * `stop` stop all services
-* `stop-api` stop api service
 * `stop-dashboard` stop dashboard service
 * `stop-scheduler` stop scheduler service
 * `sync` synchronize database schema
