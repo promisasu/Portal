@@ -121,6 +121,7 @@ function trialView (request, reply) {
             const complianceCount = processComplianceCount(compliance);
             const patientCount = patients.length;
             const patientStatuses = compliance.map(processPatientStatus);
+
             const patientArray = patients.map((patient) => {
                 const patientStatus = patientStatuses.find((status) => {
                     return status.PatientPin === patient.PatientPin;
@@ -146,8 +147,16 @@ function trialView (request, reply) {
                 if (patientStatus) {
                     patient.trialStatus = patientStatus.trialStatus;
                     patient.status = patientStatus.status;
-                    patient.compliancePercentage = patientStatus.compliancePercentage;
-                    patient.trendingCompliance = patientStatus.trendingCompliance;
+                    if (isNaN(patientStatus.compliancePercentage)) {
+                        patient.compliancePercentage = ' ---- ';
+                    } else {
+                        patient.compliancePercentage = patientStatus.compliancePercentage;
+                    }
+                    if (isNaN(patientStatus.trendingCompliance)) {
+                        patient.trendingCompliance = ' ---- ';
+                    } else {
+                        patient.trendingCompliance = patientStatus.trendingCompliance;
+                    }
                 } else {
                     patient.status = 'Pending';
                 }

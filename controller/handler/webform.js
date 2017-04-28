@@ -14,8 +14,6 @@ const configuration = require('../../config.json');
   * @returns {View} Rendered page
   */
 function webform (request, reply) {
-    console.log(request.params);
-
     return reply.view('webform', {
         title: 'Add a new Patient',
         webFormPostUrl: configuration.webFormPostUrl,
