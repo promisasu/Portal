@@ -15,19 +15,18 @@
     "seed": "node task/seed",
     "postseed": "node task/user",
     "prestart": "jsonlint config.json --validate config-schema.json --quiet",
-    "start": "node task/start-api && node task/start-dashboard && node task/start-scheduler",
+    "start": "node task/start-dashboard && node task/start-scheduler",
     "poststart": "pm2 ls",
-    "start-api": "node task/start-api",
     "start-dashboard": "node task/start-dashboard",
     "start-scheduler": "node task/start-scheduler",
     "status": "pm2 ls",
-    "stop": "node task/stop-api && node task/stop-dashboard && node task/stop-scheduler",
+    "stop": "node task/stop-dashboard && node task/stop-scheduler",
     "poststop": "pm2 ls",
-    "stop-api": "node task/stop-api",
     "stop-dashboard": "node task/stop-dashboard",
     "stop-scheduler": "node task/stop-scheduler",
     "sync": "node task/sync",
     "test": "env TEST=true nyc ava */*-test/*.js --timeout=15s",
+    "preuser": "node task/createUserSchema",
     "user": "node task/user",
     "validate": "jsonlint config.json --validate config-schema.json --quiet"
   },
@@ -59,8 +58,10 @@
     "joi": "^8.0.5",
     "moment": "^2.13.0",
     "mysql": "^2.10.2",
+    "request": "^2.81.0",
     "sequelize": "^3.22.0",
-    "vision": "^4.1.0"
+    "vision": "^4.1.0",
+    "hashmap": "^2.0.6"
   },
   "optionalDependencies": {
     "bcrypt": "^0.8.6"

@@ -10,33 +10,48 @@ const boom = require('boom');
 const deduplicate = require('../helper/deduplicate');
 const configuration = [
     {
-        label: 'patient pin',
+        label: 'Patient Pin',
         key: 'pin',
         default: ''
     },
     {
-        label: 'survey name',
+        label: 'Survey Title/Type',
         key: 'name',
         default: ''
     },
     {
-        label: 'unique survey id',
+        label: 'Survey Activity Id',
         key: 'id',
         default: ''
     },
     {
-        label: 'unique question id',
+        label: 'Date Survey Completed',
+        key: 'date',
+        default: ''
+    },
+    {
+        label: 'Question Id',
         key: 'questionId',
         default: ''
     },
     {
-        label: 'question',
+        label: 'Question',
         key: 'questionText',
         default: ''
     },
     {
-        label: 'question option',
+        label: 'Answer',
         key: 'optionText',
+        default: ''
+    },
+    {
+        label: 'Dosage',
+        key: 'dosage',
+        default: ''
+    },
+    {
+        label: 'Value',
+        key: 'Value',
         default: ''
     }
 ];
@@ -50,24 +65,19 @@ const configuration = [
 function patientCSV (request, reply) {
     database.sequelize.query(
         `
-        SELECT pa.pin, st.name, si.id, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
-        FROM active_patients AS pa
-        JOIN survey_instance AS si
-        ON si.patientId = pa.id
-        JOIN survey_template AS st
-        ON st.id = si.surveyTemplateId
-        JOIN join_surveys_and_questions AS jsq
-        ON jsq.surveyTemplateId = st.id
-        JOIN question_template AS qt
-        ON qt.id = jsq.questionTemplateId
-        JOIN question_option AS qo
-        ON qo.questionTemplateId = qt.id
-        JOIN question_result AS qr
-        ON qr.surveyInstanceId = si.id
-        AND qr.questionOptionId = qo.id
-        WHERE pa.pin = ?
-        AND si.state = 'completed'
-        ORDER BY si.id, jsq.questionOrder, qo.order
+        SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date,
+        act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, que.QuestionText as questionText,
+        act.questionOptionIdFk as optionId, ans.OptionText as optionText, act.dosage, act.Value
+        FROM question_result act
+        JOIN questions que
+        ON act.questionIdFk = que.QuestionId
+        JOIN question_options ans
+        ON act.questionOptionIdFk = ans.QuestionOptionId
+        JOIN activity_instance ai
+        ON act.ActivityInstanceIdFk = ai.ActivityInstanceId
+        WHERE act.ActivityInstanceIdFk
+        IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ? and State='completed')
+        ORDER BY id;
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
@@ -77,7 +87,7 @@ function patientCSV (request, reply) {
         }
     )
     .then((optionsWithAnswers) => {
-        const property = ['pin', 'name', 'id', 'questionText', 'questionId'];
+        const property = ['pin', 'name', 'id', 'date', 'questionText', 'questionId'];
         const uniqueAnswers = deduplicate(optionsWithAnswers, property);
 
         return convertJsonToCsv(uniqueAnswers, configuration);
@@ -86,7 +96,7 @@ function patientCSV (request, reply) {
         return reply(csv).type('text/csv');
     })
     .catch((err) => {
-        request.log('error', err);
+        console.log('error', err);
         reply(boom.notFound('patient data not found'));
     });
 }

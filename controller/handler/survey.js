@@ -4,93 +4,108 @@
  * @module controller/handler/survey
  */
 
-const groupBy = require('../helper/group-by.js');
+// const groupBy = require('../helper/group-by.js');
 const database = require('../../model');
 const httpNotFound = 404;
+const convertJsonToCsv = require('../helper/convert-json-to-csv');
+const boom = require('boom');
+const deduplicate = require('../helper/deduplicate');
+const configuration = [
+    {
+        label: 'Patient Pin',
+        key: 'pin',
+        default: ''
+    },
+    {
+        label: 'Survey Title/Type',
+        key: 'name',
+        default: ''
+    },
+    {
+        label: 'Survey Activity Id',
+        key: 'id',
+        default: ''
+    },
+    {
+        label: 'Date Survey Completed',
+        key: 'date',
+        default: ''
+    },
+    {
+        label: 'Question Id',
+        key: 'questionId',
+        default: ''
+    },
+    {
+        label: 'Question',
+        key: 'questionText',
+        default: ''
+    },
+    {
+        label: 'Answer',
+        key: 'optionText',
+        default: ''
+    },
+    {
+        label: 'Dosage',
+        key: 'dosage',
+        default: ''
+    },
+    {
+        label: 'Value',
+        key: 'Value',
+        default: ''
+    }
+];
 
 /**
- * A dashboard with an overview of a specific survey.
+ * Create a Comma Seperate Value export of a single patient's data.
  * @param {Request} request - Hapi request
  * @param {Reply} reply - Hapi Reply
  * @returns {View} Rendered page
  */
-function surveyView (request, reply) {
-    const surveyInstance = database.sequelize.model('survey_instance');
+function surveyCSV (request, reply) {
+    database.sequelize.query(
+        `
+        SELECT ai.PatientPinFK as pin, ai.activityTitle as name, ai.UserSubmissionTime as date,
+        act.ActivityInstanceIdFk as id, act.questionIdFk as questionId, que.QuestionText as questionText,
+        act.questionOptionIdFk as optionId, ans.OptionText as optionText, act.dosage, act.Value
+        FROM question_result act
+        JOIN questions que
+        ON act.questionIdFk = que.QuestionId
+        JOIN question_options ans
+        ON act.questionOptionIdFk = ans.QuestionOptionId
+        JOIN activity_instance ai
+        ON act.ActivityInstanceIdFk = ai.ActivityInstanceId
+        WHERE act.ActivityInstanceIdFk
+        IN (SELECT ActivityInstanceId FROM activity_instance WHERE PatientPinFK = ?
+        and ActivityInstanceId = ? and State='completed');
+        `,
+        {
+            type: database.sequelize.QueryTypes.SELECT,
+            replacements: [
+                request.params.pin,
+                request.params.activityInstanceId
+            ]
+        }
+    )
+    .then((optionsWithAnswers) => {
+        const property = ['pin', 'name', 'id', 'date', 'questionText', 'questionId'];
+        const uniqueAnswers = deduplicate(optionsWithAnswers, property);
 
-    Promise
-    .all([
-        surveyInstance.findById(request.params.id),
-        database.sequelize.query(
-            `
-            SELECT jsq.questionOrder, qt.id AS questionId, qt.questionText, qo.id AS optionId, qo.optionText
-            FROM survey_instance AS si
-            JOIN survey_template AS st
-            ON st.id = si.surveyTemplateId
-            JOIN join_surveys_and_questions AS jsq
-            ON jsq.surveyTemplateId = st.id
-            JOIN question_template AS qt
-            ON qt.id = jsq.questionTemplateId
-            JOIN question_option AS qo
-            ON qo.questionTemplateId = qt.id
-            JOIN question_result AS qr
-            ON qr.surveyInstanceId = si.id
-            AND qr.questionOptionId = qo.id
-            WHERE si.id = ?
-            ORDER BY jsq.questionOrder, qo.order
-            `,
-            {
-                type: database.sequelize.QueryTypes.SELECT,
-                replacements: [
-                    request.params.id
-                ]
-            }
-        ),
-        database.sequelize.query(
-            `
-            SELECT pa.pin, tr.id, tr.name
-            FROM survey_instance AS si
-            JOIN active_patients AS pa
-            ON pa.id = si.patientId
-            JOIN stage as st
-            ON st.id = pa.stageId
-            JOIN trial AS tr
-            ON tr.id = st.trialId
-            WHERE si.id = ?
-            `,
-            {
-                type: database.sequelize.QueryTypes.SELECT,
-                plain: true,
-                replacements: [
-                    request.params.id
-                ]
-            }
-        )
-    ])
-    .then(([survey, questions, patientAndTrial]) => {
-        const groupedQuestions = groupBy(questions, 'questionId');
-
-        return reply.view('survey', {
-            title: 'Pain Reporting Portal',
-            survey,
-            patient: {
-                pin: patientAndTrial.pin
-            },
-            trial: {
-                id: patientAndTrial.id,
-                name: patientAndTrial.name
-            },
-            questions: groupedQuestions
-        });
+        return convertJsonToCsv(uniqueAnswers, configuration);
+    })
+    .then((csv) => {
+        return reply(csv).type('text/csv');
     })
     .catch((err) => {
-        request.log('error', err);
-
+        console.log('error', err);
         reply
-        .view('404', {
-            title: 'Not Found'
-        })
-        .code(httpNotFound);
+            .view('404', {
+                title: 'Not Found'
+            })
+            .code(httpNotFound);
     });
 }
 
-module.exports = surveyView;
+module.exports = surveyCSV;

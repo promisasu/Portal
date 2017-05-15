@@ -8,7 +8,7 @@
 const database = require('../model');
 const read = require('./helper/read-promise');
 
-database.setup(require('../config.json').database);
+database.setupUser(require('../config.json').database);
 
 const userModel = database.sequelize.model('user');
 

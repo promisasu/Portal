@@ -46,29 +46,11 @@ read({
     });
 })
 .then((port) => {
-    config.dashboard.port = port;
+    config.dashboard.port = parseInt(port);
 
-    console.log('');
-    console.log('setup for pain reporting portal api');
-    console.log('');
-
-    return read({
-        prompt: 'hostname:',
-        default: 'localhost'
-    });
+    return;
 })
-.then((hostname) => {
-    config.api = {};
-    config.api.hostname = hostname;
-
-    return read({
-        prompt: 'port number:',
-        default: 3001
-    });
-})
-.then((port) => {
-    config.api.port = port;
-
+.then(() => {
     console.log('');
     console.log('setup for pain reporting portal database');
     console.log('');
@@ -118,6 +100,52 @@ read({
 })
 .then((salt) => {
     config.database.salt = salt;
+
+    return read({
+        prompt: 'Web Form Post URL:',
+        default: 'http://swent1linux.asu.edu:8082/v311/rest/patients/enrollpatient'
+    });
+})
+.then((formPostURL) => {
+    config.webFormPostUrl = formPostURL;
+
+    return read({
+        prompt: 'API Url for the web app:',
+        default: 'http://swent1linux.asu.edu:8082/api'
+    });
+})
+.then((apiURL) => {
+    config.apiURL = apiURL;
+
+    return read({
+        prompt: 'Opioid conversion factor for Tramadol:',
+        default: 0.1
+    });
+})
+.then((tramadol) => {
+    config.opioid = {};
+    config.opioid.Tramadol = parseFloat(tramadol);
+
+    return read({
+        prompt: 'Opioid conversion factor for Oxycodone:',
+        default: 1.5
+    });
+})
+.then((oxycodone) => {
+    config.opioid.Oxycodone = parseFloat(oxycodone);
+
+    return read({
+        prompt: 'Opioid conversion factor for Hydromorphone:',
+        default: 4
+    });
+})
+.then((hydromorphone) => {
+    config.opioid.Dilaudid = parseFloat(hydromorphone);
+
+    // Gotta get rid of these dependencies in the near future
+    config.api = {};
+    config.api.hostname = 'localhost';
+    config.api.port = 3001;
 
     return writeFile(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, jsonIndent));
 })

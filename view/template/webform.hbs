@@ -1,0 +1,381 @@
+<div class="container-fluid">
+    <br>
+    <ol class="breadcrumb">
+        <li>
+            <a href="/">
+                Dashboard
+            </a>
+        </li>
+        <!-- <li>
+            <a href="/trial/{{ trial.TrialId }}">
+                Trial: {{ trial.Name }}
+            </a>
+        </li>
+        <li class="active">
+            Patient: {{ patient.PatientPin }}
+        </li> -->
+    </ol>
+    <div class="container">
+        <element id="webFormPostUrl" data-webFormPost={{webFormPostUrl}}>
+            <form class="well form-horizontal" method="post" id="patient_form" novalidate="">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Patient Enrollment Form</legend>
+                    <!-- radio checks -->
+                    <label class="control-label">* Indicates Required Fields</label>
+                    <!-- <br>
+                <button type='button' id="ins" onclick="showIns()">Instruction</button> -->
+
+                    <div class="form-group row">
+                        <label class="control-label">Which group does the subject belong to? *</label>
+                        <div class="">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="subject_group" value="child" onclick="isParentCheck(this.value)" id="childCheck" required/> Child (8-17)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="subject_group" value="adult" onclick="isParentCheck(this.value)" /> Adult (18-21)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="subject_group" value="parent_proxy" onclick="isParentCheck(this.value)" id="parentCheck" /> Parent
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Text input if parent is selected-->
+                    <div id="ifParent" style="display:none">
+                        <div class="form-group row">
+                            <label class="control-label">What is the PIN of your Child? *</label>
+                            <div class="inputGroupContainer">
+                                <div class="input-group col-xs-4">
+                                    <input name="childPin" id="childPin" onkeyup="setChildPin(this.value)" class="form-control" type="text" required> <span id="childPinErrorMessage" class="alert alert-danger" hidden>Please enter a valid child pin</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <!-- radio checks -->
+                    <div class="form-group row">
+                        <label class="control-label">What kind of device will you be using for the study?</label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="device" value="android smartphone" /> Android smartphone
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="device" value="iPhone" /> iPhone
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="device" value="android tablet" /> Android Tablet
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="device" value="iPad" /> iPad
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="device" value="web broswer" /> Standard web browser on a personal computer
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <!-- Text input-->
+
+                    <div class="form-group row">
+                        <label class="control-label">What is the version of the device in the previous question? This can be checked on smartphones and tablets under Settings.</label>
+                        <div class="col-md-4 inputGroupContainer">
+                            <div class="input-group">
+                                <input name="device_version" class="form-control" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- radio checks -->
+                    <div id="hydroxurea" style="display:none">
+                        <div class="form-group row">
+                            <label class="control-label">How many tablets of hydroxurea does the patient take per day? *</label>
+                            <div class="">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="0" required/> 0
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="1" /> 1
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="2" /> 2
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="hydroxurea_tablets" onclick="setHydroxurea(this.value)" value="3 or more" /> 3 or more
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Text input-->
+
+                    <div id="medication-questions" class="form-group row">
+                        <label class="control-label">What prescribed medications is the patient allowed to take for the onset of pain? Please indicate the medication and the dosage per unit (tablet) per day basis.</label>
+                        <br>
+                        <div class="inputGroupContainer">
+                            <div class="input-group">
+                                <br/>
+                                <label> Oxycodone</label>
+                                <div id="Oxycodone">
+                                    <select id="Oxycodone_tablets" onchange='enable("Oxycodone")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                    Tablets
+                                    <select id="Oxycodone_medicine_mg" hidden disabled>
+                                        <option selected="selected" value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="40">40</option>
+                                    </select> <span id="Oxycodone_medicine_mg_label" hidden>mg</span>
+                                </div>
+                                </br>
+
+                                <label>Tramadol</label>
+                                <br>
+                                <div id="Tramadol">
+                                    <select id="Tramadol_tablets" onchange='enable("Tramadol")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                    Tablets
+                                    <select id="Tramadol_medicine_mg" hidden disabled>
+                                        <option selected="selected" value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
+                                        <option value="300">300</option>
+                                    </select> <span id="Tramadol_medicine_mg_label" hidden>mg</span>
+                                </div>
+                                </br>
+
+                                <label>Dilaudid</label>
+                                <br>
+                                <div id="Dilaudid">
+                                    <select id="Dilaudid_tablets" onchange='enable("Dilaudid")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                    Tablets
+                                    <select id="Dilaudid_medicine_mg" hidden disabled>
+                                        <option selected="selected" value="2">2</option>
+                                        <option value="4">4</option>
+                                        <option value="8">8</option>
+                                    </select> <span id="Dilaudid_medicine_mg_label" hidden>mg</span>
+                                </div>
+                                </br>
+
+                                <label>Percocet</label>
+                                <br>
+                                <div id="Percocet">
+                                    <select id="Percocet_tablets" onchange='enable("Percocet")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                    Tablets
+                                    <select id="Percocet_medicine_mg" hidden disabled>
+                                        <option selected="selected" value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="40">40</option>
+                                    </select> <span id="Percocet_medicine_mg_label" hidden>mg</span>
+                                </div>
+                                </br>
+
+                                <label>Ibuprofen</label>
+                                <br>
+                                <div id="Ibuprofen">
+
+                                    <select id="Ibuprofen_tablets" onchange='enable("Ibuprofen")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                    Tablets
+                                    <select id="Ibuprofen_medicine_mg" hidden disabled>
+                                        <option selected="selected" value="200">200</option>
+                                        <option value="400">400</option>
+                                        <option value="600">600</option>
+                                        <option value="800">800</option>
+                                    </select> <span id="Ibuprofen_medicine_mg_label" hidden>mg</span>
+                                </div>
+                                </br>
+
+                                <label>Naprosyn</label>
+                                <br>
+                                <div id="Naprosyn">
+
+                                    <select id="Naprosyn_tablets" onchange='enable("Naprosyn")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                    Tablets
+                                    <select id="Naprosyn_medicine_mg" hidden disabled>
+                                        <option selected="selected" value="250">250</option>
+                                        <option value="375">375</option>
+                                        <option value="500">500</option>
+                                    </select> <span id="Naprosyn_medicine_mg_label" hidden>mg</span>
+                                </div>
+                                </br>
+
+                                <label>Tylenol with codeine</label>
+                                <br>
+                                <div id="Tylenol with codeine">
+
+                                    <select id="Tylenol with codeine_tablets" onchange='enable("Tylenol with codeine")'>
+                                        <option selected="selected" value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                    Tablets
+                                    <select id="Tylenol with codeine_medicine_mg" hidden disabled>
+                                        <option selected="selected" value="200">200</option>
+                                        <option value="400">400</option>
+                                        <option value="600">600</option>
+                                        <option value="800">800</option>
+                                    </select> <span id="Tylenol with codeine_medicine_mg_label" hidden>mg</span>
+                                </div>
+                                </br>
+
+                                <label>Other Medications (If Any):
+                                    <br> [Format: advil 5mg 1Tablet]</label>
+                                <br>
+                                <textarea name="other_medication" rows="4" cols="50"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="control-label">Please provide any other notes relevant to this subject:</label>
+                        <div class="inputGroupContainer">
+                            <div class="input-group">
+                                <textarea name="other_info" rows="4" cols="50"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group row">
+                        <label class="control-label"></label>
+                        <div class="">
+                            <input id="submitBtn" type="button" class="btn btn-info disabled" value="Submit" onclick="submitData()" disabled><span class="glyphicon glyphicon-send"></span>
+                            </button>
+                            <br>
+
+                        </div>
+                    </div>
+
+
+                </fieldset>
+            </form>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="success-modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">You are all SET!</h4>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>Your pin is : <big id="patientPIN"> </big>.</li>
+                        <br/>
+                        <li>Odd PINs get the enhanced version, even PINs the normal version. You do not have to do anything to control this assignment.</li>
+                        <br/>
+                        <li>ANDROID Users: Go to the <a href="https://play.google.com/store/apps/details?id=edu.asu.healPromisV3">Google Playstore</a> and download the app</li>
+                        <br/>
+                        <li>iOS Users: Go to the <a href="https://itunes.apple.com/us/app/promis-pain-report/id1162282071">iTunes App Store</a> and download the app</li>
+                        <br/>
+                        <li>Enter your <b>pin</b> and a <b>server address of:</b> {{apiURL}}</li>
+                        <br/>
+                        <li>If you encounter a problem, please email <a href="mailto:promisasu@gmail.com">promisasu@gmail.com</a></li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="enroll-new-btn" data-trial-id='{{ trialId }}' data-dismiss="modal">Enroll New Patient</button>
+                    <button type="button" class="btn btn-default" id="success-modal-close" data-trial-id='{{ trialId }}' data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal fade" id="error-modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">ERROR!</h4>
+                </div>
+                <div class="modal-body">
+                    There was an error. 
+                    <p id="error-message" class="alert alert-danger"></p>
+                    Please try again. If the error persists, please get in touch with us at <a href="mailto:promisasu@gmail.com">promisasu@gmail.com</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="error-modal-dismiss" data-trial-id='{{ trialId }}' data-dismiss="modal">Dismiss</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="/static/script/helper.js"></script>

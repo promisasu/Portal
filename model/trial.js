@@ -15,18 +15,25 @@ function register (sequelize) {
     /**
      * a clinical Trial has many Stages for Patients to take Surveys
      * @typedef {Object} Trial
-     * @property {String} name - trial name
-     * @property {String} description - short blurb about the trial
+     * @property {String} Name - trial name
+     * @property {String} Description - short blurb about the trial
      * @property {String} IRBID - Institutional Review Board Identifier
      * @property {Date} IRBStart - Institutional Review Board permit starts
      * @property {Date} IRDEnd - Institutional Review Board permit ends
-     * @property {Number} targetCount - Number of Patients that will participate in Trial
-     * @property {Number} patientPinCounter - Count off patient id within Trial
+     * @property {Number} TargetCount - Number of Patients that will participate in Trial
+     * @property {Number} PatientPinCounter - Count off patient id within Trial
      */
     sequelize.define(
         'trial',
         {
-            name: {
+            TrialId: {
+                type: Sequelize.INTEGER,
+                primaryKey: true,
+                validate: {
+                    notEmpty: true
+                }
+            },
+            Name: {
                 type: Sequelize.STRING,
                 allowNull: false,
                 validate: {
@@ -34,7 +41,7 @@ function register (sequelize) {
                     min: 3
                 }
             },
-            description: {
+            Description: {
                 type: Sequelize.STRING,
                 allowNull: false
             },
@@ -54,11 +61,11 @@ function register (sequelize) {
                 type: Sequelize.DATE,
                 allowNull: false
             },
-            targetCount: {
+            TargetCount: {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
-            patientPinCounter: {
+            PatientPinCounter: {
                 type: Sequelize.INTEGER,
                 defaultValue: 0,
                 allowNull: false
