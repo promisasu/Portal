@@ -74,7 +74,8 @@ function setup (configuration) {
     addJoinCurrentAndNextStages(sequelize);
 
     // add the database views
-    addViewActivePatients(sequelize);
+    // Commented out as it is not being used and creates errors in pm2 logs
+    // addViewActivePatients(sequelize);
 
     // Get the newly created ORM wrappers
     const user = sequelize.model('user');
@@ -122,4 +123,35 @@ function setup (configuration) {
     return sequelize;
 }
 
+/**
+ * Takes in database configuration and returns Sequelize object
+ * that is both configured and has the models attached
+ * @param {DatabaseConfiguration} configuration - settings for connecting to database
+ * @returns {Sequelize} configured sequelize object
+ */
+function setupUser (configuration) {
+    // setup database connection
+    const sequelize = new Sequelize(configuration.name, configuration.username, configuration.password, {
+        host: configuration.hostname,
+        dialect: configuration.dialect,
+        pool: {
+            max: 5,
+            min: 0,
+            idle: 10000
+        }
+    });
+
+    // add models to sequelize
+    addUserModel(sequelize, configuration.salt);
+
+    // Get the newly created ORM wrappers
+    const user = sequelize.model('user');
+
+    // export configured sequelize to allow for access to database models
+    module.exports.sequelize = sequelize;
+
+    return sequelize;
+}
+
 module.exports.setup = setup;
+module.exports.setupUser = setupUser;

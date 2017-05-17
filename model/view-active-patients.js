@@ -15,7 +15,7 @@ function register (sequelize) {
         `
         CREATE OR REPLACE VIEW active_patients AS
         SELECT *
-        FROM patient
+        FROM patients
         WHERE deletedAt IS NULL
         `,
         {

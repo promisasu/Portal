@@ -7,31 +7,44 @@
             </a>
         </li>
         <li>
-            <a href="/trial/{{ trial.id }}">
-                Trial: {{ trial.name }}
+            <a href="/trial/{{ trial.TrialId }}">
+                Trial: {{ trial.Name }}
             </a>
         </li>
         <li class="active">
-            Patient: {{ patient.pin }}
+            Patient: {{ patient.PatientPin }}
         </li>
     </ol>
+    <div style="text-align:center">
+        <a href="#" id="survey-chart" class="active" onclick="return showChart('survey');">Survey Chart</a>
+        <span> | </span>
+        <a href="#" onclick="return showChart('scores');" id="scores-chart" class="">Scores Chart</a>
+    </div>
     <div class="row">
         <div class="col-sm-12">
-            <div id="chartCanvasDiv" class="card">
-              <br>
-              <canvas id="complianceChart" width="400" height="100px"></canvas>
+            <div id="surveyChartCanvasDiv" class="card">
+                <br>
+                <canvas id="surveyComplianceChart" width="400" height="100px"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="scoresChartCanvasDiv" class="card" style="display:none">
+                <br>
+                <canvas id="scoresComplianceChart" width="400" height="100px"></canvas>
             </div>
         </div>
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-block">
                     <h4 class="card-title">
-                        Patients' Surveys
+                        Patients' Surveys <span data-proxy-pin='{{patient.ParentPinFK}}' id="parent-proxy" hidden>(Proxy for Patient: <a href="/patient/{{ patient.ParentPinFK }}">{{patient.ParentPinFK}}</a>)</span>
                         <span class="pull-right">
-                            <a href="/patient/{{ patient.pin }}.csv" class="btn btn-primary btn-sm">
+                            <a href="/patient/{{ patient.PatientPin }}.csv" class="btn btn-primary btn-sm">
                                 Export Patient Data
                             </a>
-                            <button id="deactivate-patient" class="btn btn-danger btn-sm">
+                            <button id="deactivate-patient" class="btn btn-danger btn-sm" data-patient-pin="{{ patient.PatientPin }}">
                                 Deactivate
                             </button>
                         </span>
@@ -41,16 +54,13 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Survey ID
+                                        Activity Instance ID
                                     </th>
                                     <th>
                                         Status
                                     </th>
                                     <th>
-                                        Stage
-                                    </th>
-                                    <th>
-                                        Survey Type
+                                        Activity Type
                                     </th>
                                     <th>
                                         Start
@@ -65,32 +75,29 @@
                             </thead>
                             <tbody>
                                 {{#each surveys}}
-                                    <tr class="{{ state-to-status state prefix='table-' }}">
-                                        <th scope="row">
-                                            <a href="/survey/{{ id }}">
-                                                {{ id }}
+                                <tr class="{{ state-to-status state prefix='table-' }}">
+                                    <th scope="row">
+                                        <a href="/survey/{{ ../patient.PatientPin }}/{{ ActivityInstanceId }}">
+                                                {{ ActivityInstanceId }}
                                                 <i class="fa fa-search"></i>
                                             </a>
-                                        </th>
-                                        <td>
-                                            {{ state }}
-                                        </td>
-                                        <td>
-                                            {{ stageName }}
-                                        </td>
-                                        <td>
-                                            {{ surveyTemplateName }}
-                                        </td>
-                                        <td>
-                                            {{ startTime }}
-                                        </td>
-                                        <td>
-                                            {{ endTime }}
-                                        </td>
-                                        <td>
-                                            {{ userSubmissionTime }}
-                                        </td>
-                                    </tr>
+                                    </th>
+                                    <td>
+                                        {{ state }}
+                                    </td>
+                                    <td>
+                                        {{ activityTitle }}
+                                    </td>
+                                    <td>
+                                        {{ startTime }}
+                                    </td>
+                                    <td>
+                                        {{ endTime }}
+                                    </td>
+                                    <td>
+                                        {{ ActualSubmissionTime }}
+                                    </td>
+                                </tr>
                                 {{/each}}
                             </tbody>
                         </table>
@@ -104,6 +111,24 @@
 {{> remember-patient-pin}}
 
 <script>
+    'use strict';
     window.dates = JSON.parse('{{{ datesJson }}}');
+    window.clinicalValues = JSON.parse('{{{ clinicalValues }}}');
+
+    function showChart (type) {
+        if (type === 'scores') {
+            document.getElementById('scoresChartCanvasDiv').style.display = 'block';
+            document.getElementById('surveyChartCanvasDiv').style.display = 'none';
+            document.getElementById('scores-chart').classList.add('active');
+            document.getElementById('survey-chart').classList.remove('active');
+        } else {
+            document.getElementById('surveyChartCanvasDiv').style.display = 'block';
+            document.getElementById('scoresChartCanvasDiv').style.display = 'none';
+            document.getElementById('survey-chart').classList.add('active');
+            document.getElementById('scores-chart').classList.remove('active');
+        }
+
+        return false;
+    }
 </script>
 <script src="/static/script/patient.js" defer></script>

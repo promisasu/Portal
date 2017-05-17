@@ -16,6 +16,11 @@ function deduplicate (rows, properties) {
 
     return copyOfRows.map((row) => {
         for (const property of properties) {
+            if (property === 'date') {
+                /* Used to facilitate the comparison of the date coming from
+                the database with the date in current[property] */
+                row[property] = String(row[property]);
+            }
             if (row[property] === current[property]) {
                 row[property] = '';
             } else {

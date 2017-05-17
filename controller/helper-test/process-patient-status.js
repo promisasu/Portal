@@ -27,7 +27,7 @@ test('when patient has one expired survey', (t) => {
 
     const expectedResult = {
         expiredCount: 1,
-        status: 'Semi-Compliant'
+        status: 'Compliant'
     };
 
     t.deepEqual(result, expectedResult, 'it should return row with semi-compliant status');
@@ -42,21 +42,21 @@ test('when patient has two expired surveys', (t) => {
 
     const expectedResult = {
         expiredCount: 2,
-        status: 'Semi-Compliant'
+        status: 'Compliant'
     };
 
-    t.deepEqual(result, expectedResult, 'it should return row with semi-compliant status');
+    t.deepEqual(result, expectedResult, 'it should return row with compliant status');
 });
 
-test('when patient has three expired surveys', (t) => {
+test('when patient has five expired surveys', (t) => {
     const data = {
-        expiredCount: 3
+        expiredCount: 5
     };
 
     const result = processPatientStatus(data);
 
     const expectedResult = {
-        expiredCount: 3,
+        expiredCount: 5,
         status: 'Non-Compliant'
     };
 

@@ -7,7 +7,7 @@
             </a>
         </li>
         <li class="active">
-            Trial: {{ trial.name }}
+            Trial: {{ trial.Name }}
         </li>
     </ol>
     <div class="row">
@@ -15,10 +15,10 @@
             <div class="card">
                 <div class="card-block">
                     <h4 class="card-title text-center">
-                        {{ trial.name }} Trial
+                        {{ trial.Name }} Trial
                     </h4>
                     <p class="card-text">
-                        {{ trial.description }}
+                        {{ trial.Description }}
                     </p>
                     <table class="table">
                         <tbody>
@@ -81,30 +81,36 @@
                                 Patients
                             </h4>
                         </div>
-                        <div class="col-xl-1 col-xl-1 col-xl-offset-5 col-md-offset-1">
-                          <button type="button" class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#addPatient">
+
+                        <div class="col-sm-3 custom-btn">
+                          <button type="button" id='add-patient-btn' class="btn btn-primary text-uppercase" data-trial-id="{{ trial.TrialId }}" data-target="#addPatient">
                               Enroll New Patient
                           </button>
                         </div>
-                        <div class="col-md-3 col-xl-1 col-xl-offset-1">
-                          <a href="/trial/{{ trial.id }}.csv" class="btn btn-primary text-uppercase">
-                              Export Trial Data
+                        <div class="col-sm-3 custom-btn">
+                          <a href="/trial/{{ trial.TrialId }}-weekly.csv" class="btn btn-primary text-uppercase">
+                              Export Weekly Trial Data
+                          </a>
+                        </div>
+                        <div class="col-sm-3 custom-btn">
+                          <a href="/trial/{{ trial.TrialId }}-daily.csv" class="btn btn-primary text-uppercase">
+                              Export Daily Trial Data
                           </a>
                         </div>
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table id="patients-table" class="table table-hover">
                         <thead>
                             <tr>
                                 <th>
                                     Patient Pin
                                 </th>
                                 <th>
-                                    Compliance Status
+                                    Trial Status
                                 </th>
                                 <th>
-                                    Stage
+                                    Compliance Status
                                 </th>
                                 <th>
                                     Start
@@ -113,7 +119,13 @@
                                     End
                                 </th>
                                 <th>
-                                    Total Missed Past Week
+                                    Compliance %
+                                </th>
+                                <th>
+                                    Compliance % Last Week
+                                </th>
+                                <th>
+                                    Last Weekly
                                 </th>
                             </tr>
                         </thead>
@@ -135,25 +147,31 @@
                             {{#each patients}}
                                 <tr class="table-{{ statusType }}">
                                     <td>
-                                        <a href="/patient/{{ pin }}">
-                                            {{ pin }}
+                                        <a href="/patient/{{ PatientPin }}">
+                                            {{ PatientPin }}
                                             <i class="fa fa-search"></i>
                                         </a>
+                                    </td>
+                                    <td>
+                                        {{ trialStatus }}
                                     </td>
                                     <td>
                                         {{ status }}
                                     </td>
                                     <td>
-                                        {{ stage }}
+                                        {{ DateStarted }}
                                     </td>
                                     <td>
-                                        {{ dateStarted }}
+                                        {{ DateCompleted }}
                                     </td>
                                     <td>
-                                        {{ dateCompleted }}
+                                        {{ compliancePercentage }}
                                     </td>
                                     <td>
-                                        {{ totalMissed }}
+                                        {{ trendingCompliance }}
+                                    </td>
+                                    <td>
+                                        {{ lastWeekly }}
                                     </td>
                                 </tr>
                             {{/each}}
@@ -168,6 +186,7 @@
 {{> add-patient}}
 
 <script>
+    'use strict';
     window.data = JSON.parse('{{{ graphData }}}');
 </script>
 <script src="/static/script/trial.js" defer></script>

@@ -29,3 +29,12 @@ input[type='date'] {
     background-repeat: no-repeat;
     height: 300px;
 }
+
+.custom-btn {
+    padding-bottom: 0.47rem;
+    padding-top: 0.47rem;
+}
+a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}

@@ -20,26 +20,17 @@ const httpNotFound = 404;
  */
 function trialView (request, reply) {
     const trial = database.sequelize.model('trial');
-    const stage = database.sequelize.model('stage');
-    const startDate = moment().startOf('Week');
+    const startDate = moment('2016-11-23');
 
     Promise
         .all([
             trial.findById(request.params.id),
-            stage.findAll({
-                where: {
-                    trialId: request.params.id
-                }
-            }),
             database.sequelize.query(
                 `
-                SELECT tr.*, pa.pin, pa.dateStarted, pa.dateCompleted, st.name AS stage
-                FROM trial AS tr
-                JOIN stage AS st
-                ON st.trialId = tr.id
-                JOIN active_patients AS pa
-                ON pa.stageId = st.id
-                WHERE tr.id = ?
+                SELECT StageId, Name, CreatedAt, UpdatedAt, DeletedAt, TrialId
+                FROM stage AS stage
+                WHERE stage.DeletedAt IS NULL
+                AND stage.TrialId = ?
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -50,17 +41,50 @@ function trialView (request, reply) {
             ),
             database.sequelize.query(
                 `
-                SELECT pa.id, pa.pin,
-                SUM(si.state = 'expired') AS expiredCount,
-                SUM(si.state = 'completed') AS completedCount
-                FROM survey_instance AS si
-                JOIN active_patients AS pa
-                ON pa.id = si.patientId
+                SELECT tr.*, pa.PatientPin, pa.DateStarted, pa.DateCompleted, st.Name AS stage
+                FROM trial AS tr
                 JOIN stage AS st
-                ON st.id = pa.stageId
-                WHERE st.trialId = ?
-                AND si.endTime > ?
-                GROUP BY pa.id
+                ON st.TrialId = tr.TrialId
+                JOIN patients AS pa
+                ON pa.StageIdFK = st.StageId
+                WHERE tr.TrialId = ?
+                ORDER BY pa.DateCompleted DESC
+                `,
+                {
+                    type: database.sequelize.QueryTypes.SELECT,
+                    replacements: [
+                        request.params.id
+                    ]
+                }
+            ),
+            database.sequelize.query(
+                `
+                SELECT pa.PatientPin,
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Weekly Survey') AS expiredWeeklyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Weekly Survey') AS completedWeeklyCount,
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Daily Survey') AS expiredDailyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Daily Survey') AS completedDailyCount,
+                SUM(si.State = 'pending') AS pendingCount,
+                SUM(si.State = 'DEACTIVATED') AS deactivatedCount,
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Weekly Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS expiredTrendingWeeklyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Weekly Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS completedTrendingWeeklyCount,
+                SUM(si.State = 'expired' and si.activityTitle = 'Sickle Cell Daily Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS expiredTrendingDailyCount,
+                SUM(si.State = 'completed' and si.activityTitle = 'Sickle Cell Daily Survey'
+                    and si.EndTime > DATE_SUB(now(), INTERVAL 8 DAY)
+                    and si.EndTime < now()) AS completedTrendingDailyCount
+                FROM activity_instance AS si
+                JOIN patients AS pa
+                ON pa.PatientPin = si.PatientPinFK
+                JOIN stage AS st
+                ON st.StageId = pa.StageIdFK
+                WHERE st.TrialId = ?
+                GROUP BY pa.PatientPin
                 `,
                 {
                     type: database.sequelize.QueryTypes.SELECT,
@@ -71,24 +95,24 @@ function trialView (request, reply) {
                 }
             ),
             database.sequelize.query(
-                `
-                SELECT jcns.rule
-                FROM trial AS tr
-                JOIN stage AS st
-                ON tr.id = st.trialId
-                JOIN join_current_and_next_stages AS jcns
-                ON st.id = jcns.stageId
-                WHERE tr.id = ?
-                `,
+              `
+              SELECT State, EndTime, PatientPinFK
+              FROM activity_instance
+              WHERE activityTitle = 'Sickle Cell Weekly Survey'
+              AND EndTime > DATE_SUB(now(),INTERVAL 8 DAY)
+              AND EndTime <= now()
+              AND State != 'pending'
+              ORDER BY EndTime
+              DESC
+              `,
                 {
-                    type: database.sequelize.QueryTypes.SELECT,
-                    replacements: [
-                        request.params.id
-                    ]
+                    type: database.sequelize.QueryTypes.SELECT
                 }
             )
         ])
-        .then(([currentTrial, stages, patients, compliance, rules]) => {
+        .then(([currentTrial, stages, patients, compliance, missedLastWeek]) => {
+            const rules = [];
+
             if (!currentTrial) {
                 throw new Error('trial does not exist');
             }
@@ -100,23 +124,46 @@ function trialView (request, reply) {
             const patientStatuses = compliance.map(processPatientStatus);
 
             const patientArray = patients.map((patient) => {
-                  // check for patient's status
                 const patientStatus = patientStatuses.find((status) => {
-                    return status.pin === patient.pin;
+                    return status.PatientPin === patient.PatientPin;
                 });
+
+                let missedWeekly = missedLastWeek.find((missed) => {
+                    return missed.PatientPinFK === patient.PatientPin;
+                });
+
+                if (missedWeekly) {
+                    if (typeof patient.lastWeekly === 'undefined') {
+                        if (missedWeekly.State === 'expired') {
+                            patient.lastWeekly = 'Missed';
+                        } else if (missedWeekly.State === 'completed') {
+                            patient.lastWeekly = 'Taken';
+                        }
+                    }
+                } else {
+                    patient.lastWeekly = ' ---- ';
+                }
 
                 // collect the compliance status as well as expiredCount
                 if (patientStatus) {
+                    patient.trialStatus = patientStatus.trialStatus;
                     patient.status = patientStatus.status;
-                    patient.totalMissed = patientStatus.expiredCount;
+                    if (isNaN(patientStatus.compliancePercentage)) {
+                        patient.compliancePercentage = ' ---- ';
+                    } else {
+                        patient.compliancePercentage = patientStatus.compliancePercentage;
+                    }
+                    if (isNaN(patientStatus.trendingCompliance)) {
+                        patient.trendingCompliance = ' ---- ';
+                    } else {
+                        patient.trendingCompliance = patientStatus.trendingCompliance;
+                    }
                 } else {
                     patient.status = 'Pending';
-                    patient.totalMissed = 0;
                 }
-
-                patient.dateStarted = moment(patient.dateStarted)
+                patient.DateStarted = moment(patient.DateStarted)
                     .format('MM-DD-YYYY');
-                patient.dateCompleted = moment(patient.dateCompleted)
+                patient.DateCompleted = moment(patient.DateCompleted)
                     .format('MM-DD-YYYY');
 
                 return patient;
@@ -143,6 +190,7 @@ function trialView (request, reply) {
             });
         })
         .catch((err) => {
+            console.log('ERRORCUSTOM - ', err);
             request.log('error', err);
 
             reply

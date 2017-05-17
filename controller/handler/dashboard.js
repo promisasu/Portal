@@ -19,34 +19,9 @@ function dashboardView (request, reply) {
 
     database.sequelize.query(
         `
-        SELECT *
-        FROM trial AS tr
-        LEFT JOIN (
-        	SELECT st.trialId, COUNT(pa.id) AS recruitedCount
-        	FROM stage AS st
-        	JOIN active_patients AS pa
-        	ON pa.stageId = st.id
-        	GROUP BY st.trialId
-        ) AS recruited
-        ON tr.id = recruited.trialId
-        LEFT JOIN (
-        	SELECT st.trialId, COUNT(pa.id) AS completedCount
-        	FROM stage AS st
-        	JOIN active_patients AS pa
-        	ON pa.stageId = st.id
-        	WHERE pa.dateCompleted < ?
-        	GROUP BY st.trialId
-        ) AS completed
-        ON tr.id = completed.trialId
-        LEFT JOIN (
-        	SELECT st.trialId, COUNT(pa.id) AS activeCount
-        	FROM stage AS st
-        	JOIN active_patients AS pa
-        	ON pa.stageId = st.id
-        	WHERE ? BETWEEN pa.dateStarted AND pa.dateCompleted
-        	GROUP BY st.trialId
-        ) AS active
-        ON tr.id = active.trialId;
+        SELECT t.*, s.StageId, count(1) as recruitedCount from trial t, stage s
+        INNER JOIN patients pa ON s.StageId = pa.StageIdFK  WHERE t.TrialId = s.trialId;
+
         `,
         {
             type: database.sequelize.QueryTypes.SELECT,
@@ -68,7 +43,7 @@ function dashboardView (request, reply) {
             });
         })
         .catch((err) => {
-            request.log('error', err);
+            console.log('error', err);
 
             reply
             .view('404', {
