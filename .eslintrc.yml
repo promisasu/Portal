@@ -222,6 +222,9 @@ rules:
     no-underscore-dangle: error
     no-unneeded-ternary: off # no-ternary
     object-curly-spacing: error
+    object-property-newline:
+        - error
+        - allowMultiplePropertiesPerLine: true
     one-var:
         - error
         - never
