@@ -80,6 +80,7 @@
     "proxyquire": "^1.7.4",
     "remark": "^4.2.2",
     "remark-lint": "^3.2.1",
+    "remark-validate-links": "^3.0.0",
     "sinon": "^1.17.3",
     "stylelint": "^6.2.2"
   },
