@@ -71,6 +71,7 @@
   "devDependencies": {
     "ava": "^0.14.0",
     "eslint": "^2.9.0",
+    "eslint-plugin-ava": "^2.2.1",
     "eslint-plugin-promise": "^1.1.0",
     "jsdoc": "^3.4.0",
     "nsp": "^2.3.2",
