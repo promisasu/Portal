@@ -24,7 +24,7 @@ As well as allowing clinicians to monitor patient responses to look for possible
 
 ## Setup Instructions
 
-1. The portal uses the same database as the CNMC PROMIS Application. Please ensure that you the correct and latest schema.      If you do not, a dump can be found [here]().
+1. The portal uses the same database as the CNMC PROMIS Application. Please ensure that you have the correct and latest        schema.
 2. run `npm run init`
 3. run `npm run user`. This command sets up the user who gains access to the portal once it's deployed.
 4. Connect to the local MySQL server and run the command `set GLOBAL sql_mode="";`
