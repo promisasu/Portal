@@ -34,10 +34,13 @@ test('when patient\'s have one or two expired surveys', (t) => {
     t.deepEqual(result, expectedResult, 'it should show patients are compliant');
 });
 
-test('when a patient has five or more expired surveys', (t) => {
+test('when a patient has more than two-thirds(66.66%) expired surveys', (t) => {
     const data = [
         {
-            expiredCount: 6
+          completedWeeklyCount: 0,
+          expiredWeeklyCount: 1,
+          completedDailyCount: 2,
+          expiredDailyCount: 5,
         }
     ];
 
@@ -51,19 +54,34 @@ test('when a patient has five or more expired surveys', (t) => {
 test('when there are multiple patients with different compliance', (t) => {
     const data = [
         {
-            expiredCount: 0
+          completedWeeklyCount: 0,
+          expiredWeeklyCount: 1,
+          completedDailyCount: 2,
+          expiredDailyCount: 5,
         },
         {
-            expiredCount: 1
+          completedWeeklyCount: 1,
+          expiredWeeklyCount: 1,
+          completedDailyCount: 7,
+          expiredDailyCount: 7,
         },
         {
-            expiredCount: 5
+          completedWeeklyCount: 3,
+          expiredWeeklyCount: 2,
+          completedDailyCount: 25,
+          expiredDailyCount: 10,
+        },
+        {
+          completedWeeklyCount: 1,
+          expiredWeeklyCount: 1,
+          completedDailyCount: 10,
+          expiredDailyCount: 4,
         }
     ];
 
     const result = processComplianceCount(data);
 
-    const expectedResult = [1, 0, 2];
+    const expectedResult = [1, 2, 1];
 
     t.deepEqual(result, expectedResult, 'it should show correct overall compliance counts');
 });
