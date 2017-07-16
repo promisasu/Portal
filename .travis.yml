@@ -3,7 +3,7 @@ node_js: 6
 install: npm install --ignore-scripts
 script:
   - npm run lint
-   - npm test
+  - npm test
 notifications:
   slack:
     secure: i7Do+oa/nwjb+NS3elI2RsBoePF9k9VLQB5AkiQrVxZ2OQ+q6UZ2/laH7SRpXunHFiyc3EkU52QtgtoTXER7DaWmyBoWKQDqfL2oUFM8dJJPFjVDFbu7n4XNx9AG4RE+qugREVzNwewKy49IuuQz3WF9cEjdDVhwrgRO9mVkXmC28dE8yfg8eG5tMQnHtrwTZUJVHy4ZBwZY8fOmqgD+ulVF9V0IRgACIgIm3jGePO+lSzYan+TYLWZIF1Os/RaxWUoU94Q4d5JQV63Oc5sSvJfIZVC0u7rAXp4kIR7Ru8rcuLHknIZSzYUdnTaUVaLcK6FWCELKGEMvjnWBHXFNM17VkvmZsd0Wq3EAS3igS6FxH2GgAiGKzmvIhiXM0njuLBr0IC6HFIxkz12qgWGvHI58VD2PbjkQMHS6nmDI29RNVhWCPftKWRvOGOPr4dY+hbBo+VAFliziz/B02/yUsQNqT3xqdvD3J1t4MNAEfc95X1gutpWyevakRV4FM1cOq5NMTSWCFPkzf/qygKKVK5ixUyW0H0jQhqOvMkXqZxRlKDjZQ2nClOvp/gSNm26qXJHUuuzMPFcDK2zQTBthcL5q9Ooqo1CveQat6GQdptyo3Zw5c7XI9IaE8heL9fi5gtXkubibFOaPCdt4mYPCgxJ6viDLBsD+vegDn+k0eaA=
