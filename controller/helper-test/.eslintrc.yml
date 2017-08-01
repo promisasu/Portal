@@ -15,10 +15,10 @@ rules:
     ava/no-cb-test: off
     ava/no-identical-title: error
     no-ignored-test-files: off
-    ava/no-invalid-end: error
+    #ava/no-invalid-end: error
     ava/no-only-test: error
     ava/no-skip-assert: error
-    ava/no-skip-test: error
+    #ava/no-skip-test: error
     ava/no-statement-after-end: error
     ava/no-todo-test: warn
     ava/no-unknown-modifiers: error
