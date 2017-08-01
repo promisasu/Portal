@@ -7,7 +7,7 @@ const QueryTypes = {
     SELECT: 'select'
 };
 
-test.cb('when there are no patients', (t) => {
+test.skip('when there are no patients', (t) => {
     const model = sinon.stub();
     const query = sinon.stub();
 
@@ -74,7 +74,7 @@ test.cb('when there are no patients', (t) => {
     trial(request, reply);
 });
 
-test.cb('when there is one patient', (t) => {
+test.skip('when there is one patient', (t) => {
     const model = sinon.stub();
     const query = sinon.stub();
 
@@ -153,7 +153,7 @@ test.cb('when there is one patient', (t) => {
     trial(request, reply);
 });
 
-test.cb('when trial does not exist', (t) => {
+test.skip('when trial does not exist', (t) => {
     const model = sinon.stub();
     const query = sinon.stub();
 

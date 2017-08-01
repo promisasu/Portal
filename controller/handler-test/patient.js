@@ -7,7 +7,7 @@ const QueryTypes = {
     SELECT: 'select'
 };
 
-test.cb('when patient has one survey', (t) => {
+test.skip('when patient has one survey', (t) => {
     const query = sinon.stub();
 
     query
@@ -88,7 +88,7 @@ test.cb('when patient has one survey', (t) => {
     patientCSV(request, reply);
 });
 
-test.cb('when patient has no surveys', (t) => {
+test.skip('when patient has no surveys', (t) => {
     const query = sinon.stub();
 
     query

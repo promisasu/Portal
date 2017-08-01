@@ -20,7 +20,7 @@ test('when patient has no expired surveys', (t) => {
     t.deepEqual(result, expectedResult, 'it should show patient is compliant');
 });
 
-/* test('when patient\'s have one or two expired surveys', (t) => {
+test.skip('when patient\'s have one or two expired surveys', (t) => {
     const data = [
         {
             expiredCount: 1
@@ -35,7 +35,7 @@ test('when patient has no expired surveys', (t) => {
     const expectedResult = [0, 0, 2];
 
     t.deepEqual(result, expectedResult, 'it should show patients are compliant');
-});*/
+});
 
 test('when a patient has more than two-thirds(66.66%) expired surveys', (t) => {
     const data = [
