@@ -1,6 +1,7 @@
 language: node_js
 node_js: 6
 install: npm install --ignore-scripts
+before_script: npm run dummyConfig
 script:
   - npm run lint
   - npm test

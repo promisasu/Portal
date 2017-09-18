@@ -2,15 +2,7 @@
 
 const test = require('ava');
 const moment = require('moment');
-const proxyquire = require('proxyquire');
-let emptyConfigJsonStub = {};
-
-// const processSurveyInstances = require('../helper/process-survey-instances');
-const processSurveyInstances = proxyquire('../helper/process-survey-instances', {
-    '../helper/calculate-scores': {
-        '../../config.json': emptyConfigJsonStub
-    }
-});
+const processSurveyInstances = require('../helper/process-survey-instances');
 
 test('when survey is completed in one day with two days allowed', (t) => {
     const open = moment('2000-01-01');

@@ -28,7 +28,8 @@
     "test": "env TEST=true nyc ava */*-test/*.js --timeout=15s",
     "preuser": "node task/createUserSchema",
     "user": "node task/user",
-    "validate": "jsonlint config.json --validate config-schema.json --quiet"
+    "validate": "jsonlint config.json --validate config-schema.json --quiet",
+    "dummyConfig": "node task/dummyConfig"
   },
   "repository": {
     "type": "git",
