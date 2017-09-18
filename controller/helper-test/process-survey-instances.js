@@ -2,7 +2,13 @@
 
 const test = require('ava');
 const moment = require('moment');
-const processSurveyInstances = require('../helper/process-survey-instances');
+const proxyquire = require('proxyquire');
+var emptyCalculateScoresStub = {};
+
+// const processSurveyInstances = require('../helper/process-survey-instances');
+const processSurveyInstances = proxyquire('../helper/process-survey-instances', {
+    '../helper/calculate-scores': emptyCalculateScoresStub
+});
 
 test('when survey is completed in one day with two days allowed', (t) => {
     const open = moment('2000-01-01');
