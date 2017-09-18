@@ -3,7 +3,7 @@
 const test = require('ava');
 const moment = require('moment');
 const proxyquire = require('proxyquire');
-var emptyCalculateScoresStub = {};
+let emptyCalculateScoresStub = {};
 
 // const processSurveyInstances = require('../helper/process-survey-instances');
 const processSurveyInstances = proxyquire('../helper/process-survey-instances', {
